@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -24,9 +24,9 @@ export class RegisterComponent implements OnInit {
   updatedDate = new FormControl ('');
   updatedBy = new FormControl ('');
   password = new FormControl('');
-
-
-
+  OtherExperience = new FormControl('');
+  capeExperience = new FormControl('');
+  
 
 
   constructor() { }
