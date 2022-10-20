@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   createdBy = new FormControl('');
   updatedDate = new FormControl ('');
   updatedBy = new FormControl ('');
+  password = new FormControl('');
 
 
 

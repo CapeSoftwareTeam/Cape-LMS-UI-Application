@@ -3,14 +3,14 @@
     <div class="col-md-3"> 
         
             <label class="form-label">Employee Id</label>
-            <input type="text" name="empid" class="form-control"[formControl]="empid">
+            <input type="text" name="empid" class="form-control"formControlName="empid">
             
         
     </div>
     <div class="col-md-3">        
        
             <label class="form-label">Name</label>
-            <input type="text" name="name" class="form-control"[formControl]="name">
+            <input type="text" name="name" class="form-control"formControlName="name">
             
      
     </div>
@@ -18,14 +18,14 @@
         <div class="col-md-3"> 
            
                 <label class="form-label">Gender</label>
-                <input type="text" name="gender" class="form-control"[formControl]="gender">
+                <input type="text" name="gender" class="form-control"formControlName="gender">
                 
             </div>
         
         <div class="col-md-3">        
             
                 <label class="form-label">Date Of Birth</label>
-                <input type="text" name="dob" class="form-control"[formControl]="dob">
+                <input type="date" name="dob" class="form-control"formControlName="dob">
                 
             
         </div>
@@ -33,14 +33,14 @@
             <div class="col-md-3"> 
                 
                     <label class="form-label">Marital Status</label>
-                    <input type="text"name="maritalStatus" class="form-control"[formControl]="maritalStatus">
+                    <input type="text"name="maritalStatus" class="form-control"formControlName="maritalStatus">
                     
                
             </div>
             <div class="col-md-3">        
                 <div id="d">
                     <label class="form-label">Mobile Number</label>
-                    <input type="text" name="mobile" class="form-control"[formControl]="mobile">
+                    <input type="number" name="mobile" class="form-control"formControlName="mobile">
                     
                 </div>
             </div>
@@ -48,14 +48,14 @@
                 <div class="col-md-3"> 
                     <div id="d">
                         <label class="form-label">Alternate Number</label>
-                        <input type="text" name="alternate" class="form-control"[formControl]="alternate">
+                        <input type="number" name="alternate" class="form-control"formControlName="alternate">
                         
                     </div>
                 </div>
                 <div class="col-md-3">        
                     <div id="d">
                         <label class="form-label">EmailId</label>
-                        <input type="text" name="email" class="form-control"[formControl]="email">
+                        <input type="email" name="email" class="form-control"formControlName="email">
                         
                     </div>
                 </div>
@@ -63,14 +63,14 @@
                     <div class="col-md-3"> 
                        
                             <label class="form-label">Date Of Joining</label>
-                            <input type="text" name="doj" class="form-control"[formControl]="doj">
+                            <input type="date" name="doj" class="form-control"formControlName="doj">
                             
                         
                     </div>
                     <div class="col-md-3">        
                        
                             <label class="form-label">Department</label>
-                            <input type="text" name="department" class="form-control"[formControl]="department">
+                            <input type="text" name="department" class="form-control"formControlName="department">
                             
                       
                     </div>
@@ -78,14 +78,28 @@
                         <div class="col-md-3"> 
                            
                                 <label class="form-label">Designation</label>
-                                <input type="text" name="designation" class="form-control"[formControl]="designation">
+                                <input type="text" name="designation" class="form-control"formControlName="designation">
+                                
+                           
+                        </div>
+                        <div class="col-md-3"> 
+                           
+                                <label class="form-label">CAPE Experience</label>
+                                <input type="number" name="CAPE Experience" class="form-control"formControlName="CAPE Experience">
+                                
+                           
+                        </div>
+                        <div class="col-md-3"> 
+                           
+                                <label class="form-label">Other Experience</label>
+                                <input type="number" name="Other Experience" class="form-control"formControlName="Other Experience">
                                 
                            
                         </div>
                         <div class="col-md-3">        
                             
                                 <label class="form-label">Total Experience</label>
-                                <input type="text" name="totalExperience" class="form-control" [formControl]="totalExperience">
+                                <input type="number" name="totalExperience" class="form-control" formControlName="totalExperience">
                                 
                            
                         </div>
@@ -93,10 +107,17 @@
                             <div class="col-md-3 "> 
                                
                                     <label class="form-label">OfficeLocation</label>
-                                    <input type="text" name="officeLocation" class="form-control" [formControl]="officeLocation">
+                                    <input type="text" name="officeLocation" class="form-control" formControlName="officeLocation">
                                     
                                
                             </div>
+                            <div class="col-md-3 "> 
+                               
+                                <label class="form-label">Password</label>
+                                <input type="password" name="Password" class="form-control" formControlName="password">
+                                
+                           
+                        </div>
                             <!-- <div class="col-md-4">        
                                 
                                     <label class="form-label">Created Date</label>
