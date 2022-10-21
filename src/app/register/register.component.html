@@ -1,10 +1,13 @@
-<form [formGroup]="RegisterationForm">
+<form [formGroup]="RegisterationForm" (ngSubmit)="submitFunction()">
     <div class="row">
     <div class="col-md-3"> 
         
             <label class="form-label">Employee Id</label>
-            <input type="text" name="empid" class="form-control"formControlName="empid">
-            
+            <input type="text" name="empid" class="form-control" formControlName="empid" 
+            [(ngModel)]="register.empid"  [ngClass]="{ 'is-invalid': submitted && f.empid.errors }" >
+            <div *ngIf="submitted && f.empid.errors" class="invalid-feedback">
+                <div *ngIf="f.empid.errors">employee id is required</div>
+            </div>
         
     </div>
     <div class="col-md-3">        
@@ -149,6 +152,7 @@
                                         
                                     </div> -->
                                     </div>
+                                    <button type="submit">Submit</button>
                                 
                                 </form>
                                
