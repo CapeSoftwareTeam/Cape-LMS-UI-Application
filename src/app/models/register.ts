@@ -8,6 +8,11 @@ export class Register {
     mobilenumber!:String;
     alternatenumber!:String;
     emailid!:String;
+    department!:String;
+    designation!:String;
+    capeExperience!:number;
+    otherExperience!:number;
+    totalExperience!:number;
     password!:String;
     dateofjoining!:Date;
     totalexperience!:number;

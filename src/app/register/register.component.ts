@@ -18,8 +18,8 @@ export class RegisterComponent implements OnInit {
   gender : new FormControl(''),
   dob : new FormControl(''),
   maritalStatus : new FormControl(''),
-  mobile : new FormControl(''),
-  alternate : new FormControl(''),
+  mobile : new FormControl('',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]),
+  alternate : new FormControl('',[Validators.required,Validators.maxLength(10),Validators.minLength(10)]),
   email : new FormControl(''),
   doj : new FormControl(''),
   department : new FormControl(''),
@@ -31,9 +31,21 @@ export class RegisterComponent implements OnInit {
   // updatedDate :new FormControl (''),
   // updatedBy : new FormControl (''),
   password : new FormControl(''),
-  OtherExperience : new FormControl(''),
+  otherExperience : new FormControl(''),
   capeExperience : new FormControl(''),
   })
+  
+  // Only Accept numbers
+  keyPressNumbers(event: any) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
   
 
 
@@ -49,7 +61,7 @@ export class RegisterComponent implements OnInit {
       gender:['', [Validators.required,]],
       dob :['', [Validators.required,]],
       maritalStatus:['', [Validators.required,]],
-      mobile:['', [Validators.required,]],
+      mobile:['', [Validators.required, ]],
       alternate:['', [Validators.required,]],
       email:['', [Validators.required,]],
       doj :['', [Validators.required,]],
@@ -58,15 +70,24 @@ export class RegisterComponent implements OnInit {
       totalExperience:['', [Validators.required,]],
       officeLocation:['', [Validators.required,]],
       password:['', [Validators.required,]],
-      OtherExperience:['', [Validators.required,]],
+      otherExperience:['', [Validators.required,]],
       capeExperience:['', [Validators.required,]]
 })
 
   }
-  get f(){
+  get field(){
     return this.RegisterationForm.controls;
   }
   
+  // calcExperience(event:any,form:any){
+    
+  //   if(form.controls.capeExperience!=null && form.controls.capeExperience!=undefined && form.controls.capeExperience!="" &&
+  //      form.controls.otherExperience!=null && form.controls.otherExperience!=undefined && form.controls.otherExperience!=""){
+  //     var a=(form.controls.capeExperience.value+form.controls.otherExperience.value);
+  //     form.controls.totalExperience.setValue(a);
+  //   }
+  // }
+
   submitFunction(){
     //validation trigger
 this.submitted=true;
