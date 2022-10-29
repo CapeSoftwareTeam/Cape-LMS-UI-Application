@@ -1,234 +1,176 @@
 <form [formGroup]="RegisterationForm" (ngSubmit)="submitFunction()">
-    <div class="row">
-    <div class="col-md-3"> 
-        
+<div class="container">
+<header>Registeration</header>
+<div class="first">
+        <h2>Personal Details</h2>
+<div class="row">
+<div class="col-md-4"> 
             <label class="form-label">Employee Id</label>
-           
             <input type="text" name="empid" class="form-control" formControlName="empid" 
             [(ngModel)]="register.empid"  [ngClass]="{ 'is-invalid': submitted && field.empid.errors }" >
             <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
-                <div *ngIf="field.empid.errors">Employee id is required</div>
+            <div *ngIf="field.empid.errors">Employee id is required</div>
             </div>
-        
-    </div>
-    <div class="col-md-3">        
-       
-            <label class="form-label">Name</label>
-            <input type="text" name="name" class="form-control"formControlName="name"
-            [(ngModel)]="register.name" [ngClass]="{'is-invalid': submitted && field.name.errors}">
-            <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
-                <div *ngIf="field.name.errors">Name field is required</div>
-            </div>
-            
-     
-    </div>
-   
-        <div class="col-md-3"> 
-           
-                <!-- <label class="form-label">Gender</label>
-                <input type="text" name="gender" class="form-control"formControlName="gender"
-                [(ngModel)]="register.gender"[ngClass]="{'is-invalid': submitted && field.gender.errors}">
-                <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
-                        <div *ngIf="field.gender.errors">choose your gender</div>
-
-                </div>
-                 -->
-                 <label class="form-label">Gender</label>
-                 <mat-radio-group aria-label="Select an option" name="gender" class="form-control"
-                 formControlName="gender"[(ngModel)]="register.gender"[ngClass]="{'is-invalid': submitted &&
-                 field.gender.errors}">
-                 <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
-                        <div *ngIf="field.gender.errors">
-                                   choose your gender
-                        </div>
-                 </div>
-                        <mat-radio-button value="1">Male</mat-radio-button>
-                        <mat-radio-button value="2">Female</mat-radio-button>
-                      </mat-radio-group>
-            </div>
-        
-        <div class="col-md-3">        
-            
-                <label class="form-label">Date Of Birth</label>
-                <input type="date" name="dob" class="form-control"formControlName="dob"
-                [(ngModel)]="register.dob" [ngClass]="{'is-invalid': submitted && field.dob.errors}">
-                <div *ngIf ="submitted && field.dob.errors" class="invalid-feedback">
-                   <div *ngIf="field.dob.errors">Date of birth is required</div>
-                </div>
-                
-            
+ </div>
+<div class="col-md-4">        
+           <label class="form-label">Name</label>
+           <input type="text" name="name" class="form-control"formControlName="name"
+           [(ngModel)]="register.name" [ngClass]="{'is-invalid': submitted && field.name.errors}">
+           <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
+           <div *ngIf="field.name.errors">Name field is required</div>
+           </div>
+</div>
+<div class="col-md-4"> 
+        <!-- <label class="form-label">Gender</label>
+        <input type="text" name="gender" class="form-control"formControlName="gender"
+        [(ngModel)]="register.gender"[ngClass]="{'is-invalid': submitted && field.gender.errors}">
+         <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
+         <div *ngIf="field.gender.errors">choose your gender</div>
+         </div>-->
+          <label class="form-label">Gender</label>
+          <mat-radio-group aria-label="Select an option" name="gender" class="form-control"
+          formControlName="gender"[(ngModel)]="register.gender"[ngClass]="{'is-invalid': submitted &&
+          field.gender.errors}" style="width:300px;">
+          <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
+          <div *ngIf="field.gender.errors">choose your gender</div>
+          </div>
+          <mat-radio-button value="1">Male</mat-radio-button>
+          <mat-radio-button value="2">Female</mat-radio-button>
+          </mat-radio-group>
+</div>
+<div class="col-md-4">        
+         <label class="form-label">Date Of Birth</label>
+         <input type="date" name="dob" class="form-control"formControlName="dob"
+         [(ngModel)]="register.dob" [ngClass]="{'is-invalid': submitted && field.dob.errors}">
+         <div *ngIf ="submitted && field.dob.errors" class="invalid-feedback">
+         <div *ngIf="field.dob.errors">Date of birth is required</div>
+         </div>
+</div>
+<div class="col-md-4"> 
+        <label class="form-label">Marital Status</label>
+        <input type="text"name="maritalStatus" class="form-control"formControlName="maritalStatus"
+        [(ngModel)]="register.maritalstatus" [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
+         <div *ngIf="submitted && field.maritalStatus.errors" class="invalid-feedback">
+         <div *ngIf="field.maritalStatus.errors">MaritalStatus is required</div>
+         </div>
+</div>
+<div class="col-md-4">        
+        <label class="form-label">Mobile Number</label>
+        <input type="number" name="mobile" min="10" class="form-control"formControlName="mobile"
+        [(ngModel)]="register.mobilenumber"[ngClass]="{'is-invalid': submitted && field.mobile.errors}">
+        <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
+        <div *ngIf="field.mobile.errors?.['required']">Mobile Number Is Required</div>
+        <div *ngIf="field.mobile.errors?.['min']">Enter 10 Digit Number</div> 
+        <div *ngIf="field.mobile.errors?.['max']">Enter 10 Digit Number</div>
         </div>
-        
-            <div class="col-md-3"> 
-                
-                    <label class="form-label">Marital Status</label>
-                    <input type="text"name="maritalStatus" class="form-control"formControlName="maritalStatus"
-                    [(ngModel)]="register.maritalstatus" [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
-                    <div *ngIf="submitted && field.maritalStatus.errors" class="invalid-feedback">
-                        <div *ngIf="field.maritalStatus.errors">MaritalStatus is required</div>
-                    </div>
-               
-            </div>
-            <div class="col-md-3">        
-                
-                    <label class="form-label">Mobile Number</label>
-                    <input type="number" name="mobile" class="form-control"formControlName="mobile"
-                    [(ngModel)]="register.mobilenumber"[ngClass]="{'is-invalid': submitted && field.mobile.errors}">
-                    <!-- <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
-                         <div *ngIf="field.mobile.errors['required']">Mobile number is required</div> 
-                      <div *ngIf="field['mobile']errors['minLength']||['maxLength']">Phone number must be at least 10 numbers </div>
-               </div> -->
-               <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
-                <div *ngIf="field.mobile?.errors?.['required']">Mobile Number Is Required</div>
-                <div *ngIf="field.mobile?.errors?.['minlength']">Enter 10 Digit Number</div> 
-                <div *ngIf="field.mobile?.errors?.['maxlength']">Enter 10 Digit Number</div>
-            </div>
-                  </div> 
-          
-                <div class="col-md-3"> 
-                    
-                        <label class="form-label">Alternate Number</label>
-                        <input type="number" name="alternate" class="form-control"formControlName="alternate"
-                        [(ngModel)]="register.alternatenumber"[ngClass]="{'is-invalid': submitted && field.alternate.errors}">
-                        <div *ngIf="submitted && field.alternate.errors" class="invalid-feedback">
-                                 <div *ngIf="field.alternate.errors['required']">Alternate number is required</div> 
-                               <div *ngIf="field.alternate.errors['minLength']">Enter 10 digit number</div>
-                               <div *ngIf="field.alternate.errors['maxLength']">Enter 10 digit number</div>
-                        </div>
-                        
-                   
-                </div>
-                <div class="col-md-3">        
-                    
-                        <label class="form-label">EmailId</label>
-                        <input type="email" name="email" class="form-control"formControlName="email"
-                        [(ngModel)]="register.emailid" [ngClass]="{'is-invalid': submitted && field.email.errors}">
-                        <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
-                            <div *ngIf="field.email.errors">Email is required</div>
-                        </div>
-                   
-                </div>
-               
-                    <div class="col-md-3"> 
-                       
-                            <label class="form-label">Date Of Joining</label>
-                            <input type="date" name="doj" class="form-control"formControlName="doj" 
-                            [(ngModel)]="register.dateofjoining"[ngClass]="{'is-invalid': submitted && field.doj.errors}">
-                            <div *ngIf="submitted && field.doj.errors" class="invalid-feedback">
-                                <div *ngIf="field.doj.errors">Date Of Joining is required</div>
-                            </div>
-                           
-                            
-                        
-                    </div>
-                    <div class="col-md-3">        
-                       
-                            <label class="form-label">Department</label>
-                            <input type="text" name="department" class="form-control"formControlName="department"
-                            [(ngModel)]="register.department" [ngClass]="{'is-invalid': submitted && field.department.errors}">
-                            <div *ngIf="submitted && field.department.errors" class="invalid-feedback">
-                                <div *ngIf="field.department.errors">Department is required</div>
-                            </div>
-                            
-                      
-                    </div>
-                    
-                        <div class="col-md-3"> 
-                           
-                                <label class="form-label">Designation</label>
-                                <input type="text" name="designation" class="form-control"formControlName="designation"
-                                [(ngModel)]="register.designation"[ngClass]="{'is-invalid': submitted && field.designation.errors}">
-                                <div *ngIf="submitted && field.designation.errors" class="invalid-feedback">
-                                        <div *ngIf="field.designation.errors">Designation is required</div>
-                                </div>
-                                
-                           
-                        </div>
-                        <div class="col-md-3"> 
-                           
-                                <label class="form-label">CAPE Experience</label>
-                                <input type="number" name="CAPE Experience" (keypress)="keyPressNumbers($event)" 
-                                class="form-control"formControlName="capeExperience"  [(ngModel)]="register.capeExperience"
-                                [ngClass]="{'is-invalid' : submitted && field.capeExperience.errors}">
-                                <div *ngIf="submitted && field.capeExperience.errors" class="invalid-feedback">
-                                        <div *ngIf="field.capeExperience.errors">Experience required</div>
-                                </div>
-                                
-                           
-                        </div>
-                        <div class="col-md-3"> 
-                           
-                                <label class="form-label">Other Experience</label>
-                                <input name="Other Experience" class="form-control"
-                                formControlName="otherExperience"  (keypress)="keyPressNumbers($event)" 
-                                 [(ngModel)]="register.otherExperience" [ngClass]="{'is-invalid' : submitted && field.otherExperience.errors}">
-                                <div *ngIf="submitted && field.otherExperience.errors" class="invalid-feedback">
-                                        <div *ngIf="field.otherExperience.errors">Experience required</div>
-                                </div>
-                           
-                        </div>
-                        <div class="col-md-3">        
-                            
-                                <label class="form-label">Total Experience</label>
-                                <input type="number" name="totalExperience" readonly class="form-control" 
-                                formControlName="totalExperience" (keypress)="keyPressNumbers($event)"
-                                [(ngModel)]="register.totalExperience"
-                                [ngClass]="{'is-invalid' : submitted && field.totalExperience.errors}">
-                                <div *ngIf="submitted && field.totalExperience.errors" class="invalid-feedback">
-                                        <div *ngIf="field.totalExperience.errors">Experience required</div>
-                                </div>
-                                
-                           
-                        </div>
-                       
-                            <div class="col-md-3 "> 
-                               
-                                    <label class="form-label">OfficeLocation</label>
-                                    <input type="text" name="officeLocation" class="form-control" formControlName="officeLocation">
-                                    
-                               
-                            </div>
-                            <div class="col-md-3 "> 
-                               
-                                <label class="form-label">Password</label>
-                                <input type="password" name="Password" class="form-control" formControlName="password">
-                                
-                           
-                        </div>
-                            <!-- <div class="col-md-4">        
-                                
-                                    <label class="form-label">Created Date</label>
-                                    <input type="text" name="createdDate" class="form-control"[formControl]="createdDate">
-                                    
-                            
-                            </div>
-                          
-                                <div class="col-md-4"> 
-                                    
-                                        <label class="form-label"> Created By</label>
-                                        <input type="text" name="createdBy" class="form-control"[formControl]="createdBy">
-                                        
+</div> 
+<div class="col-md-4"> 
+        <label class="form-label">Alternate Number</label>
+        <input type="number" name="alternate" class="form-control"formControlName="alternate"
+        [(ngModel)]="register.alternatenumber"[ngClass]="{'is-invalid': submitted && field.alternate.errors}">
+        <div *ngIf="submitted && field.alternate.errors" class="invalid-feedback">
+        <div *ngIf="field.alternate.errors['required']">Alternate number is required</div> 
+        <div *ngIf="field.alternate.errors['min']">Enter 10 digit number</div>
+        <div *ngIf="field.alternate.errors['max']">Enter 10 digit number</div>
+        </div>
+</div>
+<div class="col-md-4">        
+        <label class="form-label">EmailId</label>
+        <input type="email" name="email" class="form-control"formControlName="email"
+        [(ngModel)]="register.emailid" [ngClass]="{'is-invalid': submitted && field.email.errors}">
+        <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
+        <div *ngIf="field.email.errors">Email is required</div>
+        <div *ngIf="field.email.errors.pattern">Enter valid email</div>
+        </div>
+</div>
+<div class="col-md-4 "> 
+        <label class="form-label">Password</label>
+        <input type="password" name="Password" class="form-control" formControlName="password"
+        [(ngModel)]="register.password"[ngClass]="{'is-invalid' : submitted && field.password.errors}">
+        <div *ngIf="submitted && field.password.errors" class="invalid-feedback">
+        <div *ngIf="field.password.errors">Password is required</div>
+        </div>
+</div>
+</div>
+<div class="second">
+         <h2>Work Details</h2>
+<div class="row">
+<div class="col-md-4"> 
+        <label class="form-label">Date Of Joining</label>
+        <input type="date" name="doj" class="form-control"formControlName="doj" 
+        [(ngModel)]="register.dateofjoining"[ngClass]="{'is-invalid': submitted && field.doj.errors}">
+        <div *ngIf="submitted && field.doj.errors" class="invalid-feedback">
+        <div *ngIf="field.doj.errors">Date Of Joining is required</div>
+        </div>
+</div>
+<div class="col-md-4">        
+        <label class="form-label">Department</label>
+        <input type="text" name="department" class="form-control"formControlName="department"
+        [(ngModel)]="register.department" [ngClass]="{'is-invalid': submitted && field.department.errors}">
+        <div *ngIf="submitted && field.department.errors" class="invalid-feedback">
+        <div *ngIf="field.department.errors">Department is required</div>
+        </div>
+</div>
+<div class="col-md-4"> 
+        <label class="form-label">Designation</label>
+        <input type="text" name="designation" class="form-control"formControlName="designation"
+         [(ngModel)]="register.designation"[ngClass]="{'is-invalid': submitted && field.designation.errors}">
+        <div *ngIf="submitted && field.designation.errors" class="invalid-feedback">
+        <div *ngIf="field.designation.errors">Designation is required</div>
+        </div>
+</div>
+<div class="col-md-4"> 
+        <label class="form-label">CAPE Experience</label>
+        <input type="number" name="CAPE Experience" (keypress)="keyPressNumbers($event)" (focusout)="changevalue($event)"
+        class="form-control"formControlName="capeExperience"  [(ngModel)]="register.capeExperience"
+        [ngClass]="{'is-invalid' : submitted && field.capeExperience.errors}">
+        <div *ngIf="submitted && field.capeExperience.errors" class="invalid-feedback">
+        <div *ngIf="field.capeExperience.errors">Experience required</div>
+        </div>
+</div>
+<div class="col-md-4"> 
+        <label class="form-label">Other Experience</label>
+        <input name="Other Experience" class="form-control"formControlName="otherExperience"  (keypress)="keyPressNumbers($event)" (focusout)="changevalue($event)"
+         [(ngModel)]="register.otherExperience" [ngClass]="{'is-invalid' : submitted && field.otherExperience.errors}">
+        <div *ngIf="submitted && field.otherExperience.errors" class="invalid-feedback">
+        <div *ngIf="field.otherExperience.errors">Experience required</div>
+        </div>
+</div>
+<div class="col-md-4">        
+        <label class="form-label">Total Experience</label>
+        <input type="number" name="totalExperience" readonly class="form-control" formControlName="totalExperience" (keypress)="keyPressNumbers($event)"
+        [(ngModel)]="register.totalexperience"[ngClass]="{'is-invalid' : submitted && field.totalExperience.errors}">
+        <div *ngIf="submitted && field.totalExperience.errors" class="invalid-feedback">
+        <div *ngIf="field.totalExperience.errors">Experience required</div>
+        </div>
+</div>
+<div class="col-md-4 "> 
+         <label class="form-label">OfficeLocation</label>
+         <input type="text" name="officeLocation" class="form-control" formControlName="officeLocation">
+</div>
+</div>
+<!-- <div class="col-md-4">        
+        <label class="form-label">Created Date</label>
+        <input type="text" name="createdDate" class="form-control"[formControl]="createdDate">
+        </div>
+<div class="col-md-4"> 
+        <label class="form-label"> Created By</label>
+        <input type="text" name="createdBy" class="form-control"[formControl]="createdBy">
+</div>
+<div class="col-md-4">        
+        <label class="form-label">Updated Date</label>
+        <input type="text" name="updatedDate" class="form-control" [formControl]="updatedDate">
+</div>
+<div class="col-md-4"> 
+         <label class="form-label"> Updated By</label>
+         <input type="text" name="updateBy" class="form-control" [formControl]="updatedBy">
+</div> -->
+</div>
+</div>
+<button type="submit" class="btn btn-primary">Save</button>
+</div>
+</form>
                                    
-                                </div>
-                                <div class="col-md-4">        
-                                  
-                                        <label class="form-label">Updated Date</label>
-                                        <input type="text" name="updatedDate" class="form-control" [formControl]="updatedDate">
-                                        
                                    
-                                </div>
-                               
-                                    <div class="col-md-4"> 
-                                       
-                                            <label class="form-label"> Updated By</label>
-                                            <input type="text" name="updateBy" class="form-control" [formControl]="updatedBy">
-                                            
-                                        
-                                    </div> -->
-                                    </div>
-                                    <button type="submit">Submit</button>
-                                
-                                </form>
-                               
+            
         
-    

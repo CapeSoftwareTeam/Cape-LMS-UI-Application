@@ -7,13 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Observable } from 'rxjs'; 
+import { Observable } from 'rxjs';
+import { CalculationPipe } from './pipe/calculation.pipe'; 
 
 
 @NgModule({
   declarations: [
     AppComponent, 
-    RegisterComponent
+    RegisterComponent, CalculationPipe
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ export class Register {
     designation!:String;
     capeExperience!:number;
     otherExperience!:number;
-    totalExperience!:number;
+    
     password!:String;
     dateofjoining!:Date;
     totalexperience!:number;

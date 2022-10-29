@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterserviceService {
+export class RegisterserviceService { 
 
  apiurl=environment.apiurl;
   constructor(private http: HttpClient ) 
@@ -17,7 +17,7 @@ export class RegisterserviceService {
     return this.http.get<any>(this.apiurl+'/getRegister',{responseType: 'text' as 'json'});
   }
   saveForm(register: Register):Observable<any> {
-    return this.http.post<any>(this.apiurl+'/addRegister',{responseType: 'text' as 'json'});
+    return this.http.post<any>(this.apiurl+'/addRegister',register,{responseType: 'text' as 'json'});
   }
   deleteForm(id: any):Observable<any> {
     return this.http.put<any>( this.apiurl+'/deleteRegister' + '/' +id, {responseType: 'text' as 'json'});
