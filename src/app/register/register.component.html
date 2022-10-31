@@ -31,11 +31,12 @@
           <mat-radio-group aria-label="Select an option" name="gender" class="form-control"
           formControlName="gender"[(ngModel)]="register.gender"[ngClass]="{'is-invalid': submitted &&
           field.gender.errors}" style="width:300px;">
+          <mat-radio-button>Male</mat-radio-button>
+          <mat-radio-button>Female</mat-radio-button>
+          <mat-radio-button>Others</mat-radio-button>
           <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
           <div *ngIf="field.gender.errors">choose your gender</div>
           </div>
-          <mat-radio-button value="1">Male</mat-radio-button>
-          <mat-radio-button value="2">Female</mat-radio-button>
           </mat-radio-group>
 </div>
 <div class="col-md-4">        
@@ -51,7 +52,7 @@
         <input type="text"name="maritalStatus" class="form-control"formControlName="maritalStatus"
         [(ngModel)]="register.maritalstatus" [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
          <div *ngIf="submitted && field.maritalStatus.errors" class="invalid-feedback">
-         <div *ngIf="field.maritalStatus.errors">MaritalStatus is required</div>
+         <div *ngIf="field.maritalStatus.errors">Marital status is required</div>
          </div>
 </div>
 <div class="col-md-4">        
@@ -79,7 +80,7 @@
         <input type="email" name="email" class="form-control"formControlName="email"
         [(ngModel)]="register.emailid" [ngClass]="{'is-invalid': submitted && field.email.errors}">
         <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
-        <div *ngIf="field.email.errors">Email is required</div>
+        <!-- <div *ngIf="field.email.errors">Email is required</div> -->
         <div *ngIf="field.email.errors.pattern">Enter valid email</div>
         </div>
 </div>
@@ -145,9 +146,21 @@
         </div>
 </div>
 <div class="col-md-4 "> 
-         <label class="form-label">OfficeLocation</label>
-         <input type="text" name="officeLocation" class="form-control" formControlName="officeLocation">
+        <label>States</label>
+        <select style="width:300px;height:35px;margin-top:2px;" formControlName="state" [(ngModel)]="register.state"[ngClass]="{'is-invalid' : submitted && field.state.errors}">
+                <option *ngFor="let state of States; let i = index">{{state}}</option>
+        </select>
+        <div *ngIf="submitted && field.state.errors" class="invalid-feedback">
+        <div *ngIf="field.state.errors">State is required</div>
+        </div>
 </div>
+<div class="col-md-4">        
+        <label class="form-label">City</label>
+        <input type="text" name="city" class="form-control"formControlName="city"
+        [(ngModel)]="register.city" [ngClass]="{'is-invalid': submitted && field.city.errors}">
+        <div *ngIf="submitted && field.city.errors" class="invalid-feedback">
+        <div *ngIf="field.city.errors">City is required</div>
+        </div>
 </div>
 <!-- <div class="col-md-4">        
         <label class="form-label">Created Date</label>
@@ -167,9 +180,10 @@
 </div> -->
 </div>
 </div>
-<button type="submit" class="btn btn-primary">Save</button>
+<button type="submit" class="btn btn-primary" style="margin-left:410px;margin-top:59px;">Save</button>
 </div>
-</form>
+</div>
+ </form>
                                    
                                    
             

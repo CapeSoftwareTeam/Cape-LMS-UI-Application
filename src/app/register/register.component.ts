@@ -38,12 +38,13 @@ this.RegisterationForm = new FormGroup({
   maritalStatus  :new FormControl('',Validators.required),
   mobile  :new FormControl('',[Validators.required,Validators.min(1000000000),Validators.max(9999999999)]),
   alternate  :new FormControl('', [Validators.required,Validators.min(1000000000),Validators.max(9999999999)]),
-  email  :new FormControl('',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+  email  :new FormControl('',[Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
   doj   :new FormControl('',Validators.required),
   department  :new FormControl('',Validators.required),
   designation   :new FormControl('',Validators.required),
   totalExperience  :new FormControl('',Validators.required),
-  officeLocation  :new FormControl('',Validators.required),
+  state:new FormControl('',Validators.required),
+  city:new FormControl('',Validators.required),
   password  :new FormControl('',Validators.required),
   otherExperience  :new FormControl('',Validators.required),
   capeExperience : new FormControl('',Validators.required)
@@ -83,4 +84,9 @@ error =>{
 )
 
   }
+   States:any[]= ['Andhra Pradesh','Andaman & Nicobar Islands','Arunachal Pradesh',
+'Assam','Bihar','Chandigarh','Chhattisgarh','Delhi','Goa','Gujrat','Haryana','Himachal Pradesh',
+'Jammu & Kashmir','Jharkhand','Karnataka','Kerala','Ladakh','Lakshadweep','Madhya Pradesh',
+'Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Puducherry','Punjab','Rajasthan',
+'Sikkim','Tamilnadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
 }
