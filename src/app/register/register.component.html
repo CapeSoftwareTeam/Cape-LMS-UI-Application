@@ -80,7 +80,7 @@
         <input type="email" name="email" class="form-control"formControlName="email"
         [(ngModel)]="register.emailid" [ngClass]="{'is-invalid': submitted && field.email.errors}">
         <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
-        <!-- <div *ngIf="field.email.errors">Email is required</div> -->
+         <div *ngIf="field.email.errors">Email is required</div> 
         <div *ngIf="field.email.errors.pattern">Enter valid email</div>
         </div>
 </div>

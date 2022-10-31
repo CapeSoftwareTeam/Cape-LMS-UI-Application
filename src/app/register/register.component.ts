@@ -38,7 +38,7 @@ this.RegisterationForm = new FormGroup({
   maritalStatus  :new FormControl('',Validators.required),
   mobile  :new FormControl('',[Validators.required,Validators.min(1000000000),Validators.max(9999999999)]),
   alternate  :new FormControl('', [Validators.required,Validators.min(1000000000),Validators.max(9999999999)]),
-  email  :new FormControl('',[Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+  email  :new FormControl('',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
   doj   :new FormControl('',Validators.required),
   department  :new FormControl('',Validators.required),
   designation   :new FormControl('',Validators.required),
