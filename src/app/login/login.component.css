@@ -1,0 +1,100 @@
+html,body{
+    display: grid;
+    height: 100%;
+    /* background-color: gainsboro; */
+    /* place-items: center; */
+}
+.wrapper{
+    width: 400px;
+    height: 350px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+     max-width: 100%;
+    max-height: 100%; 
+    overflow: auto;
+    /* padding: 1em 2em; */
+   
+    display: table;
+}
+.card .title{
+    line-height: 60px;
+    font-size: medium;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.row{
+   margin-left: 25px;
+   margin-right: 25px;
+}
+#login{
+    margin-top: 25px;
+    width: 35%;
+    margin-left: 135px;
+    border-radius: 5px;
+    height: 35px;
+}
+.wrapper form{
+    margin-bottom: 50px;
+   
+   
+    height: 250px;
+}
+.forget{
+    margin-left: 25px;
+    margin-top: 15px;
+    color: #007bff;
+    cursor: pointer;
+    /* font: 400 14px/20px Roboto,Helvetica Neue,sans-serif;
+    letter-spacing: normal; */
+    
+}
+.modal-body{
+    overflow: hidden;
+
+}
+.modal-body:hover{
+    overflow-y: auto;
+}
+p{
+    font-family: Arial, Helvetica, sans-serif;
+}
+#button1{
+    margin-top: 25px;
+    margin-left: 85px;
+    cursor: pointer;
+}
+#submit{
+    margin-top: 25px;
+    margin-right: 70px;
+    width: 90px;
+    cursor: pointer;
+}
+#otpGenerate{
+    width: 300px;
+}
+#closeModal{
+    margin-left: 100px;
+}
+.modal-title{
+    text-align: center;
+   
+}
+.card{
+   
+    width: 450px;
+    height: 350px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    margin-top:150px;
+  
+}
