@@ -10,16 +10,18 @@ export class Register {
     emailid!:String;
     department!:String;
     designation!:String;
-    capeExperience!:number;
-    otherExperience!:number;
+    capeExperience!:any;
+    otherExperience!:any;
     city!:String;
     state!:String
     password!:String;
     dateofjoining!:Date;
-    totalexperience!:number;
+    totalexperience!:any;
     officelocation!:String;
     createddate!:Date;
     createdby!:String;
+    managername!:String;
+    manageremail!:String;
     updateddate!:Date;
     updatedby!:String;
     status!:String;
