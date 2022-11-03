@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 // import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,17 +17,18 @@ export class LoginComponent implements OnInit {
   loginForm=new FormGroup({
     empid:new FormControl(''),
     password:new FormControl('')
-   
+
   })
   otpgenerateform=new FormGroup({ mobileNumber:new FormControl(''),
   otp:new FormControl('')})
-  constructor(private modalService: NgbModal ,private formbuilder:FormBuilder) { }
+  constructor(private modalService: NgbModal ,
+    private formbuilder:FormBuilder,private route:Router) { }
 
   ngOnInit(): void {
     this.loginForm=this.formbuilder.group({
       empid:['',[Validators.required]],
       password:['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),Validators.required]]
-      
+
 
   });
   this.otpgenerateform=this.formbuilder.group({
@@ -41,17 +43,17 @@ export class LoginComponent implements OnInit {
     this.modalReference.close();
   }
 login(){
-  this.submitted=true;
+  // this.submitted=true;
 
-  
-  if(this.loginForm.invalid) {
-    return;
-  }
+  // if(this.loginForm.invalid) {
+  //   return;
+  // }
+this.route.navigate(['/home']);
 }
 submitForm(){
   this.submit=true;
 
-  
+
   if(this.otpgenerateform.invalid) {
     return;
   }
@@ -59,7 +61,7 @@ submitForm(){
 generate(){
   this.submit=true;
 
- 
+
   if(this.otpgenerateform.invalid) {
     return;
   }

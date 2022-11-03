@@ -1,0 +1,22 @@
+.modal-content{
+
+  right:50%;
+  width: 720px;
+  /* background-image: linear-gradient( white, rgb(200,255,15) , yellow); */
+
+  }
+  .modal-header{
+    padding-left:230px;
+    
+  }
+  i{
+    padding-left: 89%;
+   }
+   span{
+
+     padding: 10px;
+   }
+   b{
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+   }

@@ -1,0 +1,28 @@
+<mat-toolbar>
+  <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
+  <mat-toolbar-row>
+    <!-- margin-left: 68rem; -->
+
+
+
+    <button mat-button >
+      <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
+      matBadgeColor="accent" style='font-size:26px;color:rgb(9, 9, 211);left:72rem;' (click)="callCalculation()">
+      notifications</mat-icon>
+    </button>
+    <button mat-button  style='color:rgb(0, 0, 5); margin-left: 72rem;'>
+      <mat-icon style='font-size:30px;color:rgb(9, 9, 211);' (click)="callProfile()">person</mat-icon>
+      <b style="font-size: 16px;padding-left:6px;">
+        {{empid}}
+      </b>
+
+    </button>
+
+
+
+  </mat-toolbar-row>
+  <!-- <h2>Cape Electric Pvt Ltd</h2> -->
+</mat-toolbar>
+  <h1>Leave management Systems</h1>
+  <button (click)="leave()">Apply Leave</button>
+

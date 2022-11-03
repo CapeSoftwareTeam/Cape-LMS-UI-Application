@@ -1,0 +1,54 @@
+<p>apply-leave works!</p>
+
+<div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
+  <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here
+  </b>
+  </div>
+  <div class="modal-body">
+    <label> Leave Type </label>
+    <mat-form-field appearance="fill">
+      <mat-select>
+        <mat-option value="casual">Casual Leave</mat-option>
+        <mat-option value="sick">Sick Leave</mat-option>
+        <mat-option value="bereavement">Bereavement Leave</mat-option>
+        <mat-option value="privilege">Privilege Leave</mat-option>
+        <mat-option value="maternity">Maternity Leave</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <br>
+    <label>Number of days : </label>
+    <input type="number">
+   <br>
+   <br>
+    <label style="margin-right:5px;">From Date: </label>
+    <input type="date">
+    <!-- <mat-form-field appearance="fill">
+      <input matInput [matDatepicker]="myDatePicker">
+      <mat-datepicker-toggle  [for]="myDatePicker" matSuffix ></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field> -->
+
+    <label style="margin-left: 20px;margin-right:5px;"> To Date: </label>
+    <input type="date">
+
+    <br>
+<br>
+<!--
+<h3>Reason for applying leave</h3>
+<textarea matInput placeholder="Reason ..."></textarea> -->
+<div class="row">
+<div class="col-md-12">
+<label >Reason for applying leave</label>
+  <textarea type="text" class="form-control" placeholder="Enter Reason Here..."></textarea>
+</div>
+</div>
+  </div>
+
+  <div class="modal-footer">
+   <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()">Cancel</button>
+   <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
+  </div>
+</div>
+

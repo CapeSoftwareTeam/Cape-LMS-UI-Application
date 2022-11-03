@@ -1,0 +1,36 @@
+
+h1 {
+  font-family: "Sofia", sans-serif;
+  font-size: 30px;
+  text-shadow: 3px 3px 3px #ababab;
+  margin: 120px;
+  font-size: 40px;
+  text-decoration: overline;
+}
+img{
+  align-items: center;
+  width: 560px;
+    height: 520px;
+  float: right;
+}
+.modal-content{
+width: 560px;
+/* background-image: linear-gradient( white, rgb(200,255,15) , yellow); */
+background-image: linear-gradient( rgb(246, 252, 251), rgb(226, 234, 235) , rgb(178, 181, 182),rgb(173, 169, 169));
+}
+.modal-header{
+  padding-left: 220px;
+  background-color: #c5ccd4;
+}
+
+
+/* i{
+ padding-left: 89%;
+} */
+/* span{
+
+  padding: 10px;
+} */
+/* #employee{
+  padding-left: 78%;
+} */

@@ -2,15 +2,15 @@
     <body>
             <div class="card">
                 <div class="card-body">
-                    
+
 
             <div class="wrapper"><br>
             <div class="title"><span >LOGIN HERE!!</span></div>
             <hr>
         <form [formGroup]="loginForm">
             <div class="row">
-             
-                
+
+
                 <label class="form-label">UserName</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -21,17 +21,17 @@
                            <input type="text" name="empid" class="form-control" formControlName="empid" placeholder="Enter Your Email Id or Emp Id"  [ngClass]="{ 'is-invalid': submitted && f.empid.errors }">
                            <div *ngIf="submitted && f.empid.errors" class="invalid-feedback">
                             <div *ngIf="f.empid.errors['required']">empid or UserName is required</div>
-                            
+
                         </div>
                     </div>
             </div>
-           
 
-            
-          
+
+
+
                 <div class="row">
-                 
-                    
+
+
                         <label class="form-label">Password</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -40,22 +40,22 @@
                                 </span>
                             </div>
                         <input type="password" name="password" class="form-control" formControlName="password" placeholder="Enter Your Password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <!-- <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                             <div *ngIf="f.password.errors['required']">Password is required</div>
                             <div *ngIf="f.password.errors['pattern']">Password must contain at least 8 characters</div>
-                        </div>
+                        </div> -->
                         </div>
                 </div>
-               <div class="forget"><a (click)="otpValidation(otpGenerate)">Forget Password?</a></div> 
+               <div class="forget"><a (click)="otpValidation(otpGenerate)">Forget Password?</a></div>
                 <button  class="btn btn-primary" type="submit" id="login"  (click)="login()">Login</button>
 
-                
+
         </form>
     </div>
 </div>
 </div>
     </body>
-    
+
 </html>
 
 <ng-template #otpGenerate let-modal >
@@ -70,49 +70,49 @@
              <div class="row">
                 <label class="form-lable">Mobile Number/Email</label>
                 <div class="input-group">
-                    
+
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="bi bi-telephone-fill"></i>
                         </span>
                     </div>
-                
+
                 <input type="number" formControlName="mobileNumber" class="form-control" placeholder="Enter your Mobile Number or Email"  [ngClass]="{ 'is-invalid': submit && g.mobileNumber.errors }">
                 <div *ngIf="submit && g.mobileNumber.errors" class="invalid-feedback">
                     <div *ngIf="g.mobileNumber.errors['required']"> Mobile Number or Email is required</div>
                     <div *ngIf="g.mobileNumber.errors['pattern']">Mobile Number should be in 10 Numbers</div>
                 </div>
             </div>
-                 
+
              </div>
              <div class="row">
                 <label class="form-lable">Otp</label>
                 <div class="input-group">
-                    
+
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="bi bi-lock-fill"></i>
                         </span>
                     </div>
-                
+
                 <input type="number" formControlName="otp" class="form-control" placeholder="Enter Your Otp" [ngClass]="{ 'is-invalid': submit&& g.otp.errors }">
                 <div *ngIf="submit&& g.otp.errors" class="invalid-feedback">
                     <div *ngIf="g.otp.errors['required']">Otp is required</div>
                     </div>
-            
+
             </div>
 
              </div>
-             <div class="row" > 
+             <div class="row" >
                 <div class="col col-50"><button class="btn btn-success" id="button1" (click)="generate()">
                     Generate
             </button> </div><div class="col col-50" id="button2"><button class="btn btn-primary" id="submit" (click)="submitForm()">
                 Submit
-            </button></div>     
+            </button></div>
             </div>
         </form>
           </div>
-       
-    
+
+
 </ng-template>
 
