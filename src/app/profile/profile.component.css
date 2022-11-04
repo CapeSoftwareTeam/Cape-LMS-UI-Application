@@ -1,0 +1,36 @@
+.container{
+    margin-top: 20px;
+    background-color:#CFA5B4;
+    border: 1px solid rgb(131, 68, 82);
+    border-radius: 15px;
+    color:black;
+    align-items: center;
+    justify-content: center;
+}
+.row{
+    margin: 20px;
+}
+h2{
+    margin-top: 15px;
+    color: black;
+    font-weight: bold;
+}
+.btn{
+    margin-bottom: 20px;
+}
+label{
+    
+}
+input{
+    width: 200px;
+    height: 30px;
+    margin: 20px;
+    border-radius: 5px;
+    border-color: rgb(135, 173, 222);
+}
+/* .profile{
+    background-color:#B7C3F3;
+    width: 75%;
+    margin-left: 150px;
+} */
+

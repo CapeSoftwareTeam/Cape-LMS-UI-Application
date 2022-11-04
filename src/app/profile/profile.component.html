@@ -1,1 +1,70 @@
-<p>profile works!</p>
+
+<form [formGroup]="profile">
+<div class="container">
+    <h2>Personal Details</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label>EmployeeID</label>
+            <input class="form-control" type="text" formControlName="empid" [(ngModel)]="register.empid" readonly>
+        </div>
+        <div class="col-md-4">
+            <label>Name</label>
+            <input class="form-control" type="text" formControlName="name"  [(ngModel)]="register.name">
+        </div>
+        <div class="col-md-4">
+            <label>Gender</label>
+            <input class="form-control" type="text" formControlName="gender" [(ngModel)]="register.gender">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Date of Birth</label>
+            <input class="form-control" type="date" formControlName="dob" [(ngModel)]="register.dob">
+        </div>
+        <div class="col-md-4">
+            <label>Marital Status</label>
+            <input class="form-control" type="text" formControlName="maritalstatus" [(ngModel)]="register.maritalstatus">
+        </div>
+        <div class="col-md-4">
+            <label>Mobile Number</label>
+            <input class="form-control" type="number" formControlName="mobilenumber" [(ngModel)]="register.mobilenumber">
+        </div>
+    </div>
+    <h2>Work Details</h2>
+    <div class="row">
+
+        <div class="col-md-4">
+            <label for="">Date of Joining</label>
+            <input class="form-control" type="date" formControlName="dateofjoining" [(ngModel)]="register.dateofjoining" readonly>
+        </div>
+        <div class="col-md-4">
+            <label for="">Department</label>
+            <input class="form-control" type="text" formControlName="department" [(ngModel)]="register.department">
+        </div>
+        <div class="col-md-4">
+            <label for="">Designation</label>
+            <input class="form-control" type="text" formControlName="designation" [(ngModel)]="register.designation">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Total Experience</label>
+            <input class="form-control" type="number" name="" id="" formControlName="totalexperience" [(ngModel)]="register.totalexperience">
+        </div>
+        <div class="col-md-4">
+            <label>Office Location</label>
+            <input class="form-control" type="text" formControlName="officelocation" [(ngModel)]="register.officelocation">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center justify-content-center">
+            <button type="button" class="btn btn-primary" (click)="updateDetails()">Update</button>
+            <div>
+                <p *ngIf="successMsg">Updated Successfully</p>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+

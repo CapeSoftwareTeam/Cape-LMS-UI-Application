@@ -1,0 +1,11 @@
+.box{
+    border: 1px solid rgb(16, 1, 1);
+    border-radius: 15px;
+    padding: 0px 20px 20px 20px;
+    color: black;
+    font-weight: bold;
+    background-color: #E2D4B7;
+}
+input{
+    border: 1px solid black;
+}
