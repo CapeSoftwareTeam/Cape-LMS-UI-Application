@@ -22,9 +22,9 @@ export class ForgotpasswordComponent implements OnInit {
     this.forgotpasswordform = this.fb.group({
       password: ['', [
         Validators.required,
-        Validators.pattern("((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})")]],newPassword:['', [
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]],newPassword:['', [
           Validators.required,
-          Validators.pattern("^((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30})")]]
+          Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]]
   });
   }
   onSubmit(){

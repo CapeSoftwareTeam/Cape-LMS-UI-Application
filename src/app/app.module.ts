@@ -22,6 +22,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import { ProfileComponent } from './profile/profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { ProfileComponent } from './profile/profile.component';
     LeaveStatusComponent,
     ApplyLeaveComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
