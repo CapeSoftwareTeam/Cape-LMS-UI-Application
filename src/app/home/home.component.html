@@ -1,28 +1,111 @@
-<mat-toolbar>
-  <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
-  <mat-toolbar-row>
-    <!-- margin-left: 68rem; -->
 
+  <mat-toolbar style="background-color:rgb(64, 177, 221);">
 
-
-    <button mat-button >
-      <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
-      matBadgeColor="accent" style='font-size:26px;color:rgb(9, 9, 211);left:72rem;' (click)="callCalculation()">
-      notifications</mat-icon>
+    <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
+    <mat-toolbar-row>
+      <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
+      <button mat-button  style='color:rgb(0, 0, 7); '>
+        <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
+      </button>
+      <h2 > Cape Electric Private Limited </h2>
+      <button mat-button style="margin-left:auto;">
+        <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
+        matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
+        notifications</mat-icon>
+      </button>
+      <button mat-button  style='color:rgb(0, 0, 7);' (click)="callProfile()">
+        <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;' >person</mat-icon>
+        <b style="font-size: 16px;">
+          {{empid}}
+        </b>
+      </button>
+    </mat-toolbar-row >
+  </mat-toolbar>
+  <mat-tab-group [selectedIndex]="selected.value"
+                 (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
+   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+      <!-- <button mat-raised-button
+            class="example-add-tab-button"
+            (click)="addTab()" style="float:right;">
+      Add new tab
     </button>
-    <button mat-button  style='color:rgb(0, 0, 5); margin-left: 72rem;'>
-      <mat-icon style='font-size:30px;color:rgb(9, 9, 211);' (click)="callProfile()">person</mat-icon>
-      <b style="font-size: 16px;padding-left:6px;">
-        {{empid}}
-      </b>
 
-    </button>
+      <button mat-raised-button
+              class="example-delete-tab-button"
+              [disabled]="tabs.length === 1"
+              (click)="removeTab(index)"  style="float:right;">
+        Delete Tab
+      </button> -->
+     <ng-container></ng-container>
+     <div class="content" mat-elevation-z8>
+      <h1 *ngIf="tabName == 'Leave Management Systems'">Leave Management Systems</h1>
+      <br>
+      <button mat-flat-button
+         *ngIf="tabName == 'Leave Management Systems'"
+         style="color:blue" routerLink="/lmspage">Click here to access</button>
+      <h1 *ngIf="tabName == 'Time Schedule'"> Time Schedule </h1>
+    </div>
+    </mat-tab>
+  </mat-tab-group>
+
+
+  <!-- <div class="content" mat-elevation-z8 >
+    <h1 > Leave management Systems </h1>
+    <br>
+    <button (click)="leave()">Apply Leave</button>
+  </div> -->
 
 
 
-  </mat-toolbar-row>
-  <!-- <h2>Cape Electric Pvt Ltd</h2> -->
-</mat-toolbar>
-  <h1>Leave management Systems</h1>
-  <button (click)="leave()">Apply Leave</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="content" mat-elevation-z8 >
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" style="background-color: #9494b8;">
+            <mat-sidenav-content>
+
+          <img class="avatar">
+          <div>
+            <p>{{name}}</p>
+       </div>
+          <div>
+             <p>{{department}}</p>
+        </div>
+         <hr>
+
+      </mat-sidenav-content>
+      <mat-nav-list>
+        <a mat-list-item ><button mat-button class="menu-button">
+          <span> Leave Policy</span>
+        </button></a>
+        <a mat-list-item ><button mat-button class="menu-button">
+          <span> Public Holidays </span>
+        </button></a>
+        <a mat-list-item  class="sideme">  <button mat-button class="menu-button">
+          <span> My History </span>
+        </button></a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+
+  </mat-sidenav-container>
+</div> -->
 

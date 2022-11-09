@@ -4,14 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { ApplyLeaveComponent } from './apply-leave/apply-leave.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { HolidaysComponent } from './holidays/holidays.component';
 import { HomeComponent } from './home/home.component';
 import { LeaveStatusComponent } from './leave-status/leave-status.component';
+import { LmsPageComponent } from './lms-page/lms-page.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-{path:'',redirectTo:"/login",pathMatch:'full'},
+{path:'',redirectTo:"/home",pathMatch:'full'},
 {path:'register',component:RegisterComponent},
 {path:'login',component:LoginComponent},
 {path:'forgotpassword',component:ForgotpasswordComponent},
@@ -19,7 +21,9 @@ const routes: Routes = [
 {path:'home',component:HomeComponent},
 {path:'leavestatus',component:LeaveStatusComponent},
 {path:'applyleave',component:ApplyLeaveComponent},
-{path:'profile',component:ProfileComponent}
+{path:'profile',component:ProfileComponent},
+{path:'holidays',component:HolidaysComponent},
+{path:'lmspage',component:LmsPageComponent}
 ]
 
 

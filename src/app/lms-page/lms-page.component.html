@@ -1,0 +1,55 @@
+
+<mat-toolbar style="background-color:rgb(64, 177, 221);">
+
+  <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
+  <mat-toolbar-row>
+    <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
+    <button mat-button  style='color:rgb(0, 0, 7); '>
+      <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <h2 > Cape Electric Private Limited </h2>
+    <button mat-button style="margin-left:auto;">
+      <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
+      matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
+      notifications</mat-icon>
+    </button>
+    <button mat-button  style='color:rgb(0, 0, 7);' (click)="callProfile()">
+      <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;' >person</mat-icon>
+      <b style="font-size: 16px;">
+        {{empid}}
+      </b>
+    </button>
+  </mat-toolbar-row >
+</mat-toolbar>
+<!-- *ngIf="tabName == 'Leave Management Systems'" -->
+<mat-sidenav-container >
+  <mat-sidenav mode="over" opened >
+    <div mat-card-avatar class="example-header-image"></div>
+    <img src="avatar.png" alt="Avatar" class="avatar">
+        <div>
+          <!-- <p>{{name}}</p> --><p><b><i>Name</i></b></p>
+        </div>
+
+        <div>
+          <!-- <p>{{department}}</p> --><p><b><i>department</i></b></p>
+        </div>
+       <hr>
+<button mat-button class="menu-button">
+  <span> <b>Leave Policy</b></span>
+</button>
+
+<button mat-button class="menu-button" (click)="callholidays()">
+  <span> <b>Public Holidays</b> </span>
+</button>
+
+<button mat-button class="menu-button">
+  <span><b> My History </b></span>
+</button>
+
+
+</mat-sidenav>
+    <!-- <mat-sidenav-content>
+<h1><i class="bi bi-person-plus-fill"></i>Add New Employees</h1><button><mat-icon>plus</mat-icon></button>
+
+    </mat-sidenav-content> -->
+</mat-sidenav-container>

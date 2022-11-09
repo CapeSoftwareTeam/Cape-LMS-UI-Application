@@ -1,5 +1,5 @@
-<p>apply-leave works!</p>
 
+<form [formGroup]="postleave">
 <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
   <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here
   </b>
@@ -7,7 +7,7 @@
   <div class="modal-body">
     <label> Leave Type </label>
     <mat-form-field appearance="fill">
-      <mat-select>
+      <mat-select formControlName="leaveType"  [(ngModel)]="selectedItem" (select)="selected()">
         <mat-option value="casual">Casual Leave</mat-option>
         <mat-option value="sick">Sick Leave</mat-option>
         <mat-option value="bereavement">Bereavement Leave</mat-option>
@@ -18,11 +18,11 @@
     <br>
     <br>
     <label>Number of days : </label>
-    <input type="number">
+    <input type="number" formControlName="noofdays">
    <br>
    <br>
     <label style="margin-right:5px;">From Date: </label>
-    <input type="date">
+    <input type="date" formControlName="fromdate">
     <!-- <mat-form-field appearance="fill">
       <input matInput [matDatepicker]="myDatePicker">
       <mat-datepicker-toggle  [for]="myDatePicker" matSuffix ></mat-datepicker-toggle>
@@ -30,7 +30,7 @@
     </mat-form-field> -->
 
     <label style="margin-left: 20px;margin-right:5px;"> To Date: </label>
-    <input type="date">
+    <input type="date" formControlName="todate">
 
     <br>
 <br>
@@ -40,7 +40,7 @@
 <div class="row">
 <div class="col-md-12">
 <label >Reason for applying leave</label>
-  <textarea type="text" class="form-control" placeholder="Enter Reason Here..."></textarea>
+  <textarea type="text" class="form-control" placeholder="Enter Reason Here..." formControlName="reasonforapply"></textarea>
 </div>
 </div>
   </div>
@@ -51,4 +51,16 @@
     <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
   </div>
 </div>
-
+</form>
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Note:</h4>
+  </div>
+  <div class="modal-body">
+   The leave which your are selected is unavailable. You will get Loss of pay if you proceed.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" >proceed</button>
+    <button type="button" class="btn btn-outline-dark" (click)="cancel()">cancel</button>
+  </div>
+</ng-template>

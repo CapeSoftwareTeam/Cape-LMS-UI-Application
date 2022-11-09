@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
+
+
 
 @Component({
   selector: 'app-leave-status',
@@ -9,7 +12,7 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./leave-status.component.css']
 })
 export class LeaveStatusComponent implements OnInit {
-rowCount=0;
+  showmessage:boolean=false;
   enableApprove:boolean=true;
   enableSubmit:boolean=false;
 successValue:string="approved";
@@ -18,9 +21,10 @@ successValue:string="approved";
   @ViewChild('resultPaginator', { static: false }) resultPaginator!: MatPaginator;
 
   empId:any;
+  durationInSeconds: Number = 5;
   constructor(private statusservice:LeaveStatusServiceService,
     private statusagree: LeaveStatusServiceService,
-    private getUpdates:LeaveStatusServiceService) { }
+    private route: Router) { }
 
   ngOnInit(): void {
     this.empId = sessionStorage.getItem("empid");
@@ -28,10 +32,14 @@ successValue:string="approved";
     this.getpendingData();
   }
 
+
     // return (<FormArray>this.questionForm.get('questionHtml')).controls;
 approve(historyid:Number,status:string){
+  this.showmessage=true;
+  setTimeout(()=>{this.showmessage=false;},2000);
   this.enableApprove=true;
   this.enableSubmit=false;
+
 this.statusagree.statusUpdate(historyid,status).subscribe(
   data=>{
 console.log("updated successfully")
@@ -39,6 +47,7 @@ this.getpendingData();
 
   }
 );
+
 }
 submit(){
 console.log("Apply")
@@ -70,4 +79,17 @@ getpendingData(){
     }
   );
 }
+editOption(){
+  this.statusservice.getUpdates(this.empId).subscribe(
+    data => {
+
+for(let fetch of JSON.parse(data)){
+
 }
+});
+}
+back(){
+  this.route.navigate(['/home']);
+}
+}
+

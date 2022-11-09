@@ -1,4 +1,5 @@
 export class ApplyLeave {
+ // [x: string]: any;
   historyid!: number;
   registerid!: number;
   empid!: string;

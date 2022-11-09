@@ -54,9 +54,10 @@
       <span class="mobile-label">Status</span>
       <!-- <button mat-flat-button>Basic</button>
     <button mat-flat-button color="primary">Primary</button> -->
-       <button mat-flat-button class="success" *ngIf="enableApprove" (click)="approve(element.historyid,'Approved')">Approve</button>
-        <button mat-flat-button class="failure" *ngIf="enableApprove" (click)="approve(element.historyid,'Rejected')">Decline</button>
-        <button mat-flat-button class="failure" *ngIf="enableSubmit"(click)="submit()">submit</button>
+       <button mat-flat-button  class="success" *ngIf="enableApprove" (click)="approve(element.historyid,'Approved')" style="color:blue">Approve</button>
+        <button mat-flat-button class="failure" *ngIf="enableApprove" (click)="approve(element.historyid,'Rejected')"  style="color:blue">Decline</button>
+        <button mat-flat-button class="failure" *ngIf="enableSubmit"(click)="submit()"  style="color:blue">submit</button>
+        <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" (click)="editOption()">edit</mat-icon>
        </mat-cell>
 
   </ng-container>
@@ -68,7 +69,13 @@
 </div>
 </div>
 </mat-table>
+
 </div>
+<div *ngIf="showmessage" class="card" id="card">
+  <p style="margin-top: 16px;">Your response has been successfully updated</p>
+</div>
+<br>
+<button id="back" style="margin-left: 50%;margin:66px" (click)="back()">Back</button>
 
 <!-- </div>
 </div> -->

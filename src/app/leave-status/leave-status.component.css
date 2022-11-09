@@ -23,11 +23,11 @@ background-color: rgb(28, 224, 28);
 }
 .failure:hover{
   background-color:red
-}
-.card{
+}*/
+/* .card{
   display:flex;
   flex-wrap: wrap;
-} */ */
+} */
 .example-container {
   display: flex;
   flex-direction: column;
@@ -71,5 +71,18 @@ h2 {
     padding: 8px 24px;
   }
 
-
+#back{
+margin-top:15px;
+  margin-left: 50%;
+}
+  }
+#card{
+  place-content: center;
+  border-radius: 9px;
+  display: inline-block;
+  margin-left: 612px;
+  padding-left: 10px;
+  top: 272px;
+  padding-right: 10px;
+  background-color: aqua;
   }
