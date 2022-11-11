@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { ApplyleaveService } from '../services/applyleave.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
@@ -13,6 +14,7 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  
   enableTs:boolean=false;
   OpenApplyLeave:boolean=false;
   enableNavBar: boolean = false;
@@ -28,10 +30,16 @@ export class HomeComponent implements OnInit {
   EnableLms:boolean=true;
   selectedItem:any;
   tabName :String='Leave Management Systems';
+  modalReference: any;
+ loading:boolean=false;
+ isChecked:boolean=false;
+ namelist=[{name:'sangeetha'},{name:'shinchan'},{name:'dora'},{name:'jackie chan'}];
+
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
-    private getDetails: ApplyleaveService) { }
+    private getDetails: ApplyleaveService,
+    private modalService: NgbModal) { }
 
   ngAfterViewInit(): void {
     this.move.observe(['(max-width:800px)']).subscribe((data) => {if(this.selected){
@@ -69,6 +77,7 @@ export class HomeComponent implements OnInit {
       }
     )
     // this.selectedItem=this.tabs[0];
+    
   }
 
 
@@ -96,5 +105,42 @@ console.log(event);
   this.tabName = this.tabs[event];
 
   }
+  termsCondition(termsContent:any){
+    this.modalReference = this.modalService.open(termsContent,{size: 'xl'})
+  }
+  onCancel() {
+    this.modalReference.close();
+  }
+//   getInitial(name){
+//     const canvas= document.createElement('canvas');
+//   canvas.style.display='none';
+//   canvas.width=32;
+//   canvas.height=32;
+//   document.body.appendChild(canvas);
+//   const context=canvas.getContext('2d');
+//   context.fillstyle ='#476ce8';
+//   context.fillRect(0,0,canvas.width,canvas.height);
+// context?.font='16px arial';
+// context?.fillStyle='#fffff';
+// const nameArray=name.split(' ');
+// let initials='';
+// for(let i=0;i<nameArray.length;i++){
+//   if(i<=1){
+//     initials=initials+nameArray[i][0];
+//   }
+//   if(initials.length>1){
+//     context?.fillText(initials.toUpperCase(),7,22);
+//   }
+//   else{
+//     context?.fillText(initials.toLowerCase(),10,22);
+//   }
+//   const data=canvas.toDataURL();
+//   document.body.removeChild(canvas);
+//   return data;
+// }
 
+//   }
+avatar(){
+  
+}
 }

@@ -1,29 +1,29 @@
-
+<div class="example-container mat-elevation-z8">
   <mat-toolbar style="background-color:rgb(64, 177, 221);">
 
     <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
-    <mat-toolbar-row>
+    <mat-toolbar-row style="overflow: hidden;max-height: 500px;">
       <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
-      <button mat-button  style='color:rgb(0, 0, 7); '>
+      <button mat-button style='color:rgb(0, 0, 7); '>
         <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
       </button>
-      <h2 > Cape Electric Private Limited </h2>
+      <h2> Cape Electric Private Limited </h2>
       <button mat-button style="margin-left:auto;">
         <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
-        matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
-        notifications</mat-icon>
+          matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
+          notifications</mat-icon>
       </button>
-      <button mat-button  style='color:rgb(0, 0, 7);' (click)="callProfile()">
-        <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;' >person</mat-icon>
+      <button mat-button style='color:rgb(0, 0, 7);' (click)="callProfile()">
+        <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;'>person</mat-icon>
         <b style="font-size: 16px;">
           {{empid}}
         </b>
       </button>
-    </mat-toolbar-row >
+    </mat-toolbar-row>
   </mat-toolbar>
   <mat-tab-group [selectedIndex]="selected.value"
-                 (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
-   <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+    (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
       <!-- <button mat-raised-button
             class="example-add-tab-button"
             (click)="addTab()" style="float:right;">
@@ -36,20 +36,145 @@
               (click)="removeTab(index)"  style="float:right;">
         Delete Tab
       </button> -->
-     <ng-container></ng-container>
-     <div class="content" mat-elevation-z8>
-      <h1 *ngIf="tabName == 'Leave Management Systems'">Leave Management Systems</h1>
+
+      <!-- <div class="content" > -->
+      <!-- <h1 *ngIf="tabName == 'Leave Management Systems'">Leave Management Systems</h1>
       <br>
       <button mat-flat-button
          *ngIf="tabName == 'Leave Management Systems'"
          style="color:blue" routerLink="/lmspage">Click here to access</button>
       <h1 *ngIf="tabName == 'Time Schedule'"> Time Schedule </h1>
-    </div>
+    </div>style="justify-content: center;" text-decoration: underline;-->
+
+      <div class="sidebar">
+        <br>
+        <div class="avatar" data-label="CA"  style="justify-content: center;" (load)="avatar()"> 
+          
+          </div>
+       <br>
+       <br>
+        <h4 style="justify-content: center;">Name</h4>
+        <h6 class="text-muted"> Department - Designation</h6>
+        <hr>
+        <button type="button" class="btn btn-light" style="cursor: pointer; "
+          (click)="termsCondition(termsContent)">Leave Policy</button>
+        <button type="button" class="btn btn-light" routerlink="/holidays"> public Holidays </button>
+        <button type="button" class="btn btn-light" routerlink="/history"> My History </button>
+       
+        <button type="button" class="btn btn-light" routerlink="/register"> Add Employee </button>
+        <!-- <button type="button" class="btn btn-light" routerlink="/history"> Update-Employee details </button> -->
+        <button type="button" class="btn btn-light" routerlink="/history"> Tracking History </button>
+      </div>
+
+      <div class="content">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h6>NO of days taken</h6>
+                <h3 style="font-size:large"><strong>Casual leave</strong></h3>
+                <h5> Jan year - Dec year</h5>
+              </div>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                no of days remaining
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h6>NO of days taken</h6>
+                <h3 style="font-size:large"><strong>Sick leave</strong></h3>
+                <h5> Jan year - Dec year</h5>
+              </div>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                no of days remaining
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h6>NO of days taken</h6>
+                <h3 style="font-size:large"><strong>Privilege leave</strong></h3>
+                <h5> Jan year - Dec year</h5>
+              </div>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                no of days remaining
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h6>NO of days taken</h6>
+                <h3 style="font-size:large"><strong>Bereavement leave</strong></h3>
+                <h5> Jan year - Dec year</h5>
+              </div>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                no of days remaining
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h6>NO of days taken</h6>
+                <h3 style="font-size:large"><strong>Maternity leave</strong></h3>
+                <h5> Jan year - Dec year</h5>
+              </div>
+              <div class="card-body">
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+                </div>
+              </div>
+              <div class="card-footer">
+                no of days remaining
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" routerlink="/applyleave" style="display:inline-flexbox">Apply
+          Leave</button>
+      </div>
     </mat-tab>
   </mat-tab-group>
 
+  <!-- <mat-tab-group>
+    <mat-tab *ngFor="let yourVariable of yourLinks" let index = "index" [label]="yourVariable">
+         <ng-template mat-tab-label>
+            <a  mat-tab-link >
+                   [routerLink]="yourVariable.path"
+                  [routerLinkActiveOptions]="{exact: true}"
+                  routerLinkActive #rla="routerLinkActive"> -->
+  <!-- {{yourVariable.data['label']}} or however your links are set up -->
+  <!--  </a>
+        </ng-template>
+   </mat-tab>
+</mat-tab-group> -->
+</div>
 
-  <!-- <div class="content" mat-elevation-z8 >
+<!-- <div class="content" mat-elevation-z8 >
     <h1 > Leave management Systems </h1>
     <br>
     <button (click)="leave()">Apply Leave</button>
@@ -58,26 +183,95 @@
 
 
 
+<ng-template #termsContent let-modal>
+  <div class="modal-header" style="text-align: center; display: block">
+    <h2 class="modal-title" style="display: contents">CAPE ELECTRIC PRIVATE LIMITED</h2>
+    <br>
+    <p style="font-weight:bold ;">
+      Leave Policy for the Year 2022
+    </p>
+  </div>
+  <!-- <div class="modal-header">
+        <button type="button" class="btn btn-primary" printSectionId="printdiv">Print</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('cancel click')"><i class="bi bi-x icon"></i> Cancel</button>
+        </div> -->
+  <div class="modal-body" modal-xl style="height: 700px;;
+        overflow-y: scroll;">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" style="display: block;">
+
+        </div>
+        <h6 style="display: contents">Objective</h6><br>
+
+        <p>
+          Leave Policy aims at providing the employees an opportunity to take a planned break from the stress ofbusiness
+          so as
+          to re-energize him/her and achieve a better balance between work and another social familyresponsibilities.
+        </p>
+        <p>
+          The annual cycle is normally the calendar year –1st January to 31st December. The Employees, who are on
+          probation,will be able to take one day of leave per month.
+          All confirmed employees are entitled to leave,according to the rules and regulations stated below.
+        </p>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Casual Leave : 5 Days</h5>
+        </div><br>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Sick Leave : 5 Days</h5>
+        </div><br>
+        <p>
+          If the SL is taken more than 2 days Medical Certificate should be provided.
+        </p>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Privilege Leave : 15Days</h5>
+
+        </div><br>
+        <p>
+          All permanent employees are eligible for 15calendar day’s privilege leave. For employees joiningmidyear, leave
+          will be computed from date of confirmation on pro-rata basis and would be creditedto the employees account on
+          1st January each year.
+          Employee should apply for the leave before 3workingdays to their immediate Supervisor.
+        </p>
 
 
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Maternity Leave : As per norms</h5>
+        </div><br>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Public Holidays : 12 Days</h5>
+        </div><br>
+        <p>
+          All Employees are advised to take proper approval in case of an absence of 3 Consecutive days.
+          Absence without proper approval will be considered for Loss Of Pay for any leave requirement.
+        </p>
+        <p>
+          Annually two times, Friday+Saturday+Sunday+Monday (2 Days Leave & 2 Days Holidays) will not be treated as 4
+          days leave.
+          Prior Approval required from Sales Head / HR Department.
+        </p>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Working Hours : 8.30 AM to 5.30 PM</h5>
+        </div><br>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Working Days : Monday to Saturday except 2 and 4th Saturday.
+          </h5>
+        </div><br>
+        <div style="text-align: center; display: block">
+          <h5 class="modal-title" style="display: contents">Lunch Time : 1:30 PM to 2:00 PM</h5>
+        </div><br>
+        <div class="col-xs-12">
+          <div class="text-align" style="text-align: end;margin: 10px;">
+            <button type="button" class="btn btn-danger" id="closeModal" (click)="onCancel()">Cancel</button>
+          </div>
+        </div>
 
+      </div>
+    </div>
+  </div>
+</ng-template>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!-- <div class="content" mat-elevation-z8 >
+<!-- <div class="content" mat-elevation-z8 >
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" style="background-color: #9494b8;">
             <mat-sidenav-content>
@@ -108,4 +302,15 @@
 
   </mat-sidenav-container>
 </div> -->
-
+<script>
+  const avatars = document.querySelectorAll(".avatar");
+    avatars.forEach(a => {
+      const charCodeRed = a.dataset.label.charCodeAt(0);
+      const charCodeGreen = a.dataset.label.charCodeAt(1) || charCodeRed;
+      console.log(charCodeRed);
+      const red = Math.pow(charCodeRed* 7) % 200;
+      const green = Math.pow(charCodeGreen* 7) % 200;
+      const blue = (red + green) % 200;
+      a.style.background = 'rgb(${red}, ${green}, ${blue}';
+    });
+</script>
