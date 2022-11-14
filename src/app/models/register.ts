@@ -10,8 +10,8 @@ export class Register {
     emailid!:String;
     department!:String;
     designation!:String;
-    capeExperience!:any;
-    otherExperience!:any;
+    capeexperience!:any;
+    otherexperience!:any;
     city!:String;
     state!:String
     password!:String;

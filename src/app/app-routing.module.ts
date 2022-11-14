@@ -1,16 +1,20 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+
 import { ApplyLeaveComponent } from './apply-leave/apply-leave.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { FrontpageComponent } from './frontpage/frontpage.component';
 import { HolidaysComponent } from './holidays/holidays.component';
 import { HomeComponent } from './home/home.component';
 import { LeaveStatusComponent } from './leave-status/leave-status.component';
 import { LmsPageComponent } from './lms-page/lms-page.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+
 import { RegisterComponent } from './register/register.component';
+
 
 const routes: Routes = [
 {path:'',redirectTo:"/home",pathMatch:'full'},
@@ -23,8 +27,9 @@ const routes: Routes = [
 {path:'applyleave',component:ApplyLeaveComponent},
 {path:'profile',component:ProfileComponent},
 {path:'holidays',component:HolidaysComponent},
-{path:'lmspage',component:LmsPageComponent}
+{path:'lmspage',component:LmsPageComponent},{path:'frontpage',component:FrontpageComponent}
 ]
+
 
 
 @NgModule({

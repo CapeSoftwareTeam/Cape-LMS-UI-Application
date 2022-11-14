@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs';
 import { CalculationPipe } from './pipe/calculation.pipe';
 import { LoginComponent } from './login/login.component';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LeaveStatusComponent } from './leave-status/leave-status.component';
 import { ApplyLeaveComponent } from './apply-leave/apply-leave.component';
@@ -33,6 +34,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { IntlInputPhoneModule } from 'intl-input-phone';
 
+import { FrontpageComponent } from './frontpage/frontpage.component';
+
+
+
+
 
 
 @NgModule({
@@ -42,13 +48,20 @@ import { IntlInputPhoneModule } from 'intl-input-phone';
     CalculationPipe,
     ForgotpasswordComponent,
     LoginComponent,
+
     LeaveStatusComponent,
     ApplyLeaveComponent,
     HomeComponent,
     ProfileComponent,
     ChangePasswordComponent,
     HolidaysComponent,
-    LmsPageComponent
+    LmsPageComponent,
+
+    FrontpageComponent,
+  
+ 
+    
+
   ],
   imports: [
     BrowserModule,

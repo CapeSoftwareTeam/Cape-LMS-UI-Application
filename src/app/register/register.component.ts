@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
       otherExperience: new FormControl('', Validators.required),
       capeExperience: new FormControl('', Validators.required),
       managername: new FormControl('', Validators.required),
-      manageremail: new FormControl('', Validators.required)
+      manageremail: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     })
    
     
@@ -61,6 +61,7 @@ export class RegisterComponent implements OnInit {
   get field(): any {
     return this.RegisterationForm.controls;
   }
+  
   // calcExperience(event:any,form:any){
   //   if(form.controls.capeExperience!=null && form.controls.capeExperience!=undefined && form.controls.capeExperience!="" &&
   //      form.controls.otherExperience!=null && form.controls.otherExperience!=undefined && form.controls.otherExperience!=""){
@@ -105,8 +106,8 @@ changevalue(e:any){
     var months = Math.floor(days/31);
     var years = Math.floor(months/12);
     var m = months% 12;
-    this.register.capeExperience=Math.floor(months/12)+''+m;
-    this.register.totalexperience = +this.register.capeExperience + +this.register.otherExperience;
+    this.register.capeexperience=Math.floor(months/12)+'.'+m;
+    this.register.totalexperience = +this.register.capeexperience+ +this.register.otherexperience;
   }
 
 }
@@ -132,7 +133,7 @@ changevalue(e:any){
       console.log('errorr')
     }
   }
-  States: any[] = ['Andhra Pradesh', 'Andaman & Nicobar Islands', 'Arunachal Pradesh',
+  States: any[] = ['select option','Andhra Pradesh', 'Andaman & Nicobar Islands', 'Arunachal Pradesh',
     'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujrat', 'Haryana', 'Himachal Pradesh',
     'Jammu & Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh',
     'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan',

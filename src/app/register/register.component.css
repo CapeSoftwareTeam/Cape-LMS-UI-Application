@@ -5,13 +5,18 @@ label{
 input {
     width:300px;
 }
+
+/*  */
 .container{
     position:absolute;
     max-width: 1000px;
+    justify-content: center;
     width: 200%;
+    margin-left:  260px;
+    margin-top: 50px;
+    margin-left:  260px;
     border-radius: 6px;
     padding: 50px;
-    margin-left:  260px;
     margin-top: 50px;
     background-color: rgb(243, 237, 237);
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
@@ -33,4 +38,8 @@ input {
     padding-bottom: -7px;
     border-radius: 8px;
     background-color: #4070f4;
+    
+    
 }
+
+
