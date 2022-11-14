@@ -28,6 +28,12 @@ import { MatListModule } from '@angular/material/list'
 import { HolidaysComponent } from './holidays/holidays.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LmsPageComponent } from './lms-page/lms-page.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {Ng2TelInputModule} from 'ng2-tel-input';
+import { IntlInputPhoneModule } from 'intl-input-phone';
+
+
 
 @NgModule({
   declarations: [
@@ -61,7 +67,9 @@ import { LmsPageComponent } from './lms-page/lms-page.component';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,MatInputModule,
+    MatFormFieldModule,
+    Ng2TelInputModule,IntlInputPhoneModule
 
   ],
   providers: [],

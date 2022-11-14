@@ -1,34 +1,97 @@
-<html>
+<html >
     <body>
-            <div class="card">
-                <div class="card-body">
+            <div class="card" *ngIf="loginPage">
+               
                     
 
             <div class="wrapper"><br>
             <div class="title"><span >LOGIN HERE!!</span></div>
             <hr>
         <form [formGroup]="loginForm">
-
             <div class="row">
+                <label class="form-label">Preffered Login</label>
+                <mat-radio-group  class="example-section" formControlName="userValidation">
+                <mat-radio-button class="btn1" value="empid">EmpId</mat-radio-button>
+                <mat-radio-button value="mobileNumber">Mobile Number</mat-radio-button>
+                <mat-radio-button class="btn3" value="email">Email</mat-radio-button>
+                  </mat-radio-group >
+                  <!-- <label class="form-lable">UserName</label>
+                  <input type="text" class="form-control" formControlName="userLogin"> -->
+
+
+
+                <!-- <label class="form-label">Which type You Login</label>
+                <div class="input-group" >
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="bi bi-person-lines-fill"></i>
+                        </span>
+                    </div>
+                <select value="select" class="form-control" formControlName="userValidation" placeholder="Select Any One" [ngClass]="{ 'is-invalid': submitted && f.userValidation.errors }" (change)="function()">
+                    <input type="checkbox" value="empId">
+                    <option value="email">Email</option>
+                    <option value="mobileNumber">Mobile Number</option>
+                </select> -->
+                <div *ngIf="submitted && f.userValidation.errors" class="invalid-feedback">
+                    <div *ngIf="f.userValidation.errors['required']">Select any One</div>
+                </div>
+                </div>
+ 
+            <!-- </div> -->
+
+            <div class="row" *ngIf="f.userValidation.value=='empid'">
              
                 
-                <label class="form-label">UserName</label>
-                    <div class="input-group">
+                <label class="form-label">EmpId</label>
+                    <div class="input-group" >
                         <div class="input-group-prepend">
                             <span class="input-group-text">
                                 <i class="bi bi-person-lines-fill"></i>
                             </span>
                         </div>
-                           <input type="text" name="empid" class="form-control" formControlName="empid" placeholder="Enter Your Email Id or Emp Id"  [ngClass]="{ 'is-invalid': submitted && f.empid.errors }">
+                           <input type="text" name="empid"   class="form-control" formControlName="empid" placeholder="Enter Your Email Id or Emp Id" 
+                           [(ngModel)]="user.empId"
+                            [ngClass]="{ 'is-invalid': submitted && f.empid.errors }" >
                            <div *ngIf="submitted && f.empid.errors" class="invalid-feedback">
-                            <div *ngIf="f.empid.errors['required']">empid or UserName is required</div>
+                            <div *ngIf="f.empid.errors['required']">Empid is required</div>
                             
                         </div>
                     </div>
             </div>
-           
-
             
+            <div class="row">
+            <div  *ngIf="f.userValidation.value=='mobileNumber'">
+                <label class="form-lable">Mobile Number</label>
+                <div class="input-group" >
+                    <intl-input-phone  formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber"  [SelectedCountryISOCode]="'IN'"></intl-input-phone>
+                    <div *ngIf="submitted && f.mobileNumberLogin.errors" class="invalid-feedback">
+                        <div *ngIf="f.mobileNumberLogin.errors['required']"> Mobile Number is required</div>
+                        <div *ngIf="f.mobileNumberLogin.errors['pattern']">Mobile Number should be in 10 Numbers</div>
+                    </div>
+                </div>
+            </div>
+         
+            </div>
+                     
+             <div class="row">
+            <div  *ngIf="f.userValidation.value=='email'">
+                <label class="form-lable">Email</label>
+                <div class="input-group" >
+                    
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i  class="bi bi-envelope"></i>
+                        </span>
+                    </div>
+                
+                <input type="email"  formControlName="emailidLogin" class="form-control" placeholder="Enter your  Email" [(ngModel)]="user.email"  [ngClass]="{ 'is-invalid': submitted && f.emailidLogin.errors }" >
+                <div *ngIf="submitted && f.emailidLogin.errors" class="invalid-feedback">
+                    <div *ngIf="f.emailidLogin.errors['required']">Email is required</div>
+                     <div *ngIf="f.emailidLogin.errors['pattern']">Email Pattern Validation</div> 
+                </div>
+            </div>
+             </div>
+            </div> 
           
                 <div class="row">
                  
@@ -40,104 +103,103 @@
                                     <i class="bi bi-lock"></i>
                                 </span>
                             </div>
-                        <input type="password" name="password" class="form-control" formControlName="password" placeholder="Enter Your Password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                        <input type="password" name="password" class="form-control" formControlName="password" placeholder="Enter Your Password"  
+                        [(ngModel)]="user.password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                             <div *ngIf="f.password.errors['required']">Password is required</div>
                             <div *ngIf="f.password.errors['pattern']">Password must contain more than 8 characters,1 upper case letter,and 1 special character </div>
                         </div>
                         </div>
                 </div>
-               <div class="forget"><a (click)="otpValidation(otpGenerate)">Forget Password?</a></div> 
-                <button  class="btn btn-primary" type="submit" id="login"  (click)="login()">Login</button>
-
+               <div class="forget"><a (click)="otpValidation()">Forget Password?</a></div> 
+              
                 
         </form>
     </div>
+    <button  class="btn btn-primary" type="submit" id="login"  (click)="login($event)">Login</button>
 </div>
-</div>
+
+<div class="card" *ngIf="otp">
+  
+    <div class="row">
+        <button type="button" id="closeModal"  (click)="onCancel()" class="btn-close" aria-label="Close"></button>
+    </div>
+    <span  style="text-align: center;"  >OTP GENERATE</span>
+    <hr>
+  
+   <div class="modal-body" >
+      
+
+        <form [formGroup]="otpgenerateform" >
+           
+           <p *ngIf="errorMsg" style="text-align: center;color:red;border-radius: 3px;font-size: 12px;">Please fill Email or Mobile number to proceed further!</p>
+           <div *ngIf="showErrorMessage" class="errorshow">{{showErrorMessage}}</div>
+            <div class="row">
+               <label class="form-lable">Mobile Number</label>
+               <div class="input-group">
+                   
+                  
+                   <div class="panel-group" id="accordion">
+                   <intl-input-phone  formControlName="mobileNumber" ></intl-input-phone>
+                   </div>
+               <div *ngIf="submit && g.mobileNumber.errors" class="invalid-feedback">
+                   <div *ngIf="g.mobileNumber.errors['required']"> Mobile Number is required</div>
+                   <div *ngIf="g.mobileNumber.errors['pattern']">Mobile Number should be in 10 Numbers</div>
+               </div>
+           </div>
+                
+            </div>
+            <div class="row">
+               <label class="form-lable">Email</label>
+               <div class="input-group" >
+                   
+                   <div class="input-group-prepend">
+                       <span class="input-group-text">
+                           <i  class="bi bi-envelope"></i>
+                       </span>
+                   </div>
+               
+               <input type="email"  formControlName="emailid" class="form-control" placeholder="Enter your  Email"  [ngClass]="{ 'is-invalid': submit && g.emailid.errors }" >
+               <div *ngIf="submit && g.emailid.errors" class="invalid-feedback">
+                   <div *ngIf="g.emailid.errors['required']">Email is required</div>
+                    <div *ngIf="g.emailid.errors['pattern']">Email Pattern Validation</div> 
+               </div>
+           </div>
+                
+            </div>
+            <div *ngIf="sentOtp" class="row">
+               <label class="form-lable">Otp</label>
+               <div class="input-group">
+                   
+                   <div class="input-group-prepend">
+                       <span class="input-group-text">
+                           <i class="bi bi-lock-fill"></i>
+                       </span>
+                   </div>
+               
+               <input type="number" formControlName="otp" class="form-control" placeholder="Enter Your Otp" [ngClass]="{ 'is-invalid': submit&& g.otp.errors }">
+               <div *ngIf="submit&& g.otp.errors" class="invalid-feedback">
+                   <div *ngIf="g.otp.errors['required']">Otp is required</div>
+                   </div>
+           
+           </div>
+
+            </div>
+            <div class="row" > 
+               <div class="col col-50"><button class="btn btn-success" [disabled]="sentOtp" id="button1" (click)="generate()">
+                   Generate
+           </button> </div>
+           <div class="col col-50" id="button2">
+               <button [disabled]="!sentOtp" class="btn btn-primary" id="submit" (click)="submitForm()">
+               Submit
+           </button></div>     
+           </div>
+       </form>
+         </div>
+        </div>
+
     </body>
     
 </html>
 
-<ng-template #otpGenerate let-modal >
-    <div class="row">
-    <div class="modal-header" style=" display: block;text-align: center;">
-        <h2 class="modal-title" style="display: contents;" >Otp Generate</h2><button type="button" id="closeModal"  (click)="onCancel()" class="btn-close" aria-label="Close"></button>
-    </div>
-</div>
-
-    <div class="modal-body" >
-       
-
-         <form [formGroup]="otpgenerateform" >
-            
-            <p *ngIf="errorMsg" style="text-align: center;color:red;border-radius: 3px;font-size: 12px;">Please fill Email or Mobile number to proceed further!</p>
-            <div *ngIf="showErrorMessage" class="errorshow">{{showErrorMessage}}</div>
-             <div class="row">
-                <label class="form-lable">Mobile Number</label>
-                <div class="input-group">
-                    
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="bi bi-telephone-fill"></i>
-                        </span>
-                    </div>
-                
-                <input type="number" formControlName="mobileNumber" class="form-control" placeholder="Enter your Mobile Number"  [ngClass]="{ 'is-invalid': submit && g.mobileNumber.errors }">
-                <div *ngIf="submit && g.mobileNumber.errors" class="invalid-feedback">
-                    <div *ngIf="g.mobileNumber.errors['required']"> Mobile Number is required</div>
-                    <div *ngIf="g.mobileNumber.errors['pattern']">Mobile Number should be in 10 Numbers</div>
-                </div>
-            </div>
-                 
-             </div>
-             <div class="row">
-                <label class="form-lable">Email</label>
-                <div class="input-group" >
-                    
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i  class="bi bi-envelope"></i>
-                        </span>
-                    </div>
-                
-                <input type="email"  formControlName="emailid" class="form-control" placeholder="Enter your  Email"  [ngClass]="{ 'is-invalid': submit && g.emailid.errors }" >
-                <div *ngIf="submit && g.emailid.errors" class="invalid-feedback">
-                    <div *ngIf="g.emailid.errors['required']">Email is required</div>
-                     <div *ngIf="g.emailid.errors['pattern']">Email Pattern Validation</div> 
-                </div>
-            </div>
-                 
-             </div>
-             <div *ngIf="sentOtp" class="row">
-                <label class="form-lable">Otp</label>
-                <div class="input-group">
-                    
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <i class="bi bi-lock-fill"></i>
-                        </span>
-                    </div>
-                
-                <input type="number" formControlName="otp" class="form-control" placeholder="Enter Your Otp" [ngClass]="{ 'is-invalid': submit&& g.otp.errors }">
-                <div *ngIf="submit&& g.otp.errors" class="invalid-feedback">
-                    <div *ngIf="g.otp.errors['required']">Otp is required</div>
-                    </div>
-            
-            </div>
-
-             </div>
-             <div class="row" > 
-                <div class="col col-50"><button class="btn btn-success" [disabled]="sentOtp" id="button1" (click)="generate()">
-                    Generate
-            </button> </div>
-            <div class="col col-50" id="button2">
-                <button [disabled]="!sentOtp" class="btn btn-primary" id="submit" (click)="submitForm()">
-                Submit
-            </button></div>     
-            </div>
-        </form>
-          </div>
-       
-    
-</ng-template>
+        

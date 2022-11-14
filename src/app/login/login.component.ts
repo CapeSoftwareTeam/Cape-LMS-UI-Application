@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { ConfigurationOptions, TooltipOptionsEnum } from 'intl-input-phone';
+import { RegisterserviceService } from '../services/registerservice.service';
+import { User } from '../models/user';
+
+
 // import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,41 +23,86 @@ export class LoginComponent implements OnInit {
   showErrorMessage=false;
   sentOtp:boolean = false;
   disable:boolean=true;
+  configOption1: ConfigurationOptions;
+
+  countryCode:String='';
+  user=new User();
+
   loginForm=new FormGroup({
-    empid:new FormControl(''),
-    password:new FormControl('')
+  empid:new FormControl(''),
+  password:new FormControl(''),userValidation:new FormControl(''),emailidLogin:new FormControl(''),mobileNumberLogin:new FormControl('')
 
   })
   otpgenerateform=new FormGroup({ mobileNumber:new FormControl(''),
   otp:new FormControl(''),emailid:new FormControl('')})
+  otp: boolean=false;
+  loginPage:boolean=true;
   constructor(private modalService: NgbModal ,
-    private formbuilder:FormBuilder,private route:Router) { }
+    private formbuilder:FormBuilder,private route:Router,private registerService:RegisterserviceService) { 
+      this.configOption1 = new ConfigurationOptions();
+      this.configOption1.SelectorClass = "ToolTipType1";
+    }
 
   ngOnInit(): void {
+    
     this.loginForm=this.formbuilder.group({
+      userValidation:['',[Validators.required]],
       empid:['',[Validators.required]],
+    
+      mobileNumberLogin: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),Validators.required]],
+      emailidLogin:['',[Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}"),Validators.required]],
       password:['',[Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),Validators.required]]
-      
-
   });
   this.otpgenerateform=this.formbuilder.group({
     mobileNumber: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       otp:['',Validators.required],emailid:['',Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")]
   })
   }
-  otpValidation(otpGenerate:any){
-    this.modalReference = this.modalService.open(otpGenerate)
+
+  
+disable1 : boolean = false;
+  otpValidation(){
+    this.disable1 = true;
+    this.otp=true;
+    this.loginPage=false;
+
+    // this.modalReference = this.modalService.open(otpGenerate)
   }
   onCancel() {
-    this.modalReference.close();
+    this.disable1 = false;
+    this.otp=false
+    this.loginPage=true;
   }
-login(){
+  onCountryChange(country: any) {
+    this.countryCode = country.dialCode;
+  }
+  
+login(event:any){
+ 
   this.submitted=true;
+  // this.user.emailid
+  // this.user.emailid = this.loginForm.value.emailidLogin;
 
-  if(this.loginForm.invalid) {
-    return;
+  if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.emailidLogin?.length==0){
+    this.submitted=true;
   }
-this.route.navigate(['/home']);
+    this.registerService.authenticate( this.user).subscribe(data=>{
+      localStorage.setItem('emailid',this.user.email);
+      localStorage.setItem('mobileNumber',this.user.mobileNumber);
+      localStorage.setItem('empid',this.user.empId);
+      localStorage.setItem('password', this.user.password);
+      sessionStorage.setItem('token', data['token']);
+      this.route.navigate(['/home']);
+    
+    })
+   
+ 
+ 
+
+  // if(this.loginForm.invalid) {
+  //   return;
+  // }
+
 }
 submitForm(){
   this.submit=true;
@@ -100,6 +150,10 @@ get f(){
 }
 get g(){
   return this.otpgenerateform.controls;
+}
+getFuntion(event:any){
+console.log(event);
+
 }
 
 }

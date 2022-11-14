@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Register } from '../models/register';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,9 @@ export class RegisterserviceService {
   // updateForm():Observable<any>{
   //   return this.http.update<any>('/update',{responseType:'text' as 'json'});
   // }
+  authenticate(user:User){
+return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text' as 'json'});
+  }
 }
 
 
