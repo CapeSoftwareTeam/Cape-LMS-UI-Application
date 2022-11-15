@@ -26,8 +26,7 @@ export class LeaveStatusComponent implements OnInit {
     private route: Router) { }
 
   ngOnInit(): void {
-    localStorage.setItem("empid", "cepl-001");
-    sessionStorage.setItem("empid", "cepl-001");
+ 
     this.empid = sessionStorage.getItem("empid");
 
     this.statusservice.getUpdates(this.empid).subscribe(

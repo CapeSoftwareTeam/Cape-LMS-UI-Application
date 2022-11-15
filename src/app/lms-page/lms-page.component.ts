@@ -53,8 +53,7 @@ leavestatus: boolean=false;
     private registerDetails: RegisterserviceService) { }
 
   ngOnInit(): void {
-    localStorage.setItem("empid", "cepl-001");
-    sessionStorage.setItem("empid", "cepl-001");
+ 
     this.empid = sessionStorage.getItem("empid");
 
     this.statusservice.getUpdates(this.empid).subscribe(
