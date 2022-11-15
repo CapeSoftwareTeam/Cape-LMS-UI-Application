@@ -14,6 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { RegisterComponent } from './register/register.component';
+import { HistoryComponent } from './history/history.component';
+
 
 
 const routes: Routes = [
@@ -27,7 +29,9 @@ const routes: Routes = [
 {path:'applyleave',component:ApplyLeaveComponent},
 {path:'profile',component:ProfileComponent},
 {path:'holidays',component:HolidaysComponent},
-{path:'lmspage',component:LmsPageComponent},{path:'frontpage',component:FrontpageComponent}
+{path:'lmspage',component:LmsPageComponent},{path:'frontpage',component:FrontpageComponent},
+{path:'history',component:HistoryComponent},
+
 ]
 
 

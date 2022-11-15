@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, } from '@angular/common/http';
 import { MatRadioModule } from '@angular/material/radio';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs';
 import { CalculationPipe } from './pipe/calculation.pipe';
 import { LoginComponent } from './login/login.component';
+import {MatSortModule} from '@angular/material/sort';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LeaveStatusComponent } from './leave-status/leave-status.component';
@@ -35,6 +36,7 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import { IntlInputPhoneModule } from 'intl-input-phone';
 
 import { FrontpageComponent } from './frontpage/frontpage.component';
+import { HistoryComponent } from './history/history.component';
 
 
 
@@ -57,9 +59,10 @@ import { FrontpageComponent } from './frontpage/frontpage.component';
     HolidaysComponent,
     LmsPageComponent,
 
-    FrontpageComponent,
+    FrontpageComponent,HistoryComponent
+      
   
- 
+  
     
 
   ],
@@ -82,7 +85,7 @@ import { FrontpageComponent } from './frontpage/frontpage.component';
     MatListModule,
     MatTabsModule,MatInputModule,
     MatFormFieldModule,
-    Ng2TelInputModule,IntlInputPhoneModule
+    Ng2TelInputModule,IntlInputPhoneModule,MatSortModule
 
   ],
   providers: [],

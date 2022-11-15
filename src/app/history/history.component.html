@@ -1,0 +1,199 @@
+<h1 style="font-weight: bold;color:rgb(226, 101, 142); font-size: x-large;text-align:center ;font-style:inherit ;margin-inline-start: 5px ;"> HISTORY DETAILS</h1>
+
+<!-- <div class="container">
+  <div class="dropdown" >
+    <button class= "btn btn-secondary"  type="button" data-toggle="dropdown">USING FILTER
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <input class="form-control" id="myInput" type="text" placeholder="Search..">
+
+      <li><a href="#">department</a></li>
+      <li><a href="#">location</a></li>
+    </ul>
+  </div>
+</div> -->
+<!-- <form [formGroup]="registerForm" >
+    <input type="text" class="form-control" formControlName="designation">
+</form> -->
+
+ <mat-label>Filter</mat-label> 
+<input matInput (keyup)="applyFilter($event)" placeholder="Ex. UsingFilter" #input style="margin: top 10px; position: sticky;"> 
+
+
+
+<!-- <mat-form-field appearance="fill">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="picker">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field> -->
+
+<!-- <mat-table #table [dataSource]="dataSource" > -->
+
+<div class="example-container mat-elevation-z8">
+<mat-table #table [dataSource]="dataSource">
+ <div class="mat-elevation-z8" matSort #historySort="matSort" style="margin-left:10 rem;">
+<div class="success:hover">
+
+  <!-- <ng-container  matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef > 
+       <mat-checkbox [checked]="isAllSelected()"
+      (change)="toggleAll()">
+
+      </mat-checkbox>      -->
+    <!-- </mat-header-cell>
+    <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()" >
+      <mat-checkbox (change)="onSelectToggled(element)"
+        [checked]="selection.isSelected(element)">
+
+      </mat-checkbox>
+    </mat-cell> --> 
+
+  <!-- </ng-container> -->
+<!-- Position Column -->
+<ng-container matColumnDef="empId"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color:darkgrey;display: inline-flexbox;"> empId </mat-header-cell>
+<mat-cell *matCellDef="let element" > {{element.empid}}  </mat-cell>
+</ng-container>
+<!-- <ng-container matColumnDef="empId">
+<mat-header-cell *matHeaderCellDef  style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> empId</mat-header-cell>
+<mat-cell *matCellDef="let element" ><span class="mobile-label">Applied Date</span> {{element.empid}}   </mat-cell>
+</ng-container> -->
+<!-- <ng-container matColumnDef="name">
+<mat-header-cell *matHeaderCellDef  style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Name </mat-header-cell>
+<mat-cell *matCellDef="let element" ><span class="mobile-label">Applied Date</span>{{element.name}}   </mat-cell>
+</ng-container> -->
+<!-- Name Column -->
+<ng-container matColumnDef="name">
+<mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight:bold;color:black;font-size: medium; background-color: darkgrey; " > Name </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.name}}  </mat-cell>
+</ng-container>
+
+<!-- Weight Column -->
+<ng-container matColumnDef="appliedDate">
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey; display:inline-flex;" > Applied Date </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.appliedDate  | date:'shortDate'}}</mat-cell>
+</ng-container>
+
+<!-- Symbol Column -->
+<ng-container matColumnDef="approvedDate"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Approved Date </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.approveddate | date:'shortDate'}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="fromDate"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> From Date </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.fromdate  | date:'shortDate'}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="toDate"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> To Date </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.toDate | date:'shortDate'}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="noOfDays"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> No Of Days </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.noofdays}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="lopdays"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> LOP Days </mat-header-cell>
+
+<mat-cell *matCellDef="let element"> {{element.lopdays}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="status">
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Status </mat-header-cell>
+
+<mat-cell *matCellDef="let element" [ngStyle]="{'color': element.status == 'APPROVED'? 'green' : null || element.status == 'CANCELLED'? 'red': null || element.status == 'PENDING'? '#ff9900': null}" id="font"> {{element.status}} </mat-cell>
+
+
+ <!-- </div> -->
+
+
+<ng-container matColumnDef="approvedBy"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size:medium;background-color: darkgrey;"> Approved By </mat-header-cell>
+<mat-cell *matCellDef="let element">{{element.approvedby}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="department"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Department </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.department}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="leavetype"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Leave Type </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.leavetype}} </mat-cell>
+</ng-container>
+
+<ng-container matColumnDef="reasonForApply"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Reason </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.reasonforapply}} </mat-cell>
+</ng-container>
+
+<!-- <ng-container matColumnDef="managerName"  >
+    <mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> ManagerName </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.managerName}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="designation"  >
+        <mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Designation </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.designation}} </mat-cell>
+        </ng-container> -->
+
+    
+
+<ng-container matColumnDef="location"  >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Location </mat-header-cell>
+<mat-cell *matCellDef="let element"> {{element.location}} </mat-cell>
+</ng-container>
+
+
+</ng-container>
+
+<ng-container matColumnDef="delete" >
+<mat-header-cell *matHeaderCellDef  mat-sort-header style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Action </mat-header-cell>       
+<td style="width: auto; text-align: justify; padding: auto;"  mat-cell *matCellDef="let element">
+    <mat-icon class="material-icons-outlined-danger delete" (click)="deleteHistory(element.historyid)" *ngIf="enableDelete" title="Delete The Record"
+    style="margin-left: 1rem;cursor: pointer;color: red;">delete</mat-icon>
+</td>
+</ng-container>
+</div>
+
+  
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true"
+
+(mouseout)="row.hovered = false"></mat-row>
+<mat-row class="mat-row" *matNoDataRow></mat-row>
+ 
+
+  <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true"
+
+  (mouseout)="row.hovered = false"></tr>
+  <tr class="mat-row" *matNoDataRow>
+  </tr> -->
+  <!-- <script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".dropdown-menu li").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
+    <tr>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr> -->
+ </div>
+      </mat-table>
+    </div>
+
+<mat-paginator #historyPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+
+
