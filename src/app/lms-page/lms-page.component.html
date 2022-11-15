@@ -1,9 +1,135 @@
+<div class="content">
+  <div class="row" style="margin-top:25px">
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h6>NO of days taken</h6>
+          <h3 style="font-size:large"><strong>Casual leave</strong></h3>
+          <h5> Jan {{year}} - Dec {{year}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          {{remainingcl}} remaining
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h6>NO of days taken</h6>
+          <h3 style="font-size:large"><strong>Sick leave</strong></h3>
+          <h5> Jan {{year}} - Dec {{year}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          {{remainingsl}} remaining
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h6>NO of days taken</h6>
+          <h3 style="font-size:large"><strong>Privilege leave</strong></h3>
+          <h5> Jan {{year}} - Dec {{year}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          no of days remaining
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h6>NO of days taken</h6>
+          <h3 style="font-size:large"><strong>Bereavement leave</strong></h3>
+          <h5> Jan {{year}} - Dec {{year}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          no of days remaining
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h6>NO of days taken</h6>
+          <h3 style="font-size:large"><strong>Maternity leave</strong></h3>
+          <h5> Jan {{year}} - Dec {{year}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          no of days remaining
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" routerlink="/applyleave" style="display:inline-flexbox"
+  >Apply
+    Leave</button>
 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 <mat-toolbar style="background-color:rgb(64, 177, 221);">
 
-  <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
+  <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px;
   <mat-toolbar-row>
-    <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
+    margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;"
     <button mat-button  style='color:rgb(0, 0, 7); '>
       <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
     </button>
@@ -21,17 +147,17 @@
     </button>
   </mat-toolbar-row >
 </mat-toolbar>
-<!-- *ngIf="tabName == 'Leave Management Systems'" -->
+ *ngIf="tabName == 'Leave Management Systems'"
 <mat-sidenav-container >
   <mat-sidenav mode="over" opened >
     <div mat-card-avatar class="example-header-image"></div>
     <img src="avatar.png" alt="Avatar" class="avatar">
         <div>
-          <!-- <p>{{name}}</p> --><p><b><i>Name</i></b></p>
+       <p>{{name}}</p> <p><b><i>Name</i></b></p>
         </div>
 
         <div>
-          <!-- <p>{{department}}</p> --><p><b><i>department</i></b></p>
+         <p>{{department}}</p> <p><b><i>department</i></b></p>
         </div>
        <hr>
 <button mat-button class="menu-button">
@@ -48,8 +174,8 @@
 
 
 </mat-sidenav>
-    <!-- <mat-sidenav-content>
+     <mat-sidenav-content>
 <h1><i class="bi bi-person-plus-fill"></i>Add New Employees</h1><button><mat-icon>plus</mat-icon></button>
 
-    </mat-sidenav-content> -->
-</mat-sidenav-container>
+    </mat-sidenav-content>
+</mat-sidenav-container> -->

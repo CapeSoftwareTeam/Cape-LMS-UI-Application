@@ -7,7 +7,7 @@
   }
   .modal-header{
     padding-left:230px;
-    
+
   }
   i{
     padding-left: 89%;
@@ -18,5 +18,15 @@
    }
    b{
     font-size: large;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
    }
+
+   input{
+    width: 200px;
+    height: 30px;
+    margin: 20px;
+    border-radius: 5px;
+   }
+   @media screen and (max-width: 768px) {
+
+  }

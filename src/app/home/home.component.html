@@ -48,115 +48,31 @@
 
       <div class="sidebar">
         <br>
-        <div class="avatar" data-label="CA"  style="justify-content: center;" (load)="avatar()"> 
-          
+        <div class="avatar" data-label="" id="avatar" style="justify-content: center;
+        text-align: center;padding: 27px;margin-left: 38px">
           </div>
        <br>
        <br>
-        <h4 style="justify-content: center;">Name</h4>
-        <h6 class="text-muted"> Department - Designation</h6>
+        <h4 style="justify-content: center;text-align: center;">  {{name}}</h4>
+        <h6 class="text-muted" style="justify-content: center;text-align: center;"> {{department}} - {{designation}}</h6>
         <hr>
         <button type="button" class="btn btn-light" style="cursor: pointer; "
           (click)="termsCondition(termsContent)">Leave Policy</button>
-        <button type="button" class="btn btn-light" routerlink="/holidays"> public Holidays </button>
-        <button type="button" class="btn btn-light" routerlink="/history"> My History </button>
-       
-        <button type="button" class="btn btn-light" routerlink="/register"> Add Employee </button>
+        <button type="button" class="btn btn-light" routerlink="/holidays" (click)="callHolidays()"> public Holidays </button>
+        <button type="button" class="btn btn-light" routerlink="/history" (click)="callHistory()"> My History </button>
+
+        <button type="button" class="btn btn-light" routerlink="/register" (click)="callRegister()"> Add Employee </button>
         <!-- <button type="button" class="btn btn-light" routerlink="/history"> Update-Employee details </button> -->
         <button type="button" class="btn btn-light" routerlink="/history"> Tracking History </button>
+        <button type="button" class="btn btn-light" routerlink="/history" (click)="callApplyLeave()"> Apply Leave </button>
       </div>
-
-      <div class="content">
-        <div class="row">
-          <div class="col-md-2">
-            <div class="card">
-              <div class="card-header">
-                <h6>NO of days taken</h6>
-                <h3 style="font-size:large"><strong>Casual leave</strong></h3>
-                <h5> Jan year - Dec year</h5>
-              </div>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
-                </div>
-              </div>
-              <div class="card-footer">
-                no of days remaining
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="card">
-              <div class="card-header">
-                <h6>NO of days taken</h6>
-                <h3 style="font-size:large"><strong>Sick leave</strong></h3>
-                <h5> Jan year - Dec year</h5>
-              </div>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
-                </div>
-              </div>
-              <div class="card-footer">
-                no of days remaining
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="card">
-              <div class="card-header">
-                <h6>NO of days taken</h6>
-                <h3 style="font-size:large"><strong>Privilege leave</strong></h3>
-                <h5> Jan year - Dec year</h5>
-              </div>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
-                </div>
-              </div>
-              <div class="card-footer">
-                no of days remaining
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="card">
-              <div class="card-header">
-                <h6>NO of days taken</h6>
-                <h3 style="font-size:large"><strong>Bereavement leave</strong></h3>
-                <h5> Jan year - Dec year</h5>
-              </div>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
-                </div>
-              </div>
-              <div class="card-footer">
-                no of days remaining
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="card">
-              <div class="card-header">
-                <h6>NO of days taken</h6>
-                <h3 style="font-size:large"><strong>Maternity leave</strong></h3>
-                <h5> Jan year - Dec year</h5>
-              </div>
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
-                </div>
-              </div>
-              <div class="card-footer">
-                no of days remaining
-              </div>
-            </div>
-          </div>
-        </div>
-        <button type="button" class="btn btn-primary" routerlink="/applyleave" style="display:inline-flexbox">Apply
-          Leave</button>
-      </div>
+      <div class="content" mat-elevation-z8>
+ <app-apply-leave *ngIf="apply"></app-apply-leave>
+    <app-holidays *ngIf="holidays"></app-holidays>
+    <app-lms-page *ngIf="lmspage"></app-lms-page>
+    <!-- <app-leave-status *ngIf="leavestatus"></app-leave-status> -->
+    <!-- <app-history></app-history> -->
+  </div>
     </mat-tab>
   </mat-tab-group>
 

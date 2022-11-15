@@ -10,6 +10,7 @@ export class LeaveStatusServiceService {
   apiurl=environment.apiurl;
 
   constructor(private http:HttpClient) { }
+
   getUpdates(empId:string):Observable<any>{
     return this.http.get<any>(this.apiurl+"/"+'history2'+"/"+empId,{responseType:'text' as'json'});
   }

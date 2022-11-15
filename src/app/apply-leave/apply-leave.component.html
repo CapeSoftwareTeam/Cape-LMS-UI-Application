@@ -1,6 +1,91 @@
-
 <form [formGroup]="postleave">
-<div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
+  <div class="container">
+    <div class="card" style="margin-top:30px">
+      <div class="card-body">
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-12">
+            <div class="formcontrol">
+              <h2 style="justify-content:center;text-align: center;">Enter Leave Details here</h2>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-6" style="float: left;width: 25%;margin-top: 6px;">
+            <label><b>Leave Type: </b></label></div>
+            <div class="col-md-6" >
+            <select class="formcontrol" formControlName="leaveType" style="height: 40px;
+            float: left;width: 75%;margin-top: 6px;" >
+              <option [ngValue]="null" disabled>Select Country</option>
+              <option value="casual">Casual Leave</option>
+              <option value="sick">Sick Leave</option>
+              <option value="bereavement">Bereavement Leave</option>
+              <option value="privilege">Privilege Leave</option>
+              <option value="maternity">Maternity Leave</option>
+            </select>
+            <!-- <mat-form-field appearance="fill">
+  <mat-select formControlName="leaveType"  [(ngModel)]="selectedItem" (select)="selected()">
+    <mat-option value="casual">Casual Leave</mat-option>
+    <mat-option value="sick">Sick Leave</mat-option>
+    <mat-option value="bereavement">Bereavement Leave</mat-option>
+    <mat-option value="privilege">Privilege Leave</mat-option>
+    <mat-option value="maternity">Maternity Leave</mat-option>
+  </mat-select>
+</mat-form-field> -->
+</div>
+        </div>
+
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-6">
+            <div class="formcontrol">
+              <label>Date From: </label>
+              <input class="formcontrol" type="date" formControlName="fromdate">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-6">
+            <div class="formcontrol">
+              <label>Date To : </label>
+              <input class="formcontrol" type="date" formControlName="todate">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-12">
+            <div class="formcontrol">
+              <label>Number of days: </label>
+              <input class="formcontrol" type="text" formControlName="noofdays">
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-12">
+            <div class="formcontrol">
+              <label>Leave Reason: </label>
+              <textarea formControlName="reasonforapply"></textarea>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-md-12">
+
+            <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()">Cancel</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+             <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
+          </div>
+        </div>
+      </div>
+<br>
+    </div>
+  </div>
+  <!-- <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
   <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here
   </b>
   </div>
@@ -23,21 +108,20 @@
    <br>
     <label style="margin-right:5px;">From Date: </label>
     <input type="date" formControlName="fromdate">
-    <!-- <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill">
       <input matInput [matDatepicker]="myDatePicker">
       <mat-datepicker-toggle  [for]="myDatePicker" matSuffix ></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>
-    </mat-form-field> -->
+    </mat-form-field>
 
-    <label style="margin-left: 20px;margin-right:5px;"> To Date: </label>
+  <label style="margin-left: 20px;margin-right:5px;"> To Date: </label>
     <input type="date" formControlName="todate">
 
     <br>
 <br>
-<!--
-<h3>Reason for applying leave</h3>
-<textarea matInput placeholder="Reason ..."></textarea> -->
-<div class="row">
+ <h3>Reason for applying leave</h3>
+<textarea matInput placeholder="Reason ..."></textarea>
+ <div class="row">
 <div class="col-md-12">
 <label >Reason for applying leave</label>
   <textarea type="text" class="form-control" placeholder="Enter Reason Here..." formControlName="reasonforapply"></textarea>
@@ -50,17 +134,18 @@
    <button type="button" class="btn btn-primary">Save changes</button>
     <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
   </div>
-</div>
+</div> -->
 </form>
+
 <ng-template #mymodal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Note:</h4>
   </div>
   <div class="modal-body">
-   The leave which your are selected is unavailable. You will get Loss of pay if you proceed.
+    The leave which your are selected is unavailable. You will get Loss of pay if you proceed.
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" >proceed</button>
+    <button type="button" class="btn btn-outline-dark">proceed</button>
     <button type="button" class="btn btn-outline-dark" (click)="cancel()">cancel</button>
   </div>
 </ng-template>

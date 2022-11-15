@@ -108,7 +108,7 @@ mat-sidenav{
     float: right;
     display: block;
   }
-} */ 
+} */
 
 /* @media screen and (max-width: 600px) {
   .topnav.responsive {position: relative;}
@@ -160,27 +160,27 @@ mat-sidenav{
   white-space: nowrap;
   overflow: auto;
 } */
-@media (max-width: 576px) {  
+@media (max-width: 576px) {
   .xs {color:red;font-weight:bold;}
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) and (max-width:768px) {  
+@media (min-width: 576px) and (max-width:768px) {
   .sm {color:red;font-weight:bold;}
 }
- 
+
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-@media (min-width: 768px) and (max-width:992px) {  
+@media (min-width: 768px) and (max-width:992px) {
  .md {color:red;font-weight:bold;}
 }
- 
+
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width:1200px) { 
+@media (min-width: 992px) and (max-width:1200px) {
  .lg {color:red;font-weight:bold;}
 }
- 
+
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  
+@media (min-width: 1200px) {
     .xl {color:red;font-weight:bold;}
 }
 
@@ -200,15 +200,16 @@ mat-sidenav{
   padding: 16px;
   text-decoration: none;
 }
- 
+
 /* .sidebar button.active {
   background-color: #04AA6D;
   color: white;
 } */
 
 .sidebar button:hover:not(.active) {
-  background-color: rgb(19, 225, 60);
-  color: white;
+  background-color:none;
+  /* background-color: rgb(240, 245, 241); */
+  color: rgb(10, 10, 10);
 }
 
 div.content {
@@ -220,7 +221,7 @@ div.content {
 @media screen and (max-width: 700px) {
   .sidebar {
     width: 100%;
-    height: auto;
+    height: fit-content;
     position: relative;
   }
   .sidebar button{float: left;}
@@ -234,6 +235,7 @@ div.content {
   }
 }
 .avatar{
+  vertical-align: middle;
   font-size: 37px;
   width:3em;
   height:3em;
@@ -242,11 +244,16 @@ div.content {
   display: inline-flex;
   justify-content: center;
   text-align: center;
-
+  color: #ffffff;
+  content:attr(data-label);
+  font-family: 'Readex Pro', sans-serif;
 }
 .avatar::after{
   content:attr(data-label);
   font-family: 'Readex Pro', sans-serif;
-  margin-top: 26px;
+  margin-top:26px;
   color: #ffffff;
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
 }
