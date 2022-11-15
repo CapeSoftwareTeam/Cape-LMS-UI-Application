@@ -59,12 +59,13 @@
         <button type="button" class="btn btn-light" style="cursor: pointer; "
           (click)="termsCondition(termsContent)">Leave Policy</button>
         <button type="button" class="btn btn-light" routerlink="/holidays" (click)="callHolidays()"> public Holidays </button>
+        <button type="button" class="btn btn-light" routerlink="/history" (click)="callApplyLeave()"> Apply Leave </button>
         <button type="button" class="btn btn-light" routerlink="/history" (click)="callHistory()"> My History </button>
-
+        <button type="button" class="btn btn-light" routerlink="/history"> Tracking History </button>
         <button type="button" class="btn btn-light" routerlink="/register" (click)="callRegister()"> Add Employee </button>
         <!-- <button type="button" class="btn btn-light" routerlink="/history"> Update-Employee details </button> -->
-        <button type="button" class="btn btn-light" routerlink="/history"> Tracking History </button>
-        <button type="button" class="btn btn-light" routerlink="/history" (click)="callApplyLeave()"> Apply Leave </button>
+
+
       </div>
       <div class="content" mat-elevation-z8>
  <app-apply-leave *ngIf="apply"></app-apply-leave>

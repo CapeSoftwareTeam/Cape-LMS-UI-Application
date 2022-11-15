@@ -12,9 +12,9 @@
         <hr>
 
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-6" style="float: left;width: 25%;margin-top: 6px;">
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
             <label><b>Leave Type: </b></label></div>
-            <div class="col-md-6" >
+            <div class="col-7" >
             <select class="formcontrol" formControlName="leaveType" style="height: 40px;
             float: left;width: 75%;margin-top: 6px;" >
               <option [ngValue]="null" disabled>Select Country</option>
@@ -35,40 +35,53 @@
 </mat-form-field> -->
 </div>
         </div>
-
+<br>
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-6">
-            <div class="formcontrol">
-              <label>Date From: </label>
-              <input class="formcontrol" type="date" formControlName="fromdate">
+          <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
+              <label><b>Date From:</b> </label></div>
+              <div class="col-7">
+                <input class="formcontrol" type="date" formControlName="todate"
+                style="height: 40px;float: left;width: 75%;margin-top: 6px;"
+                min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date">
+                <!-- <mat-form-field appearance="fill">
+                  <input matInput [matDatepicker]="dtAdm" [matDatepickerFilter]="myDateFilter" formControlName="dateOfAdmission">
+                  <mat-datepicker-toggle matSuffix [for]="dtAdm"></mat-datepicker-toggle>
+    <mat-datepicker #dtAdm ></mat-datepicker>
+                </mat-form-field>  -->
             </div>
           </div>
-        </div>
-
+        <!-- </div> -->
+<br>
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-6">
-            <div class="formcontrol">
-              <label>Date To : </label>
-              <input class="formcontrol" type="date" formControlName="todate">
+          <div class="col-6"style="float: left;width: 24%;margin-top: 6px;">
+              <label><b>Date To:</b></label>
+            </div>
+            <div class="col-7">
+              <input class="formcontrol" type="date" formControlName="todate"
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;">
             </div>
           </div>
-        </div>
-
+        <!-- </div> -->
+<br>
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-12">
-            <div class="formcontrol">
-              <label>Number of days: </label>
-              <input class="formcontrol" type="text" formControlName="noofdays">
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
+              <label><b>Number of days: </b></label>
+            </div>
+              <div class="col-7">
+              <input class="formcontrol" type="text" formControlName="noofdays"
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;">
             </div>
           </div>
-        </div>
+ <br>
 
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-12">
-            <div class="formcontrol">
-              <label>Leave Reason: </label>
-              <textarea formControlName="reasonforapply"></textarea>
-            </div>
+          <div class="col-6"  style="float: left;width: 25%;margin-top: 6px;">
+
+              <label><b>Leave Reason: </b></label></div>
+              <div class="col-7">
+              <textarea formControlName="reasonforapply"
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;"></textarea>
+
           </div>
         </div>
         <br>
@@ -84,7 +97,7 @@
       </div>
 <br>
     </div>
-  </div>
+
   <!-- <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
   <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here
   </b>
@@ -133,8 +146,8 @@
    <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()">Cancel</button>
    <button type="button" class="btn btn-primary">Save changes</button>
     <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
-  </div>
-</div> -->
+  </div>-->
+</div>
 </form>
 
 <ng-template #mymodal let-modal>

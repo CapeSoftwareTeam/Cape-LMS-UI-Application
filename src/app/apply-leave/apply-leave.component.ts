@@ -16,7 +16,11 @@ export class ApplyLeaveComponent implements OnInit {
   leave: any = [];
   empid: any;
 selectedItem: any;
-
+dayOfWeek:any=[];
+// myDateFilter = (d: Date | null): boolean => {
+//   const day = (d || new Date()).getDay();
+//   return day !== 0 && day !== 6;
+// }
   constructor(private route: Router,
     private apply: ApplyleaveService,
     private fb: FormBuilder,
@@ -71,4 +75,16 @@ selectedItem: any;
   selected(){
 console.log(this.selectedItem);
   }
+  CurrentDate:any=new Date();
+//  date = new Date();
+		        // let dateString = CurrentDate;
+		        // try {
+		        //     Date = new SimpleDateFormat("dd/mm/yyyy").parse(dateString);
+		        // }
+		      //   Calendar c = Calendar.getInstance();
+		      //   c.setTime(date);
+		      // dayOfWeek = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+		      //  day = this.dayOfWeek[c.get(Calendar.DAY_OF_WEEK) - 1];
+		      //   int dayOfYear = c.get(Calendar.DAY_OF_MONTH) / 7 + 1 ;
+
 }
