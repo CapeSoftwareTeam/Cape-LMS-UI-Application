@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { ConfigurationOptions, TooltipOptionsEnum } from 'intl-input-phone';
+import { ConfigurationOptions, CustomCountryModel, TooltipOptionsEnum } from 'intl-input-phone';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { User } from '../models/user';
 
@@ -24,9 +24,14 @@ export class LoginComponent implements OnInit {
   sentOtp:boolean = false;
   disable:boolean=true;
   configOption1: ConfigurationOptions;
+  selectedCountryList : CustomCountryModel[] = [];
+ 
+  // configOption2!: ConfigurationOptions;
+  // configOption3! : ConfigurationOptions;
 
   countryCode:String='';
   user=new User();
+  // Number:string='';
 
   loginForm=new FormGroup({
   empid:new FormControl(''),
@@ -42,6 +47,8 @@ export class LoginComponent implements OnInit {
       this.configOption1 = new ConfigurationOptions();
       this.configOption1.SelectorClass = "ToolTipType1";
     }
+   
+    
 
   ngOnInit(): void {
     
@@ -57,6 +64,10 @@ export class LoginComponent implements OnInit {
     mobileNumber: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       otp:['',Validators.required],emailid:['',Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")]
   })
+
+  // this.configOption1 = new ConfigurationOptions();
+  // this.configOption2 = new ConfigurationOptions();
+  // this.configOption3 = new ConfigurationOptions();
   }
 
   
@@ -80,18 +91,21 @@ disable1 : boolean = false;
 login(event:any){
  
   this.submitted=true;
-  // this.user.emailid
+
+  
+    // this.user.emailid
   // this.user.emailid = this.loginForm.value.emailidLogin;
+
 
   if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.emailidLogin?.length==0){
     this.submitted=true;
   }
     this.registerService.authenticate( this.user).subscribe(data=>{
-      localStorage.setItem('emailid',this.user.email);
-      localStorage.setItem('mobileNumber',this.user.mobileNumber);
-      localStorage.setItem('empid',this.user.empId);
-      localStorage.setItem('password', this.user.password);
-      sessionStorage.setItem('token', data['token']);
+      
+      sessionStorage.setItem('empid',this.user.empId);
+      
+      sessionStorage.setItem('token',JSON.parse(data).token);
+     
       this.route.navigate(['/home']);
     
     })

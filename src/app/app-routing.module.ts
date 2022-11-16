@@ -19,7 +19,7 @@ import { HistoryComponent } from './history/history.component';
 
 
 const routes: Routes = [
-{path:'',redirectTo:"/home",pathMatch:'full'},
+{path:'',redirectTo:"/login",pathMatch:'full'},
 {path:'register',component:RegisterComponent},
 {path:'login',component:LoginComponent},
 {path:'forgotpassword',component:ForgotpasswordComponent},

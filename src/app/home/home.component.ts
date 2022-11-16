@@ -76,8 +76,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.lmspage=true;
-    localStorage.setItem("empid", "cepl-001");
-    sessionStorage.setItem("empid", "cepl-001");
+     
     this.empid = sessionStorage.getItem("empid");
 
     this.statusservice.getUpdates(this.empid).subscribe(

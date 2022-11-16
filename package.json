@@ -30,7 +30,9 @@
     "intl-input-phone": "^0.0.9",
     "intl-tel-input": "^17.0.19",
     "ng2-tel-input": "^2.3.0",
+    "ngx-bootstrap": "^9.0.0",
     "ngx-bootstrap-icons": "^1.9.1",
+    "ngx-intl-tel-input": "^3.2.0",
     "rxjs": "^7.5.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

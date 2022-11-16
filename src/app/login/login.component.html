@@ -63,7 +63,8 @@
             <div  *ngIf="f.userValidation.value=='mobileNumber'">
                 <label class="form-lable">Mobile Number</label>
                 <div class="input-group" >
-                    <intl-input-phone  formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber"  [SelectedCountryISOCode]="'IN'"></intl-input-phone>
+                    
+                    <intl-input-phone  formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber" [NumberTextValue]="'8602605927'" [SelectedCountryISOCode]="'IN'" [ConfigurationOption]="configOption1"></intl-input-phone>
                     <div *ngIf="submitted && f.mobileNumberLogin.errors" class="invalid-feedback">
                         <div *ngIf="f.mobileNumberLogin.errors['required']"> Mobile Number is required</div>
                         <div *ngIf="f.mobileNumberLogin.errors['pattern']">Mobile Number should be in 10 Numbers</div>
@@ -140,7 +141,7 @@
                    
                   
                    <div class="panel-group" id="accordion">
-                   <intl-input-phone  formControlName="mobileNumber" ></intl-input-phone>
+                   <intl-input-phone  formControlName="mobileNumber" [NumberTextValue]="'8602605927'" [SelectedCountryISOCode]="'IN'" ></intl-input-phone>
                    </div>
                <div *ngIf="submit && g.mobileNumber.errors" class="invalid-feedback">
                    <div *ngIf="g.mobileNumber.errors['required']"> Mobile Number is required</div>
