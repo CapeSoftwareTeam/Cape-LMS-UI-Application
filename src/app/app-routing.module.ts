@@ -19,7 +19,7 @@ import { ChangeNumberComponent } from './change-number/change-number.component';
 
 
 const routes: Routes = [
-{path:'',redirectTo:"/login",pathMatch:'full'},
+{path:'',redirectTo:"/frontpage",pathMatch:'full'},
 {path:'register',component:RegisterComponent},
 {path:'login',component:LoginComponent},
 {path:'forgotpassword',component:ForgotpasswordComponent},

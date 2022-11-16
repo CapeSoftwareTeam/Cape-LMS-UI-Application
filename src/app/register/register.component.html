@@ -47,15 +47,11 @@
          <div *ngIf="field.gender.errors">choose your gender</div>
          </div>-->
                                         <label class="form-label">Gender</label>
-                                        <mat-radio-group aria-label="Select an option" name="gender"
-                                                class="form-control" formControlName="gender"
-                                                [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted &&
-          field.gender.errors}" style="width:300px;">
-                                                <mat-radio-button value="Male">Male</mat-radio-button> 
-                                                <mat-radio-button value="Female">Female</mat-radio-button>
-                                                <mat-radio-button value="Others">Others</mat-radio-button>
-                                                
-                                        </mat-radio-group>
+                       <select  class="form-control" formControlName="gender"
+                                           [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted && field.gender.errors}" style="width:300px;">
+                                              <option value="male">Male</option>
+                                              <option value="female">Female  </option>
+                                              <option value="others">Others</option>     </select>                              
                                         
 
                                 </div>
@@ -88,12 +84,12 @@
                                 <div class="col-md-4">
                                         <label class="form-label">Mobile Number</label>
                                         
-                                                     <intl-input-phone  formControlName="mobilen" [(ngModel)]="register.mobilenumber"  [SelectedCountryISOCode]="'IN'"
+                                                     <intl-input-phone  formControlName="mobile" [(ngModel)]="register.mobilenumber"  [SelectedCountryISOCode]="'IN'"
                                                      [ngClass]="{'is-invalid': submitted && field.mobile.errors}"></intl-input-phone>
                                                      
                                              <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.mobile.errors?.['required']">Mobile Number Is Required
-                                                     </div>
+                                                     <!-- <div *ngIf="field.mobile.errors?.['required']">Mobile Number Is Required
+                                                     </div> -->
                                                      <div *ngIf="field.mobile.errors?.['min']">Enter 10 Digit Number</div>
                                                      <div *ngIf="field.mobile.errors?.['max']">Enter 10 Digit Number</div>
                                              </div>
@@ -133,7 +129,7 @@
                                                 [ngClass]="{'is-invalid': submitted && field.email.errors}">
                                         <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
                                                 <div *ngIf="field.email.errors">Email is required</div>
-                                                <div *ngIf="field.email.errors.pattern">Enter valid email</div>
+                                                <div *ngIf="field.email.errors">Enter valid email</div>
                                         </div>
                                         </div>
                                 </div>

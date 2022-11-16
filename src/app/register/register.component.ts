@@ -118,6 +118,10 @@ changevalue(e:any){
     if (this.RegisterationForm.invalid) {
       return
     }
+    let mobileNumber: any
+  mobileNumber = this.register.mobilenumber;
+  this.register.mobilenumber= mobileNumber.Number;
+  debugger
     this.registerService.saveForm(this.register).subscribe(
       data => {
         console.log("success")
