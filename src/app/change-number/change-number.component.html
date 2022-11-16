@@ -1,0 +1,51 @@
+<div class="container" style="width:450px ;margin-top: 150px;padding:20px;">
+    <div class="card">
+        <div class="card-body" style="width:400px ;">
+            <h2>Change Number</h2>
+            <form action="" [formGroup]="changeNumber" id="card">
+                <div class="row">
+                    <label class="form-label">Enter Mobile Number</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="bi bi-telephone-fill"></i>                                  
+                              </span>
+                         </div>
+                        <input type="text" class="form-control" formControlName="mobileNumber"  
+                        [ngClass]="{'is-invalid': submitted && field.mobileNumber.errors}">
+                        <div *ngIf=" submitted && field.mobileNumber.errors" class="invalid-feedback">
+                            <div *ngIf=" field.mobileNumber.errors">Mobile Number is Required</div>
+                        </div> 
+                        
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <label for="" class="form-label">Enter OTP</label>
+                    <div class="input-group"> 
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="bi bi-123"></i>                            
+                              </span>
+                         </div>
+                        <input type="number" class="form-control" formControlName="otp" 
+                        [ngClass]="{'is-invalid':submitted && field.otp.errors}">
+                        <div *ngIf="submitted && field.otp.errors" class="invalid-feedback">
+                            <div *ngIf="field.otp.errors">OTP is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="button">
+                        <button type="button" id="btn" class="btn btn-primary">Generate</button>
+                        <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

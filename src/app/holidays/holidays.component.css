@@ -5,7 +5,46 @@
     color: black;
     font-weight: bold;
     background-color: #E2D4B7;
+    justify-content: center;
 }
-input{
+/* input{
     border: 1px solid black;
+} */
+.container{
+    margin: 20x;
+    width: 600px;
+    top:10px;
+    justify-items: center;
+}
+h2{
+    margin-left: 160px;
+    font-weight: bold;
+}
+.card{
+    box-shadow: 0 0 15px rgba(0, 0, 0,0.4);
+    margin: 20px;
+}
+.btn{
+    margin: 10px;
+    justify-content:center;
+}
+#btn{
+    margin-left:100px;
+}
+.btn-submit{
+    background-color:skyblue;
+    border-radius: 5px;
+    color: rgb(10, 10, 10);
+    border-style: none;
+}
+.btn-submit:hover{
+    background-color:rgb(7, 7, 7);
+    color: rgb(252, 247, 247);
+}
+p{
+    margin-top: 250px;
+}
+.msg{
+    position: relative;
+    left:390px;
 }

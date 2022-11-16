@@ -20,11 +20,11 @@ export class HolidayservicesService {
 saveLeave(holiday: Holiday):Observable<any> {
   return this.http.post<any>(this.apiurl+'/addPublicHolidays',holiday,{responseType: 'text' as 'json'});
 }
-// deleteLeave(id: any):Observable<any> {
-//   return this.http.delete<any>( this.apiurl+'/deletedPublicHolidays' + '/' +id, {responseType: 'text' as 'json'});
-// }
-updateLeave(holiday:Holiday):Observable<any>{
-  return this.http.put<any>(this.apiurl+'/updatePublicHolidays',{responseType: 'text' as 'json'});
+deleteLeave(id: any):Observable<any> {
+  return this.http.delete<any>( this.apiurl+'/deletedPublicHolidays' + '/' +id, {responseType: 'text' as 'json'});
 }
+// updateLeave(holiday:Holiday):Observable<any>{
+//   return this.http.put<any>(this.apiurl+'/updatePublicHolidays',{responseType: 'text' as 'json'});
+// }
 
 }
