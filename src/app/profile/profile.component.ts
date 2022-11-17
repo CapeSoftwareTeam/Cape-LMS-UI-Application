@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
  register=new Register();
  spinner: boolean=false;
  blurMode: boolean=false;
-  
+empid:any;
 
   constructor(private profileService:ProfileserviceService,private fb:FormBuilder,
     private route:Router) { }
@@ -47,7 +47,8 @@ export class ProfileComponent implements OnInit {
       manageremail:new FormControl('')
    
      });
- this.profileService.getRegisterDetails('3').subscribe(
+     this.empid=sessionStorage.getItem('empid')
+ this.profileService.getRegisterDetails(this.empid).subscribe(
   data=>{
        this.register=JSON.parse(data);
        this.generateProfile(this.register);

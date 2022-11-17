@@ -21,6 +21,7 @@ export class HistoryComponent implements OnInit {
     pending:boolean=false;
     cancelled:boolean=false;
     enableDelete: boolean =false;
+    empid:any;
    displayedColumns = ['empId','name','appliedDate','approvedDate','fromDate','toDate','noOfDays','lopdays','status','approvedBy','department','leavetype','reasonForApply','location','delete'];
  // displayedColumns: any=[];
   Color!:'pink';

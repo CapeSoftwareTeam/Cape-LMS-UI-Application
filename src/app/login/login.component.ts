@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
   disable:boolean=true;
   configOption1: ConfigurationOptions;
   selectedCountryList : CustomCountryModel[] = [];
- 
+  public token: string = '';
+  isLogin:boolean=false;
   // configOption2!: ConfigurationOptions;
   // configOption3! : ConfigurationOptions;
 
@@ -100,18 +101,31 @@ login(event:any){
   if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.emailidLogin?.length==0){
     this.submitted=true;
   }
+  
+  // let mobileNumber: any
+  // mobileNumber = this.user.mobileNumber;
+  // this.user.mobileNumber= mobileNumber.Number;
+ 
     this.registerService.authenticate( this.user).subscribe(data=>{
       
+      this.isLogin = true;
       sessionStorage.setItem('empid',this.user.empId);
       
       sessionStorage.setItem('token',JSON.parse(data).token);
-     
+       sessionStorage.setItem('token',JSON.parse(data).token);
       this.route.navigate(['/home']);
     
+    // }, error => {
+    //   if(error.error.error == 'Unauthorized'){
+    //     error.error.error = 'Invalid Credentials';
+    //     this.showErrorMessage=error.error.error;
+    //   } else{
+    //     this.showErrorMessage=error.error.message;
+    //   }
+      
+     
     })
    
- 
- 
 
   // if(this.loginForm.invalid) {
   //   return;

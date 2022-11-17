@@ -21,6 +21,8 @@ export class ProfileserviceService {
   return this.http.put<any>(this.apiurl+'/updateRegister',register,{ responseType:'text' as 'json'})
  }
 
-
+getToken(){
+  return sessionStorage.getItem('token');
+}
 
 }

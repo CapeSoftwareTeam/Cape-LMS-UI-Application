@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Register } from '../models/register';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
@@ -9,7 +9,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class RegisterserviceService {
-
+  
  apiurl=environment.apiurl;
   constructor(private http: HttpClient )
 
@@ -24,13 +24,18 @@ export class RegisterserviceService {
     return this.http.put<any>( this.apiurl+'/deleteRegister' + '/' +id, {responseType: 'text' as 'json'});
   }
   getMemberDetails(empid:String):Observable<any>{
-    return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
+    return this.http.get<any>(this.apiurl + '/' + "berdetails" + '/'+empid,{responseType:'text' as 'json'});
       }
   // updateForm():Observable<any>{
   //   return this.http.update<any>('/update',{responseType:'text' as 'json'});
   // }
   authenticate(user:User){
-return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text' as 'json'});
+return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text' as 'json'}) 
+  // data=>{
+
+  // }
+//})
+ 
   }
 }
 

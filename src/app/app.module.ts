@@ -37,6 +37,8 @@ import { IntlInputPhoneModule } from 'intl-input-phone';
 import { ChangeNumberComponent } from './change-number/change-number.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
 import { HistoryComponent } from './history/history.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenServiceService } from './services/token-service.service';
 
 
 
@@ -60,6 +62,8 @@ import { HistoryComponent } from './history/history.component';
     LmsPageComponent,
     ChangeNumberComponent,
     FrontpageComponent,HistoryComponent
+
+   
       
   
   
@@ -89,7 +93,11 @@ import { HistoryComponent } from './history/history.component';
    ,IntlInputPhoneModule
 
   ],
-  providers: [],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenServiceService,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,8 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LeaveStatusServiceService {
-  apiurl=environment.apiurl;
-
+  apiurl=environment.apiurl_history;
   constructor(private http:HttpClient) { }
 
   getUpdates(empId:string):Observable<any>{
