@@ -9,7 +9,7 @@ import { Register } from '../models/register';
   providedIn: 'root'
 })
 export class ApplyleaveService {
-  apiurl=environment.apiurl_history;
+  apiurl=environment.apiurl;
   constructor(private http:HttpClient) { }
 
    leaveRegister(applyleave:ApplyLeave):Observable<any>{

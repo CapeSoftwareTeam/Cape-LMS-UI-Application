@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class HistoryService {
-  apiurl=environment.apiurl_history;
+  apiurl=environment.apiurl;
   constructor(private http: HttpClient) { }
 
   getHistory():Observable<any> {
