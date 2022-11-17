@@ -7,15 +7,19 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class HistoryService {
-  apiurl=environment.apiurl;
+  
+  apiurl=environment.apiurl_history;
   constructor(private http: HttpClient) { }
 
   getHistory():Observable<any> {
     return this.http.get<any>(this.apiurl+'/history',{responseType: 'text' as 'json'});
   }
 
-  deleteHistory(historyId:number):Observable<any>{
+  deleteHistory(historyId:any):Observable<any>{
     return this.http.delete<any>(this.apiurl+'/history3'+'/' + historyId, {responseType: 'text' as 'json'});
 
+  }
+  getHistory1(empid:any):Observable<any>{
+    return this.http.get<any>(this.apiurl+'/history2'+'/' + empid, {responseType: 'text' as 'json'});
   }
 }
