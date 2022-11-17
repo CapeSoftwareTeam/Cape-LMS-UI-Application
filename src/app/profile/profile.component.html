@@ -1,71 +1,293 @@
+<!-- <div >
+    <div class="loader" *ngIf="spinner"></div>
+</div> -->
 
-<form [formGroup]="profile">
-<div class="container">
-    <h2>Personal Details</h2>
+<div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;"></div>
+<div class="">
+    <div class="formbox">
+        <form [formGroup]="profile"  class="container" (ngSubmit)="submitFunction()">
+            <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
+                <h2>Personal Details</h2>
+            
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>EmployeeID</label>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-file-person"></i>
+                                    </span>
+                                 </div>
+                                <input class="form-control" type="text" formControlName="empid" [(ngModel)]="register.empid" readonly>
+                               </div>
+                        </div>
+                       
+                    </div>
+                   
+                    <div class="col-md-3">
+                        
+                            <label class="form-label">Name</label>
+                            
+                            <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person-fill"></i>
+                                    </span>
+                                 </div>
+                                <!-- </div> <mat-icon>account_circle</mat-icon> -->
+                                <input class="form-control" type="text" formControlName="name" [(ngModel)]="register.name"
+                                    [ngClass]="{'is-invalid': submitted && field.name.errors}">
+                                <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
+                            
+                                    <div *ngIf="field.name.errors">Name field is required</div>
+                                </div>
+                                </div>
+                        
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-people-fill"></i>
+                                    </span>
+                                 </div> 
+                                <input class="form-control" type="text" formControlName="gender" [(ngModel)]="register.gender" 
+                                [ngClass]="{'is-invalid': submitted && field.gender.errors}">
+                                <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
+                            
+                                    <div *ngIf="field.gender.errors">Gender field is required</div>
+                            
+                                </div>
+                                </div>
+                        </div>
+                      
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <div class="input-group">      
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-calendar-date-fill"></i>
+                                     </span>
+                                 </div>   
+                                <input class="form-control" type="date" formControlName="dob" [(ngModel)]="register.dob"
+                                [ngClass]="{'is-invalid': submitted && field.dob.errors}">
+                                <div *ngIf="submitted && field.dob.errors" class="invalid-feedback">
+                            
+                                    <div *ngIf="field.dob.errors">DoB field is required</div>
+                            
+                                </div>
+                    
+                            </div>
+                           
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                             <label>Marital Status</label>
+                             <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-postcard-heart-fill"></i>
+                                     </span>
+                                 </div>   
+                                <input class="form-control" type="text" formControlName="maritalstatus" [(ngModel)]="register.maritalstatus"
+                                [ngClass]="{'is-invalid': submitted && field.maritalstatus.errors}">
+                                <div *ngIf="submitted && field.maritalstatus.errors" class="invalid-feedback">
+                            
+                                    <div *ngIf="field.maritalstatus.errors">Marital Status field is required</div>
+                            
+                                </div>
+                             </div>
+                            </div>
+                    </div>
+                    <div class="col-md-3">
 
-    <div class="row">
-        <div class="col-md-4">
-            <label>EmployeeID</label>
-            <input class="form-control" type="text" formControlName="empid" [(ngModel)]="register.empid" readonly>
-        </div>
-        <div class="col-md-4">
-            <label>Name</label>
-            <input class="form-control" type="text" formControlName="name"  [(ngModel)]="register.name">
-        </div>
-        <div class="col-md-4">
-            <label>Gender</label>
-            <input class="form-control" type="text" formControlName="gender" [(ngModel)]="register.gender">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <label>Date of Birth</label>
-            <input class="form-control" type="date" formControlName="dob" [(ngModel)]="register.dob">
-        </div>
-        <div class="col-md-4">
-            <label>Marital Status</label>
-            <input class="form-control" type="text" formControlName="maritalstatus" [(ngModel)]="register.maritalstatus">
-        </div>
-        <div class="col-md-4">
-            <label>Mobile Number</label>
-            <input class="form-control" type="number" formControlName="mobilenumber" [(ngModel)]="register.mobilenumber">
-        </div>
-    </div>
-    <h2>Work Details</h2>
-    <div class="row">
-
-        <div class="col-md-4">
-            <label for="">Date of Joining</label>
-            <input class="form-control" type="date" formControlName="dateofjoining" [(ngModel)]="register.dateofjoining" readonly>
-        </div>
-        <div class="col-md-4">
-            <label for="">Department</label>
-            <input class="form-control" type="text" formControlName="department" [(ngModel)]="register.department">
-        </div>
-        <div class="col-md-4">
-            <label for="">Designation</label>
-            <input class="form-control" type="text" formControlName="designation" [(ngModel)]="register.designation">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <label>Total Experience</label>
-            <input class="form-control" type="number" name="" id="" formControlName="totalexperience" [(ngModel)]="register.totalexperience">
-        </div>
-        <div class="col-md-4">
-            <label>Office Location</label>
-            <input class="form-control" type="text" formControlName="officelocation" [(ngModel)]="register.officelocation">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center justify-content-center">
-            <button type="button" class="btn btn-primary" (click)="updateDetails()">Update</button>
-            <!-- <button type="button" class="btn btn-primary" (click)="backbutton()">back</button> -->
-            <div>
-                <p *ngIf="successMsg">Updated Successfully</p>
+                            <label>EmailId</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope-fill"></i>
+                                    </span>
+                                 </div>
+                                <input class="form-control" type="text" formControlName="emailid" [(ngModel)]="register.emailid" readonly>
+                            </div>
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-telephone-fill"></i>                                  
+                                      </span>
+                                 </div>
+                                 
+                                <input class="form-control" type="text" formControlName="mobilenumber" [(ngModel)]="register.mobilenumber"
+                                [ngClass]="{'is-invalid': submitted && field.mobilenumber.errors}" (change)=" keyPressNumbers($event)">
+                                <div *ngIf="submitted && field.mobilenumber.errors" class="invalid-feedback">
+                                    <div *ngIf="field.mobilenumber.errors">Mobile number field is required</div>
+                                    <div *ngIf="field.mobilenumber.errors?.['min']">Enter 10 Digit Number</div>
+                                    <div *ngIf="field.mobilenumber.errors?.['max']">Enter 10 Digit Number</div>
+                                </div>
+                            </div>
+                            <mat-icon class="changeNumber" (click) ="otp()"  title="Change Contact Number">
+                                published_with_changes
+                            </mat-icon>
+                        </div>
+                    
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Emergency Contact</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-telephone-forward-fill"></i>        
+                                  </span>
+                                 </div>
+                                <input class="form-control" type="text" formControlName="alternatenumber" [(ngModel)]="register.alternatenumber">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h2>Work Details</h2>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Supervisor Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person-fill"></i>
+                                    </span>
+                                 </div>
+                                <input class="form-control" type="text" formControlName="managername" [(ngModel)]="register.managername" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Supervisor Email</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope-fill"></i>
+                                    </span>
+                                 </div>
+                                <input class="form-control" type="text" formControlName="manageremail" [(ngModel)]="register.manageremail" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Date of Joining</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-calendar-date-fill"></i>
+                                     </span>
+                                 </div>
+                                <input class="form-control" type="date" formControlName="dateofjoining" [(ngModel)]="register.dateofjoining" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Department</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-card-heading"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="department" [(ngModel)]="register.department" readonly>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Designation</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-person-lines-fill"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="designation" [(ngModel)]="register.designation" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Total Experience</label>
+                         <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="bi bi-list-ul"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="number" name="" id="" formControlName="totalexperience" [(ngModel)]="register.totalexperience"
+                            [ngClass]="{'is-invalid': submitted && field.totalexperience.errors}">
+                            <div *ngIf="submitted && field.totalexperience.errors" class="invalid-feedback">
+                                <div *ngIf="field.totalexperience.errors">Total Experience field is required</div>
+                            </div>
+                         </div>
+                        </div>
+                      
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>City</label>
+                           <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" type="text" formControlName="city" [(ngModel)]="register.city" readonly>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>State</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </span>
+                                </div>
+                                <input class="form-control" type="text" formControlName="state" [(ngModel)]="register.state" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center justify-content-center">
+                        <button type="button" class="btn btn-primary" (click)="updateDetails()">Update</button>
+                        <button type="button" class="btn btn-danger" (click)=" profileCancel()" title="Back"><i class="bi bi-box-arrow-in-left"></i>Back</button>
+                        <div>
+                            <p class="alert alert-success" *ngIf="successMsg">Updated Successfully</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            </form>
     </div>
 </div>
-</form>
+
+
 

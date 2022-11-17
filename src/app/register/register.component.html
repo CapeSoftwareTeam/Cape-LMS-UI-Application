@@ -47,17 +47,22 @@
          <div *ngIf="field.gender.errors">choose your gender</div>
          </div>-->
                                         <label class="form-label">Gender</label>
-                                        <mat-radio-group aria-label="Select an option" name="gender"
-                                                class="form-control" formControlName="gender"
-                                                [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted &&
-          field.gender.errors}" style="width:300px;">
-                                                <mat-radio-button value="Male">Male</mat-radio-button> 
-                                                <mat-radio-button value="Female">Female</mat-radio-button>
-                                                <mat-radio-button value="Others">Others</mat-radio-button>
-                                                
-                                        </mat-radio-group>
+                                        <!-- <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-people-fill"></i>
+                                                    </span>
+                                                 </div>  -->
+                                        
+                       <select  class="form-control" formControlName="gender"
+                       
+                                           [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted && field.gender.errors}" style="width:300px;">
+                                              <option value="male">Male</option>
+                                              <option value="female">Female  </option>
+                                              <option value="others">Others</option>     </select>                              
                                         
 
+                               
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Date Of Birth</label>
@@ -87,18 +92,20 @@
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Mobile Number</label>
-                                        
-                                                     <intl-input-phone  formControlName="mobilen" [(ngModel)]="register.mobilenumber"  [SelectedCountryISOCode]="'IN'"
-                                                     [ngClass]="{'is-invalid': submitted && field.mobile.errors}"></intl-input-phone>
-                                                     
+                                       
+                                                     <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
+                                                     <input type="text" name="mobilenumber" class="form-control"
+                                                     formControlName="mobile" [(ngModel)]="register.mobilenumber"
+                                                     [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
                                              <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.mobile.errors?.['required']">Mobile Number Is Required
-                                                     </div>
-                                                     <div *ngIf="field.mobile.errors?.['min']">Enter 10 Digit Number</div>
-                                                     <div *ngIf="field.mobile.errors?.['max']">Enter 10 Digit Number</div>
+                                                     <div *ngIf="field.mobile.errors['required']">Mobile number is
+                                                             required</div>
+                                                     <div *ngIf="field.mobile.errors['min']">Enter 10 digit number</div>
+                                                     <div *ngIf="field.mobile.errors['max']">Enter 10 digit number</div>
                                              </div>
+                                        </div>
                                         
-                                </div>
+                              
                                 <div class="col-md-4">
                                         <label class="form-label">Alternate Number</label>
                                         <div class="input-group">
@@ -360,6 +367,12 @@
                         </div>
                         <button type="submit" class="btn btn-primary"
                                 style="margin-left:410px;margin-top:59px;">Save</button>
+                                <div class="alert alert-success alert-dismissible fade show" *ngIf="priyanka">
+                                        <strong>Success!</strong> Registered.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+                                    </div>
+                                    
                 </div>
         </div>
 </form>

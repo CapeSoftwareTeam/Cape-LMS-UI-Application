@@ -12,14 +12,14 @@ import { LeaveStatusComponent } from './leave-status/leave-status.component';
 import { LmsPageComponent } from './lms-page/lms-page.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
-
 import { RegisterComponent } from './register/register.component';
 import { HistoryComponent } from './history/history.component';
+import { ChangeNumberComponent } from './change-number/change-number.component';
 
 
 
 const routes: Routes = [
-{path:'',redirectTo:"/login",pathMatch:'full'},
+{path:'',redirectTo:"/frontpage",pathMatch:'full'},
 {path:'register',component:RegisterComponent},
 {path:'login',component:LoginComponent},
 {path:'forgotpassword',component:ForgotpasswordComponent},
@@ -31,6 +31,7 @@ const routes: Routes = [
 {path:'holidays',component:HolidaysComponent},
 {path:'lmspage',component:LmsPageComponent},{path:'frontpage',component:FrontpageComponent},
 {path:'history',component:HistoryComponent},
+{path:'changenumber',component:ChangeNumberComponent}
 
 ]
 

@@ -1,66 +1,98 @@
-<div class="card">  
-    <form [formGroup]="holidays">
-       <div class="mt-5 box">
-           <div class="form-row">
-               <div class="col-md-12">
-                  <div class="form-group">
-                   <label>Date</label>
-                  </div>
-                  <div class="form-row">
-                   <div class="col">
-                       <input type="date" formControlName="date" class="form-control" name="" id="" >
-                   </div>
-                  </div>
-               </div>
-               <div class="col-md-12">
-                   <div class="form-group">
-                    <label>Day</label>
-                   </div>
-                   <div class="form-row">
-                    <div class="col">
-                        <input type="text" formControlName="day" class="form-control" name="" id="" >
+<div class="container">
+    <div class="card" *ngIf="false">
+        
+        <div class="card-body">
+            <form [formGroup]="holidays" *ngIf="">
+                <h2>Add Holidays</h2>
+                <div class="mt-5">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                           <div class="form-group">
+                            <label>Date</label>
+                           </div>
+                           <div class="form-row">
+                            <div class="col">
+                                <input type="date" formControlName="date" class="form-control" name="" id="" 
+                                [ngClass]="{'is-invalid': submitted && field.date.errors}" [(ngModel)]="holiday.date">
+                                <div *ngIf="submitted && field.date.errors" class="invalid-feedback">
+                                  <div *ngIf="field.date.errors">Date is Required</div>
+                                </div>
+                            </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                             <label>Day</label>
+                            </div>
+                            <div class="form-row">
+                             <div class="col">
+                                 <input type="text" formControlName="day" class="form-control" name="" id=""
+                                 [ngClass]="{'is-invalid':submitted && field.day.errors}" [(ngModel)]="holiday.day">
+                                 <div *ngIf="submitted && field.day.errors" class="invalid-feedback">
+                                   <div *ngIf="field.day.errors">Day is Required</div>
+                                 </div>
+                             </div>
+                            </div>
+                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group">
+                             <label>Description</label>
+                            </div>
+                            <div class="form-row">
+                             <div class="col">
+                                 <input type="text" formControlName="description" class="form-control" name="" id="" 
+                                 [ngClass]="{'is-invalid': submitted && field.description.errors}" [(ngModel)]="holiday.description">
+                                 <div *ngIf="submitted && field.description.errors" class="invalid-feedback">
+                                    <div *ngIf="field.description.errors">Description is Required</div>
+                                 </div>
+                             </div>
+                            </div>
+                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group">
+                             <label>Year</label>
+                            </div>
+                            <div class="form-row">
+                             <div class="col">
+                                 <input type="number" formControlName="year" class="form-control" name="" id=""
+                                 [ngClass]="{'is-invalid':submitted && field.year.errors}" [(ngModel)]="holiday.year">
+                                 <div *ngIf="submitted && field.year.errors" class="invalid-feedback">
+                                    <div *ngIf="field.year.errors">Year is Required</div>
+                                 </div>
+                             </div>
+                            </div>
+                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group">
+                             <label>Location</label>
+                            </div>
+                            <div class="form-row">
+                             <div class="col">
+                                 <input type="text" formControlName="workLocation" class="form-control" name="" id=""
+                                 [ngClass]="{'is-invalid': submitted && field.workLocation.errors}" >
+                                 <div *ngIf="submitted && field.workLocation.errors" class="invalid-feedback" [(ngModel)]="holiday.workLocation">
+                                    <div *ngIf="field.workLocation.errors">WorkLocation is Required</div>
+                                 </div>
+                             </div>
+                            </div>
+                         </div>
+                         <div class="form-row mt-4">
+                            <div class="row">
+                                <div class="col" id="btn">
+                                    <button type="button" class="btn btn-primary" (click)="addLeave()">Add</button>
+                                    <button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
+                                </div>
+                            </div>
+                         </div>
                     </div>
-                   </div>
                 </div>
-                <div class="col-md-12">
-                   <div class="form-group">
-                    <label>Description</label>
-                   </div>
-                   <div class="form-row">
-                    <div class="col">
-                        <input type="text" formControlName="description" class="form-control" name="" id="" >
-                    </div>
-                   </div>
-                </div>
-                <div class="col-md-12">
-                   <div class="form-group">
-                    <label>Year</label>
-                   </div>
-                   <div class="form-row">
-                    <div class="col">
-                        <input type="number" formControlName="year" class="form-control" name="" id="" >
-                    </div>
-                   </div>
-                </div>
-                <div class="col-md-12">
-                   <div class="form-group">
-                    <label>Location</label>
-                   </div>
-                   <div class="form-row">
-                    <div class="col">
-                        <input type="text" formControlName="workLocation" class="form-control" name="" id="" >
-                    </div>
-                   </div>
-                </div>
-                <div class="form-row mt-4">
-                   <div class="col-md-6">
-                       <button type="button" class="btn btn-primary" (click)="addLeave()">Add</button>
-                       <button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
-                   </div>
-                </div>
-           </div>
-       </div>
-    </form>
+             </form>
+        </div>
+    </div>
+</div>
+
+    <!-- <p  *ngIf="successMsg" class="alert alert-success">Update Successfully</p> -->
+<div class="table" *ngIf="show">  
     <div class="col-md-8 mt-4 mb-4">
        <table class="table table-hover">
            <thead>
@@ -70,7 +102,7 @@
                    <th>DESCRIPTION</th>
                    <th>YEAR</th>
                    <th>LOCATION</th>
-                   <th>ACTION</th>
+                   <th *ngIf="true">ACTION</th>
                </tr>
            </thead>
            <tbody>
@@ -79,10 +111,17 @@
                    <td><span>{{item.day}}</span></td>
                    <td><span>{{item.description}}</span></td>
                    <td><span>{{item.year}}</span></td>
-                   <td><span>{{item.location}}</span></td>
-                   <td><button type="button" class="btn btn-primary" (click)="removeLeave(item)">Remove</button> </td>
+                   <td><span>{{item.workLocation}}</span></td>
+                   <td *ngIf="true"><button type="button" class="btn btn-primary" (click)="removeLeave(item)">Remove</button> </td>
                </tr>
+
+               <tr  *ngIf="successMsg" class="alert alert-success">
+                Update Successfully
+               </tr>
+                              
            </tbody>
        </table>
+       <button class="btn btn-primary" (click)="submit()">Submit</button>
     </div>
+    <!-- <button type="button" class="btn btn-danger" (click)="back()" title="Back"><i class="bi bi-box-arrow-in-right"></i></button> -->
    </div>

@@ -34,9 +34,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { IntlInputPhoneModule } from 'intl-input-phone';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
+import { ChangeNumberComponent } from './change-number/change-number.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
 import { HistoryComponent } from './history/history.component';
 
@@ -60,7 +58,7 @@ import { HistoryComponent } from './history/history.component';
     ChangePasswordComponent,
     HolidaysComponent,
     LmsPageComponent,
-
+    ChangeNumberComponent,
     FrontpageComponent,HistoryComponent
       
   
@@ -88,7 +86,7 @@ import { HistoryComponent } from './history/history.component';
     MatTabsModule,MatInputModule,
     MatFormFieldModule,
     Ng2TelInputModule,IntlInputPhoneModule,MatSortModule
-   ,IntlInputPhoneModule,NgxIntlTelInputModule,BsDropdownModule.forRoot(),
+   ,IntlInputPhoneModule
 
   ],
   providers: [],

@@ -1,11 +1,16 @@
-.container{
-    margin-top: 20px;
-    background-color:#CFA5B4;
-    border: 1px solid rgb(131, 68, 82);
-    border-radius: 15px;
+.formbox{
+    margin-top: 60px;
+    background-color:#ffffff;
+    margin-left: 20px;
+    margin-right: 20px;
+    /* border: 1px solid rgb(131, 68, 82); */
+    border-radius: 5px;
     color:black;
     align-items: center;
+    padding: 10px;
     justify-content: center;
+    box-shadow: 0px 0px 20px 1px black;
+    
 }
 .row{
     margin: 20px;
@@ -15,22 +20,43 @@ h2{
     color: black;
     font-weight: bold;
 }
+/* .container{
+  box-shadow: 0 0 10px rgba(0, 0, 0,0.4);
+    box-shadow: 0 2px 15px rgba(0, 0, 0,0.4);   
+} */
 .btn{
     margin-bottom: 20px;
-}
-label{
-    
-}
-input{
-    width: 200px;
-    height: 30px;
-    margin: 20px;
-    border-radius: 5px;
-    border-color: rgb(135, 173, 222);
 }
 /* .profile{
     background-color:#B7C3F3;
     width: 75%;
     margin-left: 150px;
 } */
-
+/* .changeNumber{
+  margin-left:200px;
+} */
+button{
+  margin: 10px;
+}
+/* Spinner Code */
+.loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #a0a0f1;
+    border-bottom: 10px solid #237f81;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: 47%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
