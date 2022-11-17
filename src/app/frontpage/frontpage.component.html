@@ -8,23 +8,24 @@
     <a class="navbar-brand" href="#"><img src="../assets/cape.png" width="70px" height="80px" alt=""></a>
     <ul class="nav nav-pills" >
       <li class="nav-item">
-        <a class="nav-link text-black-50" href="#">Login</a>
+         <a class="nav-link text-black-50"  [routerLink]="" (click)="loginPage()">Login</a> 
+        <!-- <button class="nav-link text-black-50"[routerLink]="" (click)="loginPage()">login</button> -->
       </li>
       <li class="nav-item" >
         <a class="nav-link text-black-50" href="#about">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-black-50" href="#products">Product & Services</a>
+        <a class="nav-link text-black-50" href="#Products">Product & Services</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-black-50" href="#contact">Contact</a>
+        <a class="nav-link text-black-50" href="#Contact">Contact</a>
       </li>
     </ul>
   </nav>
   <img src="../assets/banner1.png" width="1520px" height="600px" alt="">
   <br>
   <hr>
-  <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
+  <div data-bs-spy="scroll" data-bs-target="#navbar-example2"  id="about" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
     <h4  class="fs-3 fw-bolder lh-lg font-monospace text-center">About</h4>
     <hr>
     <p>Established in 1996 at Kanyakumari. Started to provide reactive power compensation for wind turbines which is a challenging application due to high temperature, harmonics etc. During 1998 we started establishing our business all over India starting with branch offices in Chennai, Delhi and Mumbai. Our international collaborations helped us to establish ourselves as a leader in providing solutions against failure due to transient surges. We have conducted more than 500 seminars all over India for various industries and as a result the subject of Surge Protection became known to the industry. Another industry’s first from CAPE was DC combiner solutions for Solar during 2002. In association with leading German and Spanish manufacturers we specialize in the area of double Insulated electricity distribution solutions for Industries. Our UV resistant and high IP protected panels are accepted and appreciated in the industry due to its advantages of non-corrosive behavior and long life. “SMART BUILDING INFRASTRUCTURE SOLUTIONS” of CAPE and unique in which helps in reducing electrical accidents. Our END to END solution offers, design, product development, manufacturing & supply, installation and testing commissioning and periodic maintenance in the field of electrical safety. <a href="">Join us</a></p>

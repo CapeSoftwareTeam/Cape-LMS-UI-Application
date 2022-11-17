@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-frontpage',
@@ -7,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FrontpageComponent implements OnInit {
 date:any;
-  constructor() { }
+router:any;
+  constructor(private route:Router) { }
 
   ngOnInit(): void {
     this.date = new Date().getFullYear()
+  }
+  loginPage(){
+    this.route.navigate(['/login']);
+
   }
 
 }

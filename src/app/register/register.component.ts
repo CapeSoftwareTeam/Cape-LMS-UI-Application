@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   submitted: boolean = false;
   register = new Register();
   fullDate:any;
-  
+  priyanka:boolean=false;
   RegisterationForm!: FormGroup;
   // Only Accept numbers
   keyPressNumbers(event: any) {
@@ -118,12 +118,13 @@ changevalue(e:any){
     if (this.RegisterationForm.invalid) {
       return
     }
-    let mobileNumber: any
-  mobileNumber = this.register.mobilenumber;
-  this.register.mobilenumber= mobileNumber.Number;
-  debugger
+  //   let mobileNumber: any
+  // mobileNumber = this.register.mobilenumber;
+  // this.register.mobilenumber= mobileNumber.Number;
+  // debugger
     this.registerService.saveForm(this.register).subscribe(
       data => {
+        this.priyanka=true;
         console.log("success")
       },
       error => {
