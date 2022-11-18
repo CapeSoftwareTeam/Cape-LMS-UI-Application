@@ -4,6 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router,ActivatedRoute } from '@angular/router';
 import { Register } from '../models/register';
 import { ProfileserviceService } from '../services/profileservice.service';
+import { ConfigurationOptions, CustomCountryModel, TooltipOptionsEnum } from 'intl-input-phone';
+import { ChangeNumberComponent } from '../change-number/change-number.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -14,8 +17,8 @@ import { ProfileserviceService } from '../services/profileservice.service';
 export class ProfileComponent implements OnInit {
 
   submitted: boolean = false;
-
- 
+  flag: boolean = true;
+  selectedCountryList : CustomCountryModel[] = [];
  successMsg:boolean=false;
 
  register=new Register();
@@ -24,7 +27,7 @@ export class ProfileComponent implements OnInit {
 empid:any;
 
   constructor(private profileService:ProfileserviceService,private fb:FormBuilder,
-    private route:Router) { }
+    private route:Router,private dialog:MatDialog) { }
   profile !:FormGroup;
   ngOnInit(): void {
 
@@ -47,6 +50,7 @@ empid:any;
       manageremail:new FormControl('')
    
      });
+     
      this.empid=sessionStorage.getItem('empid')
  this.profileService.getRegisterDetails(this.empid).subscribe(
   data=>{
@@ -81,6 +85,10 @@ empid:any;
     if (this.profile.invalid) {
       return
     }
+    let mobileNumber: any
+    mobileNumber = this.register.mobilenumber;
+    this.register.mobilenumber= mobileNumber.Number;
+    debugger
     this.profileService.updateRegisterDetails(this.register).subscribe(
       data => {
         this.spinner=true;
@@ -98,8 +106,17 @@ empid:any;
   }
 
 
-  otp(){
+  otp():void{
+   const dialogRef= this.dialog.open(ChangeNumberComponent,
+      {
+      width: '500px',
+      height: '350px',
+      disableClose: true,
 
+});
+dialogRef.afterClosed().subscribe(data=>{
+  console.log("its closed")
+})
   }
 
   profileCancel(){

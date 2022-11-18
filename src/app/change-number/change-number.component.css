@@ -11,12 +11,14 @@ form{
     margin-left: 70px;
 }
 h2{
-    margin-left: 80px;
-    
+    margin-left: 80px; 
 }
 #btn{
     margin: 10px;
 }
 .card{
 box-shadow: 0 0 15px rgba(0, 0, 0,0.4);
+}
+#button{
+    margin-top: 20px;
 }

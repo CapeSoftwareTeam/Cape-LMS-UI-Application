@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators,FormControlName } from '@angular/for
 import { Router } from '@angular/router';
 import { Holiday } from '../models/holiday';
 import { HolidayservicesService } from '../services/holidayservices.service';
+import { MatSelectModule } from '@angular/material/select';
+
+
 
 @Component({
   selector: 'app-holidays',
@@ -11,6 +14,8 @@ import { HolidayservicesService } from '../services/holidayservices.service';
 })
 export class HolidaysComponent implements OnInit {
  
+  spinner:boolean=false;
+  blurMode:boolean=false;
   submitted:boolean=false;
   holidays:FormGroup;
   holidaysAdd!: FormGroup;
@@ -19,6 +24,8 @@ export class HolidaysComponent implements OnInit {
   successMsg:boolean=false;
   showForm:boolean=false;
   holiday=new Holiday();
+  weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
 
   constructor( private formBuilder : FormBuilder,private holidaysService:HolidayservicesService,
     private route:Router) { 
@@ -58,10 +65,13 @@ export class HolidaysComponent implements OnInit {
    this.holidaysService.saveLeave(this.ListData).subscribe(data=>
     {
       this.successMsg=true;
+      this.spinner=true;
+      this.blurMode=true;
       setTimeout(()=>{
           this.successMsg=false;
+          this.spinner=false;
+          this.blurMode=false;
           this.ngOnInit();
-
       },3000)
     
     })
@@ -80,13 +90,18 @@ export class HolidaysComponent implements OnInit {
     });
    }
 
+   Datechng(event:any){
+   
+     this.holiday.day = this.weekday[event.target.valueAsDate.getDay()];
+     this.holiday.year =  event.target.valueAsDate.getFullYear();
+   }
 
   ngOnInit(): void {
     
   }
   // Back Button
   // back(){
-  //   this.route.navigate(['/lmspage'])
+  //   this.route.navigate(['/home'])
   // }
   
   get field():any{

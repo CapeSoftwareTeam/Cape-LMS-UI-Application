@@ -10,14 +10,14 @@
 /* input{
     border: 1px solid black;
 } */
-.container{
-    margin: 20x;
-    width: 600px;
+ .container{
+    margin-top: 60px;
     top:10px;
-    justify-items: center;
-}
+    /* justify-items: center; */
+} 
 h2{
-    margin-left: 160px;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
 }
 .card{
@@ -29,7 +29,7 @@ h2{
     justify-content:center;
 }
 #btn{
-    margin-left:100px;
+    margin-left:120px;
 }
 .btn-submit{
     background-color:skyblue;
@@ -48,3 +48,28 @@ p{
     position: relative;
     left:390px;
 }
+
+
+
+/* Spinner Code */
+.loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #a0a0f1;
+    border-bottom: 10px solid #237f81;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: 47%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

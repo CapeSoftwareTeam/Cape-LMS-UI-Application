@@ -1,0 +1,58 @@
+
+    <div class="row">
+        <h2>Public Holidays</h2>
+    </div>
+    <div class="row" id="filter">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. UsingFilter" #input>
+    </div>
+    
+<div class="mat-elevation-z8" class="container">
+    <table mat-table [dataSource]="dataSource" class="table table-hover">
+  
+         <!-- Symbol Column -->
+         <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef class="thead"> DESCRIPTION </th>
+          <td mat-cell *matCellDef="let element" class="table-info"> {{element.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef class="thead"> LOCATION </th>
+          <td mat-cell *matCellDef="let element" class="table-info"> {{element.workLocation}} </td>
+        </ng-container>
+      <!-- Position Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef class="thead"> DATE </th>
+        <td mat-cell *matCellDef="let element" class="table-info"> {{element.date}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="day">
+        <th mat-header-cell *matHeaderCellDef class="thead"> DAY </th>
+        <td mat-cell *matCellDef="let element" class="table-info"> {{element.day}} </td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <!-- <ng-container matColumnDef="year">
+        <th mat-header-cell *matHeaderCellDef class="thead"> YEAR </th>
+        <td mat-cell *matCellDef="let element" class="table-info"> {{element.year}} </td>
+      </ng-container>
+   -->
+   
+
+    
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div class="row" id="btn">
+      <button type="button" class="btn btn-danger" (click)="back()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
+  </div>
+  
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+
+  </div>
+  

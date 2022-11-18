@@ -12,9 +12,11 @@
                               </span>
                          </div>
                         <input type="text" class="form-control" formControlName="mobileNumber"  
-                        [ngClass]="{'is-invalid': submitted && field.mobileNumber.errors}">
+                        [ngClass]="{'is-invalid': submitted && field.mobileNumber.errors}" placeholder="Enter Mobile Number">
                         <div *ngIf=" submitted && field.mobileNumber.errors" class="invalid-feedback">
                             <div *ngIf=" field.mobileNumber.errors">Mobile Number is Required</div>
+                            <div *ngIf="field.mobileNumber.errors?.['min']">Enter 10 Digit Number</div>
+                            <div *ngIf="field.mobileNumber.errors?.['max']">Enter 10 Digit Number</div>
                         </div> 
                         
                     </div>
@@ -35,10 +37,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12" id="button">
-                        <button type="button" id="btn" class="btn btn-primary">Generate</button>
+                <div class="row" id="button"> 
+                    <div class="col" >
+                        <button type="button"  class="btn btn-primary">Generate</button>
+                    </div>
+                    <div class="col">
                         <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+                    </div>
+                        <div class="col">
+                        <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
                     </div>
                 </div>
             </form>

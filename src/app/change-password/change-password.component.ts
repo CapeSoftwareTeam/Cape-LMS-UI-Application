@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -12,7 +13,8 @@ export class ChangePasswordComponent implements OnInit {
   changePasswordForm=new FormGroup({
     newpassword:new FormControl('')
   });
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder,
+) { }
 
   ngOnInit(): void {
         this.changePasswordForm= this.fb.group({

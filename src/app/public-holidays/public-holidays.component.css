@@ -1,0 +1,34 @@
+.container{
+   
+}
+.table{
+    box-shadow: 0 0 15px rgba(0, 0, 0,0.4);
+}
+table {
+    width: 100%;
+  margin-top: 60px;
+  }
+  .thead{
+    justify-content: center;
+    font-size: x-large;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+.col{
+    margin-left: 40px;
+    margin-top:50px;
+    display: inline;
+}  
+ 
+ #btn{
+    margin-left:90%;
+    margin-top:40px;
+    width: 100px;
+ } 
+ h2{
+  margin-left:80px;
+  margin-top: 20px;
+ }
+ #filter{
+  margin-left:80%;
+}

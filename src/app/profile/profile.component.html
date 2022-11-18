@@ -131,9 +131,12 @@
                                         <i class="bi bi-telephone-fill"></i>                                  
                                       </span>
                                  </div>
-                                 
+                                 <!-- <intl-input-phone  formControlName="mobilenumber" [(ngModel)]="register.mobilenumber" >
+
+                                 </intl-input-phone> -->
+
                                 <input class="form-control" type="text" formControlName="mobilenumber" [(ngModel)]="register.mobilenumber"
-                                [ngClass]="{'is-invalid': submitted && field.mobilenumber.errors}" (change)=" keyPressNumbers($event)">
+                                [ngClass]="{'is-invalid': submitted && field.mobilenumber.errors}" >
                                 <div *ngIf="submitted && field.mobilenumber.errors" class="invalid-feedback">
                                     <div *ngIf="field.mobilenumber.errors">Mobile number field is required</div>
                                     <div *ngIf="field.mobilenumber.errors?.['min']">Enter 10 Digit Number</div>
@@ -240,7 +243,7 @@
                                 </span>
                             </div>
                             <input class="form-control" type="number" name="" id="" formControlName="totalexperience" [(ngModel)]="register.totalexperience"
-                            [ngClass]="{'is-invalid': submitted && field.totalexperience.errors}">
+                            [ngClass]="{'is-invalid': submitted && field.totalexperience.errors}" readonly>
                             <div *ngIf="submitted && field.totalexperience.errors" class="invalid-feedback">
                                 <div *ngIf="field.totalexperience.errors">Total Experience field is required</div>
                             </div>

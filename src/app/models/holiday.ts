@@ -3,7 +3,7 @@ export class Holiday {
     date!:Date;
     description!:String;
     day!:String;
-    year!:number;
+    year!:any;
     workLocation!:String;
 
 
