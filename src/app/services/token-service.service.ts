@@ -13,16 +13,15 @@ export class TokenServiceService implements HttpInterceptor{
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // if(sessionStorage.getItem("token") ==null || !this.loginService.isLogin){
-      let profileService=this.injector.get(ProfileserviceService);
-      let tokenzedReq=req.clone({
-        setHeaders:{
-          Authorization:`Bearer ${profileService.getToken()} `
-        }
-      
-      })
-        
-    return next.handle(tokenzedReq);
-    // }
-    //   return next.handle(req);
-  }
+      if(sessionStorage.getItem("token") !=null){
+        let profileService=this.injector.get(ProfileserviceService);
+        let tokenzedReq=req.clone({
+          setHeaders:{
+            Authorization:`Bearer ${profileService.getToken()} `
+          }
+        })
+      return next.handle(tokenzedReq);
+      }
+        return next.handle(req);
+    }
 }

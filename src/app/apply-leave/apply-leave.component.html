@@ -1,4 +1,4 @@
-<form [formGroup]="postleave">
+<form [formGroup]="postleave" >
   <div class="container">
     <div class="card" style="margin-top:30px">
       <div class="card-body">
@@ -40,9 +40,16 @@
           <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
               <label><b>Date From:</b> </label></div>
               <div class="col-7">
-                <input class="formcontrol" type="date" formControlName="todate"
-                style="height: 40px;float: left;width: 75%;margin-top: 6px;"
-                min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date">
+                <!-- <mat-form-field>
+                <input matInput [matDatepicker]="picker" [matDatepickerFilter]="weekendsDatesFilter" 
+                placeholder="Choose a date">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker ></mat-datepicker>
+</mat-form-field> -->
+                <input class="formcontrol" type="date" formControlName="fromdate"
+                style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate">
+                <input type="submit" (click)="getfirstnumber()">
+                <!-- min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date"> -->
                 <!-- <mat-form-field appearance="fill">
                   <input matInput [matDatepicker]="dtAdm" [matDatepickerFilter]="myDateFilter" formControlName="dateOfAdmission">
                   <mat-datepicker-toggle matSuffix [for]="dtAdm"></mat-datepicker-toggle>
@@ -58,25 +65,25 @@
             </div>
             <div class="col-7">
               <input class="formcontrol" type="date" formControlName="todate"
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;">
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate">
+              <input type="submit" (click)="getsecondnumber()">
             </div>
           </div>
-        <!-- </div> -->
+        <!-- </div>focusout -->
 <br>
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;" >
               <label><b>Number of days: </b></label>
             </div>
               <div class="col-7">
-              <input class="formcontrol" type="text" formControlName="noofdays"
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;">
+              <input class="formcontrol" type="text" formControlName="noofdays" value={{difference}}
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly>
             </div>
           </div>
  <br>
 
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6"  style="float: left;width: 25%;margin-top: 6px;">
-
               <label><b>Leave Reason: </b></label></div>
               <div class="col-7">
               <textarea formControlName="reasonforapply"
@@ -88,7 +95,6 @@
         <hr>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
-
             <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()">Cancel</button>
             <button type="button" class="btn btn-primary">Save changes</button>
              <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
@@ -97,6 +103,8 @@
       </div>
 <br>
     </div>
+   
+    
 
   <!-- <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
   <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here

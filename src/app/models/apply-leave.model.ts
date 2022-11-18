@@ -23,4 +23,6 @@ export class ApplyLeave {
   createdby!: String;
   approveddate!: Date;
   approvedby!: String;
+  managername!:String
+  designation!:String
 }

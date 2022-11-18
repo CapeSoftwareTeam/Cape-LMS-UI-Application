@@ -57,17 +57,7 @@ export class LeaveStatusComponent implements OnInit {
     );
 
   }
-  submit() {
-    console.log("Apply")
-  }
-  // if(this.empid.equalsIgnoreCase("user")){
-  //   this.enableSubmit=true;
-  //   this.enableApprove=false;
-  // }
-  // else{
-  //   this.enableApprove=true;
-  //   this.enableSubmit=false;
-  // }
+
 
   getpendingData() {
     this.statusservice.getUpdates(this.empId).subscribe(
@@ -87,14 +77,23 @@ export class LeaveStatusComponent implements OnInit {
       }
     );
   }
-  editOption() {
-    this.statusservice.getUpdates(this.empId).subscribe(
-      data => {
+  // editOption() {
+  //   this.statusservice.getUpdates(this.empId).subscribe(
+  //     data => {
 
-        for (let fetch of JSON.parse(data)) {
+  //       for (let fetch of JSON.parse(data)) {
 
-        }
-      });
+  //       }
+  //     });
+  // }
+  user(){
+     console.log('user');
+ 
+  
+  }
+  admin(){
+    console.log('admin')
+    this.getpendingData();
   }
   back() {
     this.route.navigate(['/home']);

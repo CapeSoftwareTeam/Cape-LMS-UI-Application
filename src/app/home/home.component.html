@@ -1,4 +1,5 @@
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8" 
+[ngStyle]="{'filter': (blurMode ? 'blur(2px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}" >
   <mat-toolbar style="background-color:rgb(64, 177, 221);">
 
     <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
@@ -13,12 +14,22 @@
           matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
           notifications</mat-icon>
       </button>
-      <button mat-button style='color:rgb(0, 0, 7);' (click)="callProfile()">
-        <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;'>person</mat-icon>
+      <div class="dropdown">
+        <button mat-button style='color:rgb(0, 0, 7);' data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+          <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;'>person</mat-icon>
         <b style="font-size: 16px;">
           {{empid}}
         </b>
-      </button>
+        </button>
+        <div class="dropdown-menu" role="menu">
+          <span class="caret"></span>
+        <span class="sr-only">Split button!</span>
+          <mat-nav-list>
+            <a mat-list-item (click)="callProfile()">Profile</a>
+            <a mat-list-item (click)="signout()">Log Out</a>
+          </mat-nav-list>
+        </div>
+    </div>
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-tab-group [selectedIndex]="selected.value"
@@ -46,33 +57,36 @@
       <h1 *ngIf="tabName == 'Time Schedule'"> Time Schedule </h1>
     </div>style="justify-content: center;" text-decoration: underline;-->
 
-      <div class="sidebar">
+      <div class="sidebar" *ngIf="tabName == 'Leave Management Systems'">
         <br>
         <div class="avatar" data-label="" id="avatar" style="justify-content: center;
         text-align: center;padding: 27px;margin-left: 38px">
           </div>
        <br>
        <br>
-        <h4 style="justify-content: center;text-align: center;">  {{name}}</h4>
+               <h4 style="justify-content: center;text-align: center;">  {{name}}</h4>
         <h6 class="text-muted" style="justify-content: center;text-align: center;"> {{department}} - {{designation}}</h6>
         <hr>
-        <button type="button" class="btn btn-light" style="cursor: pointer; "
-          (click)="termsCondition(termsContent)">Leave Policy</button>
-        <button type="button" class="btn btn-light" routerlink="/holidays" (click)="callHolidays()"> public Holidays </button>
-        <button type="button" class="btn btn-light" routerlink="/history" (click)="callApplyLeave()"> Apply Leave </button>
-        <button type="button" class="btn btn-light" routerlink="/history" (click)="callHistory()"> My History </button>
-        <button type="button" class="btn btn-light" routerlink="/history"> Tracking History </button>
-        <button type="button" class="btn btn-light" routerlink="/register" (click)="callRegister()"> Add Employee </button>
-        <!-- <button type="button" class="btn btn-light" routerlink="/history"> Update-Employee details </button> -->
-
-
+        <mat-nav-list>
+          <a mat-list-item (click)="termsCondition(termsContent)">Leave Policy</a>
+          <a mat-list-item (click)="callHolidays()">Public Holidays</a>
+          <a mat-list-item (click)="callApplyLeave()">Apply Leave</a>
+          <a mat-list-item (click)="callHistory()">My History</a>
+          <hr>
+          <a mat-list-item >Add holidays</a>
+          <a mat-list-item (click)="callRegister()">Add Employee</a>
+          <hr>
+          <button type="button" class="btn btn-light" (click)="signout()">
+            <i class="fa fa-sign-out" style="font-size:30px"></i></button>
+        </mat-nav-list>
+ 
       </div>
       <div class="content" mat-elevation-z8>
- <app-apply-leave *ngIf="apply"></app-apply-leave>
-    <app-holidays *ngIf="holidays"></app-holidays>
-    <app-lms-page *ngIf="lmspage"></app-lms-page>
+ 
+    <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
+    
     <!-- <app-leave-status *ngIf="leavestatus"></app-leave-status> -->
-    <!-- <app-history></app-history> -->
+  <!-- <app-history></app-history> -->
   </div>
     </mat-tab>
   </mat-tab-group>
@@ -219,7 +233,7 @@
 
   </mat-sidenav-container>
 </div> -->
-<script>
+<!-- <script>
   const avatars = document.querySelectorAll(".avatar");
     avatars.forEach(a => {
       const charCodeRed = a.dataset.label.charCodeAt(0);
@@ -230,4 +244,11 @@
       const blue = (red + green) % 200;
       a.style.background = 'rgb(${red}, ${green}, ${blue}';
     });
-</script>
+</script> -->
+<!-- <p> Goodbye</p>-->
+<div class="spinner" id="spinner" *ngIf="spinner">
+  <div class="dot1"></div>
+  <div class="dot2"></div>
+
+</div> 
+

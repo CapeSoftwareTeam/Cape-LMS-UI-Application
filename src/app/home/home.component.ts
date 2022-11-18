@@ -16,9 +16,11 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  blurMode:boolean=false;
+  spinner:boolean=false;
   apply:boolean=false;
   holidays:boolean=false;
-  lmspage:boolean=false;
+  lmspage:boolean=true;
   enableTs: boolean = false;
   OpenApplyLeave: boolean = false;
   enableNavBar: boolean = false;
@@ -37,7 +39,6 @@ export class HomeComponent implements OnInit {
   modalReference: any;
   loading: boolean = false;
   isChecked: boolean = false;
-  //  namelist=[{name:'sangeetha'},{name:'shinchan'},{name:'dora'},{name:'jackie chan'}];
   year: String = '';
   remainingcl: String = '';
   remainingsl: String = '';
@@ -47,6 +48,7 @@ export class HomeComponent implements OnInit {
   designation: String = '';
   leavestatus:boolean=false;
   initials: String='';
+
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
@@ -136,18 +138,10 @@ export class HomeComponent implements OnInit {
     this.route.navigate(['/leavestatus']);
   }
   callApplyLeave(){
-    this.holidays=false;
-    this.lmspage=false;
-    this.apply=true;
-
-    // this.route.navigate(['/applyleave']);
+     this.route.navigate(['/applyleave']);
   }
   callHolidays(){
-    this.holidays=true;
-    this.lmspage=false;
-    this.apply=false;
-
-    // this.route.navigate(['/holidays']);
+     this.route.navigate(['/holidays']);
   }
   callHistory(){
     this.route.navigate(['/history']);
@@ -157,8 +151,6 @@ export class HomeComponent implements OnInit {
   }
 
   getSelectedindex(event: any) {
-    console.log(event);
-
     this.tabName = this.tabs[event];
 
   }
@@ -197,6 +189,16 @@ export class HomeComponent implements OnInit {
   // }
 
   //   }
-
-
+  signout(){
+    // this.blurMode=true
+    this.spinner=true;
+    this.blurMode=true;
+    setTimeout(() => {  
+      this.blurMode=false;
+      this.spinner=false;
+      this.route.navigate(['/login']);
+  }, 5000);
+    
+ 
+  }
 }

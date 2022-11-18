@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="row" style="margin-top:25px">
+  <div class="row" style="margin-top:25px;margin-left:30px">
     <div class="col-md-2">
       <div class="card">
         <div class="card-header">
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="card-footer">
-          {{remainingcl}} remaining
+          {{remainingcl}} days remaining
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="card-body">
           <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+            <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" style="width:40%"></div>
           </div>
         </div>
         <div class="card-footer">
@@ -43,7 +43,7 @@
         </div>
         <div class="card-body">
           <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width:40%"></div>
           </div>
         </div>
         <div class="card-footer">
@@ -55,12 +55,13 @@
       <div class="card">
         <div class="card-header">
           <h6>NO of days taken</h6>
-          <h3 style="font-size:large"><strong>Bereavement leave</strong></h3>
+          
+          <h3 style="font-size:111%"><strong>Bereavement leave</strong></h3>
           <h5> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body">
           <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+            <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" style="width:40%"></div>
           </div>
         </div>
         <div class="card-footer">
@@ -77,7 +78,7 @@
         </div>
         <div class="card-body">
           <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width:40%"></div>
           </div>
         </div>
         <div class="card-footer">
@@ -91,9 +92,42 @@
     Leave</button> -->
 
 </div>
-
-
-
+<!-- <div class="content">
+<div class="mat-grid-container">
+  <mat-grid-list >
+    <div class="card" cols="2" rowHeight="340px">
+      <div class="card-header">
+        <h6>NO of days taken</h6>
+        <h3 style="font-size:large"><strong>Casual leave</strong></h3>
+        <h5> Jan {{year}} - Dec {{year}}</h5>
+      </div>
+      <div class="card-body">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+        </div>
+      </div>
+      <div class="card-footer">
+        {{remainingcl}} days remaining
+      </div>
+    
+   
+      <div class="card-header">
+        <h6>NO of days taken</h6>
+        <h3 style="font-size:large"><strong>Sick leave</strong></h3>
+        <h5> Jan {{year}} - Dec {{year}}</h5>
+      </div>
+      <div class="card-body">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" style="width:40%"></div>
+        </div>
+      </div>
+      <div class="card-footer">
+        {{remainingsl}} remaining
+      </div>
+    </div>
+  </mat-grid-list>
+</div>
+</div> -->
 
 
 
