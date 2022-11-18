@@ -12,7 +12,7 @@ export class HistoryService {
   constructor(private http: HttpClient) { }
 
   getHistory():Observable<any> {
-    return this.http.get<any>(this.apiurl+'/history',{responseType: 'text' as 'json'});
+    return this.http.get<any>(this.apiurl+'/getHistory',{responseType: 'text' as 'json'});
   }
 
   deleteHistory(historyId:any):Observable<any>{
@@ -21,5 +21,13 @@ export class HistoryService {
   }
   getHistory1(empid:any):Observable<any>{
     return this.http.get<any>(this.apiurl+'/history2'+'/' + empid, {responseType: 'text' as 'json'});
+  }
+
+  getHistoryBasedOnUser(empid:any):Observable<any>{
+    return this.http.get<any>(this.apiurl+'/getHistoryBasedOnUser'+'/' + empid, {responseType: 'text' as 'json'});
+  }
+
+  getHistoryBasedOnRole(role:any):Observable<any>{
+    return this.http.get<any>(this.apiurl+'/getHistoryBasedOnRole'+'/' + role, {responseType: 'text' as 'json'});
   }
 }
