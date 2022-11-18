@@ -24,9 +24,7 @@ export class RegisterserviceService {
     return this.http.put<any>( this.apiurl+'/deleteRegister' + '/' +id, {responseType: 'text' as 'json'});
   }
   getMemberDetails(empid:String):Observable<any>{
-
     return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
-
   }
   // updateForm():Observable<any>{
   //   return this.http.update<any>('/update',{responseType:'text' as 'json'});

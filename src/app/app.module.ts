@@ -95,7 +95,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     Ng2TelInputModule,IntlInputPhoneModule,MatSortModule,
     MatMenuModule,
     MatDialogModule
-
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

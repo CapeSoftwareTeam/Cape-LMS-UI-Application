@@ -88,8 +88,7 @@ export class LeaveStatusComponent implements OnInit {
   // }
   user(){
      console.log('user');
- 
-  
+     this.getpendingData();
   }
   admin(){
     console.log('admin')

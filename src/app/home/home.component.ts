@@ -141,7 +141,10 @@ export class HomeComponent implements OnInit {
      this.route.navigate(['/applyleave']);
   }
   callHolidays(){
-     this.route.navigate(['/holidays']);
+     this.route.navigate(['/publicholidays']);
+  }
+  calleditholidays(){
+    this.route.navigate(['/holidays'])
   }
   callHistory(){
     this.route.navigate(['/history']);
@@ -198,7 +201,6 @@ export class HomeComponent implements OnInit {
       this.spinner=false;
       this.route.navigate(['/login']);
   }, 5000);
-    
- 
+  
   }
 }

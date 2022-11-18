@@ -36,7 +36,8 @@ export class ApplyLeaveComponent implements OnInit {
   postleave !: FormGroup;
 
   ngOnInit(): void {
-    this.postleave = new FormGroup({
+    
+  this.postleave = new FormGroup({
       leaveType: new FormControl(''),
       noofdays: new FormControl(''),
       fromdate: new FormControl(''),

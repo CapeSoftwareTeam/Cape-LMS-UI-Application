@@ -15,20 +15,18 @@
           notifications</mat-icon>
       </button>
       <div class="dropdown">
-        <button mat-button style='color:rgb(0, 0, 7);' data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+        <button mat-button style='color:rgb(0, 0, 7);' data-toggle="dropdown" class="btn btn-default dropdown-toggle"
+        [matMenuTriggerFor]="menu">
           <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;'>person</mat-icon>
         <b style="font-size: 16px;">
           {{empid}}
         </b>
         </button>
-        <div class="dropdown-menu" role="menu">
-          <span class="caret"></span>
-        <span class="sr-only">Split button!</span>
-          <mat-nav-list>
-            <a mat-list-item (click)="callProfile()">Profile</a>
-            <a mat-list-item (click)="signout()">Log Out</a>
-          </mat-nav-list>
-        </div>
+        <mat-menu #menu="matMenu">    
+          <button mat-menu-item (click)="callProfile()">Profile</button>    
+          <button mat-menu-item (click)="signout()">Log out</button> 
+        </mat-menu>
+  
     </div>
     </mat-toolbar-row>
   </mat-toolbar>
@@ -73,20 +71,18 @@
           <a mat-list-item (click)="callApplyLeave()">Apply Leave</a>
           <a mat-list-item (click)="callHistory()">My History</a>
           <hr>
-          <a mat-list-item >Add holidays</a>
+          <a mat-list-item (click)="calleditholidays()">Add holidays</a>
           <a mat-list-item (click)="callRegister()">Add Employee</a>
           <hr>
-          <button type="button" class="btn btn-light" (click)="signout()">
-            <i class="fa fa-sign-out" style="font-size:30px"></i></button>
+          <!-- <button type="button" class="btn btn-light" (click)="signout()">
+            <i class="fa fa-sign-out" style="font-size:30px"></i></button> -->
         </mat-nav-list>
  
       </div>
       <div class="content" mat-elevation-z8>
  
     <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
-    
-    <!-- <app-leave-status *ngIf="leavestatus"></app-leave-status> -->
-  <!-- <app-history></app-history> -->
+  
   </div>
     </mat-tab>
   </mat-tab-group>
@@ -249,6 +245,5 @@
 <div class="spinner" id="spinner" *ngIf="spinner">
   <div class="dot1"></div>
   <div class="dot2"></div>
-
 </div> 
 
