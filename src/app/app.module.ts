@@ -39,7 +39,9 @@ import { FrontpageComponent } from './frontpage/frontpage.component';
 import { HistoryComponent } from './history/history.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenServiceService } from './services/token-service.service';
-
+import { PublicHolidaysComponent } from './public-holidays/public-holidays.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -61,7 +63,8 @@ import { TokenServiceService } from './services/token-service.service';
     HolidaysComponent,
     LmsPageComponent,
     ChangeNumberComponent,
-    FrontpageComponent,HistoryComponent
+    FrontpageComponent,HistoryComponent,
+    PublicHolidaysComponent
 
    
       
@@ -89,8 +92,9 @@ import { TokenServiceService } from './services/token-service.service';
     MatListModule,
     MatTabsModule,MatInputModule,
     MatFormFieldModule,
-    Ng2TelInputModule,IntlInputPhoneModule,MatSortModule
-   ,IntlInputPhoneModule
+    Ng2TelInputModule,IntlInputPhoneModule,MatSortModule,
+    MatMenuModule,
+    MatDialogModule
 
   ],
   providers: [{
