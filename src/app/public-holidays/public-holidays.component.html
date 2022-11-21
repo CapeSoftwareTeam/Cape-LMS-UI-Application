@@ -1,7 +1,5 @@
-
-    <div class="row">
         <h2>Public Holidays</h2>
-    </div>
+  
     <div class="row" id="filter">
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. UsingFilter" #input>
@@ -21,8 +19,8 @@
           <td mat-cell *matCellDef="let element" class="table-info"> {{element.workLocation}} </td>
         </ng-container>
       <!-- Position Column -->
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef class="thead"> DATE </th>
+      <ng-container matColumnDef="date" >
+        <th mat-header-cell *matHeaderCellDef class="thead" > DATE </th>
         <td mat-cell *matCellDef="let element" class="table-info"> {{element.date}} </td>
       </ng-container>
   
