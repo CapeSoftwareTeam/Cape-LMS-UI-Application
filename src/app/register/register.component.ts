@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   priyanka:boolean=false;
   RegisterationForm!: FormGroup;
   Empid:any;
+  countryCode:any;
 
   // Only Accept numbers
   keyPressNumbers(event: any) {
@@ -54,6 +55,7 @@ export class RegisterComponent implements OnInit {
   )
 
    }
+  
     
   
   constructor(private formBuilder: FormBuilder,
@@ -82,7 +84,7 @@ export class RegisterComponent implements OnInit {
       manageremail: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     })
    
-    
+    this.countryCode='91';
     
 
   }
@@ -141,15 +143,13 @@ changevalue(e:any){
 }
 
   submitFunction() {
-    //validation trigger
+  
     this.submitted = true;
     if (this.RegisterationForm.invalid) {
       return
     }
-  //   let mobileNumber: any
-  // mobileNumber = this.register.mobilenumber;
-  // this.register.mobilenumber= mobileNumber.Number;
-  // debugger
+  this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
+  this.register.alternatenumber='+'+ this.countryCode +'-'+ this.RegisterationForm.value.alternate
     this.registerService.saveForm(this.register).subscribe(
       data => {
         this.priyanka=true;
