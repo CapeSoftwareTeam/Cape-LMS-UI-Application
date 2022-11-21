@@ -17,6 +17,8 @@ export class RegisterComponent implements OnInit {
   fullDate:any;
   priyanka:boolean=false;
   RegisterationForm!: FormGroup;
+  Empid:any;
+
   // Only Accept numbers
   keyPressNumbers(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
@@ -28,6 +30,32 @@ export class RegisterComponent implements OnInit {
       return true;
     }
   }
+  empid(event: any){
+   this.Empid=this.register.empid;
+   let tempArr : any=[];
+
+
+   this.registerService.getEmpid().subscribe(
+    data => {
+     tempArr = JSON.parse(data);
+     for(let j of tempArr){
+      if(j.empid==this.Empid){
+        console.log("empid registered")
+      }
+      else{
+        console.log("bug")
+      }
+     }
+      
+    },
+    error => {
+      console.log("empid err")
+    }
+  )
+
+   }
+    
+  
   constructor(private formBuilder: FormBuilder,
     private registerService: RegisterserviceService
   ) { }

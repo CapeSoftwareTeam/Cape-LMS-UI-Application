@@ -14,8 +14,8 @@ export class RegisterserviceService {
   constructor(private http: HttpClient )
 
   { }
-  getForm(empId:any):Observable<any> {
-    return this.http.get<any>(this.apiurl+'/getRegister' + '/' +empId,{responseType: 'text' as 'json'});
+  getForm(empid:any):Observable<any> {
+    return this.http.get<any>(this.apiurl+'/getRegister' +'/'+empid,{responseType: 'text' as 'json'});
   }
   saveForm(register: Register):Observable<any> {
     return this.http.post<any>(this.apiurl+'/addRegister',register,{responseType: 'text' as 'json'});
@@ -37,7 +37,11 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
 //})
  
   }
-}
+  getEmpid():Observable<any>{
+       return this.http.get<any>(this.apiurl+ '/empid' +   {responseType: 'text' as 'json'})
+     }
+  }
+
 
 
 

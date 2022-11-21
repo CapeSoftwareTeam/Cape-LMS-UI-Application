@@ -7,7 +7,7 @@
                                 <div class="col-md-4">
                                         <label class="form-label">Employee Id</label>
                                         <div class="input-group">
-                                               
+                                        
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                             <i class="bi bi-file-person"></i>
@@ -15,11 +15,13 @@
                                                         </span>
                                                         
                                                      </div>
-                                                <input type="text" name="empid" class="form-control" formControlName="empid"
+                                                <input type="text" name="empid" (focusout)="empid($event)"  class="form-control" formControlName="empid"
                                                         [(ngModel)]="register.empid"
                                                         [ngClass]="{ 'is-invalid': submitted && field.empid.errors }">
                                                 <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
                                                         <div *ngIf="field.empid.errors">Employee id is required</div>
+                                                        <!-- <p *ngIf="emp">Employee id is already exists</p> -->
+                                                       
                                                 </div>
                                         </div>
                                 </div>
@@ -115,7 +117,7 @@
                                                                 <i class="bi bi-telephone-forward-fill"></i>
                                                         </span>
                                                      </div>
-                                                     <input type="text" name="alternate" class="form-control"
+                                                     <input type="number" name="alternate" class="form-control"
                                                      formControlName="alternate" [(ngModel)]="register.alternatenumber"
                                                      [ngClass]="{'is-invalid': submitted && field.alternate.errors}">
                                              <div *ngIf="submitted && field.alternate.errors" class="invalid-feedback">
@@ -203,14 +205,14 @@
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Designation</label>
-                                                <div class="input-group">
+                                                <!-- <div class="input-group">
                                                 
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-person-lines-fill"></i>
                                                                 </span>
-                                                             </div>
-                                                             <input type="text" name="designation" class="form-control"
+                                                             </div> -->
+                                                             <!-- <input type="text" name="designation" class="form-control"
                                                              formControlName="designation" [(ngModel)]="register.designation"
                                                              [ngClass]="{'is-invalid': submitted && field.designation.errors}">
                                                      <div *ngIf="submitted && field.designation.errors"
@@ -218,7 +220,20 @@
                                                              <div *ngIf="field.designation.errors">Designation is required
                                                              </div>
                                                      </div>
-                                                </div>
+                                                </div> -->
+                                                <select 
+                                                formControlName="designation" class="form-control" [(ngModel)]="register.designation"
+                                                [ngClass]="{'is-invalid' : submitted && field.designationerrors}">
+                                                <option value="" selected>Select Option</option>
+                                                <option >Software Engineer trainee</option>
+                                                <option>Software Developer</option>
+                                                <option>Designing</option>
+                                                <option>Sales</option>
+                                                <option>Marketing</option>
+                                                <option>Testing</option>
+
+                                                
+                                        </select>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">CAPE Experience</label>
@@ -376,8 +391,3 @@
                 </div>
         </div>
 </form>
-
-
-
-
-
