@@ -1,21 +1,21 @@
 <div class="example-container mat-elevation-z8" 
 [ngStyle]="{'filter': (blurMode ? 'blur(2px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}" >
-  <mat-toolbar style="background-color:rgb(64, 177, 221);">
+  <!-- <mat-toolbar style="background-color:rgb(64, 177, 221);"> -->
 
     <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
-    <mat-toolbar-row style="overflow: hidden;max-height: 500px;">
+    <!-- <mat-toolbar-row style="overflow: hidden;max-height: 500px;"> -->
       <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
       <button mat-button style='color:rgb(0, 0, 7); '>
         <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
       </button>
-      <h2> Cape Electric Private Limited </h2>
+      <h2 style="font-size:small;margin-left:auto"> Cape Electric Private Limited </h2>
       <button mat-button style="margin-left:auto;">
         <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
           matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
           notifications</mat-icon>
       </button>
       <div class="dropdown">
-        <button mat-button style='color:rgb(0, 0, 7);' data-toggle="dropdown" class="btn btn-default dropdown-toggle"
+        <button mat-button style='color:rgb(0, 0, 7);margin-left:auto;' data-toggle="dropdown" class="btn btn-default dropdown-toggle"
         [matMenuTriggerFor]="menu">
           <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;'>person</mat-icon>
         <b style="font-size: 16px;">
@@ -28,8 +28,9 @@
         </mat-menu>
   
     </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
+    <!-- </mat-toolbar-row>
+  </mat-toolbar> -->
+  <hr>
   <mat-tab-group [selectedIndex]="selected.value"
     (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
     <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
@@ -73,7 +74,7 @@
           <hr>
           <a mat-list-item (click)="calleditholidays()">Add holidays</a>
           <a mat-list-item (click)="callRegister()">Add Employee</a>
-          <hr>
+      
           <!-- <button type="button" class="btn btn-light" (click)="signout()">
             <i class="fa fa-sign-out" style="font-size:30px"></i></button> -->
         </mat-nav-list>
@@ -243,6 +244,7 @@
 </script> -->
 <!-- <p> Goodbye</p>-->
 <div class="spinner" id="spinner" *ngIf="spinner">
+  <!-- <p class="logOut"> Logging out</p> -->
   <div class="dot1"></div>
   <div class="dot2"></div>
 </div> 

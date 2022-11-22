@@ -42,10 +42,8 @@ import { TokenServiceService } from './services/token-service.service';
 import { PublicHolidaysComponent } from './public-holidays/public-holidays.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-
-
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -56,7 +54,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     CalculationPipe,
     ForgotpasswordComponent,
     LoginComponent,
-
     LeaveStatusComponent,
     ApplyLeaveComponent,
     HomeComponent,
@@ -67,12 +64,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ChangeNumberComponent,
     FrontpageComponent,HistoryComponent,
     PublicHolidaysComponent
-
-   
-      
-  
-  
-    
 
   ],
   imports: [
@@ -97,10 +88,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   IntlInputPhoneModule,MatSortModule,
     MatMenuModule,
     MatDialogModule,
+
     Ng2TelInputModule,
     IntlInputPhoneModule,
-    MatSortModule
- 
+    MatSortModule,
+
+    MatNativeDateModule,
+    MatDatepickerModule
+
+
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

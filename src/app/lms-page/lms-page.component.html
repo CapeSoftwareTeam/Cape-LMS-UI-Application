@@ -1,15 +1,17 @@
 <div class="content">
-  <div class="row" style="margin-top:25px;margin-left:30px">
+  <div class="row" style="margin-top:25px;">
     <div class="col-md-2">
-      <div class="card">
+      <div class="card" >
         <div class="card-header">
           <h6>NO of days taken</h6>
           <h3 style="font-size:large"><strong>Casual leave</strong></h3>
           <h5> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body">
+          <span class="text-success" style="font-size: 10px;">(12) days taken | <span class="text-danger" style="font-size: 10px;">(24) days in total</span></span>
           <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:40%"></div>
+            <!-- <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div> -->
           </div>
         </div>
         <div class="card-footer">
@@ -25,6 +27,7 @@
           <h5> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body">
+          <span class="text-success" style="font-size: 10px;">(12) days taken | <span class="text-danger" style="font-size: 10px;">(24) days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" style="width:40%"></div>
           </div>
@@ -42,6 +45,7 @@
           <h5> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body">
+          <span class="text-success" style="font-size: 10px;">(12) days taken | <span class="text-danger" style="font-size: 10px;">(24) days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width:40%"></div>
           </div>
@@ -60,6 +64,7 @@
           <h5> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body">
+          <span class="text-success" style="font-size: 10px;">(12) days taken | <span class="text-danger" style="font-size: 10px;">(24) days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" style="width:40%"></div>
           </div>
@@ -77,8 +82,12 @@
           <h5> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body">
+          <span class="text-success" style="font-size: 10px;">(12) days taken | <span class="text-danger" style="font-size: 10px;">(24) days in total</span></span>
           <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width:40%"></div>
+             
+            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width:40%">
+              </div>
+        
           </div>
         </div>
         <div class="card-footer">
@@ -90,7 +99,8 @@
   <!-- <button type="button" class="btn btn-primary" routerlink="/applyleave" style="display:inline-flexbox"
   >Apply
     Leave</button> -->
-
+<div class="avatar" data-label="" id="avatar">
+</div>
 </div>
 <!-- <div class="content">
 <div class="mat-grid-container">

@@ -23,7 +23,7 @@ export class RegisterserviceService {
   deleteForm(id: any):Observable<any> {
     return this.http.put<any>( this.apiurl+'/deleteRegister' + '/' +id, {responseType: 'text' as 'json'});
   }
- 
+
   // updateForm():Observable<any>{
   //   return this.http.update<any>('/update',{responseType:'text' as 'json'});
   // }

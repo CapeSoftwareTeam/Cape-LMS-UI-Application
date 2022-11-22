@@ -1,6 +1,7 @@
 <form [formGroup]="postleave" >
   <div class="container">
-    <div class="card" style="margin-top:30px">
+    <h1>{{empid}}</h1>
+    <div class="card" style="margin-top:40px">
       <div class="card-body">
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
@@ -40,22 +41,39 @@
           <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
               <label><b>Date From:</b> </label></div>
               <div class="col-7">
-                <!-- <mat-form-field>
-                <input matInput [matDatepicker]="picker" [matDatepickerFilter]="weekendsDatesFilter" 
-                placeholder="Choose a date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker ></mat-datepicker>
-</mat-form-field> -->
-                <input class="formcontrol" type="date" formControlName="fromdate"
-                style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate">
-                <input type="submit" (click)="getfirstnumber()">
+                <mat-form-field style="height: 40px;float: left;width: 75%;padding-left: 9px" id="field">
+                  <input matInput [matDatepicker]="picker" [matDatepickerFilter]="FrommyDateFilter" placeholder="Choose a date"
+                  style="padding-left: 10px;height: 40px;margin-top: 6px;" [(ngModel)]="fromdate" id="date2"
+                  formControlName="fromdate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+             
+<!-- <input type="text"
+placeholder="Datepicker"
+class="form-control"
+bsDatepicker
+[daysDisabled]="[6,0]"
+formControlName="fromdate"
+> -->
+
+
+<!-- <input class="form-control" placeholder="Daterangepicker" formControlName="fromdate" type="date"
+bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
+
+
+
+                <!-- <input class="formcontrol" type="date" formControlName="fromdate" 
+                style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate"> -->
+                <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 25px;">
                 <!-- min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date"> -->
                 <!-- <mat-form-field appearance="fill">
                   <input matInput [matDatepicker]="dtAdm" [matDatepickerFilter]="myDateFilter" formControlName="dateOfAdmission">
+                  placeholder="Daterangepicker" bsDaterangepicker [daysDisabled]="[6,0]"
                   <mat-datepicker-toggle matSuffix [for]="dtAdm"></mat-datepicker-toggle>
     <mat-datepicker #dtAdm ></mat-datepicker>
                 </mat-form-field>  -->
-            </div>
+              </div>
           </div>
         <!-- </div> -->
 <br>
@@ -64,20 +82,28 @@
               <label><b>Date To:</b></label>
             </div>
             <div class="col-7">
-              <input class="formcontrol" type="date" formControlName="todate"
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate">
-              <input type="submit" (click)="getsecondnumber()">
+              <mat-form-field style="height:40px; float: left; width: 75%;padding-left: 9px">
+                <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter" placeholder="Choose a date"
+                style="padding-left: 10px;height: 40px;float: left;width: 75%;margin-top: 6px; " [(ngModel)]="todate" id="date1"
+                formControlName="todate">
+                <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                <mat-datepicker #pickers></mat-datepicker>
+              </mat-form-field>
+              <!-- <input class="formcontrol" type="date" formControlName="todate" 
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate"> -->
+              <input type="submit" (click)="getsecondnumber()" value="confirm" style="margin-top: 34px;">
             </div>
           </div>
         <!-- </div>focusout -->
+        <br>
 <br>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6" style="float: left;width: 25%;margin-top: 6px;" >
               <label><b>Number of days: </b></label>
             </div>
               <div class="col-7">
-              <input class="formcontrol" type="text" formControlName="noofdays" value={{difference}}
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly>
+              <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}} 
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly >
             </div>
           </div>
  <br>
@@ -95,16 +121,16 @@
         <hr>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
-            <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()">Cancel</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-             <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
+            <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()" style="margin-right: 23px;">Cancel</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 23px;">Save changes</button>
+             <button type="button" class="btn btn-success"(click)="leaveApply(success)" style="margin-right: 23px;"> Apply leave</button>
           </div>
         </div>
       </div>
 <br>
     </div>
-   
-    
+   <br>
+   <br> 
 
   <!-- <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
   <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here
@@ -158,15 +184,29 @@
 </div>
 </form>
 
-<ng-template #mymodal let-modal>
+<ng-template #failure let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Note:</h4>
+    <h4 class="modal-title" id="modal-basic-title">NOTE</h4>
   </div>
   <div class="modal-body">
     The leave which your are selected is unavailable. You will get Loss of pay if you proceed.
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark">proceed</button>
-    <button type="button" class="btn btn-outline-dark" (click)="cancel()">cancel</button>
+    <button type="button" class="btn btn-primary">proceed</button>
+    <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #success let-modal>
+  <div class="modal-header">
+    <div class="modal-title" id="modal-basic-title">
+      <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
+    </div>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    Your Leave has been successfully Updated.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="ok()">OK</button>
   </div>
 </ng-template>

@@ -56,7 +56,8 @@ export class HomeComponent implements OnInit {
     private move: BreakpointObserver,
     private getDetails: ApplyleaveService,
     private modalService: NgbModal,
-  private historyService:HistoryService) { }
+    private registerDetails: LeaveStatusServiceService) { }
+
 
   ngAfterViewInit(): void {
     this.move.observe(['(max-width:800px)']).subscribe((data) => {
@@ -107,7 +108,7 @@ export class HomeComponent implements OnInit {
     );
     // this.selectedItem=this.tabs[0];
   
-    this.historyService. getMemberDetails(this.empid).subscribe(
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
         this.name = this.personDetails.name;

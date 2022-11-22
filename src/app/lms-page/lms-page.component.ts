@@ -44,14 +44,20 @@ empid:any;
   name: String = '';
   personDetails = new Register();
   designation: String = '';
-leavestatus: boolean=false;
+  leavestatus: boolean=false;
+  casual: any;
+  sick: any;
+  casualsforprogress: any;
+  sickforprogress: any;
+  this: any;
 
   constructor(private route:Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
     private getDetails: ApplyleaveService,
     private modalService: NgbModal,
-    private registerDetails: RegisterserviceService,private histroryService:HistoryService) { }
+    private registerDetails: LeaveStatusServiceService) { }
+
 
   ngOnInit(): void {
  
@@ -66,12 +72,15 @@ leavestatus: boolean=false;
     this.getDetails.leaveTracking(this.empid).subscribe(
       data => {
         let leaveDetails = JSON.parse(data);
+        this.casualsforprogress =leaveDetails.casualLeave;
+
         this.year = leaveDetails.year;
         this.remainingcl = leaveDetails.carryForwardLeave;
 
         // this.
       }
     );
+
     // this.selectedItem=this.tabs[0];
     this.getDetails.getInfo(this.empid).subscribe(
       data => {
@@ -80,7 +89,7 @@ leavestatus: boolean=false;
       }
     );
     // this.selectedItem=this.tabs[0];
-    this.histroryService. getMemberDetails(this.empid).subscribe(
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
         this.name = this.personDetails.name;
@@ -88,6 +97,21 @@ leavestatus: boolean=false;
         this.designation = this.personDetails.designation;
       }
     )
+//     this.registerDetails. getMemberDetails(this.empid).subscribe(
+//       data => {
+//         this.personDetails = JSON.parse(data);
+//         this.name = this.personDetails.name;
+//         this.department = this.personDetails.department;
+//         this.designation = this.personDetails.designation;
+
+//        let initials = this.name.charAt(0);
+// //  let initial=initials.toUpperCase;
+//        let displayAvatar= 'C'+ initials;
+//       var a= document.getElementById('avatar');
+//       a!.innerHTML=displayAvatar;
+
+//       }
+//     )
   }
 
 }

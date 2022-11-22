@@ -16,4 +16,7 @@ export class LeaveStatusServiceService {
   statusUpdate(historyId:Number,status:string):Observable<any>{
     return this.http.put<any>(this.apiurl+"/"+'hrapprove'+"/"+historyId+"/"+status,{responseType:'text' as 'json'});
   }
+  getMemberDetails(empid:String):Observable<any>{
+    return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
+  }
 }

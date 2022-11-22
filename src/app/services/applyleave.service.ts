@@ -11,16 +11,19 @@ import { Register } from '../models/register';
 export class ApplyleaveService {
   apiurl=environment.apiurl_history;
   constructor(private http:HttpClient) { }
-
-   leaveRegister(applyleave:ApplyLeave):Observable<any>{
+  
+  leaveRegister(applyleave:ApplyLeave):Observable<any>{
     return this.http.post<any>(this.apiurl+"/"+'history',applyleave,{responseType:'text' as 'json'});
   }
+
   getInfo(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl+'/'+"history4"+'/'+empid,{responseType:'text' as 'json'});
   }
   leaveTracking(empid: string): Observable<any> {
       return this.http.get<any>(this.apiurl + '/' + "getLeavedetails" +'/' +empid,{responseType: 'text' as 'json'})
   }
-
+  getMemberDetails(empid:String):Observable<any>{
+    return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
+  }
   }
 

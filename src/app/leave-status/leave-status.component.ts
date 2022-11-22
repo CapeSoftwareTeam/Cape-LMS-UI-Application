@@ -51,7 +51,7 @@ export class LeaveStatusComponent implements OnInit {
     this.statusagree.statusUpdate(historyid, status).subscribe(
       data => {
         console.log("updated successfully")
-        this.getpendingData();
+        // this.getpendingData();
 
       }
     );
@@ -62,8 +62,6 @@ export class LeaveStatusComponent implements OnInit {
   getpendingData() {
     this.statusservice.getUpdates(this.empId).subscribe(
       data => {
-        // for(int i=0;i=this.dataSource;i++)
-
         let b = [];
         for (let item of JSON.parse(data)) {
           if (item.status == 'pending') {
@@ -77,15 +75,7 @@ export class LeaveStatusComponent implements OnInit {
       }
     );
   }
-  // editOption() {
-  //   this.statusservice.getUpdates(this.empId).subscribe(
-  //     data => {
 
-  //       for (let fetch of JSON.parse(data)) {
-
-  //       }
-  //     });
-  // }
   user(){
      console.log('user');
      this.getpendingData();

@@ -258,11 +258,15 @@ div.content {
   text-align: center;
 }
 .spinner {
-  margin: 100px auto;
+  margin: 0px auto;
   width: 40px;
   height: 40px;
-  position: relative;
+  position: fixed;
   text-align: center;
+  overflow: inherit;
+  top: 46%;
+  z-index: 1000;
+  margin-left: 48%;
   
   -webkit-animation: sk-rotate 2.0s infinite linear;
   animation: sk-rotate 2.0s infinite linear;
@@ -305,12 +309,20 @@ div.content {
     -webkit-transform: scale(1.0);
   }
 }
-#spinner{
+/* #spinner{
   position: fixed;
   margin:0px auto;
   overflow: inherit;
   top: 46%;
   z-index: 1000;
   margin-left: 48%;
-}
+} */
 
+/* .logOut{
+    top: 47%;
+    width: max-content;
+    text-align: center;
+    position: fixed;
+    font-weight: bold;
+    margin-left: 4%;
+} */
