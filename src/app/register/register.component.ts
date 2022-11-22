@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Register } from '../models/register';
 import { CalculationPipe } from '../pipe/calculation.pipe';
+import { HistoryService } from '../services/historyservice.service';
 import { RegisterserviceService } from '../services/registerservice.service';
 // import { Router } from '@angular/router';
 // import { ServiceService } from 'src/app/service.service';
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit {
   fullDate:any;
   priyanka:boolean=false;
   RegisterationForm!: FormGroup;
+  countryCode: any;
   // Only Accept numbers
   keyPressNumbers(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
@@ -29,7 +31,7 @@ export class RegisterComponent implements OnInit {
     }
   }
   constructor(private formBuilder: FormBuilder,
-    private registerService: RegisterserviceService
+    private registerService: RegisterserviceService,
   ) { }
   ngOnInit(): void {
     this.RegisterationForm = new FormGroup({
@@ -111,17 +113,29 @@ changevalue(e:any){
   }
 
 }
+countryChange(country: any) {
+  this.countryCode = country.dialCode;
+}
 
   submitFunction() {
     //validation trigger
-    this.submitted = true;
-    if (this.RegisterationForm.invalid) {
-      return
-    }
-  //   let mobileNumber: any
-  // mobileNumber = this.register.mobilenumber;
-  // this.register.mobilenumber= mobileNumber.Number;
-  // debugger
+    // this.submitted = true;
+    // if (this.RegisterationForm.invalid) {
+    //   return
+    // }
+  //   let mobileNumber: any;
+  //   let alternatenumber:any;
+  //  if(this.RegisterationForm.value.mobile!=null){
+  //   mobileNumber = this.RegisterationForm.value.mobile;
+  //   this.register.mobilenumber= mobileNumber.Number;
+  //  }
+  //  if(this.register.alternatenumber!=null){
+  //   alternatenumber=this.register.alternatenumber;
+  //   this.register.alternatenumber=alternatenumber.Number;
+  //  }
+   
+ 
+
     this.registerService.saveForm(this.register).subscribe(
       data => {
         this.priyanka=true;

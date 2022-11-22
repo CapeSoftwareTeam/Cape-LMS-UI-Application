@@ -27,10 +27,13 @@ export class LoginComponent implements OnInit {
   selectedCountryList : CustomCountryModel[] = [];
   public token: string = '';
   isLogin:boolean=false;
+  email:any;
+  mobileNumber:any;
+  afterOtp:boolean=true;
   // configOption2!: ConfigurationOptions;
   // configOption3! : ConfigurationOptions;
 
-  countryCode:String='';
+  countryCode:string='';
   user=new User();
   // Number:string='';
 
@@ -109,7 +112,7 @@ login(event:any){
     this.registerService.authenticate( this.user).subscribe(data=>{
       
       this.isLogin = true;
-      sessionStorage.setItem('empid',this.user.empId);
+      sessionStorage.setItem('empid',JSON.parse(data).register.empid);
       
       sessionStorage.setItem('token',JSON.parse(data).token);
        sessionStorage.setItem('token',JSON.parse(data).token);
@@ -155,6 +158,18 @@ generate(){
     }, 3000);
      
   }
+  
+  this.email=this.otpgenerateform.value.emailid;
+ 
+  this.mobileNumber= this.otpgenerateform.value.mobileNumber
+
+
+  this.registerService.sendOtp(this.email,this.mobileNumber).subscribe(data=>
+    {
+      this.sentOtp=true;
+      this.afterOtp=false;
+     
+    })
  
 }
 // function(){

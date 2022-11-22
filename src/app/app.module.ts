@@ -42,6 +42,8 @@ import { TokenServiceService } from './services/token-service.service';
 import { PublicHolidaysComponent } from './public-holidays/public-holidays.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
+// import { IntlInputPhoneModule } from 'intl-input-phone/lib/intl-input-phone.module';
+
 
 
 
@@ -92,9 +94,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatTabsModule,MatInputModule,
     MatFormFieldModule,
-    Ng2TelInputModule,IntlInputPhoneModule,MatSortModule,
+  IntlInputPhoneModule,MatSortModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    Ng2TelInputModule,
+    IntlInputPhoneModule,
+    MatSortModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

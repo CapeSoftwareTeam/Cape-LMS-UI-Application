@@ -152,7 +152,7 @@ export class HistoryComponent implements OnInit {
 
 
 
-    this.registerService.getMemberDetails(this.empid).subscribe(data => {
+    this.historyService.getMemberDetails(this.empid).subscribe(data => {
       let details = JSON.parse(data);
       this.role = this.details.designation();
 

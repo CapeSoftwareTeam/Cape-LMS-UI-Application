@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { HistoryService } from '../services/historyservice.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
 
@@ -49,12 +50,13 @@ export class HomeComponent implements OnInit {
   leavestatus:boolean=false;
   initials: String='';
 
+
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
     private getDetails: ApplyleaveService,
     private modalService: NgbModal,
-    private registerDetails: RegisterserviceService) { }
+  private historyService:HistoryService) { }
 
   ngAfterViewInit(): void {
     this.move.observe(['(max-width:800px)']).subscribe((data) => {
@@ -104,7 +106,8 @@ export class HomeComponent implements OnInit {
       }
     );
     // this.selectedItem=this.tabs[0];
-    this.registerDetails. getMemberDetails(this.empid).subscribe(
+  
+    this.historyService. getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
         this.name = this.personDetails.name;

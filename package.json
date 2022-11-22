@@ -27,7 +27,7 @@
     "bootstrap-icons": "^1.9.1",
     "google-libphonenumber": "^3.2.31",
     "international-phone-number": "^0.0.11",
-    "intl-input-phone": "^0.0.9",
+    "intl-input-phone": "0.0.9",
     "intl-tel-input": "^17.0.19",
     "ng2-tel-input": "^2.3.0",
     "ngx-bootstrap": "^9.0.0",

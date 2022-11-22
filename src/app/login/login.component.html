@@ -64,8 +64,12 @@
             <div  *ngIf="f.userValidation.value=='mobileNumber'">
                 <label class="form-lable">Mobile Number</label>
                 <div class="input-group" >
-                    
-                    <intl-input-phone  formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber" [NumberTextValue]="'8602605927'" [SelectedCountryISOCode]="'IN'" [ConfigurationOption]="configOption1"></intl-input-phone>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i  class="bi bi-telephone"></i>
+                        </span>
+                    </div>
+                    <input formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber" placeholder="Enter Your Mobile Number" class="form-control" >
                     <div *ngIf="submitted && f.mobileNumberLogin.errors" class="invalid-feedback">
                         <div *ngIf="f.mobileNumberLogin.errors['required']"> Mobile Number is required</div>
                         <div *ngIf="f.mobileNumberLogin.errors['pattern']">Mobile Number should be in 10 Numbers</div>
@@ -136,14 +140,19 @@
            
            <p *ngIf="errorMsg" style="text-align: center;color:red;border-radius: 3px;font-size: 12px;">Please fill Email or Mobile number to proceed further!</p>
            <div *ngIf="showErrorMessage" class="errorshow">{{showErrorMessage}}</div>
-            <div class="row">
+            <div class="row" *ngIf="afterOtp">
                <label class="form-lable">Mobile Number</label>
                <div class="input-group">
-                   
+                    
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i  class="bi bi-telephone"></i>
+                    </span>
+                </div>
                   
-                   <div class="panel-group" id="accordion">
-                   <intl-input-phone  formControlName="mobileNumber" [NumberTextValue]="'8602605927'" [SelectedCountryISOCode]="'IN'" ></intl-input-phone>
-                   </div>
+                  
+                   <input type="text"  formControlName="mobileNumber" placeholder="Enter your Mobile Number"  class="form-control"   [ngClass]="{ 'is-invalid': submit && g.mobileNumber.errors }" >
+                
                <div *ngIf="submit && g.mobileNumber.errors" class="invalid-feedback">
                    <div *ngIf="g.mobileNumber.errors['required']"> Mobile Number is required</div>
                    <div *ngIf="g.mobileNumber.errors['pattern']">Mobile Number should be in 10 Numbers</div>
@@ -151,7 +160,7 @@
            </div>
                 
             </div>
-            <div class="row">
+            <div class="row" *ngIf="afterOtp">
                <label class="form-lable">Email</label>
                <div class="input-group" >
                    

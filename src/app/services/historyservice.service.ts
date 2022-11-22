@@ -30,4 +30,7 @@ export class HistoryService {
   getHistoryBasedOnRole(role:any):Observable<any>{
     return this.http.get<any>(this.apiurl+'/getHistoryBasedOnRole'+'/' + role, {responseType: 'text' as 'json'});
   }
+  getMemberDetails(empid:String):Observable<any>{
+    return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
+  }
 }

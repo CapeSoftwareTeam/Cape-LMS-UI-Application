@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { HistoryService } from '../services/historyservice.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
 
@@ -20,7 +21,7 @@ export class LmsPageComponent implements OnInit {
   hidden: boolean = false;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-  empid: any
+empid:any;
   notification: number = 0;
   enableTs: boolean = false;
   OpenApplyLeave: boolean = false;
@@ -50,7 +51,7 @@ leavestatus: boolean=false;
     private move: BreakpointObserver,
     private getDetails: ApplyleaveService,
     private modalService: NgbModal,
-    private registerDetails: RegisterserviceService) { }
+    private registerDetails: RegisterserviceService,private histroryService:HistoryService) { }
 
   ngOnInit(): void {
  
@@ -79,7 +80,7 @@ leavestatus: boolean=false;
       }
     );
     // this.selectedItem=this.tabs[0];
-    this.registerDetails. getMemberDetails(this.empid).subscribe(
+    this.histroryService. getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
         this.name = this.personDetails.name;

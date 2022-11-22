@@ -23,9 +23,7 @@ export class RegisterserviceService {
   deleteForm(id: any):Observable<any> {
     return this.http.put<any>( this.apiurl+'/deleteRegister' + '/' +id, {responseType: 'text' as 'json'});
   }
-  getMemberDetails(empid:String):Observable<any>{
-    return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
-  }
+ 
   // updateForm():Observable<any>{
   //   return this.http.update<any>('/update',{responseType:'text' as 'json'});
   // }
@@ -36,6 +34,12 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
   // }
 //})
  
+  }
+  sendOtp(email:any,mobileNumber:any):Observable<any>{
+    return this.http.get<any>(this.apiurl+'/sendotp'+'/'+email+'/'+mobileNumber,{ responseType:'text' as 'json'})
+  }
+  updatePassWord(email:any,passWord:any):Observable<any>{
+    return this.http.put<any>(this.apiurl+'/updatePassword'+'/'+email+'/'+passWord,{responseType:'text' as 'json'})
   }
 }
 
