@@ -29,7 +29,7 @@ h2{
     justify-content:center;
 }
 #btn{
-    margin-left:120px;
+    margin-left:80%;
 }
 .btn-submit{
     background-color:skyblue;
@@ -41,9 +41,7 @@ h2{
     background-color:rgb(7, 7, 7);
     color: rgb(252, 247, 247);
 }
-p{
-    margin-top: 250px;
-}
+
 .msg{
     position: relative;
     left:390px;

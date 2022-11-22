@@ -64,13 +64,17 @@ export class HolidaysComponent implements OnInit {
    submit(){
    this.holidaysService.saveLeave(this.ListData).subscribe(data=>
     {
-      this.successMsg=true;
+     // this.successMsg=false;
       this.spinner=true;
       this.blurMode=true;
       setTimeout(()=>{
-          this.successMsg=false;
+          
           this.spinner=false;
           this.blurMode=false;
+          this.successMsg=true;
+          setTimeout(() => {
+            this.successMsg = false;
+          }, 2000);
           this.ngOnInit();
       },3000)
     
@@ -90,7 +94,7 @@ export class HolidaysComponent implements OnInit {
     });
    }
 
-   Datechng(event:any){
+   DateFormatchange(event:any){
    
      this.holiday.day = this.weekday[event.target.valueAsDate.getDay()];
      this.holiday.year =  event.target.valueAsDate.getFullYear();
@@ -100,12 +104,14 @@ export class HolidaysComponent implements OnInit {
     
   }
   // Back Button
-  // back(){
-  //   this.route.navigate(['/home'])
-  // }
+  backToHome(){
+    this.route.navigate(['/home'])
+  }
   
   get field():any{
     return this.holidays.controls;
   }
+
+  
 
 }

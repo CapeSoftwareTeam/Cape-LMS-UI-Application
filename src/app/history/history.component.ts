@@ -10,6 +10,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
 import { FormGroup } from '@angular/forms';
 import { HistoryService } from '../services/historyservice.service';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -18,6 +19,7 @@ import { ApplyleaveService } from '../services/applyleave.service';
 
 })
 export class HistoryComponent implements OnInit {
+  display:boolean=true;
   enable: boolean = false;
   approved: boolean = false;
   pending: boolean = false;
@@ -32,8 +34,8 @@ export class HistoryComponent implements OnInit {
   @ViewChild('historySort', { static: false }) historySort!: MatSort;
   element: Element[] = [];
   loading = false;
-
-  @ViewChild('historyPaginator', { static: false }) historyPaginator!: MatPaginator;
+  @ViewChild('historyPaginatorUser', { static: false }) historyPaginatorUser!: MatPaginator;
+  @ViewChild('historyPaginatorAdmin', { static: false }) historyPaginatorAdmin!: MatPaginator;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   adminView: boolean = true;
@@ -42,19 +44,23 @@ export class HistoryComponent implements OnInit {
   role: any;
   details: any;
   // hide:boolean=true;
-
+  displayedColumnsForUser:any;
+  displayedColumnsForAdmin:any;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource1.filter = filterValue.trim().toLowerCase();
+    this.dataSource2.filter = filterValue.trim().toLowerCase();
   }
+  
 
   selection = new SelectionModel<Element>(true, []);
 
 
 
 
-  constructor(private historyService: HistoryService, private registerService: RegisterserviceService
+  constructor(private historyService: HistoryService, private registerService: RegisterserviceService,
+    private route:Router
     // private registerService: RegisterserviceService,
     ) {
     // this.designation="softwaremanager";
@@ -75,38 +81,70 @@ export class HistoryComponent implements OnInit {
         designation =  JSON.parse(data).designation;
 
         //user
-        if (designation == "software trainee1" || designation == "DESIGNING" ||
-        designation == "TESTING" || designation == "SALES" || designation == "MARKETING") {
+        if (designation == "software trainee" || designation == "Designing" ||  designation == "Software Devloper"||
+        designation == "Testing" || designation == "Sales" || designation == "Marketing") {
          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'leavetype', 'reasonForApply'];
 
          this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
           data => {
+            this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
             this.dataSource1 = new MatTableDataSource(JSON.parse(data));
             this.dataSource1.sort = this.historySort;
-            this.dataSource1.paginator = this.historyPaginator;
+            this.dataSource1.paginator = this.historyPaginatorAdmin;
             
+          });
+debugger
+
+       }
+       else if (designation=="HR") {
+        this.enableDelete = true;
+        //this.display = false;
+        this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+  
+        this.enable = true;
+        this.historyService.getHistory().subscribe(
+          data => {
+            this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+
+            this.dataSource2 = new MatTableDataSource(JSON.parse(data));
+            this.dataSource2.sort = this.historySort;
+            this.dataSource2.paginator = this.historyPaginatorUser;
+          });
+        
+        this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
+          data => {
+            this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
+            this.dataSource1 = new MatTableDataSource(JSON.parse(data));
+            this.dataSource1.sort = this.historySort; 
+            this.dataSource1.paginator = this.historyPaginatorAdmin;
           });
 
        }
        //Admin
-        else {
+       else {
           this.enableDelete = true;
-          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
-         this.enable = true;
-          this.historyService.getHistoryBasedOnRole('Software').subscribe(
+          //this.display = false;
+         
+          this.enable = true;
+          this.historyService.getHistoryBasedOnRole('Designing').subscribe(
             data => {
+              this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+
               this.dataSource2 = new MatTableDataSource(JSON.parse(data));
               this.dataSource2.sort = this.historySort;
-              this.dataSource2.paginator = this.historyPaginator;
+              this.dataSource2.paginator = this.historyPaginatorUser;
             });
           
           this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
             data => {
+              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
+
               this.dataSource1 = new MatTableDataSource(JSON.parse(data));
-              this.dataSource1.sort = this.historySort;
-              this.dataSource1.paginator = this.historyPaginator;
+              this.dataSource1.sort = this.historySort; 
+              this.dataSource1.paginator = this.historyPaginatorAdmin;
             });
         }
+    
       });
 
    
@@ -152,11 +190,17 @@ export class HistoryComponent implements OnInit {
 
 
 
+<<<<<<< HEAD
     this.historyService.getMemberDetails(this.empid).subscribe(data => {
       let details = JSON.parse(data);
       this.role = this.details.designation();
+=======
+    // this.registerService.getMemberDetails(this.empid).subscribe(data => {
+    //   let details = JSON.parse(data);
+    //   this.role = this.details.designation();
+>>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
 
-    })
+    // })
 
 
 
@@ -193,6 +237,10 @@ export class HistoryComponent implements OnInit {
   User() {
     // this.enable = false;
 
+  }
+
+  back(){
+    this.route.navigate(['/home'])
   }
 
   Admin() {

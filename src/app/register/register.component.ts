@@ -18,7 +18,13 @@ export class RegisterComponent implements OnInit {
   fullDate:any;
   priyanka:boolean=false;
   RegisterationForm!: FormGroup;
+<<<<<<< HEAD
   countryCode: any;
+=======
+  Empid:any;
+  countryCode:any;
+
+>>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
   // Only Accept numbers
   keyPressNumbers(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
@@ -30,6 +36,33 @@ export class RegisterComponent implements OnInit {
       return true;
     }
   }
+  empid(event: any){
+   this.Empid=this.register.empid;
+   let tempArr : any=[];
+
+
+   this.registerService.getEmpid().subscribe(
+    data => {
+     tempArr = JSON.parse(data);
+     for(let j of tempArr){
+      if(j.empid==this.Empid){
+        console.log("empid registered")
+      }
+      else{
+        console.log("bug")
+      }
+     }
+      
+    },
+    error => {
+      console.log("empid err")
+    }
+  )
+
+   }
+  
+    
+  
   constructor(private formBuilder: FormBuilder,
     private registerService: RegisterserviceService,
   ) { }
@@ -56,7 +89,7 @@ export class RegisterComponent implements OnInit {
       manageremail: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     })
    
-    
+    this.countryCode='91';
     
 
   }
@@ -118,6 +151,7 @@ countryChange(country: any) {
 }
 
   submitFunction() {
+<<<<<<< HEAD
     //validation trigger
     // this.submitted = true;
     // if (this.RegisterationForm.invalid) {
@@ -136,6 +170,15 @@ countryChange(country: any) {
    
  
 
+=======
+  
+    this.submitted = true;
+    if (this.RegisterationForm.invalid) {
+      return
+    }
+  this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
+  this.register.alternatenumber='+'+ this.countryCode +'-'+ this.RegisterationForm.value.alternate
+>>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
     this.registerService.saveForm(this.register).subscribe(
       data => {
         this.priyanka=true;

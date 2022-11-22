@@ -7,7 +7,7 @@
                                 <div class="col-md-4">
                                         <label class="form-label">Employee Id</label>
                                         <div class="input-group">
-                                               
+                                        
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                             <i class="bi bi-file-person"></i>
@@ -15,11 +15,13 @@
                                                         </span>
                                                         
                                                      </div>
-                                                <input type="text" name="empid" class="form-control" formControlName="empid"
+                                                <input type="text" name="empid" (focusout)="empid($event)"  class="form-control" formControlName="empid"
                                                         [(ngModel)]="register.empid"
                                                         [ngClass]="{ 'is-invalid': submitted && field.empid.errors }">
                                                 <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
                                                         <div *ngIf="field.empid.errors">Employee id is required</div>
+                                                        <!-- <p *ngIf="emp">Employee id is already exists</p> -->
+                                                       
                                                 </div>
                                         </div>
                                 </div>
@@ -59,9 +61,12 @@
                                            [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted && field.gender.errors}" style="width:300px;">
                                               <option value="male">Male</option>
                                               <option value="female">Female  </option>
-                                              <option value="others">Others</option>     </select>                              
+                                              <option value="others">Others</option>    
+                                         </select>                              
                                         
-
+                                         <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
+                                                <div *ngIf="field.gender.errors">Gender is required</div>
+                                        </div>
                                
                                 </div>
                                 <div class="col-md-4">
@@ -92,7 +97,13 @@
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Mobile Number</label>
-                                       
+                                        <div class="input-group">
+                                                
+                                                <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                                <i class="bi bi-telephone-fill"></i>
+                                                        </span>
+                                                     </div>
                                                      <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
                                                      <input type="text" name="mobilenumber" class="form-control"
                                                      formControlName="mobile" [(ngModel)]="register.mobilenumber"
@@ -104,7 +115,7 @@
                                                      <div *ngIf="field.mobile.errors['max']">Enter 10 digit number</div>
                                              </div>
                                         </div>
-                                        
+                                </div>
                               
                                 <div class="col-md-4">
                                         <label class="form-label">Alternate Number</label>
@@ -186,7 +197,7 @@
                                                 <label class="form-label">Department</label>
                                                 <select 
                                                         formControlName="department" class="form-control" [(ngModel)]="register.department"
-                                                        [ngClass]="{'is-invalid' : submitted && field.departmenterrors}">
+                                                        [ngClass]="{'is-invalid' : submitted && field.department.errors}">
                                                         <option value="" selected>Select Option</option>
                                                         <option >Software</option>
                                                         <option>Design</option>
@@ -203,14 +214,14 @@
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Designation</label>
-                                                <div class="input-group">
+                                                <!-- <div class="input-group">
                                                 
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-person-lines-fill"></i>
                                                                 </span>
-                                                             </div>
-                                                             <input type="text" name="designation" class="form-control"
+                                                             </div> -->
+                                                             <!-- <input type="text" name="designation" class="form-control"
                                                              formControlName="designation" [(ngModel)]="register.designation"
                                                              [ngClass]="{'is-invalid': submitted && field.designation.errors}">
                                                      <div *ngIf="submitted && field.designation.errors"
@@ -218,7 +229,25 @@
                                                              <div *ngIf="field.designation.errors">Designation is required
                                                              </div>
                                                      </div>
-                                                </div>
+                                                </div> -->
+                                                <select 
+                                                formControlName="designation" class="form-control" [(ngModel)]="register.designation"
+                                                [ngClass]="{'is-invalid' : submitted && field.designation.errors}">
+                                                <option value="" selected>Select Option</option>
+                                                <option >Software Engineer trainee</option>
+                                                <option>Software Developer</option>
+                                                <option>Designing</option>
+                                                <option>Sales</option>
+                                                <option>Marketing</option>
+                                                <option>Testing</option>
+ 
+                                                
+                                        </select>
+                                        <div *ngIf="submitted && field.designation.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="field.designation.errors">Designation is required
+                                        </div>
+                                </div>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">CAPE Experience</label>
@@ -376,8 +405,3 @@
                 </div>
         </div>
 </form>
-
-
-
-
-

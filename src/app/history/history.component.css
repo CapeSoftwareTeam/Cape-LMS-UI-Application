@@ -50,8 +50,9 @@ h1{
   min-width: 300px;
 
 }
-h2 {
+h1 {
   justify-content: center;
+  margin-top: 60px;
 }
 
 
@@ -109,3 +110,10 @@ display: none;
       text-align: right;
       justify-content: flex-end;
     }
+
+ #btn{
+  margin-left: 90%;
+ }   
+ #filter{
+  margin-left: 20px;
+ }

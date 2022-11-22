@@ -13,14 +13,23 @@ import { MatSort } from '@angular/material/sort';
 })
 export class PublicHolidaysComponent implements OnInit {
 
+  display:boolean=false;
+
   displayedColumns: string[] = ['description', 'location', 'date','day'];
   dataSource!: MatTableDataSource<any>; 
 
-  
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('holidaysSort', { static: false }) 
+  holidaysSort!: MatSort;
+  @ViewChild('holidaysPaginator', { static: false })
+   holidaysPaginator!: MatPaginator;
+  @ViewChild(MatSort)
+   sort!: MatSort;
+  @ViewChild(MatPaginator)
+   paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.holidaysPaginator;
+    this.dataSource.sort = this.holidaysSort;
   }
 
 
@@ -28,7 +37,9 @@ export class PublicHolidaysComponent implements OnInit {
 
   ngOnInit(): void {
     this.holidaysService.getLeave().subscribe(data=>{
-      this.dataSource=JSON.parse(data)
+      this.dataSource= new  MatTableDataSource(JSON.parse(data));
+      this.dataSource.sort = this.holidaysSort;
+      this.dataSource.paginator = this.holidaysPaginator;
     })
   }
 
@@ -36,7 +47,7 @@ export class PublicHolidaysComponent implements OnInit {
 
     const filterValue = (event.target as HTMLInputElement).value;
 
-  this.dataSource.filter = filterValue.trim().toLowerCase();
+     this.dataSource.filter = filterValue.trim().toLowerCase();
 
  }
  

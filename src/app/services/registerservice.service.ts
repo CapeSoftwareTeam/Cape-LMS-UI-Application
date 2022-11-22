@@ -14,8 +14,8 @@ export class RegisterserviceService {
   constructor(private http: HttpClient )
 
   { }
-  getForm(empId:any):Observable<any> {
-    return this.http.get<any>(this.apiurl+'/getRegister' + '/' +empId,{responseType: 'text' as 'json'});
+  getForm(empid:any):Observable<any> {
+    return this.http.get<any>(this.apiurl+'/getRegister' +'/'+empid,{responseType: 'text' as 'json'});
   }
   saveForm(register: Register):Observable<any> {
     return this.http.post<any>(this.apiurl+'/addRegister',register,{responseType: 'text' as 'json'});
@@ -35,6 +35,7 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
 //})
  
   }
+<<<<<<< HEAD
   sendOtp(email:any,mobileNumber:any):Observable<any>{
     return this.http.get<any>(this.apiurl+'/sendotp'+'/'+email+'/'+mobileNumber,{ responseType:'text' as 'json'})
   }
@@ -42,6 +43,13 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
     return this.http.put<any>(this.apiurl+'/updatePassword'+'/'+email+'/'+passWord,{responseType:'text' as 'json'})
   }
 }
+=======
+  getEmpid():Observable<any>{
+       return this.http.get<any>(this.apiurl+ '/empid' +   {responseType: 'text' as 'json'})
+     }
+  }
+
+>>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
 
 
 

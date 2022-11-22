@@ -62,7 +62,7 @@ empid:any;
   generateProfile(value: any) {
     return this.fb.group({
       empid:new FormControl(value.empid),
-      name:new FormControl(value.name,Validators.required),
+      name:new FormControl(value.name),
       gender:new FormControl(value.gender),
       dob:new FormControl(value.dob),
       emailid:new FormControl(value.emailid),
@@ -85,21 +85,19 @@ empid:any;
     if (this.profile.invalid) {
       return
     }
-    let mobileNumber: any
-    mobileNumber = this.register.mobilenumber;
-    this.register.mobilenumber= mobileNumber.Number;
-    debugger
     this.profileService.updateRegisterDetails(this.register).subscribe(
       data => {
         this.spinner=true;
-        this.successMsg=true;
+      //  this.successMsg=true;
         this.blurMode=true;
         setTimeout(() => {
-          this.successMsg=false;
           this.spinner=false;
           this.blurMode=false;
+          this.successMsg=true;
+          setTimeout(() => {
+            this.successMsg =false;
+          }, 3000);
         }, 2000);
-        
       }
  
     )
@@ -109,8 +107,8 @@ empid:any;
   otp():void{
    const dialogRef= this.dialog.open(ChangeNumberComponent,
       {
-      width: '500px',
-      height: '350px',
+      // width: '450px',
+      // height: '300px',
       disableClose: true,
 
 });
