@@ -33,7 +33,7 @@ const routes: Routes = [
 {path:'lmspage',component:LmsPageComponent},
 {path:'frontpage',component:FrontpageComponent},
 {path:'history',component:HistoryComponent},
-{path:'changenumber',component:ChangeNumberComponent},
+{path:'change-number',component:ChangeNumberComponent},
 {path:'publicholidays',component:PublicHolidaysComponent}
 ]
 

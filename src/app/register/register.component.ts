@@ -18,13 +18,10 @@ export class RegisterComponent implements OnInit {
   fullDate:any;
   priyanka:boolean=false;
   RegisterationForm!: FormGroup;
-<<<<<<< HEAD
-  countryCode: any;
-=======
+
   Empid:any;
   countryCode:any;
 
->>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
   // Only Accept numbers
   keyPressNumbers(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
@@ -151,26 +148,7 @@ countryChange(country: any) {
 }
 
   submitFunction() {
-<<<<<<< HEAD
-    //validation trigger
-    // this.submitted = true;
-    // if (this.RegisterationForm.invalid) {
-    //   return
-    // }
-  //   let mobileNumber: any;
-  //   let alternatenumber:any;
-  //  if(this.RegisterationForm.value.mobile!=null){
-  //   mobileNumber = this.RegisterationForm.value.mobile;
-  //   this.register.mobilenumber= mobileNumber.Number;
-  //  }
-  //  if(this.register.alternatenumber!=null){
-  //   alternatenumber=this.register.alternatenumber;
-  //   this.register.alternatenumber=alternatenumber.Number;
-  //  }
-   
- 
 
-=======
   
     this.submitted = true;
     if (this.RegisterationForm.invalid) {
@@ -178,8 +156,7 @@ countryChange(country: any) {
     }
   this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
   this.register.alternatenumber='+'+ this.countryCode +'-'+ this.RegisterationForm.value.alternate
->>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
-    this.registerService.saveForm(this.register).subscribe(
+     this.registerService.saveForm(this.register).subscribe(
       data => {
         this.priyanka=true;
         console.log("success")

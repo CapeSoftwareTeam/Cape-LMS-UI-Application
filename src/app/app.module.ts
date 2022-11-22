@@ -42,12 +42,8 @@ import { TokenServiceService } from './services/token-service.service';
 import { PublicHolidaysComponent } from './public-holidays/public-holidays.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-<<<<<<< HEAD
-// import { IntlInputPhoneModule } from 'intl-input-phone/lib/intl-input-phone.module';
-
-=======
 import {MatDatepickerModule} from '@angular/material/datepicker';
->>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
+
 
 
 
@@ -100,14 +96,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatFormFieldModule,
   IntlInputPhoneModule,MatSortModule,
     MatMenuModule,
-<<<<<<< HEAD
     MatDialogModule,
     Ng2TelInputModule,
     IntlInputPhoneModule,
     MatSortModule
-=======
-    MatDialogModule,MatDatepickerModule
->>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
+ 
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

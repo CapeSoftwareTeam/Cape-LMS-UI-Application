@@ -190,17 +190,12 @@ debugger
 
 
 
-<<<<<<< HEAD
-    this.historyService.getMemberDetails(this.empid).subscribe(data => {
+     this.historyService.getMemberDetails(this.empid).subscribe(data => {
       let details = JSON.parse(data);
       this.role = this.details.designation();
-=======
-    // this.registerService.getMemberDetails(this.empid).subscribe(data => {
-    //   let details = JSON.parse(data);
-    //   this.role = this.details.designation();
->>>>>>> 276ee1b9035808c300af321fda2c1c9bc35dcf3f
+ 
 
-    // })
+    })
 
 
 
