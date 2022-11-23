@@ -19,4 +19,7 @@ export class LeaveStatusServiceService {
   getMemberDetails(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
   }
+  getExpLeaveDetails(empid:String):Observable<any>{
+    return this.http.get<any>(this.apiurl+"/leaveDetails" + '/'+ empid,{responseType: 'text' as 'json'});
+  }
 }

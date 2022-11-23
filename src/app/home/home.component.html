@@ -33,7 +33,7 @@
   <hr>
   <mat-tab-group [selectedIndex]="selected.value"
     (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
-    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+    <mat-tab style="font-family: system-ui;" *ngFor="let tab of tabs; let index = index" [label]="tab">
       <!-- <button mat-raised-button
             class="example-add-tab-button"
             (click)="addTab()" style="float:right;">
@@ -59,12 +59,12 @@
       <div class="sidebar" *ngIf="tabName == 'Leave Management Systems'">
         <br>
         <div class="avatar" data-label="" id="avatar" style="justify-content: center;
-        text-align: center;padding: 27px;margin-left: 38px">
+        text-align: center;padding: 27px;margin-left: 38px;font-family: -webkit-body;">
           </div>
        <br>
        <br>
-               <h4 style="justify-content: center;text-align: center;">  {{name}}</h4>
-        <h6 class="text-muted" style="justify-content: center;text-align: center;"> {{department}} - {{designation}}</h6>
+               <h4 style="justify-content: center;text-align: center;font-family: fangsong;">  {{name}}</h4>
+        <h6 class="text-muted" style="justify-content: center;text-align: center;font-family: system-ui;"> {{department}} - {{designation}}</h6>
         <hr>
         <mat-nav-list>
           <a mat-list-item (click)="termsCondition(termsContent)">Leave Policy</a>

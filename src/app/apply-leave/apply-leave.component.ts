@@ -158,9 +158,9 @@ export class ApplyLeaveComponent implements OnInit {
       return arr;
   }
   
-  /**
-   * this will prepare a date array
-   */
+//   /**
+//    * this will prepare a date array
+//    */
   var prepareDateArray = function(dtArr: string | any[]) {
       var arr = new Array();
       for (var i = 0; i < dtArr.length; i++) {
@@ -177,37 +177,43 @@ export class ApplyLeaveComponent implements OnInit {
     while (date.getMonth() === month) {
         if (date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
             saturdays.push(new Date(year, month, day).getDate());
+            // console.log(saturdays.push(new Date(year, month, day).getDate()));
         }
+        // date = new Date(year, month, day);
         day += 1;
         date = new Date(year, month, day);
+        // console.log(date)
     }
+    // console.log(saturdays)
     return saturdays;
 }
-
+// i%2!==0 means, it represents 2nd and 4th saturdays
 let saturdays = getSaturdays(2021, 5).filter((day, index) => index % 2 !== 0)
 console.log(saturdays)
-  /**
-   * this will return an array consisting of the
-   * working dates
-   */
+
+
+//   /**
+//    * this will return an array consisting of the
+//    * working dates
+//    */
   var getWorkingDateArray = function(dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
       
-      // remove holidays
+//       // remove holidays
       var arr = dates.filter(function(dt: any){
           return holidaysArray.indexOf(dt) < 0;
       });
   
-      // remove weekend dates that are not working dates
+//       // remove weekend dates that are not working dates
       var result = arr.filter(function(dt:any){
-          if (dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1) {
-              if (workingWeekendDates.indexOf(dt) > -1) {
-                console.log(dt);
-                  return dt;
-                  
+        console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 );
+          if (dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 ) {
+         
+            // if((saturdays.)&&(dt.indexOf("Sun")-1)){
+              if (workingWeekendDates.indexOf(dt) > -1) {  
+                  return dt; 
               }
           }
           else {
-            console.log(dt,'fjays');
               return dt;
           }
       });
@@ -216,46 +222,79 @@ console.log(saturdays)
   
   }
   
-  // start and end dates
+//   // start and end dates
   var startDate = new Date(this.count); //YYYY-MM-DD
   var endDate = new Date(this.pluscount); //YYYY-MM-DD
   
-  /**
-   * holidays and working weekends
-   *
-   * if not applicable then set it as an empty array
-   * example: if no offical holidays then set
-   * officalHolidays = []
-   * similarly, if no working weekends then set
-   * workingWeekends = []
-   */
+//   /**
+//    * holidays and working weekends
+//    *
+//    * if not applicable then set it as an empty array
+//    * example: if no offical holidays then set
+//    * officalHolidays = []
+//    * similarly, if no working weekends then set
+//    * workingWeekends = []
+//    */
   var officalHolidays = ["2022-10-02"]; //YYYY-MM-DD
   var workingWeekends = ["2022-10-05"] //YYYY-MM-DD
   
-  // compute date array between start and end dates
+//   // compute date array between start and end dates
   var dateArray = getDateArray(startDate, endDate);
   
-  // prepare the holidays array
+//   // prepare the holidays array
   var holidaysArray = prepareDateArray(officalHolidays);
   
-  // prepare the working weekends array
+//   // prepare the working weekends array
   var workingWeekendsArray = prepareDateArray(workingWeekends);
 
 
-  // get the working days array
+//   // get the working days array
   var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
   console.log(workingDateArray);
-  // output
-//   for(var i=0;i<workingDateArray.length;i++){
-//     this.countinNumber++;
-// console.log(this.countinNumber);
-//   }
+//   // output
+// //   for(var i=0;i<workingDateArray.length;i++){
+// //     this.countinNumber++;
+// // console.log(this.countinNumber);
+// //   }
 this.countinNumber=workingDateArray.length;
   console.log(workingDateArray.length);
 
+//   function dateDifference(start: string | number, end: string | number) {
+//   // Copy date objects so don't modify originals
+//   console.log('function started')
+//   var s = new Date(dd);
+//   var e = new Date(d);
+  
+//   // Set time to midday to avoid dalight saving and browser quirks
+//   s.setHours(12,0,0,0);
+//   e.setHours(12,0,0,0);
+  
+//   // Get the difference in whole days
+//   var totalDays = Math.round((e.getDate() - s.getDate()) / 8.64e7);
+  
+//   // Get the difference in whole weeks
+//   var wholeWeeks = totalDays / 7 | 0;
+  
+//   // Estimate business days as number of whole weeks * 5
+//   var days = wholeWeeks * 5;
 
+//   // If not even number of weeks, calc remaining weekend days
+//   if (totalDays % 7) {
+//     s.setDate(s.getDate() + wholeWeeks * 7);
+    
+//     while (s < e) {
+//       s.setDate(s.getDate() + 1);
 
-
+//       // If day isn't a Sunday or Saturday, add to business days
+//       if (s.getDay() != 0 && s.getDay() != 6) {
+//         ++days;
+//       }
+//     }
+//   }
+//   console.log(days);
+//   return days;
+ 
+// }
     // var dateArr = getDateArray(this.count, this.pluscount);
 
   //   var getDateArray = function(start: string | number | Date, end: number  | Date) {

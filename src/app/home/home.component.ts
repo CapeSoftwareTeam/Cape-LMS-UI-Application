@@ -100,12 +100,12 @@ export class HomeComponent implements OnInit {
       }
     );
     // this.selectedItem=this.tabs[0];
-    this.getDetails.getInfo(this.empid).subscribe(
-      data => {
-        this.applyLeave = JSON.parse(data);
+    // this.getDetails.getInfo(this.empid).subscribe(
+    //   data => {
+    //     this.applyLeave = JSON.parse(data);
 
-      }
-    );
+    //   }
+    // );
     // this.selectedItem=this.tabs[0];
   
     this.registerDetails.getMemberDetails(this.empid).subscribe(
