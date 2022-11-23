@@ -43,7 +43,7 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
   }
 
   getEmpid():Observable<any>{
-       return this.http.get<any>(this.apiurl+ '/empid' +   {responseType: 'text' as 'json'})
+       return this.http.get<any>(this.apiurl+ '/empid', {responseType: 'text' as 'json'})
      }
   }
 

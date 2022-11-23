@@ -22,12 +22,15 @@ export class AppComponent implements OnInit  {
   }
   callProfile() {
     this.route.navigate(['/profile']);
+    this.Products=false;
   }
   callCalculation() {
     this.route.navigate(['/leavestatus']);
+    this.Products=false;
   }
   signout(){
     this.route.navigate(['/login']);
+    this.Products=false;
     // this.blurMode=true
     // this.spinner=true;
     // this.blurMode=true;

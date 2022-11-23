@@ -20,10 +20,12 @@
                                                         [ngClass]="{ 'is-invalid': submitted && field.empid.errors }">
                                                 <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
                                                         <div *ngIf="field.empid.errors">Employee id is required</div>
-                                                        <!-- <p *ngIf="emp">Employee id is already exists</p> -->
+                                                        
                                                        
                                                 </div>
+                                               
                                         </div>
+                                        <p *ngIf="prod" style="color:rgba(255, 0, 0, 0.844)">Employee id is already exists</p> 
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Name</label>
@@ -49,16 +51,16 @@
          <div *ngIf="field.gender.errors">choose your gender</div>
          </div>-->
                                         <label class="form-label">Gender</label>
-                                        <!-- <div class="input-group">
+                                        <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
                                                         <i class="bi bi-people-fill"></i>
                                                     </span>
-                                                 </div>  -->
+                                                 </div>  
                                         
                        <select  class="form-control" formControlName="gender"
                        
-                                           [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted && field.gender.errors}" style="width:300px;">
+                                           [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted && field.gender.errors}" >
                                               <option value="male">Male</option>
                                               <option value="female">Female  </option>
                                               <option value="others">Others</option>    
@@ -67,7 +69,7 @@
                                          <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
                                                 <div *ngIf="field.gender.errors">Gender is required</div>
                                         </div>
-                               
+                                </div>
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Date Of Birth</label>
@@ -88,13 +90,27 @@
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Marital Status</label>
-                                        <input type="text" name="maritalStatus" class="form-control"
-                                                formControlName="maritalStatus" [(ngModel)]="register.maritalstatus"
-                                                [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
+                                        <div class="input-group">
+                                                
+                                                <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                                <i class="bi bi-postcard-heart-fill"></i>
+                                                        </span>
+                                                     </div>
+                                                     <select  class="form-control" formControlName="maritalStatus"
+                       
+                                                     [(ngModel)]="register.maritalstatus" [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}" >
+                                                        <option value="male">Married</option>
+                                                        <option value="female">Unmarried </option>
+                                                           
+                                                   </select>   
                                         <div *ngIf="submitted && field.maritalStatus.errors" class="invalid-feedback">
+                                                
                                                 <div *ngIf="field.maritalStatus.errors">Marital status is required</div>
                                         </div>
                                 </div>
+                                </div>
+                        
                                 <div class="col-md-4">
                                         <label class="form-label">Mobile Number</label>
                                         <div class="input-group">
@@ -195,6 +211,13 @@
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Department</label>
+                                                <div class="input-group">
+                                                        
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                        <i class="bi bi-card-heading"></i>
+                                                                </span>
+                                                             </div>
                                                 <select 
                                                         formControlName="department" class="form-control" [(ngModel)]="register.department"
                                                         [ngClass]="{'is-invalid' : submitted && field.department.errors}">
@@ -206,6 +229,7 @@
 
                                                         
                                                 </select>
+                                                </div>
                                                 <div *ngIf="submitted && field.department.errors"
                                                         class="invalid-feedback">
                                                         <div *ngIf="field.department.errors">Department is required
@@ -214,6 +238,13 @@
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Designation</label>
+                                                <div class="input-group">
+                                                        
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                        <i class="bi bi-person-lines-fill"></i>
+                                                                </span>
+                                                             </div>
                                                 <!-- <div class="input-group">
                                                 
                                                         <div class="input-group-prepend">
@@ -243,6 +274,7 @@
  
                                                 
                                         </select>
+                                                </div>
                                         <div *ngIf="submitted && field.designation.errors"
                                         class="invalid-feedback">
                                         <div *ngIf="field.designation.errors">Designation is required
@@ -313,12 +345,23 @@
                                         </div>
                                         <div class="col-md-4 ">
                                                 <label>States</label>
+                                                <div class="input-group">
+                                                        
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                <i class="bi bi-geo-alt-fill"></i>
+ 
+
+                                                                </span>
+                                                             </div>
+
                                                 <select 
                                                         formControlName="state"class="form-control" [(ngModel)]="register.state"
                                                         [ngClass]="{'is-invalid' : submitted && field.state.errors}">
                                                         <option *ngFor="let state of States; let i = index">{{state}}
                                                         </option>
                                                 </select>
+                                                </div>
                                                 <div *ngIf="submitted && field.state.errors" class="invalid-feedback">
                                                         <div *ngIf="field.state.errors">State is required</div>
                                                 </div>

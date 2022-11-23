@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   register = new Register();
   fullDate:any;
   priyanka:boolean=false;
+  prod:boolean=false;
   RegisterationForm!: FormGroup;
 
   Empid:any;
@@ -36,13 +37,17 @@ export class RegisterComponent implements OnInit {
   empid(event: any){
    this.Empid=this.register.empid;
    let tempArr : any=[];
+   
 
 
    this.registerService.getEmpid().subscribe(
     data => {
+   
      tempArr = JSON.parse(data);
      for(let j of tempArr){
       if(j.empid==this.Empid){
+        
+        this.prod=true;
         console.log("empid registered")
       }
       else{
@@ -93,6 +98,8 @@ export class RegisterComponent implements OnInit {
   get field(): any {
     return this.RegisterationForm.controls;
   }
+
+  
   
   // calcExperience(event:any,form:any){
   //   if(form.controls.capeExperience!=null && form.controls.capeExperience!=undefined && form.controls.capeExperience!="" &&
