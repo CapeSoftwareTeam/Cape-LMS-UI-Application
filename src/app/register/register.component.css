@@ -5,16 +5,16 @@ label{
 input {
     width:300px;
 }
+#errMsg{
+    margin-top: 20px;
+}
 
 /*  */
 .container{
-    position:absolute;
-    max-width: 1000px;
+   
     justify-content: center;
-    width: 200%;
-    margin-left:  260px;
+    width: 200%;  
     margin-top: 50px;
-    margin-left:  260px;
     border-radius: 6px;
     padding: 50px;
     margin-top: 50px;

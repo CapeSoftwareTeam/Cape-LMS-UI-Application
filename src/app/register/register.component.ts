@@ -48,6 +48,9 @@ export class RegisterComponent implements OnInit {
       if(j.empid==this.Empid){
         
         this.prod=true;
+        setTimeout(() => {
+          this.prod = false;
+        }, 2000);
         console.log("empid registered")
       }
       else{
@@ -166,6 +169,9 @@ countryChange(country: any) {
      this.registerService.saveForm(this.register).subscribe(
       data => {
         this.priyanka=true;
+        setTimeout(() => {
+          this.priyanka = false;
+        }, 3000);
         console.log("success")
       },
       error => {

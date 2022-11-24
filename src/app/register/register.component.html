@@ -281,27 +281,7 @@
                                         </div>
                                 </div>
                                         </div>
-                                        <div class="col-md-4">
-                                                <label class="form-label">CAPE Experience</label>
-                                                <div class="input-group">
-                                                        
-                                                        <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                        <i class="bi bi-list-ul"></i>                                                                </span>
-                                                             </div>
-                                                             <input type="number" name="CAPE Experience"
-                                                             (keypress)="keyPressNumbers($event)"
-                                                              class="form-control" readonly
-                                                             formControlName="capeExperience"
-                                                             [(ngModel)]="register.capeexperience"
-                                                             [ngClass]="{'is-invalid' : submitted && field.capeExperience.errors}">
-                                                     <div *ngIf="submitted && field.capeExperience.errors"
-                                                             class="invalid-feedback">
-                                                             <div *ngIf="field.capeExperience.errors">Experience required
-                                                             </div>
-                                                     </div>
-                                                </div>
-                                        </div>
+                                        
                                         <div class="col-md-4">
                                                 <label class="form-label">Other Experience</label>
                                                 <div class="input-group">
@@ -322,6 +302,27 @@
                                                              </div>
                                                      </div>
                                                 </div>  
+                                        </div>
+                                        <div class="col-md-4">
+                                                <label class="form-label">CAPE Experience</label>
+                                                <div class="input-group">
+                                                        
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                        <i class="bi bi-list-ul"></i>                                                                </span>
+                                                             </div>
+                                                             <input type="number" name="CAPE Experience"
+                                                             (keypress)="keyPressNumbers($event)"
+                                                              class="form-control" readonly
+                                                             formControlName="capeExperience"
+                                                             [(ngModel)]="register.capeexperience"
+                                                             [ngClass]="{'is-invalid' : submitted && field.capeExperience.errors}">
+                                                     <div *ngIf="submitted && field.capeExperience.errors"
+                                                             class="invalid-feedback">
+                                                             <div *ngIf="field.capeExperience.errors">Experience required
+                                                             </div>
+                                                     </div>
+                                                </div>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Total Experience</label>
@@ -437,13 +438,17 @@
 
                                 </div>
                         </div>
-                        <button type="submit" class="btn btn-primary"
-                                style="margin-left:410px;margin-top:59px;">Save</button>
-                                <div class="alert alert-success alert-dismissible fade show" *ngIf="priyanka">
-                                        <strong>Success!</strong> Registered.
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-
-                                    </div>
+                        <div class="row">
+                                <div  class="col-md-12 text-center justify-content-center">
+                                             <div>
+                                                <p  class="alert alert-success alert-dismissible fade show" *ngIf="priyanka" id="errMsg"><strong>Success!</strong> Registered.</p> 
+                                             </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                                   
+                        </div>
+                               
+                                      
                                     
                 </div>
         </div>
