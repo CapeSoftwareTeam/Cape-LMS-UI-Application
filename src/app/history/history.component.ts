@@ -19,6 +19,9 @@ import { Router } from '@angular/router';
 
 })
 export class HistoryComponent implements OnInit {
+						  
+  spinner:boolean = false;
+  blurMode:boolean = false;	   
   display:boolean=true;
   enable: boolean = false;
   approved: boolean = false;
@@ -31,6 +34,7 @@ export class HistoryComponent implements OnInit {
   Color!: 'pink';
   dataSource1!: MatTableDataSource<any>;
   dataSource2!: MatTableDataSource<any>;
+  matDatepickerFilter!:MatTableDataSource<any>;										   
   @ViewChild('historySort', { static: false }) historySort!: MatSort;
   element: Element[] = [];
   loading = false;
@@ -43,9 +47,11 @@ export class HistoryComponent implements OnInit {
   department: string = "";
   role: any;
   details: any;
+	selectedRow:any =[];				  
   // hide:boolean=true;
   displayedColumnsForUser:any;
   displayedColumnsForAdmin:any;
+  delShow: boolean=false;			 
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -53,12 +59,7 @@ export class HistoryComponent implements OnInit {
     this.dataSource2.filter = filterValue.trim().toLowerCase();
   }
   
-
   selection = new SelectionModel<Element>(true, []);
-
-
-
-
   constructor(private historyService: HistoryService, private registerService: RegisterserviceService,
     private route:Router
     // private registerService: RegisterserviceService,
@@ -93,50 +94,72 @@ export class HistoryComponent implements OnInit {
             this.dataSource1.paginator = this.historyPaginatorAdmin;
             
           });
-debugger
+ 
 
-       }
-       else if (designation=="HR") {
+
+       } 
+	   else if (designation=="HR") {
+        
         this.enableDelete = true;
+        
         //this.display = false;
         this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
   
         this.enable = true;
         this.historyService.getHistory().subscribe(
           data => {
+           
+            // this.delShow = true;
             this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
-
-            this.dataSource2 = new MatTableDataSource(JSON.parse(data));
+            let employeeData = [];
+            for(let value of JSON.parse(data))  {
+              if(this.empid != value.empid){
+                employeeData.push(value);
+              }
+            }
+            this.dataSource2 = new MatTableDataSource(employeeData);
             this.dataSource2.sort = this.historySort;
             this.dataSource2.paginator = this.historyPaginatorUser;
           });
-        
+         
         this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
           data => {
-            this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
+           // this.delShow = true;
+        this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
             this.dataSource1 = new MatTableDataSource(JSON.parse(data));
             this.dataSource1.sort = this.historySort; 
             this.dataSource1.paginator = this.historyPaginatorAdmin;
           });
+         
+        }
 
-       }
        //Admin
        else {
           this.enableDelete = true;
+         
           //this.display = false;
          
           this.enable = true;
-          this.historyService.getHistoryBasedOnRole('Designing').subscribe(
+          this.historyService.getHistoryBasedOnRole(JSON.parse(data).department).subscribe(
             data => {
+              this.delShow = true;
+              
               this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
-
-              this.dataSource2 = new MatTableDataSource(JSON.parse(data));
+              let employeeData = [];
+              for(let value of JSON.parse(data))  {
+                if(this.empid != value.empid){
+                  employeeData.push(value);
+                }
+              }
+              this.dataSource2 = new MatTableDataSource(employeeData);
               this.dataSource2.sort = this.historySort;
               this.dataSource2.paginator = this.historyPaginatorUser;
             });
           
           this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
             data => {
+             
+              
               this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
 
               this.dataSource1 = new MatTableDataSource(JSON.parse(data));
@@ -190,12 +213,13 @@ debugger
 
 
 
-     this.historyService.getMemberDetails(this.empid).subscribe(data => {
-      let details = JSON.parse(data);
-      this.role = this.details.designation();
+   
+    // this.registerService.getMemberDetails(this.empid).subscribe(data => {
+    //   let details = JSON.parse(data);
+    //   this.role = this.details.designation();
  
 
-    })
+    // })
 
 
 
@@ -229,9 +253,11 @@ debugger
 
 
   }
-  User() {
-    // this.enable = false;
-
+ selectedtab(event:any) {
+  if(event.target.innerText=='My History'){ this.delShow = false;}
+   else{
+    this.delShow = true;
+   }
   }
 
   back(){
@@ -241,6 +267,16 @@ debugger
   Admin() {
 
   }
+
+  downloadPdf(){
+    this.spinner = true;
+    this.blurMode = true;
+    setTimeout(() => {
+      this.spinner = false;
+      this.blurMode = false;
+    }, 2000);
+  }
+  
 
 
   deleteHistory(historyid: number) {
@@ -256,7 +292,5 @@ debugger
 
     )
   }
-
-
-
 }
+ 
