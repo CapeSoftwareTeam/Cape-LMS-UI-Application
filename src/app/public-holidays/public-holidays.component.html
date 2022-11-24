@@ -1,8 +1,12 @@
         <h2>Public Holidays</h2>
+
+        <div class="" id="btn">
+          <button type="button" class="btn btn-danger" (click)="back()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
+      </div>
   
-    <div class="row" id="filter">
+    <div class="" id="filter">
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. UsingFilter" #input>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. TamilNadu" #input>
     </div>
     
 <div class="mat-elevation-z8" class="container">
@@ -43,9 +47,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div class="row" id="btn">
-      <button type="button" class="btn btn-danger" (click)="back()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
-  </div>
+ 
   
   <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                  showFirstLastButtons

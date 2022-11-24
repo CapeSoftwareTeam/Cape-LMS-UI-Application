@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Holiday } from '../models/holiday';
 import { HolidayservicesService } from '../services/holidayservices.service';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 
 
@@ -14,6 +16,10 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class HolidaysComponent implements OnInit {
  
+  @ViewChild('select') select!: MatSelect;
+
+  locationList: string[] = ['TamilNadu', 'Andhra Pradesh', 'Karnataka', 'Kolkata', 'West', 'North','Odisha'];
+  allSelected:boolean = false;
   spinner:boolean=false;
   blurMode:boolean=false;
   submitted:boolean=false;
@@ -62,6 +68,22 @@ export class HolidaysComponent implements OnInit {
    }
    
    submit(){
+   
+    for(let i=0; i<this.ListData.length;i++){
+      let workLocation = '';
+      for(let value of  this.ListData[i].workLocation){
+        if(workLocation == ''){
+          workLocation = value;  
+        }
+        else{
+          workLocation = workLocation +","+ value;  
+        }
+       
+      }
+      
+       this.ListData[i].workLocation = workLocation;
+    }
+    
    this.holidaysService.saveLeave(this.ListData).subscribe(data=>
     {
      // this.successMsg=false;
@@ -111,7 +133,13 @@ export class HolidaysComponent implements OnInit {
   get field():any{
     return this.holidays.controls;
   }
-
+  toggleAllSelection() {
+    if (this.allSelected) {
+      this.select.options.forEach((item: MatOption) => item.select());
+    } else {
+      this.select.options.forEach((item: MatOption) => item.deselect());
+    }
+  }
   
 
 }

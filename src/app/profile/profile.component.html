@@ -22,7 +22,6 @@
                                 <input class="form-control" type="text" formControlName="empid" [(ngModel)]="register.empid" readonly>
                                </div>
                         </div>
-                       
                     </div>
                    
                     <div class="col-md-3">
@@ -136,7 +135,7 @@
                                  </intl-input-phone> -->
 
                                 <input class="form-control" type="text" formControlName="mobilenumber" [(ngModel)]="register.mobilenumber"
-                                [ngClass]="{'is-invalid': submitted && field.mobilenumber.errors}" >
+                                [ngClass]="{'is-invalid': submitted && field.mobilenumber.errors}" readonly>
                                 <div *ngIf="submitted && field.mobilenumber.errors" class="invalid-feedback">
                                     <div *ngIf="field.mobilenumber.errors">Mobile number field is required</div>
                                     <div *ngIf="field.mobilenumber.errors?.['min']">Enter 10 Digit Number</div>
@@ -281,7 +280,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center justify-content-center">
                         <div>
-                            <p class="alert alert-success" *ngIf="successMsg">Updated Successfully!</p>
+                            <p class="alert alert-success" *ngIf="successMsg">Profile Updated Successfully!</p>
                         </div>
                         <button type="button" class="btn btn-primary" (click)="updateDetails()">Update</button>
                         <button type="button" class="btn btn-danger" (click)=" profileCancel()" title="Back"><i class="bi bi-box-arrow-in-left"></i>Back</button>

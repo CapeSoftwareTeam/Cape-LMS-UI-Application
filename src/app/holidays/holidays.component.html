@@ -70,15 +70,25 @@
                                 </div>
                                 <div class="form-row">
                                  <div class="col">
-                                    <select class="form-control" formControlName="workLocation">
+                                    <!-- <select class="form-control" formControlName="workLocation"> -->
                                       <!-- <option [ngValue]="null" disabled>Select Location</option> -->
-                                      <option value="" disabled selected>Select your option</option>
+                                      <!-- <option value="" disabled selected>Select your option</option>
                                       <option value="Chennai">TamilNadu</option>
                                       <option value="Delhi">Delhi</option>
                                       <option value="Karnataka">Karnataka</option>
                                       <option value="Mumbai">Mumbai</option>
                                       <option value="Kolkata">Kolkata</option>
-                                    </select>
+                                    </select> -->
+                                    <mat-form-field appearance="fill">
+                                        <mat-label >Select Location</mat-label>
+                                        <mat-select  formControlName="workLocation" multiple>
+                                          <mat-option *ngFor="let location of locationList" [value]="location">{{location}}</mat-option>
+                                        </mat-select>
+                                        <!-- <mat-checkbox [(ngModel)]="allSelected"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="toggleAllSelection()"></mat-checkbox> -->
+                                      </mat-form-field>
+
                                      <!-- <input type="text" formControlName="workLocation" class="form-control" name="" id=""
                                      [ngClass]="{'is-invalid': submitted && field.workLocation.errors}" > -->
                                      <div *ngIf="submitted && field.workLocation.errors" class="invalid-feedback" [(ngModel)]="holiday.workLocation">

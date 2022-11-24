@@ -1,57 +1,76 @@
-<div class="" style="width:450px ;margin-top:0px;padding:20px;">
-    <div class="card">
-        <div class="card-body" style="width:400px;">
-            <h2>Change Number</h2>
-            <form action="" [formGroup]="changeNumber" id="card">
-                <div class="row">
-                    <label class="form-label">Enter Mobile Number</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="bi bi-telephone-fill"></i>                                  
-                              </span>
-                         </div>
-                        <input type="text" class="form-control" formControlName="mobileNumber"  
-                        [ngClass]="{'is-invalid': submitted && field.mobileNumber.errors}" placeholder="Enter Mobile Number">
-                        <div *ngIf=" submitted && field.mobileNumber.errors" class="invalid-feedback">
-                            <div *ngIf=" field.mobileNumber.errors">Mobile Number is Required</div>
-                            <div *ngIf="field.mobileNumber.errors?.['min']">Enter 10 Digit Number</div>
-                            <div *ngIf="field.mobileNumber.errors?.['max']">Enter 10 Digit Number</div>
-                        </div> 
-                        
-                    </div>
-                </div>
-               
-                <div class="row">
-                    <label for="" class="form-label">Enter OTP</label>
-                    <div class="input-group"> 
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="bi bi-123"></i>                            
-                              </span>
-                         </div>
-                        <input type="number" class="form-control" formControlName="otp" 
-                        [ngClass]="{'is-invalid':submitted && field.otp.errors}">
-                        <div *ngIf="submitted && field.otp.errors" class="invalid-feedback">
-                            <div *ngIf="field.otp.errors">OTP is required</div>
+<div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;"></div>
+<div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
+    <div class="container" style="margin-top:0px;padding:20px;">
+        <div class="">
+            <div class="card-body">
+                <h2>Change Number</h2>
+                <form action="" [formGroup]="changeNumber" id="card">
+                    <div class="row">
+                        <label class="form-label">Enter Mobile Number</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="bi bi-telephone-fill"></i>                                  
+                                  </span>
+                             </div>
+                            <input type="text" class="form-control" formControlName="mobileNumber"  
+                            [ngClass]="{'is-invalid': submitted && field.mobileNumber.errors}" placeholder="Enter Mobile Number" [readonly]="OtpNumber">
+                            <div *ngIf=" submitted && field.mobileNumber.errors" class="invalid-feedback">
+                                <div *ngIf=" field.mobileNumber.errors">Mobile Number is Required</div>
+                                <div *ngIf="field.mobileNumber.errors?.['min']">Enter 10 Digit Number</div>
+                                <div *ngIf="field.mobileNumber.errors?.['max']">Enter 10 Digit Number</div>
+                            </div> 
+                            
                         </div>
                     </div>
-                </div>
-                <div class="row" id="button"> 
-                    <div class="col" >
-                        <button type="button"  class="btn btn-primary">Generate</button>
+                   
+                    <div class="row">
+                        <label for="" class="form-label">Enter OTP</label>
+                        <div class="input-group"> 
+                            <!-- <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="bi bi-123"></i>                            
+                                  </span>
+                             </div> -->
+                             <div class="form-group" >
+                                <div class="row">
+                                    <div class="form-group col-sm-2" *ngFor="let otp of formInput;  index as i">
+                                         <!-- optEnter -->
+                                        <input #formRow type="password" formControlName="{{otp}}" class="form-control" 
+                                        maxlength="1" (keyup)="keyUpEvent($event, i)" name="password" id="otpBtn" 
+                                        [ngClass]="{'is-invalid':submitted && field.otp.errors}" [readonly]="">
+                                    </div>
+                                </div>
+                              </div>
+                            <div *ngIf="submitted && field.otp.errors" class="invalid-feedback">
+                                <div *ngIf="field.otp.errors" class="errorshow">Please enter verification code (OTP)</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+                    <!-- id="button" -->
+                    <div>
+                       <p *ngIf="successMsg" class="alert alert-success">OTP generated Successfully</p>
                     </div>
+                    <div>
+                        <p *ngIf="successMsgg" class="alert alert-success">Mobile number Updated Successfully</p>
+                     </div>
+                    <div class="row" > 
+                        <div class="col" >
+                            <button type="button"  class="btn btn-primary"  [disabled]="disableGenerate" (click)="generate(field)">Generate</button>
+                        </div>
                         <div class="col">
-                        <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                            <button type="button" class="btn btn-primary"  (click)="submit(field)" [disabled]="disableSubmit">Submit</button>
+                        </div>
+                            <div class="col">
+                            <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 
 
 

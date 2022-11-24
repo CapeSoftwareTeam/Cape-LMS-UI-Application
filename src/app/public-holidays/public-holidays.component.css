@@ -21,7 +21,7 @@ table {
 }  
  
  #btn{
-    margin-left:90%;
+    margin-left:80%;
     margin-top:40px;
     width: 100px;
  } 
@@ -30,5 +30,5 @@ table {
   margin-top: 20px;
  }
  #filter{
-  margin-left:80%;
+  margin-left:10%;
 }

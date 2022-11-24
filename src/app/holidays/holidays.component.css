@@ -53,8 +53,10 @@ h2{
 .loader {
     border: 10px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 10px solid #a0a0f1;
-    border-bottom: 10px solid #237f81;
+    border-top: 10px solid #131396;
+    border-bottom: 10px solid #812323;
+    /* border-left: #969413;
+    border-right: #969413; */
     width: 60px;
     height: 60px;
     position: relative;
