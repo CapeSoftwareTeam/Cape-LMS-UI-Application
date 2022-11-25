@@ -28,7 +28,7 @@ input {
     color: #333;
     margin-bottom: 25px;
 }
-.container header::before{
+ /* .container header::before{
     content: "";
     position: absolute;
     left: 0;
@@ -38,8 +38,27 @@ input {
     padding-bottom: -7px;
     border-radius: 8px;
     background-color: #4070f4;
+    transition: width 2s;
     
+}  */
+/* header{
+    content: "";
+    position: absolute;
+    left: 0; */
+    /* bottom: -2px; */
+    /* height: 3px;
+    width: 27px; */
     
+    /* border-radius: 8px;
+    background-color: #4070f4;
+    transition: width 2s;
+} */
+
+
+header:hover{
+   
+    width: 120px;
+      
 }
 
 
