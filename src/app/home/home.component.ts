@@ -17,6 +17,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  admin:boolean=false;
   blurMode:boolean=false;
   spinner:boolean=false;
   apply:boolean=false;
@@ -121,8 +122,13 @@ export class HomeComponent implements OnInit {
       var a= document.getElementById('avatar');
       a!.innerHTML=displayAvatar;
 
+      if(this.designation=='Manager'||this.designation=='HR'){
+        this.admin=true;
       }
-    )
+      }
+    );
+  
+  
   }
 
 
@@ -167,7 +173,7 @@ export class HomeComponent implements OnInit {
   onCancel() {
     this.modalReference.close();
   }
-  //   getInitial(name){
+  //   getInitial(name: string){
   //     const canvas= document.createElement('canvas');
   //   canvas.style.display='none';
   //   canvas.width=32;
@@ -204,7 +210,7 @@ export class HomeComponent implements OnInit {
       this.blurMode=false;
       this.spinner=false;
       this.route.navigate(['/login']);
-  }, 5000);
+  }, 3000);
   
   }
 }

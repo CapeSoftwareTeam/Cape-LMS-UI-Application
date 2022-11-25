@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { end, start } from '@popperjs/core';
 import { ApplyLeave } from '../models/apply-leave.model';
+import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 
 @Component({
   selector: 'app-apply-leave',
@@ -33,6 +35,13 @@ export class ApplyLeaveComponent implements OnInit {
   }
   modalReference: any;
   countinNumber: any;
+  personDetails= new Register();
+  name: any;
+  designation: any;
+  department: any;
+  experience: any;
+  location: any;
+  managername: any;
 
 
   constructor(private route: Router,
@@ -40,14 +49,29 @@ export class ApplyLeaveComponent implements OnInit {
     private fb: FormBuilder,
     private getDetails: ApplyleaveService,
     private activeRoute: ActivatedRoute,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private registerDetails: LeaveStatusServiceService) { }
 
   applyLeave = new ApplyLeave();
 
   postleave !: FormGroup;
 
   ngOnInit(): void {
-
+    this.empid = sessionStorage.getItem("empid");
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
+      data => {
+        this.personDetails = JSON.parse(data);
+      
+        this.name = this.personDetails.name;
+        console.log(this.name);
+        this.department = this.personDetails.department;
+        this.designation = this.personDetails.designation;
+        this.experience=this.personDetails.totalexperience;
+        this.location=this.personDetails.city;
+        this.managername=this.personDetails.managername;
+      })
+    
+    console.log(this.empid);
     this.postleave = new FormGroup({
       leaveType: new FormControl(''),
       noofdays: new FormControl(''),
@@ -57,8 +81,8 @@ export class ApplyLeaveComponent implements OnInit {
       status: new FormControl('pending'),
     });
     this.getnumber();
-    this.empid = sessionStorage.getItem("empid");
-    this.getDetails.getInfo(this.empid).subscribe(
+   
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.applyLeave = JSON.parse(data);
       }
@@ -73,16 +97,23 @@ export class ApplyLeaveComponent implements OnInit {
         console.log("openmodal popup and say no casual leave is available");
       }
     }
-
-    this.applyLeave.leaveType = this.postleave.value.leaveType;
-    this.applyLeave.noofdays = this.postleave.value.noofdays;
-    this.applyLeave.fromdate = this.postleave.value.fromdate;
-    this.applyLeave.todate = this.postleave.value.todate;
-    this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
-    this.applyLeave.status = this.postleave.value.status;
-    this.apply.leaveRegister(this.applyLeave).subscribe(
-      data => { this.leave.push(this.postleave) }
-    )
+ 
+      this.applyLeave.empid=this.empid;
+      this.applyLeave.name=this.name;
+      this.applyLeave.department=this.department;
+      this.applyLeave.designation=this.designation;
+      this.applyLeave.experience=this.experience;
+      this.applyLeave.location=this.location;
+      this.applyLeave.managername=this.managername;
+      this.applyLeave.leaveType = this.postleave.value.leaveType;
+      this.applyLeave.noofdays = this.countinNumber;
+      this.applyLeave.fromdate = this.postleave.value.fromdate;
+      this.applyLeave.todate = this.postleave.value.todate;
+      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.status = this.postleave.value.status;
+      this.apply.leaveRegister(this.applyLeave).subscribe(
+        data => { this.leave.push(this.applyLeave) }
+      )
     this.modalReference = this.modalService.open(success, { size: 'm' })
     console.log("applied")
   }
@@ -91,6 +122,25 @@ export class ApplyLeaveComponent implements OnInit {
   }
   selected() {
     console.log(this.selectedItem);
+  }
+  save(){
+    this.applyLeave.empid=this.empid;
+    this.applyLeave.name=this.name;
+    this.applyLeave.department=this.department;
+    this.applyLeave.designation=this.designation;
+    this.applyLeave.experience=this.experience;
+    this.applyLeave.location=this.location;
+    this.applyLeave.managername=this.managername;
+    this.applyLeave.leaveType = this.postleave.value.leaveType;
+    this.applyLeave.noofdays = this.countinNumber;
+    this.applyLeave.fromdate = this.postleave.value.fromdate;
+    this.applyLeave.todate = this.postleave.value.todate;
+    this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+    this.applyLeave.status = 'not submitted';
+    this.apply.leaveRegister(this.applyLeave).subscribe(
+      data => { this.leave.push(this.postleave) }
+    )
+    this.route.navigate(['/home']);
   }
   // let dateString = CurrentDate;
   // try {
@@ -137,15 +187,6 @@ export class ApplyLeaveComponent implements OnInit {
     let d = this.pluscount;
     const day2 = d.getDay();
     
-
-   
-
-
-
-
-
-
-
 
     // for complete saturday and sunday
     var getDateArray = function(start: string | number | Date, end: number  | Date) {
@@ -206,7 +247,7 @@ console.log(saturdays)
 //       // remove weekend dates that are not working dates
       var result = arr.filter(function(dt:any){
         console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 );
-          if (dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 ) {
+          if (dt.indexOf("Sat") > -1  || dt.indexOf("Sun") > -1 ) {
          
             // if((saturdays.)&&(dt.indexOf("Sun")-1)){
               if (workingWeekendDates.indexOf(dt) > -1) {  
@@ -258,6 +299,7 @@ console.log(saturdays)
 // //   }
 this.countinNumber=workingDateArray.length;
   console.log(workingDateArray.length);
+
 
 //   function dateDifference(start: string | number, end: string | number) {
 //   // Copy date objects so don't modify originals
@@ -321,7 +363,35 @@ this.countinNumber=workingDateArray.length;
   //     }
   // }
 
+// function nonWorkingDays(date) {
 
+//             var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
+//             var week = 0 | date.getDate() / 7 //get the week
+         
+//             //check if it's second week or fourth week
+//             if (week == 1 || week == 3) {
+//                 if (day == 6)  { //check for satruday
+//                     return [false];
+//                 }
+//             }
+
+//             //check for sunday
+//             if (day == 0)
+//             {
+//                 return [false];
+//             }
+          
+// //check for holidays
+//             for (i = 0; i < holiday.length; i++) {
+//                 if (date.getMonth() == holiday[i][0] - 1 &&
+//                 date.getDate() == holiday[i][1] &&
+//                 date.getFullYear() == holiday[i][2]) {
+//                     return [false];
+//                 }
+//             }
+
+//             return [true];
+//         }
 
 
 
@@ -395,13 +465,7 @@ this.countinNumber=workingDateArray.length;
 
 }
 
-function getDaysArray(d: any, dd: any) {
-  throw new Error('Function not implemented.');
-}
 
-function getDates(arg0: Date, arg1: Date) {
-  throw new Error('Function not implemented.');
-}
 // <input matInput [matDatepickerFilter]="holidayDateFilter" [matDatepicker]="picker">
 // holidayDateFilter = (d: Date): boolean => {
 //   // check if date is weekend day

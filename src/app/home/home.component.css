@@ -240,7 +240,7 @@ div.content {
   width:3em;
   height:3em;
   border-radius:50%;
-  background-color: rgb(137, 137, 197);
+  background-color: rgb(15, 66, 177);
   display: inline-flex;
   justify-content: center;
   text-align: center;
@@ -309,6 +309,9 @@ div.content {
     -webkit-transform: scale(1.0);
   }
 }
+.example-container{
+  overflow: hidden;
+}
 /* #spinner{
   position: fixed;
   margin:0px auto;
@@ -325,4 +328,9 @@ div.content {
     position: fixed;
     font-weight: bold;
     margin-left: 4%;
+} */
+/* a{
+  justify-content:center;
+  text-align: center;
+  align-items: center;
 } */

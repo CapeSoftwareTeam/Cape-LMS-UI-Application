@@ -1,14 +1,14 @@
 <div class="example-container mat-elevation-z8" 
 [ngStyle]="{'filter': (blurMode ? 'blur(2px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}" >
-  <!-- <mat-toolbar style="background-color:rgb(64, 177, 221);"> -->
+  <mat-toolbar style="background-color:rgb(64, 177, 221);">
 
     <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
-    <!-- <mat-toolbar-row style="overflow: hidden;max-height: 500px;"> -->
+    <mat-toolbar-row style="overflow: hidden;max-height: 500px;">
       <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
       <button mat-button style='color:rgb(0, 0, 7); '>
         <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
       </button>
-      <h2 style="font-size:small;margin-left:auto"> Cape Electric Private Limited </h2>
+      <h2 > Cape Electric Private Limited </h2>
       <button mat-button style="margin-left:auto;">
         <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
           matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
@@ -28,9 +28,9 @@
         </mat-menu>
   
     </div>
-    <!-- </mat-toolbar-row>
-  </mat-toolbar> -->
-  <hr>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
   <mat-tab-group [selectedIndex]="selected.value"
     (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
     <mat-tab style="font-family: system-ui;" *ngFor="let tab of tabs; let index = index" [label]="tab">
@@ -66,16 +66,16 @@
                <h4 style="justify-content: center;text-align: center;font-family: fangsong;">  {{name}}</h4>
         <h6 class="text-muted" style="justify-content: center;text-align: center;font-family: system-ui;"> {{department}} - {{designation}}</h6>
         <hr>
-        <mat-nav-list>
-          <a mat-list-item (click)="termsCondition(termsContent)">Leave Policy</a>
-          <a mat-list-item (click)="callHolidays()">Public Holidays</a>
-          <a mat-list-item (click)="callApplyLeave()">Apply Leave</a>
-          <a mat-list-item (click)="callHistory()">My History</a>
-          <hr>
-          <a mat-list-item (click)="calleditholidays()">Add holidays</a>
-          <a mat-list-item (click)="callRegister()">Add Employee</a>
+        <mat-nav-list >
+          <a mat-list-item  (click)="termsCondition(termsContent)">Leave Policy</a>
+          <a mat-list-item  (click)="callHolidays()" style="justify-content:center;text-align: center;">Public Holidays</a>
+          <a mat-list-item style="justify-content:center;text-align: center;" (click)="callApplyLeave()">Apply Leave</a>
+          <a mat-list-item style="justify-content:center;text-align: center;" (click)="callHistory()">My History</a>
+          <hr *ngIf="admin">
+          <a mat-list-item (click)="calleditholidays()" *ngIf="admin">Add holidays</a>
+          <a mat-list-item (click)="callRegister()" *ngIf="admin">Add Employee</a>
       
-          <!-- <button type="button" class="btn btn-light" (click)="signout()">
+          <!-- <button type="button" class="btn btn-light" (click)="signout()" *ngIf="admin">
             <i class="fa fa-sign-out" style="font-size:30px"></i></button> -->
         </mat-nav-list>
  

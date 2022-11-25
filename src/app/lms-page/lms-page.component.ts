@@ -135,7 +135,8 @@ export class LmsPageComponent implements OnInit {
         // console.log(this.experience);
         // this.experience = this.exp.experience;
         // console.log(this.experience);
-        this.expcl = this.exp.casualLeave
+        this.expcl = this.exp.casualLeave;
+        console.log(this.expcl);
         this.expsl = this.exp.sickLeave;
         this.expbl = this.exp.bereavementLeave;
         this.exppl = this.exp.privilegeLeave;
