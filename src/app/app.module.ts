@@ -44,7 +44,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { NgOtpInputModule } from 'ng-otp-input';
 
 
 @NgModule({
@@ -94,7 +94,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSortModule,
 
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,NgOtpInputModule
 
 
   ],

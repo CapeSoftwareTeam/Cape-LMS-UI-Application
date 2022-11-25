@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { FrontpageComponent } from '../frontpage/frontpage.component';
+import { LoginComponent } from '../login/login.component';
 import { RegisterserviceService } from '../services/registerservice.service';
 
 @Component({
@@ -8,6 +11,8 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./forgotpassword.component.css']
 })
 export class ForgotpasswordComponent implements OnInit {
+  @ViewChild(LoginComponent)
+  child!: LoginComponent;
 
  submitted:boolean=false;
  password:any;
@@ -20,11 +25,12 @@ export class ForgotpasswordComponent implements OnInit {
   });
   emailid: any;;
 
-  constructor(private fb:FormBuilder,private registerService:RegisterserviceService) { }
+  constructor(private fb:FormBuilder,private registerService:RegisterserviceService,private route:ActivatedRoute) { }
+
+
 
   ngOnInit(): void {    
-    this.emailid='dhanavandhan@capeindia.net';
-    sessionStorage.setItem('email',this.emailid)   
+     
     this.forgotpasswordform = this.fb.group({
       password: ['', [
         Validators.required,
@@ -40,12 +46,12 @@ export class ForgotpasswordComponent implements OnInit {
     if(this.forgotpasswordform.invalid) {
       return;
     }
-   
-    this.email=sessionStorage.getItem('email')
+    this.email=this.route.snapshot.paramMap.get('email') || '{}'
+  
     this.password=this.forgotpasswordform.value.password
     this.registerService.updatePassWord(this.email,this.password).subscribe(
       data=>{
-          console.log("success")
+          
       }
     )
 

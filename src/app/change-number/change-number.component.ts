@@ -49,7 +49,7 @@ export class ChangeNumberComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-   // sessionStorage.setItem('email','gokul@gmail.com')
+ 
 
   }
 
@@ -89,8 +89,8 @@ export class ChangeNumberComponent implements OnInit {
    
     
     this.mobileNumber=this.changeNumber.value.mobileNumber;
-    this.email=sessionStorage.getItem('email')
-   this. registerService.sendOtp(this.email,this.mobileNumber).subscribe(data=>{
+    
+   this. registerService.sendOtp(this.mobileNumber).subscribe(data=>{
    
    })
    this.OtpNumber = true;

@@ -35,8 +35,8 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
 //})
  
   }
-  sendOtp(email:any,mobileNumber:any):Observable<any>{
-    return this.http.get<any>(this.apiurl+'/sendotp'+'/'+email+'/'+mobileNumber,{ responseType:'text' as 'json'})
+  sendOtp(userName:any):Observable<any>{
+    return this.http.get<any>(this.apiurl+'/sendotp'+'/'+userName,{ responseType:'text' as 'json'})
   }
   updatePassWord(email:any,passWord:any):Observable<any>{
     return this.http.put<any>(this.apiurl+'/updatePassword'+'/'+email+'/'+passWord,{responseType:'text' as 'json'})
@@ -44,7 +44,12 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
 
   getEmpid():Observable<any>{
        return this.http.get<any>(this.apiurl+ '/empid', {responseType: 'text' as 'json'})
+       
      }
+
+  verifyOtp (user: User): Observable<any> {
+      return this.http.put<any>(this.apiurl+'/verifyOtp' ,user, { responseType: 'text' as 'json' })
+    }
   }
 
 

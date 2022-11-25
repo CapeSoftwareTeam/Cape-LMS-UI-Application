@@ -1,4 +1,6 @@
+
 <html >
+    
     <body>
             <div class="card" *ngIf="loginPage">
                
@@ -8,12 +10,13 @@
             <div class="title"><span >LOGIN HERE!!</span></div>
             <hr>
         <form [formGroup]="loginForm">
+            <p *ngIf="showErrorMessage" style="text-align:center ;color: red;">{{errorMessage}}</p>
             <div class="row">
                 <label class="form-label">Preffered Login</label>
-                <div *ngIf="showErrorMessage">{{showErrorMessage}}</div>
-                <mat-radio-group  class="example-section" formControlName="userValidation">
-                <mat-radio-button class="btn1" value="empid">EmpId</mat-radio-button>
-                <mat-radio-button value="mobileNumber">Mobile Number</mat-radio-button>
+              
+                <mat-radio-group  class="example-section"  formControlName="userValidation" (change)="validate($event)">
+                <mat-radio-button   class="btn1" value="empid">EmpId</mat-radio-button>
+                <mat-radio-button  value="mobileNumber">Mobile Number</mat-radio-button>
                 <mat-radio-button class="btn3" value="email">Email</mat-radio-button>
                   </mat-radio-group >
                   <!-- <label class="form-lable">UserName</label>
@@ -39,7 +42,7 @@
                 </div>
  
             <!-- </div> -->
-
+            
             <div class="row" *ngIf="f.userValidation.value=='empid'">
              
                 
@@ -69,7 +72,7 @@
                             <i  class="bi bi-telephone"></i>
                         </span>
                     </div>
-                    <input formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber" placeholder="Enter Your Mobile Number" class="form-control" >
+                    <input formControlName="mobileNumberLogin" [(ngModel)]="user.mobileNumber" placeholder="Enter Your Mobile Number" class="form-control"[ngClass]="{ 'is-invalid': submitted && f.mobileNumberLogin.errors }" >
                     <div *ngIf="submitted && f.mobileNumberLogin.errors" class="invalid-feedback">
                         <div *ngIf="f.mobileNumberLogin.errors['required']"> Mobile Number is required</div>
                         <div *ngIf="f.mobileNumberLogin.errors['pattern']">Mobile Number should be in 10 Numbers</div>
@@ -93,7 +96,7 @@
                 <input type="email"  formControlName="emailidLogin" class="form-control" placeholder="Enter your  Email" [(ngModel)]="user.email"  [ngClass]="{ 'is-invalid': submitted && f.emailidLogin.errors }" >
                 <div *ngIf="submitted && f.emailidLogin.errors" class="invalid-feedback">
                     <div *ngIf="f.emailidLogin.errors['required']">Email is required</div>
-                     <div *ngIf="f.emailidLogin.errors['pattern']">Email Pattern Validation</div> 
+                     <div *ngIf="f.emailidLogin.errors['pattern']"  style="color: gold;">Ex.name@gmail.com</div> 
                 </div>
             </div>
              </div>
@@ -122,7 +125,7 @@
                 
         </form>
     </div>
-    <button  class="btn btn-primary" type="submit" id="login"  (click)="login($event)">Login</button>
+    <button  class="btn btn-primary" type="submit" id="login"(click)="login()">Login</button>
 </div>
 
 <div class="card" *ngIf="otp">
@@ -139,8 +142,18 @@
         <form [formGroup]="otpgenerateform" >
            
            <p *ngIf="errorMsg" style="text-align: center;color:red;border-radius: 3px;font-size: 12px;">Please fill Email or Mobile number to proceed further!</p>
+           <p *ngIf="errorOtp" style="text-align: center;color:red;border-radius: 3px;font-size: 20px;">Please Enter The Otp</p>
            <div *ngIf="showErrorMessage" class="errorshow">{{showErrorMessage}}</div>
-            <div class="row" *ngIf="afterOtp">
+           <div class="row" >
+            <label class="form-label" >Preffered Generate Otp</label>
+           <mat-radio-group  class="example-section" formControlName="otpgenerate">
+            
+            <mat-radio-button class="btn1"value="mobileNumber" [disabled]="showOtpComponent" >Mobile Number</mat-radio-button>
+            <mat-radio-button class="btn2" value="email" [disabled]="showOtpComponent">Email</mat-radio-button>
+              </mat-radio-group >
+           </div>
+            <div class="row" *ngIf="g.otpgenerate.value=='mobileNumber'" >
+               
                <label class="form-lable">Mobile Number</label>
                <div class="input-group">
                     
@@ -151,7 +164,8 @@
                 </div>
                   
                   
-                   <input type="text"  formControlName="mobileNumber" placeholder="Enter your Mobile Number"  class="form-control"   [ngClass]="{ 'is-invalid': submit && g.mobileNumber.errors }" >
+                   <input type="text"  formControlName="mobileNumber" placeholder="Enter your Mobile Number"  class="form-control" 
+                     [ngClass]="{ 'is-invalid': submit && g.mobileNumber.errors }" [readOnly]="disableMOb">
                 
                <div *ngIf="submit && g.mobileNumber.errors" class="invalid-feedback">
                    <div *ngIf="g.mobileNumber.errors['required']"> Mobile Number is required</div>
@@ -160,7 +174,7 @@
            </div>
                 
             </div>
-            <div class="row" *ngIf="afterOtp">
+            <div class="row" *ngIf="g.otpgenerate.value=='email'">
                <label class="form-lable">Email</label>
                <div class="input-group" >
                    
@@ -178,33 +192,29 @@
            </div>
                 
             </div>
-            <div *ngIf="sentOtp" class="row">
-               <label class="form-lable">Otp</label>
-               <div class="input-group">
-                   
-                   <div class="input-group-prepend">
-                       <span class="input-group-text">
-                           <i class="bi bi-lock-fill"></i>
-                       </span>
-                   </div>
-               
-               <input type="number" formControlName="otp" class="form-control" placeholder="Enter Your Otp" [ngClass]="{ 'is-invalid': submit&& g.otp.errors }">
-               <div *ngIf="submit&& g.otp.errors" class="invalid-feedback">
-                   <div *ngIf="g.otp.errors['required']">Otp is required</div>
-                   </div>
-           
-           </div>
-
+            <div class="row" *ngIf="showOtpComponent">
+                <label class="form-lable">Enter Your Verify Otp</label>
+                <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="config" ></ng-otp-input>
+                </div>
+            
+            <div style="text-align: center;">
+                <p class="alert alert-success"  *ngIf="successMsgOtp">Otp Send Successfully</p>
             </div>
-            <div class="row" > 
-               <div class="col col-50"><button class="btn btn-success" [disabled]="sentOtp" id="button1" (click)="generate()">
+            <div class="row" style="margin-bottom:15px">
+            <div class="col" style="width: 30% ;" > 
+               <button class="btn btn-success form-control  btn-block"  [disabled]="showOtpComponent" id="button1" (click)="generate()">
                    Generate
-           </button> </div>
-           <div class="col col-50" id="button2">
-               <button [disabled]="!sentOtp" class="btn btn-primary" id="submit" (click)="submitForm()">
+           </button> 
+            </div>
+            <div class="col">
+           
+               <button [disabled]="!showOtpComponent" class="btn btn-primary form-control btn-block"  id="submit" (click)="submitForm()">
                Submit
-           </button></div>     
+           </button>    
            </div>
+        </div>
+        
+    
        </form>
          </div>
         </div>
