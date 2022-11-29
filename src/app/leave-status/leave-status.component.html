@@ -138,8 +138,10 @@
     
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    
-      <mat-paginator #dataPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+      <mat-paginator  #dataPaginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons>
+ </mat-paginator>
     </div>
     </div>
     </mat-table>

@@ -37,6 +37,25 @@
 </div>
         </div>
 <br>
+<div class="row" style="justify-content:center;text-align: center;">
+  <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
+    <label><b>Leave Duration: </b></label></div>
+  <div class="col-7" style="display: inline-flex;">
+<div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" (click)="hideDays()"/>
+  <label class="form-check-label" for="inlineRadio1" style="display:contents">Full Day</label>
+</div>
+<div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" (click)="showDays()" />
+  <label class="form-check-label" for="inlineRadio1" style="display:contents">Half A Day </label>
+</div>
+<!-- <div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+  <label class="form-check-label" for="inlineRadio1">Half in Afternoon</label>
+</div> -->
+</div>
+</div>
+<br>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
               <label><b>Date From:</b> </label></div>
@@ -48,7 +67,7 @@
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-             
+               
 <!-- <input type="text"
 placeholder="Datepicker"
 class="form-control"
@@ -66,6 +85,12 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
                 <!-- <input class="formcontrol" type="date" formControlName="fromdate" 
                 style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate"> -->
                 <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 25px;">
+                <br>
+                <br>
+                <br>
+               
+               
+              
                 <!-- min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date"> -->
                 <!-- <mat-form-field appearance="fill">
                   <input matInput [matDatepicker]="dtAdm" [matDatepickerFilter]="myDateFilter" formControlName="dateOfAdmission">
@@ -76,6 +101,21 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               </div>
           </div>
         <!-- </div> -->
+
+<div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
+          <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
+          <div class="col-7" style="display: inline-flex;">
+<div class="form-check form-check-inline" >
+  <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
+  <input class="form-check-input" type="radio"  >   
+  
+</div>
+<div class="form-check form-check-inline">
+  <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label> 
+  <input class="form-check-input" type="radio" >
+ </div>
+ </div>
+</div>
 <br>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6"style="float: left;width: 24%;margin-top: 6px;">
@@ -94,9 +134,25 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               <input type="submit" (click)="getsecondnumber()" value="confirm" style="margin-top: 34px;">
             </div>
           </div>
+          <br>
+          <br>
+          <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
+            <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
+            <div class="col-7" style="display: inline-flex;">
+  <div class="form-check form-check-inline" >
+    <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
+    <input class="form-check-input" type="radio"  >   
+    
+  </div>
+  <div class="form-check form-check-inline">
+    <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label> 
+    <input class="form-check-input" type="radio" >
+   </div>
+   </div>
+  </div>
         <!-- </div>focusout -->
         <br>
-<br>
+        <br>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6" style="float: left;width: 25%;margin-top: 6px;" >
               <label><b>Number of days: </b></label>

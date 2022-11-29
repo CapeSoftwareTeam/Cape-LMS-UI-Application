@@ -32,6 +32,8 @@ export class LeaveStatusComponent implements OnInit {
   personDetails: any=[];
   designation: any;
   department: any;
+  managerName: any;
+  name: any;
   constructor(private statusservice: LeaveStatusServiceService,
     private statusagree: LeaveStatusServiceService,
     private route: Router,
@@ -45,15 +47,17 @@ export class LeaveStatusComponent implements OnInit {
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
-        this.department=this.personDetails.department
+        this.name=this.personDetails.name;
+        this.department=this.personDetails.department;
         this.designation=this.personDetails.designation;
+        this.managerName=this.personDetails.managerName;
         if(this.designation=='Manager'||this.designation=='HR'){
           this.admin=true;
         }
       });
 
-      this.empid = sessionStorage.getItem("empid");
-    this.statusservice.getUpdates(this.empid).subscribe(
+      
+    this.statusservice.getUpdates(this.department).subscribe(
       data => {
         this.notification = JSON.parse(data).length;
         console.log(this.notification);
@@ -95,10 +99,8 @@ if(this.department=='Software' && this.designation=='Manager'){
       data => {
    
    this.detailsdata.push(status);
-      
         console.log("updated successfully")
         console.log(status);
-
       }
     );
 
@@ -106,15 +108,31 @@ if(this.department=='Software' && this.designation=='Manager'){
 
 
   getpendingData() {
-    this.statusservice.getUpdates(this.empId).subscribe(
+    // this.name==this.managername
+    this.empid = sessionStorage.getItem("empid");
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
+      data => {
+        this.personDetails = JSON.parse(data);
+        this.name=this.personDetails.name;
+        this.department=this.personDetails.department;
+        this.designation=this.personDetails.designation;
+        this.managerName=this.personDetails.managerName
+    
+    if(this.designation=='Manager'){
+    this.statusservice.getUpdates(this.department).subscribe(
       data => {
         let b = [];
+       
         for (let item of JSON.parse(data)) {
+          // if(this.name==q.managername && this.department==q.departmemt){
           if (item.status == 'pending') {
+            console.log("condition true");
+            // if(item.managerName== this.name ){
+            //   console.log("mann condition true");
             b.push(item);
             console.log(b.length);
           }
-
+        //  }
         }
         this.dataSource1 = new MatTableDataSource(b);
         this.dataSource1.paginator = this.dataPaginator;
@@ -122,15 +140,22 @@ if(this.department=='Software' && this.designation=='Manager'){
       }
     );
   }
+})
+}
+  managername(empid: any, managername: any) {
+    throw new Error('Method not implemented.');
+  }
   getstatusData() {
-        this.statusservice.getUpdates(this.empId).subscribe(
+    this.empid = sessionStorage.getItem("empid");
+        this.statusservice.separationDetails(this.empid).subscribe(
           data => {
             let c = [];
             for (let item of JSON.parse(data)) {
-              if (item.status == 'not submitted') {
+           
+              if (item.status == 'not submitted' ) {
                 c.push(item);
               }
-    
+            
             }
             this.dataSource2 = new MatTableDataSource(c);
             this.dataSource2.paginator = this.dataPaginator;
@@ -138,7 +163,7 @@ if(this.department=='Software' && this.designation=='Manager'){
           }
         );
       }
-      
+
 
   // user(){
   //    console.log('user');

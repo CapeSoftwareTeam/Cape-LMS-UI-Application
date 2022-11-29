@@ -44,12 +44,13 @@ export class HomeComponent implements OnInit {
   year: String = '';
   remainingcl: String = '';
   remainingsl: String = '';
-  department: String = '';
+  department: any;
   name: String = '';
   personDetails = new Register();
   designation: String = '';
   leavestatus:boolean=false;
   initials: String='';
+  managerName: any;
 
 
   constructor(private route: Router,
@@ -84,13 +85,22 @@ export class HomeComponent implements OnInit {
     this.lmspage=true;
      
     this.empid = sessionStorage.getItem("empid");
+   
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
+      data => {
+        this.personDetails = JSON.parse(data);
+        this.name=this.personDetails.name;
+        this.department=this.personDetails.department;
+        this.designation=this.personDetails.designation;
+        this.managerName=this.personDetails.managername;
 
-    this.statusservice.getUpdates(this.empid).subscribe(
+    this.statusservice.getUpdates(this.department).subscribe(
       data => {
         this.notification = JSON.parse(data).length;
 
       }
     );
+  });
     this.getDetails.leaveTracking(this.empid).subscribe(
       data => {
         let leaveDetails = JSON.parse(data);

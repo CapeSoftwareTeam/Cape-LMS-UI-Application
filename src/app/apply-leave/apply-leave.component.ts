@@ -6,6 +6,7 @@ import { end, start } from '@popperjs/core';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { HolidayservicesService } from '../services/holidayservices.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
+  showMorning:boolean=false;
   callLms: boolean = true;
   back: boolean = false;
   @Output() backflow = new EventEmitter();
@@ -42,15 +44,20 @@ export class ApplyLeaveComponent implements OnInit {
   experience: any;
   location: any;
   managername: any;
-
-
+Alternatesaturday:any=[];
+thismonth:any;
+thisyear:any;
+saturdays:any;
+nextmonth:any;
+nextyear:any;
   constructor(private route: Router,
     private apply: ApplyleaveService,
     private fb: FormBuilder,
     private getDetails: ApplyleaveService,
     private activeRoute: ActivatedRoute,
     private modalService: NgbModal,
-    private registerDetails: LeaveStatusServiceService) { }
+    private registerDetails: LeaveStatusServiceService,
+    private getPublicHolidays:HolidayservicesService) { }
 
   applyLeave = new ApplyLeave();
 
@@ -181,27 +188,32 @@ export class ApplyLeaveComponent implements OnInit {
     //     console.log(mm);
     //   var days=String(today.getDay());
     // console.log(days);
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
+      data => {
+        this.personDetails = JSON.parse(data);
+        this.department = this.personDetails.department;
+     
+      });
     // if()
     let dd = this.count;
     const day1 = dd.getDay();
     let d = this.pluscount;
     const day2 = d.getDay();
-    
-
+    this.empid = sessionStorage.getItem("empid");
+   
+    if(this.department!='Software'){
+      console.log(this.department)
     // for complete saturday and sunday
     var getDateArray = function(start: string | number | Date, end: number  | Date) {
       var arr = new Array();
       var dt = new Date(start);
+      console.log("dt=", dt);
       while (dt <= end) {
           arr.push((new Date(dt)).toString().substring(0,15)); //save only the Day MMM DD YYYY part
-          dt.setDate(dt.getDate() + 1);
+          dt.setDate(dt.getDate() + 1);     
       }
       return arr;
   }
-  
-//   /**
-//    * this will prepare a date array
-//    */
   var prepareDateArray = function(dtArr: string | any[]) {
       var arr = new Array();
       for (var i = 0; i < dtArr.length; i++) {
@@ -210,75 +222,101 @@ export class ApplyLeaveComponent implements OnInit {
       return arr;
   }
   function getSaturdays(year: number, month: number) {
-
     let day, date;
     let saturdays = [];
     day = 1;
     date = new Date(year, month, day);
     while (date.getMonth() === month) {
         if (date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
-            saturdays.push(new Date(year, month, day).getDate());
-            // console.log(saturdays.push(new Date(year, month, day).getDate()));
+            saturdays.push(new Date(year, month, day));
         }
-        // date = new Date(year, month, day);
         day += 1;
         date = new Date(year, month, day);
-        // console.log(date)
+         console.log(date)
     }
-    // console.log(saturdays)
-    return saturdays;
+    console.log(saturdays)
+    return saturdays;   
 }
-// i%2!==0 means, it represents 2nd and 4th saturdays
-let saturdays = getSaturdays(2021, 5).filter((day, index) => index % 2 !== 0)
-console.log(saturdays)
 
+if(this.count.getMonth()==this.pluscount.getMonth() && this.count.getFullYear()== this.pluscount.getFullYear()){
+  this.thismonth=this.count.getMonth(); this.nextmonth=this.pluscount.getMonth();
+ this.thisyear=this.count.getFullYear(); this.nextyear= this.pluscount.getFullYear();
+ this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+console.log(this.saturdays)
+for(let r=0;r<this.saturdays.length;r++){
 
-//   /**
-//    * this will return an array consisting of the
-//    * working dates
-//    */
+  let tempDate=this.saturdays[r].getMonth()+1;
+  this.Alternatesaturday.push(this.saturdays[r].getFullYear()+"-"+tempDate+"-"+this.saturdays[r].getDate())+1
+}
+console.log( this.Alternatesaturday );
+ }
+ else if((this.count.getFullYear()!= this.pluscount.getFullYear()) || this.count.getMonth()!=this.pluscount.getMonth()){
+  this.Alternatesaturday=[];
+  this.thismonth=this.count.getMonth(); this.nextmonth=this.pluscount.getMonth();
+  this.thisyear=this.count.getFullYear(); this.nextyear= this.pluscount.getFullYear();
+  // if(this.saturdays.getMonth()== this.count.getMonth()){
+    // this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+  // }
+  // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
+    this.saturdays = getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0);
+  // }
+  
+ console.log(this.saturdays)
+ for(let r=0;r<this.saturdays.length;r++){
+   let tempDate=this.saturdays[r].getMonth()+1;
+   this.Alternatesaturday.push(this.saturdays[r].getFullYear()+"-"+tempDate+"-"+this.saturdays[r].getDate());
+ }
+ }
+//  else if(this.count.getMonth()==this.pluscount.getMonth()){}
+// if(this.saturdays.getMonth()== this.count.getMonth())
+
+//     this.Alternatesaturday=[];
+//    this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+//    this.saturdays = getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0);
+//     console.log(this.saturdays)
+    
+//   for(let r=0;r<this.saturdays.length;r++){
+   
+//     let tempDate=this.saturdays[r].getMonth()+1;
+//     this.Alternatesaturday.push(this.saturdays[r].getFullYear()+"-"+tempDate+"-"+this.saturdays[r].getDate())
+    
+//   }
+//   console.log( this.Alternatesaturday );
+//    }
   var getWorkingDateArray = function(dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
-      
-//       // remove holidays
       var arr = dates.filter(function(dt: any){
           return holidaysArray.indexOf(dt) < 0;
       });
-  
-//       // remove weekend dates that are not working dates
-      var result = arr.filter(function(dt:any){
-        console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 );
-          if (dt.indexOf("Sat") > -1  || dt.indexOf("Sun") > -1 ) {
-         
-            // if((saturdays.)&&(dt.indexOf("Sun")-1)){
-              if (workingWeekendDates.indexOf(dt) > -1) {  
-                  return dt; 
-              }
-          }
-          else {
-              return dt;
-          }
-      });
-      
-      return result;
-  
-  }
-  
-//   // start and end dates
+
+var result = arr.filter(function(dt:any){
+  console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 );
+    if (dt.indexOf("Sat") > -1  || dt.indexOf("Sun") > -1 ) {
+        if (workingWeekendDates.indexOf(dt) > -1) {  
+            return dt; 
+        }
+    }
+    else {
+        return dt;
+    }
+});
+
+return result;
+
+}
+
+  this.getPublicHolidays.getLeave().subscribe(
+    data=>{
+      let publicholiday=JSON.parse(data);
+      // this.holidays=publicholiday.
+    }
+  )
+
   var startDate = new Date(this.count); //YYYY-MM-DD
   var endDate = new Date(this.pluscount); //YYYY-MM-DD
-  
-//   /**
-//    * holidays and working weekends
-//    *
-//    * if not applicable then set it as an empty array
-//    * example: if no offical holidays then set
-//    * officalHolidays = []
-//    * similarly, if no working weekends then set
-//    * workingWeekends = []
-//    */
-  var officalHolidays = ["2022-10-02"]; //YYYY-MM-DD
-  var workingWeekends = ["2022-10-05"] //YYYY-MM-DD
-  
+
+  var officalHolidays = ["2022-11-02"]; //YYYY-MM-DD
+  var workingWeekends = this.Alternatesaturday;//YYYY-MM-DD
+  console.log(workingWeekends);
 //   // compute date array between start and end dates
   var dateArray = getDateArray(startDate, endDate);
   
@@ -299,7 +337,131 @@ console.log(saturdays)
 // //   }
 this.countinNumber=workingDateArray.length;
   console.log(workingDateArray.length);
+}
 
+if(this.department=='Software'){
+  var getDateArray = function(start: string | number | Date, end: number  | Date) {
+    var arr = new Array();
+    var dt = new Date(start);
+    console.log("dt=", dt);
+    while (dt <= end) {
+        arr.push((new Date(dt)).toString().substring(0,15)); //save only the Day MMM DD YYYY part
+        dt.setDate(dt.getDate() + 1);
+        
+    }
+    console.log(arr);
+    return arr;
+}
+function getSaturdays(year: number, month: number) {
+
+  let day, date;
+  let saturdays = [];
+  day = 1;
+  date = new Date(year, month, day);
+  while (date.getMonth() === month) {
+      if (date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
+          saturdays.push(new Date(year, month, day).getDate());
+          //  console.log(saturdays.push(new Date(year, month, day).getDate()));
+      }
+      // date = new Date(year, month, day);
+      day += 1;
+      date = new Date(year, month, day);
+       console.log(date)
+  }
+  console.log(saturdays)
+  return saturdays;
+  
+}
+this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+// if(this.count.getMonth()==this.pluscount.getMonth() && this.count.getFullYear()== this.pluscount.getFullYear()){
+//   this.thismonth=this.count.getMonth(); this.nextmonth=this.pluscount.getMonth();
+//  this.thisyear=this.count.getFullYear(); this.nextyear= this.pluscount.getFullYear();
+//  this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+// console.log(this.saturdays)
+// for(let r=0;r<this.saturdays.length;r++){
+
+//   let tempDate=this.saturdays[r].getMonth()+1;
+//   this.Alternatesaturday.push(this.saturdays[r].getFullYear()+"-"+tempDate+"-"+this.saturdays[r].getDate())
+// }
+// console.log( this.Alternatesaturday );
+//  }
+
+//   /**
+//    * this will prepare a date array
+//    */
+var prepareDateArray = function(dtArr: string | any[]) {
+    var arr = new Array();
+    for (var i = 0; i < dtArr.length; i++) {
+        arr.push((new Date(dtArr[i])).toString().substring(0,15)); //save only the Day MMM DD YYYY part
+    }
+    console.log("in prepare array",arr)
+    return arr;
+}
+
+  var getWorkingDateArray = function(dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
+      
+    //       // remove holidays
+          var arr = dates.filter(function(dt: any){
+              return holidaysArray.indexOf(dt) < 0;
+          });
+      
+    //       // remove weekend dates that are not working dates
+    var result = arr.filter(function(dt:any){
+      console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1 );
+        if (dt.indexOf("Sat") > -1  || dt.indexOf("Sun") > -1 ) {
+       
+          // if((saturdays.)&&(dt.indexOf("Sun")-1)){
+            if (workingWeekendDates.indexOf(dt) > -1) {  
+                return dt; 
+            }
+        }
+        else {
+            return dt;
+        }
+    });
+    
+    return result;
+    
+    }
+ 
+    //   // start and end dates
+      var startDate = new Date(this.count); //YYYY-MM-DD
+      var endDate = new Date(this.pluscount); //YYYY-MM-DD
+      
+    //   /**
+    //    * holidays and working weekends
+    //    *
+    //    * if not applicable then set it as an empty array
+    //    * example: if no offical holidays then set
+    //    * officalHolidays = []
+    //    * similarly, if no working weekends then set
+    //    * workingWeekends = []
+    //    */
+      var officalHolidays = ["2022-10-02"]; //YYYY-MM-DD
+       workingWeekends = ["2021-10-05"] //YYYY-MM-DD
+      
+    //   // compute date array between start and end dates
+      var dateArray = getDateArray(startDate, endDate);
+      
+    //   // prepare the holidays array
+      var holidaysArray = prepareDateArray(officalHolidays);
+      
+    //   // prepare the working weekends array
+      var workingWeekendsArray = prepareDateArray(workingWeekends);
+    
+    
+    //   // get the working days array
+      var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
+      console.log(workingDateArray);
+    //   // output
+    // //   for(var i=0;i<workingDateArray.length;i++){
+    // //     this.countinNumber++;
+    // // console.log(this.countinNumber);
+    // //   }
+    this.countinNumber=workingDateArray.length;
+      console.log(workingDateArray.length);
+  
+}
 
 //   function dateDifference(start: string | number, end: string | number) {
 //   // Copy date objects so don't modify originals
@@ -462,6 +624,12 @@ this.countinNumber=workingDateArray.length;
     this.modalReference.close();
     this.route.navigate(['/home']);
   }
+  hideDays(){
+    this.showMorning=false;
+  }
+showDays(){
+this.showMorning=true;
+}
 
 }
 

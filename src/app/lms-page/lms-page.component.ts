@@ -43,7 +43,7 @@ export class LmsPageComponent implements OnInit {
   year: String = '';
   remainingcl: String = '';
 
-  department: String = '';
+  department:any;
   name: String = '';
   personDetails = new Register();
   exp = new LeaveDetails();
@@ -73,6 +73,7 @@ export class LmsPageComponent implements OnInit {
   calpl:any;
   calbl:any;
   calml:any;
+  managerName: any;
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
@@ -85,13 +86,23 @@ export class LmsPageComponent implements OnInit {
   ngOnInit(): void {
 
     this.empid = sessionStorage.getItem("empid");
+    this.registerDetails.getMemberDetails(this.empid).subscribe(
+      data => {
+        this.personDetails = JSON.parse(data);
+        this.name=this.personDetails.name;
+        this.department=this.personDetails.department;
+        this.designation=this.personDetails.designation;
+        this.managerName=this.personDetails.managername;
 
-    this.statusservice.getUpdates(this.empid).subscribe(
+    this.statusservice.getUpdates(this.department).subscribe(
       data => {
         this.notification = JSON.parse(data).length;
 
       }
     );
+  });
+
+   
     this.getDetails.leaveTracking(this.empid).subscribe(
       data => {
         let leaveDetails = JSON.parse(data);
