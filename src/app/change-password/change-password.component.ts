@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { User } from '../models/user';
+import { RegisterserviceService } from '../services/registerservice.service';
 
 
 @Component({
@@ -9,15 +12,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
+  empId:any;
   submitted:boolean=false;
-  changePasswordForm=new FormGroup({
-    newpassword:new FormControl('')
+  succesMsg:boolean=false;
+  changePasswordForm=new FormGroup({oldPassword:new FormControl(),
+    newpassword:new FormControl()
   });
-  constructor(private fb:FormBuilder,
+  user=new User();
+  this: any;
+  errorMessage: any;
+  showErrorMessage: boolean=false;
+  constructor(private fb:FormBuilder,private registerService:RegisterserviceService,private route:Router
 ) { }
 
   ngOnInit(): void {
-        this.changePasswordForm= this.fb.group({
+   this.empId=sessionStorage.getItem('empid')
+        this.changePasswordForm= this.fb.group({oldPassword:['',[Validators.required,Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]],
             newpassword:['',[Validators.required,Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]]
         });
   }
@@ -26,6 +36,26 @@ export class ChangePasswordComponent implements OnInit {
     if(this.changePasswordForm.invalid) {
       return;
     }
+    this.user.oldPassword=this.changePasswordForm.value.oldPassword;
+    this.user.password=this.changePasswordForm.value.newpassword;
+    this.user.empId=this.empId;
+    this.registerService.changePassword(this.user).subscribe(data=>{
+            this.succesMsg=true;
+            setTimeout(() => {
+              this.succesMsg=false;
+              this.route.navigate(['/home']);
+            }, 3000);
+            
+     },
+    // error=>{
+    //   this.showErrorMessage = true;
+    //   this.errorMessage = JSON.parse(error.error).message;
+    //   setTimeout(() => {
+    //     this.showErrorMessage=false;
+    //   }, 3000);
+    // }
+    )
+
   }
   get f(){
     return this.changePasswordForm.controls;

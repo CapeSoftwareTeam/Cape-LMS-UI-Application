@@ -5,5 +5,6 @@ export class User {
     password!:string;
     otp!:any;
     otpSession!:string;
+    oldPassword!:string;
 
 }

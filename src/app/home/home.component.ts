@@ -154,6 +154,9 @@ export class HomeComponent implements OnInit {
   callProfile() {
     this.route.navigate(['/profile']);
   }
+  changePassword(){
+    this.route.navigate(['/changepassword'])
+  }
   callCalculation() {
     this.route.navigate(['/leavestatus']);
   }
@@ -216,6 +219,7 @@ export class HomeComponent implements OnInit {
     // this.blurMode=true
     this.spinner=true;
     this.blurMode=true;
+    sessionStorage.clear();
     setTimeout(() => {  
       this.blurMode=false;
       this.spinner=false;

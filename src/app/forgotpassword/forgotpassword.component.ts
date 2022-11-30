@@ -13,7 +13,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
 export class ForgotpasswordComponent implements OnInit {
   @ViewChild(LoginComponent)
   child!: LoginComponent;
-
+  forgot:boolean=false;
  submitted:boolean=false;
  password:any;
  email:any;
@@ -46,7 +46,14 @@ export class ForgotpasswordComponent implements OnInit {
     if(this.forgotpasswordform.invalid) {
       return;
     }
-    this.email=this.route.snapshot.paramMap.get('email') || '{}'
+    if(this.forgotpasswordform.value.password!=this.forgotpasswordform.value.newPassword){
+      this.forgot=true;
+      setTimeout(() => {
+        this.forgot=false;
+      }, 3000);
+    }
+    else{
+      this.email=this.route.snapshot.paramMap.get('email') || '{}'
   
     this.password=this.forgotpasswordform.value.password
     this.registerService.updatePassWord(this.email,this.password).subscribe(
@@ -54,6 +61,9 @@ export class ForgotpasswordComponent implements OnInit {
           
       }
     )
+    }
+      
+    
 
   }
 get f(){

@@ -96,6 +96,7 @@ p{
 }
 
     
-mat-radio-button{
-    margin: 0 10px 0 10px;
-}
+
+::ng-deep .each_input:focus{
+    border: 2px solid red!important;
+  }
