@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   leavestatus:boolean=false;
   initials: String='';
   managerName: any;
-
+  leftoverApproval:any=[];
 
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
@@ -93,14 +93,41 @@ export class HomeComponent implements OnInit {
         this.department=this.personDetails.department;
         this.designation=this.personDetails.designation;
         this.managerName=this.personDetails.managername;
-
-    this.statusservice.getUpdates(this.department).subscribe(
-      data => {
-        this.notification = JSON.parse(data).length;
-
-      }
-    );
-  });
+          
+          if(this.designation=='Manager'){
+          this.statusservice.getUpdates().subscribe(
+            data => {
+              let b = [];
+              this.leftoverApproval =JSON.parse(data)
+              for (let item of this.leftoverApproval) {
+               if(item.managername==this.name && item.department==this.department){
+                if (item.status == 'pending') {
+                  console.log("condition true");
+                  b.push(item);
+                  this.notification = b.length;
+                }
+              }
+              }
+     
+            }
+          );
+        }
+        else{
+          this.empid = sessionStorage.getItem("empid");
+          this.statusservice.separationDetails(this.empid).subscribe(
+            data => {
+              let c = [];
+              for (let item of JSON.parse(data)) {
+                if (item.status == 'not submitted' ) {
+                  c.push(item);
+                  this.notification = c.length;
+                }
+              }
+            }
+          );
+        }
+      })
+      
     this.getDetails.leaveTracking(this.empid).subscribe(
       data => {
         let leaveDetails = JSON.parse(data);

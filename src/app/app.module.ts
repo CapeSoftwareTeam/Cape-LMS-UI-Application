@@ -45,7 +45,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgOtpInputModule } from 'ng-otp-input';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -83,18 +83,20 @@ import { NgOtpInputModule } from 'ng-otp-input';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    MatTabsModule,MatInputModule,
+    MatTabsModule,
+    MatInputModule,
     MatFormFieldModule,
-  IntlInputPhoneModule,MatSortModule,
+    IntlInputPhoneModule,
+    MatSortModule,
     MatMenuModule,
     MatDialogModule,
-
     Ng2TelInputModule,
     IntlInputPhoneModule,
     MatSortModule,
-
     MatNativeDateModule,
-    MatDatepickerModule,NgOtpInputModule
+    MatDatepickerModule,
+    NgOtpInputModule,
+    MatExpansionModule
 
 
   ],

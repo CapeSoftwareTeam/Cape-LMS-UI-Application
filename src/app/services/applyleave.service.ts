@@ -15,7 +15,6 @@ export class ApplyleaveService {
   leaveRegister(applyleave:ApplyLeave):Observable<any>{
     return this.http.post<any>(this.apiurl+"/"+'history',applyleave,{responseType:'text' as 'json'});
   }
-
   getInfo(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl+'/'+"history4"+'/'+empid,{responseType:'text' as 'json'});
   }

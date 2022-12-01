@@ -55,8 +55,8 @@
         <span class="mobile-label">Status</span>
         <!-- <button mat-flat-button>Basic</button>
       <button mat-flat-button color="primary">Primary</button> -->
-         <button mat-flat-button  class="success"  (click)="approve(element.historyid,'Approved')" style="color:blue">Approve</button>
-          <button mat-flat-button class="failure"  (click)="approve(element.historyid,'Rejected')"  style="color:blue">Decline</button>
+         <button mat-flat-button  class="success"  (click)="approve(element.historyid,empid,'Approved')" style="color:blue">Approve</button>
+          <button mat-flat-button class="failure"  (click)="approve(element.historyid,empid,'Rejected')"  style="color:blue">Decline</button>
           
           <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
          </mat-cell>
@@ -66,7 +66,10 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   
-    <!-- <mat-paginator #dataPaginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+    <mat-paginator  #dataPaginator [pageSizeOptions]="[10, 20, 30]"
+    showFirstLastButtons>
+</mat-paginator>
+
   </div>
   </div>
   </mat-table>
@@ -130,7 +133,7 @@
         <!-- <span class="mobile-label">
           {{element.status}} <p>{{}}</p>
         </span> -->
-            <button mat-flat-button  (click)="submit(element.historyid,'pending')" style="color:blue">submit</button>
+            <button mat-flat-button  (click)="submit(element.historyid,empid,'pending')" style="color:blue">submit</button>
            
            </mat-cell>
     
@@ -139,7 +142,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-      <mat-paginator  #dataPaginator [pageSizeOptions]="[5, 10, 20]"
+      <mat-paginator  #dataPaginator [pageSizeOptions]="[10, 20, 30]"
                  showFirstLastButtons>
  </mat-paginator>
     </div>
@@ -152,8 +155,8 @@
     <p style="margin-top: 16px;">Your response has been successfully updated</p>
   </div>
   <br>
-  <button id="back" style="margin-left: 50%;margin:66px" (click)="back()">Back</button>
+  <button class="btn btn-danger" id="back" style="margin-left: 50%;margin:66px" (click)="back()"><i class="fa fa-sign-out" style="font-size:18px; padding-right:5px"></i>Back</button>
   
   <!-- </div>
-  </div> -->
+  </div>style="margin-left: 50%;margin:66px"  -->
   

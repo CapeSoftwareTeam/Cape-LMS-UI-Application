@@ -1,5 +1,4 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Element } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -10,17 +9,19 @@ import { LeaveDetails } from '../models/leave-details.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
-import { HistoryService } from '../services/historyservice.service';
+
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
-
 @Component({
   selector: 'app-lms-page',
   templateUrl: './lms-page.component.html',
   styleUrls: ['./lms-page.component.css']
 })
+
 export class LmsPageComponent implements OnInit {
   modeModal: boolean = false;
+  panelOpenState: boolean = false;
+  hideTeamDetails:boolean=false;
   hidden: boolean = false;
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
@@ -42,7 +43,7 @@ export class LmsPageComponent implements OnInit {
   //  namelist=[{name:'sangeetha'},{name:'shinchan'},{name:'dora'},{name:'jackie chan'}];
   year: String = '';
   remainingcl: String = '';
-
+  teamdetails:any=[];
   department:any;
   name: String = '';
   personDetails = new Register();
@@ -74,15 +75,35 @@ export class LmsPageComponent implements OnInit {
   calbl:any;
   calml:any;
   managerName: any;
+  location: any
+  teamdepartment: any;
+  teamlocation: any;
+  city: any;
+  members:any =[]
+  memberName: any;
+  
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
     private getDetails: ApplyleaveService,
     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
-    private firstentry: LeaveStatusServiceService) { }
+    private firstentry: LeaveStatusServiceService,
+    private teamDetails:RegisterserviceService) { }
+   
+    // @ViewChild("legend", { static: true } )
+    // private legend: IgxLegendComponent
+    // @ViewChild("chart", { static: true } )
+    // private chart: IgxCategoryChartComponent
 
-
+    // private _highestGrossingMovies: HighestGrossingMovies = null;
+    // public get highestGrossingMovies(): HighestGrossingMovies {
+    //     if (this._highestGrossingMovies == null)
+    //     {
+    //         this._highestGrossingMovies = new HighestGrossingMovies();
+    //     }
+    //     return this._highestGrossingMovies;
+    // }
   ngOnInit(): void {
 
     this.empid = sessionStorage.getItem("empid");
@@ -93,8 +114,8 @@ export class LmsPageComponent implements OnInit {
         this.department=this.personDetails.department;
         this.designation=this.personDetails.designation;
         this.managerName=this.personDetails.managername;
-
-    this.statusservice.getUpdates(this.department).subscribe(
+this.city=this.personDetails.city;
+    this.statusservice.getUpdates().subscribe(
       data => {
         this.notification = JSON.parse(data).length;
 
@@ -165,9 +186,28 @@ export class LmsPageComponent implements OnInit {
       }
     );
     
+    // this.departmentService.getHistoryBasedOnRole(this.department).subscribe(
+      this.teamDetails.getEmpid().subscribe(
+      data=>{
+        // let members=[];
+         this.teamdetails = JSON.parse(data);
+          for(let team of this.teamdetails){
+              if(team.city==this.city && team.department==this.department){
+                this.members.push(team);
 
+  
+              }
+            // if((this.department==this.teamdepartment)&&(this.location==this.teamlocation)){
+            // this.memberName= team.name;
+            
+              // this.teamname=form.push(team)
 
-
+              // console.log(team);
+            
+          }
+        
+        
+      });
     //     this.registerDetails. getMemberDetails(this.empid).subscribe(
     //       data => {
     //         this.personDetails = JSON.parse(data);
@@ -183,6 +223,17 @@ export class LmsPageComponent implements OnInit {
 
     //       }
     //     )
+
+  }
+  enableHideTeamDetails(){
+    this.hideTeamDetails= true;
+    // if(this.hideTeamDetails= true){
+    //   this.hideTeamDetails= false
+    // }else{
+    //   this.hideTeamDetails= true;
+    // }
   }
 
+  
+  
 }

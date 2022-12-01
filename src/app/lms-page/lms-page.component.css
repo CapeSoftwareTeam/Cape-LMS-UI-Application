@@ -46,29 +46,29 @@ mat-sidenav{
   /* .card{
     box-sizing: content-box;
   } */
-  @media (max-width: 576px) {
+ /* @media (max-width: 576px) {
     .xs {color:red;font-weight:bold;}
-  }
+  } */
 
   /* Small devices (landscape phones, 576px and up) */
-  @media (min-width: 576px) and (max-width:768px) {
+  /* @media (min-width: 576px) and (max-width:768px) {
     .sm {color:red;font-weight:bold;}
-  }
+  } */
 
-  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-  @media (min-width: 768px) and (max-width:992px) {
+  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint*/ 
+  /* @media (min-width: 768px) and (max-width:992px) {
    .md {color:red;font-weight:bold;}
-  }
+  } */
 
   /* Large devices (desktops, 992px and up) */
-  @media (min-width: 992px) and (max-width:1200px) {
+  /* @media (min-width: 992px) and (max-width:1200px) {
    .lg {color:red;font-weight:bold;}
-  }
+  } */
 
   /* Extra large devices (large desktops, 1200px and up) */
-  @media (min-width: 1200px) {
+  /* @media (min-width: 1200px) {
       .xl {color:red;font-weight:bold;}
-  }
+  }  */
 /* .bounce {
   display: inline-block;
   position: relative;
@@ -108,3 +108,64 @@ mat-sidenav{
     70% { top: -0.3em; }
     100% { top: 0; }
 } */
+.leftcolumn {   
+  float: left;
+  width: 75%;
+ 
+}
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+.card {
+  
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Clear floats after the columns */
+.row:after {
+ content: "";
+ display: table;
+ clear: both;
+}
+/* @media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+} */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+    flex-direction: column;
+    /* width: 100%; */
+    /* display: block;
+    margin-bottom: 20px; */
+  }
+}
+/* .avatar{
+  vertical-align: middle;
+  font-size: 37px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background-color: rgb(1, 9, 24);
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  color: #0f0202;
+  content:attr(data-label);
+  font-family: 'Readex Pro', sans-serif;
+} */
+
+
+
+
+
+

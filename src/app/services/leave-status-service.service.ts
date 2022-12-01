@@ -10,11 +10,11 @@ export class LeaveStatusServiceService {
   apiurl=environment.apiurl_history;
   constructor(private http:HttpClient) { }
 
-  getUpdates(department:string):Observable<any>{
-    return this.http.get<any>(this.apiurl+"/"+'history2'+"/"+department,{responseType:'text' as'json'});
+  getUpdates():Observable<any>{
+    return this.http.get<any>(this.apiurl+"/"+'history2',{responseType:'text' as'json'});
   }
-  statusUpdate(historyId:Number,status:string):Observable<any>{
-    return this.http.put<any>(this.apiurl+"/"+'hrapprove'+"/"+historyId+"/"+status,{responseType:'text' as 'json'});
+  statusUpdate(historyId:Number,empid:String,status:string):Observable<any>{
+    return this.http.put<any>(this.apiurl+"/"+'hrapprove'+"/"+historyId+"/"+empid+"/"+status,{responseType:'text' as 'json'});
   }
   getMemberDetails(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
@@ -28,4 +28,5 @@ export class LeaveStatusServiceService {
   ApprovalDetails(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl + "/matAprrovalseparation" + "/" + empid,{responseType:'text' as 'json'});
   }
+ 
 }

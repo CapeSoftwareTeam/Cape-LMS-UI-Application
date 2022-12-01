@@ -1,6 +1,7 @@
 <div class="content">
   <div class="row" style="margin-top:25px;">
-    <div class="col-md-3">
+    <div class="leftcolumn">
+      <div class="col-md-4" style="float: left;">
       <div class="card" >
         <div class="card-header" style="justify-content: center;text-align: center;">
           <!-- <h6>NO of days taken</h6>fa fa-child -->
@@ -20,30 +21,11 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-header" style="justify-content: center;text-align: center;">
-          <!-- <h6>NO of days taken</h6>'fas fa-procedures'fas fa-ambulance -->
-          <h3 style="font-size:large;font-family: cursive"><i class='fas fa-procedures bounce' style="font-size:23px"></i><strong> Sick leave</strong></h3>
-          <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
-        </div>
-        <div class="card-body" style="text-align: center;">
-          <span class="text-success" style="font-size: 13px;">{{remainingsl}} days taken | <span class="text-danger" style="font-size: 13px;">{{expsl}} days in total</span></span>
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated active" role="progressbar" 
-            attr.aria-valuenow ="{{calsl}}" [style.width]="calsl + '%'" aria-valuemin="0" attr.aria-valuemax="{{expsl}}" >{{calsl}}</div>
-          </div>
-        </div>
-        <div class="card-footer">
-          {{remainingsl}} remaining
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card">
+    <div class="col-md-4" style="float: right;">
+      <div class="card" >
         <div class="card-header" style="justify-content: center;text-align: center;">
           <!-- <h6>NO of days taken</h6> -->
-          <h3 style="font-size:large;font-family: cursive"><i class="fa fa-plane bounce" style="font-size:25px;"></i><strong> Privilege leave</strong></h3>
+          <h3 style="font-size:large;font-family: cursive"><i class="fa fa-plane bounce" style="font-size:26px;"></i><strong> Privilege leave</strong></h3>
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
@@ -58,12 +40,32 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card">
+      <div class="col-md-4" style="float: right;">
+      <div class="card" >
+        <div class="card-header" style="justify-content: center;text-align: center;">
+          <!-- <h6>NO of days taken</h6>'fas fa-procedures'fas fa-ambulance -->
+          <h3 style="font-size:large;font-family: cursive"><i class='fas fa-procedures bounce' style="font-size:26px"></i><strong> Sick leave</strong></h3>
+          <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
+        </div>
+        <div class="card-body" style="text-align: center;">
+          <span class="text-success" style="font-size: 13px;">{{remainingsl}} days taken | <span class="text-danger" style="font-size: 13px;">{{expsl}} days in total</span></span>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated active" role="progressbar" 
+            attr.aria-valuenow ="{{calsl}}" [style.width]="calsl + '%'" aria-valuemin="0" attr.aria-valuemax="{{expsl}}" >{{calsl}}</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          {{remainingsl}} remaining
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4" style="float: inherit;top:10px">
+      <div class="card" > 
         <div class="card-header" style="justify-content: center;text-align: center;">
           <!-- <h6>NO of days taken</h6> -->
           
-          <h3 style="font-size:111%;font-family: cursive"><i class='fas fa-history bounce' style='font-size:25px'></i><strong> Bereavement leave</strong></h3>
+          <h3 style="font-size:111%;font-family: cursive"><i class='fas fa-history bounce' style='font-size:28px'></i><strong> Bereavement leave</strong></h3>
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
@@ -77,15 +79,12 @@
           {{remainingbl}} remaining
         </div>
       </div>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-3">
+      </div>
+      <div class="col-md-4" style="top: 10px; float: left">
       <div class="card">
         <div class="card-header" style="justify-content: center;text-align: center;">
           <!-- <h6>NO of days taken</h6> -->
-          <h3 style="font-size:large;font-family: cursive"><i class="material-icons" style="font-size:30px;width:30px">pregnant_woman</i><strong>Maternity leave</strong></h3>
+          <h3 style="font-size:large;font-family: cursive"><i class="material-icons" style="font-size:25px;width:30px">pregnant_woman</i><strong>Maternity leave</strong></h3>
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
@@ -99,16 +98,92 @@
         <div class="card-footer">
           {{remainingml}} remaining
         </div>
-      </div>
-    </div>
+      
   </div>
+</div>
+</div>
+<div class="rightcolumn">
+  <div class="card" style="background-color:#f1f8f2;padding:20px">
+    <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h6><i class="fa fa-group" style="padding-right:15px;"></i> Teams Members </h6>
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+          Meet your Team members here
+          <mat-icon>date_range</mat-icon>
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <hr>
+      <div *ngFor="let team of members; "style="padding:8px">
+      <i class='fa fa-user' ></i>
+      <h6 style="font-size:medium;float:right;padding-right:79px">{{team.name}}</h6> <p style="margin: 8px;text-align: right;">({{team.designation}})</p> 
+        </div>
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                          (closed)="panelOpenState = false">                  
+</mat-expansion-panel>
+</mat-expansion-panel>
+</mat-accordion>
+<!-- <h4 style="text-align:center;justify-content:center">style="font-size:medium;float:right;"
+  <i class="fa fa-group" style="font-size:25px;padding-right:15px;"></i>Team Details
+  <i class="fa fa-caret-down" style="font-size:25px; padding-left:10px" (click)="enableHideTeamDetails()"></i></h4>
+ <hr *ngIf="hideTeamDetails">
+ <div *ngIf="hideTeamDetails">
+    <div *ngFor="let team of members;" >
+       <i class='fa fa-user'></i> -->
+        <!--        -->
+    <!-- <h6 style="color:grey;font-size:x-small" *ngFor="let team of members; "></h6>  -->
+  <!-- </i>  -->
+</div> 
+<br>
+<div class="card">
 
+
+  
+
+          
+
+      </div>
+  </div>
+</div>
+  <!-- <div class="container vertical sample" *ngFor="let team of form; let i=index;>
+    <div class="legend-title">
+        Highest Grossing Movie Franchises
+    </div>
+    <div class="legend">
+        <igx-legend
+        orientation="Horizontal"
+        name="Legend"
+        #legend>
+        </igx-legend>
+    </div>
+    <div class="container fill">
+        <igx-category-chart
+        chartType="Column"
+        xAxisInterval="1"
+        isCategoryHighlightingEnabled="true"
+        yAxisLabelLeftMargin="0"
+        yAxisTitleLeftMargin="10"
+        yAxisTitleRightMargin="5"
+        yAxisTitle="Billions of U.S. Dollars"
+        [dataSource]="highestGrossingMovies"
+        [legend]="legend"
+        isHorizontalZoomEnabled="false"
+        isVerticalZoomEnabled="false"
+        crosshairsDisplayMode="None"
+        name="chart"
+        #chart>
+        </igx-category-chart>
+    </div>
+  </div> -->
+  
+<!-- </div> -->
   <!-- <button type="button" class="btn btn-primary" routerlink="/applyleave" style="display:inline-flexbox"
   >Apply
     Leave</button> -->
-<div class="avatar" data-label="" id="avatar">
-</div>
-</div>
+
+<!-- </div> -->
 <!-- <div class="content">
 <div class="mat-grid-container">
   <mat-grid-list >

@@ -27,6 +27,7 @@ export class LeaveStatusComponent implements OnInit {
   
   empId: any;
   applyleave=new ApplyLeave();
+  leftoverApproval:any=[];
   statusRequest: any=[];
   detailsdata: any=[];
   personDetails: any=[];
@@ -57,27 +58,15 @@ export class LeaveStatusComponent implements OnInit {
       });
 
       
-    this.statusservice.getUpdates(this.department).subscribe(
+    this.statusservice.getUpdates().subscribe(
       data => {
-        this.notification = JSON.parse(data).length;
-        console.log(this.notification);
+       
         this.getpendingData();
         this.getstatusData();
       }
     );
   
-if(this.department=='Software' && this.designation=='Manager'){
-  this.admin=true;
-  this.departmentService.getHistoryBasedOnRole(this.department).subscribe(
-    data=>{
-      let a=[];
-      for(let i of JSON.parse(data)){
-        a.push(i);
-      }
 
-    }
-  )
-}
 //  for(let i of JSON.parse(data)){
 //   this.department!=i.department;
 //   details.push(i);
@@ -89,23 +78,22 @@ if(this.department=='Software' && this.designation=='Manager'){
 
 
   // return (<FormArray>this.questionForm.get('questionHtml')).controls;
-  approve(historyid: Number, status: string) {
+  approve(historyid: Number, empid:String,status: string) {
     this.showmessage = true;
-    setTimeout(() => { this.showmessage = false; }, 2000);
+    setTimeout(() => { this.showmessage = false; }, 4000);
     this.enableApprove = true;
     this.enableSubmit = false;
 
-    this.statusagree.statusUpdate(historyid, status).subscribe(
+    this.statusagree.statusUpdate(historyid, status, this.empId).subscribe(
       data => {
-   
+
    this.detailsdata.push(status);
         console.log("updated successfully")
         console.log(status);
       }
     );
-
+    this.ngOnInit();
   }
-
 
   getpendingData() {
     // this.name==this.managername
@@ -119,20 +107,18 @@ if(this.department=='Software' && this.designation=='Manager'){
         this.managerName=this.personDetails.managerName
     
     if(this.designation=='Manager'){
-    this.statusservice.getUpdates(this.department).subscribe(
+    this.statusservice.getUpdates().subscribe(
       data => {
         let b = [];
-       
-        for (let item of JSON.parse(data)) {
-          // if(this.name==q.managername && this.department==q.departmemt){
+        this.leftoverApproval =JSON.parse(data)
+        for (let item of this.leftoverApproval) {
+         if(item.managername==this.name && item.department==this.department){
           if (item.status == 'pending') {
             console.log("condition true");
-            // if(item.managerName== this.name ){
-            //   console.log("mann condition true");
             b.push(item);
-            console.log(b.length);
+            this.notification = b.length;
           }
-        //  }
+        }
         }
         this.dataSource1 = new MatTableDataSource(b);
         this.dataSource1.paginator = this.dataPaginator;
@@ -142,9 +128,7 @@ if(this.department=='Software' && this.designation=='Manager'){
   }
 })
 }
-  managername(empid: any, managername: any) {
-    throw new Error('Method not implemented.');
-  }
+ 
   getstatusData() {
     this.empid = sessionStorage.getItem("empid");
         this.statusservice.separationDetails(this.empid).subscribe(
@@ -154,6 +138,7 @@ if(this.department=='Software' && this.designation=='Manager'){
            
               if (item.status == 'not submitted' ) {
                 c.push(item);
+                this.notification = c.length;
               }
             
             }
@@ -176,8 +161,8 @@ if(this.department=='Software' && this.designation=='Manager'){
   back() {
     this.route.navigate(['/home']);
   }
-  submit(historyid: Number, status: string){
-    this.statusagree.statusUpdate(historyid, status).subscribe(
+  submit(historyid: Number, status: string, empid:string){
+    this.statusagree.statusUpdate(historyid, status, this.empid).subscribe(
       data=>{ this.applyleave.status='pending' }
     )
     console.log("U can submit here")
