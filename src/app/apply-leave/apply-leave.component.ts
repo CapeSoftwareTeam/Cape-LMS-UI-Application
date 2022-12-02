@@ -52,6 +52,8 @@ export class ApplyLeaveComponent implements OnInit {
   nextyear: any;
   holidays: any = [];
   Includepublicholiday: any;
+  manageremail: any;
+
 
   constructor(private route: Router,
     private apply: ApplyleaveService,
@@ -94,7 +96,10 @@ export class ApplyLeaveComponent implements OnInit {
         this.experience = this.personDetails.totalexperience;
         this.location = this.personDetails.city;
         this.managername = this.personDetails.managername;
+        this.manageremail = this.personDetails.manageremail
+        ;
       })
+
 
     console.log(this.empid);
     this.postleave = new FormGroup({
@@ -141,6 +146,7 @@ export class ApplyLeaveComponent implements OnInit {
     this.applyLeave.experience = this.experience;
     this.applyLeave.location = this.location;
     this.applyLeave.managername = this.managername;
+    this.applyLeave.manageremail= this.manageremail;
     this.applyLeave.leaveType = this.postleave.value.leaveType;
     this.applyLeave.noofdays = this.countinNumber;
     this.applyLeave.fromdate = this.postleave.value.fromdate;
@@ -167,6 +173,7 @@ export class ApplyLeaveComponent implements OnInit {
     this.applyLeave.experience = this.experience;
     this.applyLeave.location = this.location;
     this.applyLeave.managername = this.managername;
+    this.applyLeave.manageremail=this.manageremail;
     this.applyLeave.leaveType = this.postleave.value.leaveType;
     this.applyLeave.noofdays = this.countinNumber;
     this.applyLeave.fromdate = this.postleave.value.fromdate;

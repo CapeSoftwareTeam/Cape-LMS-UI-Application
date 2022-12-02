@@ -25,4 +25,6 @@ export class ApplyLeave {
   approvedby!: String;
   managername!:String
   designation!:String
+  manageremail: any;
+
 }
