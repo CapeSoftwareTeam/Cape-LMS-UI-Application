@@ -17,6 +17,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  superadmin:boolean=false;
   admin:boolean=false;
   blurMode:boolean=false;
   spinner:boolean=false;
@@ -159,9 +160,12 @@ export class HomeComponent implements OnInit {
       var a= document.getElementById('avatar');
       a!.innerHTML=displayAvatar;
 
-      if(this.designation=='Manager'||this.designation=='HR'){
-        this.admin=true;
-      }
+       if(this.designation=='Manager'||this.designation=='HR'){
+         this.admin=true;
+       }
+       if(this.designation=='MD'){
+        this.superadmin=true;
+       }
       }
     );
   

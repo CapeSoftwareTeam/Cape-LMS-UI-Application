@@ -76,6 +76,7 @@
           <hr *ngIf="admin">
           <a mat-list-item (click)="calleditholidays()" *ngIf="admin">Add holidays</a>
           <a mat-list-item (click)="callRegister()" *ngIf="admin">Add Employee</a>
+          <a mat-list-item (click)="callRegister()" *ngIf="superadmin">Add HR</a>
       
           <!-- <button type="button" class="btn btn-light" (click)="signout()" *ngIf="admin">
             <i class="fa fa-sign-out" style="font-size:30px"></i></button> -->

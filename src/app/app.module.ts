@@ -46,6 +46,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgOtpInputModule } from 'ng-otp-input';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 @NgModule({
   declarations: [
@@ -96,7 +98,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatNativeDateModule,
     MatDatepickerModule,
     NgOtpInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+   NgOtpInputModule,
+     NgMultiSelectDropDownModule 
 
 
   ],
