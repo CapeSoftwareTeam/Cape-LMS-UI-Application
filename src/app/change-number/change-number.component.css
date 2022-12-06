@@ -2,33 +2,39 @@
     margin: 10px;
     padding: 15px;
 } */
-.container{
+.container {
     justify-content: center;
 }
-form{
+
+form {
     align-items: center;
     justify-content: center;
 }
-.row{
+
+.row {
     margin-bottom: 10px;
 }
+
 /* h2{
     margin-left: 60px; 
 } */
-#btn{
+#btn {
     margin: 10px;
 }
-.card{
-box-shadow: 0 0 15px rgba(0, 0, 0,0.4);
+
+.card {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
-#button{
+
+#button {
     margin-top: 10px;
 }
-#otpBtn{
+
+#otpBtn {
     -webkit-text-security: square;
-    height:35px;
-    width:35px;
-    margin-left:4px;
+    height: 35px;
+    width: 35px;
+    margin-left: 4px;
 }
 
 /* Spinner Code */
@@ -37,21 +43,31 @@ box-shadow: 0 0 15px rgba(0, 0, 0,0.4);
     border-radius: 50%;
     border-top: 10px solid #131396;
     border-bottom: 10px solid #812323;
-    /* border-left: #969413; 
-    border-right: #969413; */
+    border-left: #969413;
+    border-right: #969413;
     width: 60px;
     height: 60px;
     position: relative;
     left: 47%;
     animation: spin 1s linear infinite;
-  }
-  
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

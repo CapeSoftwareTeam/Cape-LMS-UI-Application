@@ -1,5 +1,6 @@
 export class Holiday {
-
+    
+    publicLeaveId!:any;
     date!:Date;
     description!:String;
     day!:String;

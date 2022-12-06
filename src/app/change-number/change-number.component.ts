@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { from } from 'rxjs';
+import { NgOtpInputConfig } from 'ng-otp-input';
+import { User } from '../models/user';
 
 
 @Component({
@@ -15,69 +17,94 @@ import { from } from 'rxjs';
 })
 export class ChangeNumberComponent implements OnInit {
 
-  OtpNumber:boolean = false;
-  optEnter:boolean = true;
-  successMsgg:boolean = false;
-  otpDisable:boolean = true;
-  disableGenerate:boolean = false;
-  disableSubmit:boolean = true;
-  successMsg:boolean=false;
-  spinner:boolean =false;
-  submitted:boolean = false;
-  blurMode:boolean = false;
-
-  changeNumberOtp = new Register();
-  formInput = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
-  @ViewChildren('formRow') rows: any;
-
-  changeNumber= this.formBuilder.group({
-   mobileNumber:new FormControl('',[Validators.required,Validators.min(1000000000), Validators.max(9999999999)]),
-   otp:new FormControl('',[Validators.required,Validators.min(100000),Validators.max(999999)]),
-   input1:[''],
-   input2:[''],
-   input3:[''],
-   input4:[''],
-   input5:[''],
-   input6:['']
-
-  })
+  OtpNumber: boolean = false;
+  optEnter: boolean = true;
+  successMsgg: boolean = false;
+  otpDisable: boolean = true;
+  disableGenerate: boolean = false;
+  disableSubmit: boolean = true;
+  successMsg: boolean = false;
+  spinner: boolean = false;
+  submitted: boolean = false;
+  blurMode: boolean = false;
   email: any;
-  mobileNumber:any;
+  mobileNumber: any;
+  showOtpComponent: boolean = false;
+  Otp: any;
+  changeNumberOtp = new Register();
+  user = new User()
 
-  constructor(private profileService:ProfileserviceService,private route:Router, private formBuilder: FormBuilder,
-    private dialogRef:MatDialogRef<ChangeNumberComponent>,private registerService:RegisterserviceService
-    ) { }
+
+  changeNumber = this.formBuilder.group({
+    mobileNumber: new FormControl('', [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]),
+    otp: new FormControl('', [Validators.required, Validators.min(100000), Validators.max(999999)]),
+  })
+  userEmail: any;
+  otpsession: any;
+
+
+  constructor(private profileService: ProfileserviceService, private route: Router, private formBuilder: FormBuilder,
+    private registerService: RegisterserviceService, private dialog: MatDialog, private dialogRef: MatDialogRef<ChangeNumberComponent>
+  ) { }
 
   ngOnInit(): void {
- 
+
 
   }
 
-  submit(form:any){
+  // Validating OTP 
+  submit() {
     this.submitted = true;
-    form.otp.setValidators([Validators.required]);
-    form.otp.updateValueAndValidity();
+    this.changeNumber.controls.otp.setValidators([Validators.required, Validators.min(100000), Validators.max(999999)]);
+    this.changeNumber.controls.otp.updateValueAndValidity();
     if (this.changeNumber.invalid) {
       return
     }
-             this.spinner = true;
-             this.blurMode = true;
+    this.user.email = this.userEmail;
+    this.user.otp = this.Otp;
+    this.user.otpSession = this.otpsession;
+    this.registerService.verifyOtp(this.user).subscribe(data => {
 
-                setTimeout(() => {
-                   this.successMsgg = true;
-                   this.spinner = false;
-                   this.blurMode = false;
-                   setTimeout(() => {
-                    this.successMsgg = false;
-                    this.dialogRef.close();
-                   }, 1000);
-                     },3000);
-                    }
-  
-  cancel(){
-   this.dialogRef.close();
+    })
+    this.spinner = true;
+    this.blurMode = true;
+
+    setTimeout(() => {
+      this.successMsgg = true;
+      this.spinner = false;
+      this.blurMode = false;
+      setTimeout(() => {
+        this.successMsgg = false;
+        this.navigateToHome();
+        this.updateMobileNumber();
+        this.dialogRef.close();
+      }, 1000);
+    }, 1000);
+    
   }
-  generate(form:any){
+
+  // Updating in Table 
+  updateMobileNumber(){  
+    let mobileNumber: any;
+    mobileNumber=this.changeNumber.value.mobileNumber
+    this.profileService.updateMobileNumber(this.changeNumber.value.mobileNumber, sessionStorage.getItem("empid")).subscribe(data=>{
+      
+    })
+  }
+
+
+  navigateToHome(){
+    this.route.navigate(['/home'])
+  }
+
+
+  // Cancel Dialog Box
+  cancel() {
+    this.dialogRef.close();
+  }
+
+  // Generate OTP
+  generate(form: any) {
     debugger
     form.otp.clearValidators();
     form.otp.updateValueAndValidity();
@@ -86,62 +113,41 @@ export class ChangeNumberComponent implements OnInit {
     if (this.changeNumber.invalid) {
       return
     }
-   
-    
-    this.mobileNumber=this.changeNumber.value.mobileNumber;
-    
-   this. registerService.sendOtp(this.mobileNumber).subscribe(data=>{
-   
-   })
-   this.OtpNumber = true;
-   this.optEnter = false;
-    this.disableGenerate= true;
+    this.mobileNumber = this.changeNumber.value.mobileNumber;
+    this.registerService.sendOtp(this.mobileNumber).subscribe(data => {
+      this.userEmail = JSON.parse(data)[1];
+      this.otpsession = JSON.parse(data)[0];
+    })
+    this.OtpNumber = true;
+    this.optEnter = false;
+    this.disableGenerate = true;
     this.disableSubmit = false;
     setTimeout(() => {
       this.successMsg = true;
-    setTimeout(() => {
-      this.successMsg = false;
-    },2000);
+      this.showOtpComponent = true;
+      setTimeout(() => {
+        this.successMsg = false;
+      }, 2000);
     }, 3000);
   }
-    // form.mobileNumber.setValidators();
-    // form.mobileNumber.updateValueAndValidity();
-       
 
-                                         
-    // if(this.submitted = true){
-    //   if (this.changeNumber.invalid) {
-    //   }
-    // }else{
-    //    // this.successMsg=true;
-    //   //  this.spinner = true;
-    //   //  this.blurMode= true;
-    //   //  this.disableGenerate= true;
-    //   //       setTimeout(() => {
-    //   //          this.spinner = false;
-    //   //          this.blurMode = false;
-    //   //          this.successMsg = true;
-    //   //               setTimeout(() => {
-    //   //                     this.successMsg = false;
-    //   //                          }, 2000);
-    //   //                     },3000);
-    //                    }
-  
-    keyUpEvent(event:any, index:any) {
-      let pos = index;
-      if (event.keyCode === 8 && event.which === 8) {
-        pos = index - 1 ;
-      } else {
-        pos = index + 1 ;
-      }
-      if (pos > -1 && pos < this.formInput.length ) {
-        this.rows._results[pos].nativeElement.focus();
-      }
-    }
-  
-  
-  get field():any{
+  config: NgOtpInputConfig = {
+    allowNumbersOnly: true,
+    length: 6,
+    isPasswordInput: true,
+    disableAutoFocus: false,
+    placeholder: ''
+  };
+
+  // Getting OTP in Input Box
+  onOtpChange(otp: any) {
+    this.Otp = otp;
+    this.changeNumber.controls.otp.setValue(this.Otp);
+  }
+
+  // Getting Form Controls
+  get field(): any {
     return this.changeNumber.controls;
   }
-  
+
 }

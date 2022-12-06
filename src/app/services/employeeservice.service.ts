@@ -7,7 +7,7 @@ import { Register } from '../models/register';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileserviceService {
+export class EmployeeserviceService {
 
   apiurl = environment.apiurl;
   constructor(private http: HttpClient) { }
@@ -19,14 +19,5 @@ export class ProfileserviceService {
   updateRegisterDetails(register: Register): Observable<any> {
     return this.http.put<any>(this.apiurl + '/updateRegister', register, { responseType: 'text' as 'json' })
   }
-
-  updateMobileNumber(mobileNumber: any,empid:any): Observable<any> {
-    return this.http.put<any>(this.apiurl + '/updateRegister'+'/'+mobileNumber+'/'+empid, { responseType: 'text' as 'json' })
-  }
-
-  getToken() {
-    return sessionStorage.getItem('token');
-  }
-
 
 }

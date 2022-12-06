@@ -47,6 +47,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgOtpInputModule } from 'ng-otp-input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     LmsPageComponent,
     ChangeNumberComponent,
     FrontpageComponent,HistoryComponent,
-    PublicHolidaysComponent
+    PublicHolidaysComponent,
+    EmployeeDetailsComponent
 
   ],
   imports: [

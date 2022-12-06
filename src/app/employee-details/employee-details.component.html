@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col" id="btn">
+    <button type="button" class="btn btn-danger" (click)="navigateToHome()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
+  </div>
+
+  <div class="col" id="filter">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. TamilNadu" #input>
+  </div>
+</div>
+
+
+
+<div class="mat-elevation-z8" class="container">
+  <table mat-table [dataSource]="dataSource" class="table table-hover">
+
+    <ng-container matColumnDef="empId">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> EmpID </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.empid}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> NAME </th>
+      <td mat-cell *matCellDef="let element" class="table-success" style="padding:10px;"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> DEPARTMENT </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.department}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="designation">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> DESIGNATION </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.designation}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="managerName">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> MANAGER NAME </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.managername}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="employeeEmail">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> EMPLOYEE MAIL </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> <a
+          href="mailto:{{element.emailid}}">Contact via Mail</a></td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> CITY </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.city}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> STATE </th>
+      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.state}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> ACTION </th>
+      <td style="width: auto; text-align: justify; padding:10px;" class="table-success" mat-cell
+        *matCellDef="let element">
+
+        <ng-template #content let-modal class="card">
+          <div class="">
+            <!-- modal-body -->
+            <div class="centre-text m-btm30">
+              <div style="text-align: center; margin-top:60px;">
+                <span class="warningMsg">Note: Are you sure, Want to Delete Employee Details</span>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12 text-center justify-content-center">
+              <button type="button" style=" margin: 40px;position: relative; bottom: 30px; width:auto;"
+                class="btn btn-primary btn-rounded btn-md font-weight-medium auth-form-btn" aria-label="Close"
+                (click)="deleteEmployee(element.empid)">
+                <i class="bi bi-arrow-right-circle"></i>&nbsp;
+                <span aria-hidden="true">Confirm</span>
+              </button>
+              <button type="button" style=" margin: 40px;position: relative;bottom: 30px; width:auto;"
+                class="btn btn-danger btn-rounded btn-md font-weight-medium auth-form-btn" aria-label="Close"
+                (click)="closePopup()">
+                <i class="bi bi-x icon"></i>
+                <span aria-hidden="true">Cancel</span>
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+        <i class="bi bi-pencil-fill fa-lg" style="margin:10px;cursor: pointer;" (click)="editEmpDetails(element.empid)"
+          *ngIf="enableDelete" title="Edit Employee"></i>
+        <i class="bi bi-person-x-fill fa-lg" (click)="gotoNextModal(content,element.empid)" *ngIf="enableDelete"
+          title="Delete Employee" style="margin-left: 1rem;cursor: pointer;color: red;height:30px;width:30px;"></i>
+      </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+  <mat-paginator #employeePaginator [pageSizeOptions]="[5, 10, 25,100]" showFirstLastButtons
+    aria-label="Select page of periodic elements">
+  </mat-paginator>
+
+</div>

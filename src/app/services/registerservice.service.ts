@@ -20,8 +20,8 @@ export class RegisterserviceService {
   saveForm(register: Register):Observable<any> {
     return this.http.post<any>(this.apiurl+'/addRegister',register,{responseType: 'text' as 'json'});
   }
-  deleteForm(id: any):Observable<any> {
-    return this.http.put<any>( this.apiurl+'/deleteRegister' + '/' +id, {responseType: 'text' as 'json'});
+  deleteForm(empid: any):Observable<any> {
+    return this.http.delete<any>( this.apiurl+'/deleteRegister' + '/' +empid, {responseType: 'text' as 'json'});
   }
 
   // updateForm():Observable<any>{

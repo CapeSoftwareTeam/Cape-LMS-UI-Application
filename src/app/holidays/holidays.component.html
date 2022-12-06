@@ -1,161 +1,160 @@
-<div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;"></div>
+<div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;">
+</div>
 <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
-    <div class="container">
-        <div class="card" *ngIf="true">
-            <div class="card-body">
-                <form [formGroup]="holidays">
-                    <h2>Add Holidays</h2>
-                    <div class="mt-5">
-                        <div class="form-row">
-                            <div class="col-md-12">
-                               <div class="form-group">
-                                <label>Date</label>
-                               </div>
-                               <div class="form-row">
-                                <div class="col">
-                                    <input type="date" formControlName="date" class="form-control" name="" id="" 
-                                    [ngClass]="{'is-invalid': submitted && field.date.errors}" [(ngModel)]="holiday.date" (change)="DateFormatchange($event)">
-                                    <div *ngIf="submitted && field.date.errors" class="invalid-feedback">
-                                      <div *ngIf="field.date.errors">Date is Required</div>
-                                    </div>
-                                </div>
-                               </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                 <label>Day</label>
-                                </div>
-                                <div class="form-row">
-                                 <div class="col">
-                                     <input type="text" formControlName="day" class="form-control" name="" id=""
-                                     [ngClass]="{'is-invalid':submitted && field.day.errors}" [(ngModel)]="holiday.day" readonly>
-                                     <div *ngIf="submitted && field.day.errors" class="invalid-feedback">
-                                       <div *ngIf="field.day.errors">Day is Required</div>
-                                     </div>
-                                 </div>
-                                </div>
-                             </div>
-                             <div class="col-md-12">
-                                <div class="form-group">
-                                 <label>Year</label>
-                                </div>
-                                <div class="form-row">
-                                 <div class="col">
-                                     <input type="text" formControlName="year" class="form-control" name="" id=""
-                                     [ngClass]="{'is-invalid':submitted && field.year.errors}" [(ngModel)]="holiday.year" readonly>
-                                     <div *ngIf="submitted && field.year.errors" class="invalid-feedback">
-                                        <div *ngIf="field.year.errors">Year is Required</div>
-                                     </div>
-                                 </div>
-                                </div>
-                             </div>
-                             <div class="col-md-12">
-                                <div class="form-group">
-                                 <label>Description</label>
-                                </div>
-                                <div class="form-row">
-                                 <div class="col">
-                                     <input type="text" formControlName="description" class="form-control" name="" id="" 
-                                     [ngClass]="{'is-invalid': submitted && field.description.errors}" [(ngModel)]="holiday.description"
-                                     placeholder="Enter Description">
-                                     <div *ngIf="submitted && field.description.errors" class="invalid-feedback">
-                                        <div *ngIf="field.description.errors">Description is Required</div>
-                                     </div>
-                                 </div>
-                                </div>
-                             </div>
-                             <div class="col-md-12">
-                                <div class="form-group">
-                                 <label>State</label>
-                                </div>
-                                <div class="form-row">
-                                 <div class="col">
-                                    <!-- <select class="form-control" formControlName="workLocation"> -->
-                                      <!-- <option [ngValue]="null" disabled>Select Location</option> -->
-                                      <!-- <option value="" disabled selected>Select your option</option>
-                                      <option value="Chennai">TamilNadu</option>
-                                      <option value="Delhi">Delhi</option>
-                                      <option value="Karnataka">Karnataka</option>
-                                      <option value="Mumbai">Mumbai</option>
-                                      <option value="Kolkata">Kolkata</option>
-                                    </select> -->
-                                    <mat-form-field appearance="fill">
-                                        <mat-label >Select Location</mat-label>
-                                        <mat-select  formControlName="workLocation" multiple>
-                                          <mat-option *ngFor="let location of locationList" [value]="location">{{location}}</mat-option>
-                                        </mat-select>
-                                        <!-- <mat-checkbox [(ngModel)]="allSelected"
-                                            [ngModelOptions]="{standalone: true}"
-                                            (change)="toggleAllSelection()"></mat-checkbox> -->
-                                      </mat-form-field>
+    <div class="row">
+        <h2>Add Holidays</h2>
+        <div class="col-md-6">
+            <div class="container">
+                <div class="card" *ngIf="true">
+                    <div class="card-body">
+                        <form [formGroup]="holidays">
 
-                                     <!-- <input type="text" formControlName="workLocation" class="form-control" name="" id=""
-                                     [ngClass]="{'is-invalid': submitted && field.workLocation.errors}" > -->
-                                     <div *ngIf="submitted && field.workLocation.errors" class="invalid-feedback" [(ngModel)]="holiday.workLocation">
-                                        <div *ngIf="field.workLocation.errors" class="invalid-feedback">WorkLocation is Required</div>
-                                     </div>
-                                 </div>
-                                </div>
-                             </div>
-                             
-                                <div class="row">
-                                    <div class="col" >
-                                        <button type="button" class="btn btn-primary" (click)="addLeave()">Add</button>
+                            <div class="mt-5">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Date</label>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <input type="date" formControlName="date" class="form-control" name=""
+                                                    id="" [ngClass]="{'is-invalid': submitted && field.date.errors}"
+                                                    [(ngModel)]="holiday.date" (change)="DateFormatchange($event)">
+                                                <div *ngIf="submitted && field.date.errors" class="invalid-feedback">
+                                                    <div *ngIf="field.date.errors">Date is Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col"  >
-                                        <button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Day</label>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <input type="text" formControlName="day" class="form-control" name=""
+                                                    id="" [ngClass]="{'is-invalid':submitted && field.day.errors}"
+                                                    [(ngModel)]="holiday.day" readonly>
+                                                <div *ngIf="submitted && field.day.errors" class="invalid-feedback">
+                                                    <div *ngIf="field.day.errors">Day is Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Year</label>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <input type="text" formControlName="year" class="form-control" name=""
+                                                    id="" [ngClass]="{'is-invalid':submitted && field.year.errors}"
+                                                    [(ngModel)]="holiday.year" readonly>
+                                                <div *ngIf="submitted && field.year.errors" class="invalid-feedback">
+                                                    <div *ngIf="field.year.errors">Year is Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <input type="text" formControlName="description" class="form-control"
+                                                    name="" id=""
+                                                    [ngClass]="{'is-invalid': submitted && field.description.errors}"
+                                                    [(ngModel)]="holiday.description" placeholder="Enter Description">
+                                                <div *ngIf="submitted && field.description.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="field.description.errors">Description is Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>State</label>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Select Location</mat-label>
+                                                    <mat-select formControlName="workLocation" multiple>
+                                                        <mat-option *ngFor="let location of locationList"
+                                                            [value]="location">{{location}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && field.workLocation.errors"
+                                                    class="invalid-feedback" [(ngModel)]="holiday.workLocation">
+                                                    <div *ngIf="field.workLocation.errors" class="invalid-feedback">
+                                                        WorkLocation is Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary" (click)="addLeave()"
+                                                [disabled]="disableAddBtn">Add</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="resetForm()">Reset</button>
+                                        </div>
+
+                                    </div>
                                 </div>
+                            </div>
+                        </form>
+                        <div style="text-align: center;">
+                            <p class="alert alert-success" *ngIf="successMsg">Holidays Added Successfully!</p>
                         </div>
                     </div>
-                 </form>
-                 <div style="text-align: center;">
-                    <p class="alert alert-success" *ngIf="successMsg">Holidays Added Successfully!</p>
                 </div>
+
             </div>
         </div>
 
-    </div>
-    
-        <!-- <p  *ngIf="successMsg" class="alert alert-success">Update Successfully</p> -->
-        <button type="button" class="btn btn-danger" id="btn" (click)="backToHome()" title="Back"><i class="bi bi-box-arrow-in-left"></i>Back</button>
-      
-      
-        <div class="container">  
-        <div class="table" *ngIf="show">  
-            <div class="col-md-8 mt-4 mb-4">
-               <table class="table table-hover">
-                   <thead>
-                       <tr>
-                           <th>DATE</th>
-                           <th>DAY</th>
-                           <th>DESCRIPTION</th>     
-                           <th>YEAR</th>
-                           <th>LOCATION</th>
-                           <th *ngIf="true">ACTION</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr *ngFor="let item of ListData">
-                           <td><span>{{item.date}}</span></td>
-                           <td><span>{{item.day}}</span></td>
-                           <td><span>{{item.description}}</span></td>
-                           <td><span>{{item.year}}</span></td>
-                           <td><span>{{item.workLocation}}</span></td>
-                           <td *ngIf="true"><button type="button" class="btn btn-primary" (click)="removeLeave(item)">Remove</button> </td>
-                       </tr>
-        
-                       <!-- <tr  *ngIf="successMsg" class="alert alert-success">
-                        Holidays Added Successfully
-                       </tr> -->
-                                      
-                   </tbody>
-               </table>
-               <button class="btn btn-primary" (click)="submit()">Submit</button>
-              
-            </div>
-           </div>
-    </div>
-</div>
 
+
+        <div class="col-md-6">
+            <div class="container">
+                <div class=" mt-4 mb-4">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>DAY</th>
+                                <th>DESCRIPTION</th>
+                                <th>YEAR</th>
+                                <th>LOCATION</th>
+                                <th *ngIf="true">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ListData">
+                                <td><span>{{item.date}}</span></td>
+                                <td><span>{{item.day}}</span></td>
+                                <td><span>{{item.description}}</span></td>
+                                <td><span>{{item.year}}</span></td>
+                                <td><span>{{item.workLocation}}</span></td>
+                                <td *ngIf="true"><button type="button" class="btn btn-primary"
+                                        (click)="removeLeave(item)" [disabled]="disableRemoveBtn">Remove</button> </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary" [disabled]="disableSubmitBtn" (click)="submit()">Submit</button>
+                    <button class="btn btn-primary" [disabled]="disableResetBtn" (click)="resetLeave()">Reset</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-danger" id="btn" (click)="navigateToHome()" title="Back"><i
+            class="bi bi-box-arrow-in-left"></i>Back</button>
+
+</div>

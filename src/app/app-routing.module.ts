@@ -16,6 +16,7 @@ import { RegisterComponent } from './register/register.component';
 import { HistoryComponent } from './history/history.component';
 import { ChangeNumberComponent } from './change-number/change-number.component';
 import { PublicHolidaysComponent } from './public-holidays/public-holidays.component';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 
 
@@ -34,7 +35,8 @@ const routes: Routes = [
 {path:'frontpage',component:FrontpageComponent},
 {path:'history',component:HistoryComponent},
 {path:'change-number',component:ChangeNumberComponent},
-{path:'publicholidays',component:PublicHolidaysComponent}
+{path:'publicholidays',component:PublicHolidaysComponent},
+{path:'employeedetails',component:EmployeeDetailsComponent}
 ]
 
 

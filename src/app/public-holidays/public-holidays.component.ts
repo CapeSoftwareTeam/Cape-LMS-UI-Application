@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HolidaysComponent } from '../holidays/holidays.component';
 import { HolidayservicesService } from '../services/holidayservices.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { RegisterserviceService } from '../services/registerservice.service';
 
 @Component({
   selector: 'app-public-holidays',
@@ -13,19 +14,18 @@ import { MatSort } from '@angular/material/sort';
 })
 export class PublicHolidaysComponent implements OnInit {
 
-  display:boolean=false;
+  display: boolean = false;
 
-  displayedColumns: string[] = ['description', 'location', 'date','day'];
-  dataSource!: MatTableDataSource<any>; 
+  displayedColumns: string[] = ['description', 'location', 'date', 'day', 'action'];
+  dataSource!: MatTableDataSource<any>;
 
-  @ViewChild('holidaysSort', { static: false }) 
-  holidaysSort!: MatSort;
-  @ViewChild('holidaysPaginator', { static: false })
-   holidaysPaginator!: MatPaginator;
+  @ViewChild('holidaysSort', { static: false }) holidaysSort!: MatSort;
+  @ViewChild('holidaysPaginator', { static: false }) holidaysPaginator!: MatPaginator;
   @ViewChild(MatSort)
-   sort!: MatSort;
+  sort!: MatSort;
   @ViewChild(MatPaginator)
-   paginator!: MatPaginator;
+  paginator!: MatPaginator;
+  empid: any;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.holidaysPaginator;
@@ -33,27 +33,58 @@ export class PublicHolidaysComponent implements OnInit {
   }
 
 
-  constructor(private route:Router,private holidaysService:HolidayservicesService) { }
-
-  ngOnInit(): void {
-    this.holidaysService.getLeave().subscribe(data=>{
-      this.dataSource= new  MatTableDataSource(JSON.parse(data));
-      this.dataSource.sort = this.holidaysSort;
-      this.dataSource.paginator = this.holidaysPaginator;
-    })
+  constructor(private route: Router, private holidaysService: HolidayservicesService, private registerService: RegisterserviceService) {
+    this.dataSource = new MatTableDataSource<any>()
   }
 
+  ngOnInit(): void {
+
+    // Geting  Holidays Details employee Designation
+    this.empid = sessionStorage.getItem('empid')
+
+    let designation = '';
+    this.registerService.getForm(this.empid).subscribe(
+      data => {
+        designation = JSON.parse(data).designation;
+
+        if (designation == "HR") {
+          this.holidaysService.getLeave().subscribe(data => {
+            this.displayedColumns = ['description', 'location', 'date', 'day', 'action'];
+            this.dataSource = new MatTableDataSource(JSON.parse(data));
+            this.dataSource.sort = this.holidaysSort;
+            this.dataSource.paginator = this.holidaysPaginator;
+          })
+
+        }
+        else {
+          this.holidaysService.getLeave().subscribe(data => {
+            this.displayedColumns = ['description', 'location', 'date', 'day'];
+            this.dataSource = new MatTableDataSource(JSON.parse(data));
+            this.dataSource.sort = this.holidaysSort;
+            this.dataSource.paginator = this.holidaysPaginator;
+          })
+        }
+      })
+
+  }
+
+  // Fitering Leaves
   applyFilter(event: Event) {
-
     const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
-     this.dataSource.filter = filterValue.trim().toLowerCase();
-
- }
- 
-
-  back(){
+  // Navigation
+  back() {
     this.route.navigate(['/home'])
+  }
+
+  // Delete Holidays From UI
+  deleteLeave(publicLeaveId: any) {
+    this.holidaysService.deleteLeave(publicLeaveId).subscribe(data => {
+      console.log("Holiday deleted")
+      this.ngOnInit();
+    })
   }
 
 }

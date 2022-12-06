@@ -1,0 +1,39 @@
+.table{
+    box-shadow: 0 0 15px rgba(0, 0, 0,0.4);
+}
+.thead{
+    justify-content: center;
+    font-size:large;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  #filter{
+    margin-left:10%;
+  }
+  
+table {
+    width: 100%;
+    margin-top: 60px;
+  }
+ 
+ #btn{
+    margin-left:90%;
+    margin-top:40px;
+    width: 100px;
+ } 
+ h2{
+  margin-left:80px;
+  margin-top: 20px;
+ }
+
+.warningMsg {
+ padding: 5px 8px;
+ text-align: center;
+ font-size: 14px;
+ color: #721c24;
+ background-color: #ffdcde;
+ border-color: #ffdcde;
+ border-radius: 0.25rem;
+ margin-bottom: 1rem;
+}
+

@@ -100,8 +100,8 @@
                                                      <select  class="form-control" formControlName="maritalStatus"
                        
                                                      [(ngModel)]="register.maritalstatus" [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}" >
-                                                        <option value="male">Married</option>
-                                                        <option value="female">Unmarried </option>
+                                                        <option value="Married">Married</option>
+                                                        <option value="Unmarried">Unmarried </option>
                                                            
                                                    </select>   
                                         <div *ngIf="submitted && field.maritalStatus.errors" class="invalid-feedback">
