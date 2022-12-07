@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Register } from '../models/register';
-import { CalculationPipe } from '../pipe/calculation.pipe';
-import { HistoryService } from '../services/historyservice.service';
-import { RegisterserviceService } from '../services/registerservice.service';
-// import { Router } from '@angular/router';
-// import { ServiceService } from 'src/app/service.service';
 
+import { RegisterserviceService } from '../services/registerservice.service';
+import csc from 'country-state-city';
+import { ICountry, IState, ICity } from 'country-state-city';
+import { Subscription } from 'rxjs';
+import { state } from '@angular/animations';
+import { CscService } from '../csc.service';
+
+interface Country {
+  shortName: string;
+  name: string;
+}
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,11 +26,30 @@ export class RegisterComponent implements OnInit {
   priyanka:boolean=false;
   prod:boolean=false;
   RegisterationForm!: FormGroup;
+ 
 
+  countries: Country[]=[]; 
+  states: string[]=[];
+  cities: string[]=[];
   Empid:any;
   countryCode:any;
-
-  // Only Accept numbers
+  stateList1: any=[];
+  countryList: any=[];
+ 
+  
+  // subscriptions:Subscription[]=[];
+  
+  // countryDropdownSettings:any=[];
+  // stateDrodownSettings: any;
+  // cityDropdownSettings: any;
+  // countries :ICountry[] = [];
+  // states : IState[] = [];
+  // cities : ICity[] = [];
+  // selectedCountryCode: any;
+  // stateList1: any=[];
+  // countryList: any=[];
+ 
+ // Only Accept numbers
   keyPressNumbers(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
@@ -34,6 +60,25 @@ export class RegisterComponent implements OnInit {
       return true;
     }
   }
+  designer1changeCountry(e: any) {
+     let changedValue;
+     if(e.target != undefined) {
+     changedValue = e.target.value;
+    }
+    else{
+     changedValue = e;
+    }
+    this.stateList1 = [];
+   for(let arr of this.countryList) {
+     if( arr.name == changedValue) {
+   this.siteService.retrieveState(arr.code).subscribe(
+    data => {
+   this.stateList1 = JSON.parse(data) 
+     }
+    )};
+     }
+  }
+
   empid(event: any){
    this.Empid=this.register.empid;
    let tempArr : any=[];
@@ -66,11 +111,42 @@ export class RegisterComponent implements OnInit {
 
    }
   
-    
+  //  getCountries(){
+  //   this.countries=csc.getAllCountries();
+  // }
+  // getState(countryCode:any){
+  //   this.states=csc.getStatesOfCountry(this.countryCode);
+  // }
+
+  // getCity(countryCode:any,stateCode:any){
+  //  this.cities=csc.getCitiesOfState(this.countryCode);
+
+  // }
+  // initDropdownSettings(){
+  //   this.countryDropdownSettings={ 
+  //     singleSelection: true,
+  //     idField: 'isoCode',
+  //     textField: 'name',
+  //      selectAllText: 'Select All',
+  //     unSelectAllText: 'UnSelect All',
+  //     itemsShowLimit :3,
+  //     allowSearchFilter:true,
+  //     maxHeight:'100'
+  //   };
+  // }
+ 
+   
   
-  constructor(private formBuilder: FormBuilder,
-    private registerService: RegisterserviceService,
-  ) { }
+  constructor(private formBuilder: FormBuilder,private route: Router,
+    private registerService: RegisterserviceService, private siteService:CscService
+  ) { 
+    // this.countries = this. siteService.getCountries();
+    // this.form = new FormGroup({
+    //   country: this.country,
+    //   state: this. state,
+    //   city: this.city,
+    // });
+  }
   ngOnInit(): void {
     this.RegisterationForm = new FormGroup({
       empid: new FormControl('', Validators.required),
@@ -85,6 +161,7 @@ export class RegisterComponent implements OnInit {
       department: new FormControl('', Validators.required),
       designation: new FormControl('', Validators.required),
       totalExperience: new FormControl('', Validators.required),
+      country:new FormControl('', Validators.required),
       state: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -92,46 +169,95 @@ export class RegisterComponent implements OnInit {
       capeExperience: new FormControl('', Validators.required),
       managername: new FormControl('', Validators.required),
       manageremail: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+     
     })
    
-    this.countryCode='91';
-    
+    this.siteService.retrieveCountry().subscribe(
+      data => {
+        this.countryList = JSON.parse(data);
+        console.log( this.countryList)
+      }
+    )
+    // this.initForm();
+    // this.initDropdownSettings();
+    // this.getCountries();
 
   }
+//   handleValueChanges(){
+//     this.subscriptions.push (this.RegisterationForm.get('country')?.value.subscribe((response: { isoCode: any; }[])=>{
+//       console.log('selected country is', response);
+//       this.selectedCountryCode = response[0].isoCode;
+//       this.getState(response[0].isoCode);
+//       }));
+// this.subscriptions.push(this.RegisterationForm.get('state')?.value.subscribe((response: { isoCode: any; }[]) =>{
+//    console.log('state selection', response);
+//    this.getCity(this.selectedCountryCode,response[0].isoCode);
+// }));
+//     }  
+  
+  initForm(){
+    this.RegisterationForm=this.formBuilder.group({
+      country:[''],
+      state:[''],
+      city:['']
+    })
+   
+  // this.getCountries();
+  // this.initDropdownSettings();
+  // this.countryDropdownSettings();
+  //   this.handleValueChanges();
+   
+  this.countryCode='91';
+
+//   this.countryChange.valueChanges.subscribe((country))=>{
+//     this.states.reset();
+//     this.states.disable();
+//     if(country){
+//       this.states=this.siteService.getStatesByCountry(country);
+//       this.states.enable();
+//     }
+//   }
+//  this.states.valueChanges.subscribe((state))=>{
+//   this.city.reset();
+//   this.city.disable();
+//   if(state){
+//     this.cities = this. siteService.getcitiesByState(this.countryChange.value, state);
+//     this.city.enable();
+//   }
+//  }
+  }
+  
+//   changeCountry(e:any){
+    
+// let changedValue;
+//  if(e.target != undefined) {
+// changedValue = e.target.value;
+//  }
+//  else{
+//  changedValue = e;
+//  }
+// this.stateList1 = [];
+//  for(let arr of this.countryList) {
+// if( arr.name == changedValue) {
+//  this.siteService.retrieveSite(arr.code).subscribe(
+//  data => {
+//  this.stateList1 = JSON.parse(data)
+// }
+//  )};
+
+//   }
+// }
+    
+ 
   get field(): any {
     return this.RegisterationForm.controls;
   }
+  
+  
 
   
   
-  // calcExperience(event:any,form:any){
-  //   if(form.controls.capeExperience!=null && form.controls.capeExperience!=undefined && form.controls.capeExperience!="" &&
-  //      form.controls.otherExperience!=null && form.controls.otherExperience!=undefined && form.controls.otherExperience!=""){
-  //     var a=(form.controls.capeExperience.value+form.controls.otherExperience.value);
-  //     form.controls.totalExperience.setValue(a);
-  //   }
-  // }
-  // changevalue(e: any) {
-  //   if (this.RegisterationForm.value.capeExperience != '' && this.RegisterationForm.value.otherexperience != '') {
-  //     this.register.totalexperience = + this.register.capeExperience + +this.register.otherExperience
-  //   }
-  // }
-  // changevalue(e:any){  
-  //   this.currentDate = new Date();
-  //   if(this.RegisterationForm.value.dateofjoining!='' && this.currentDate!=''){
-  //     this.register.capeExperience = - this.register.dateofjoining - -this.currentDate
-  //     if(this.RegisterationForm.value.capeExperience!=''&& this.RegisterationForm.value.otherExperience!=''){
-  //       this.register.totalexperience = +this.register.capeExperience+ + this.register.otherExperience
-  //     }
-
-  //   }
-  // }
-//   doj(e:any){
-//     this.currentDate=new Date();
-//     if(this.RegisterationForm.value.dateofjoining!='' ){
-//           this.register.capeExperience = -this.register.dateofjoining- -this.currentDate
-//   }
-// }
+  
 changevalue(e:any){
   if(
     this.RegisterationForm.value.otherExperience!=''&&
@@ -185,9 +311,11 @@ countryChange(country: any) {
       console.log('errorr')
     }
   }
-  States: any[] = ['select option','Andhra Pradesh', 'Andaman & Nicobar Islands', 'Arunachal Pradesh',
-    'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujrat', 'Haryana', 'Himachal Pradesh',
-    'Jammu & Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh',
-    'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan',
-    'Sikkim', 'Tamilnadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'];
+  Home(){
+    this.route.navigate(['/home']);
+  }
+  // handleButtonClick(){
+  //   if(!this.RegisterationForm.valid) this.RegisterationForm.markAllAsTouched();
+  // }
+  
 }

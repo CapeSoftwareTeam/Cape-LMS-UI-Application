@@ -1,46 +1,48 @@
 <form [formGroup]="RegisterationForm" (ngSubmit)="submitFunction()">
         <div class="container">
-                <header >Registration</header>
+                <header>Registration</header>
                 <div class="first">
                         <h2>Personal Details</h2>
                         <div class="row">
                                 <div class="col-md-4">
                                         <label class="form-label">Employee Id</label>
                                         <div class="input-group">
-                                        
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                            <i class="bi bi-file-person"></i>
-                                                           
+                                                                <i class="bi bi-file-person"></i>
+
                                                         </span>
-                                                        
-                                                     </div>
-                                                <input type="text" name="empid" (focusout)="empid($event)" placeholder="Enter employee id"  class="form-control" formControlName="empid"
-                                                        [(ngModel)]="register.empid"
+
+                                                </div>
+                                                <input type="text" name="empid" (focusout)="empid($event)"
+                                                        placeholder="Enter employee id" class="form-control"
+                                                        formControlName="empid" [(ngModel)]="register.empid"
                                                         [ngClass]="{ 'is-invalid': submitted && field.empid.errors }">
                                                 <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
                                                         <div *ngIf="field.empid.errors">Employee id is required</div>
-                                                        
-                                                       
+
+
                                                 </div>
-                                               
+
                                         </div>
-                                        <p *ngIf="prod" style="color:rgba(255, 0, 0, 0.844)">Employee id is already exists</p> 
+                                        <p *ngIf="prod" style="color:rgba(255, 0, 0, 0.844)">Employee id is already
+                                                exists</p>
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Name</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                                <i class="bi bi-person-fill"></i>                                                        </span>
-                                                     </div>
-                                                     <input type="text" name="name" class="form-control"   formControlName="name"
-                                                     [(ngModel)]="register.name"
-                                                     [ngClass]="{'is-invalid': submitted && field.name.errors}">
-                                             <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.name.errors">Name field is required</div>
-                                             </div>
+                                                                <i class="bi bi-person-fill"></i> </span>
+                                                </div>
+                                                <input type="text" name="name" class="form-control"
+                                                        formControlName="name" [(ngModel)]="register.name"
+                                                        [ngClass]="{'is-invalid': submitted && field.name.errors}">
+                                                <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
+                                                        <div *ngIf="field.name.errors">Name field is required</div>
+                                                </div>
                                         </div>
                                 </div>
                                 <div class="col-md-4">
@@ -53,138 +55,148 @@
                                         <label class="form-label">Gender</label>
                                         <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="bi bi-people-fill"></i>
-                                                    </span>
-                                                 </div>  
-                                        
-                       <select  class="form-control" formControlName="gender" 
-                       
-                                           [(ngModel)]="register.gender" [ngClass]="{'is-invalid': submitted && field.gender.errors}" >
-                                              <option value="male">Male</option>
-                                              <option value="female">Female  </option>
-                                              <option value="others">Others</option>    
-                                         </select>                              
-                                        
-                                         <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
-                                                <div *ngIf="field.gender.errors">Gender is required</div>
+                                                        <span class="input-group-text">
+                                                                <i class="bi bi-people-fill"></i>
+                                                        </span>
+                                                </div>
+
+                                                <select class="form-control" formControlName="gender"
+                                                        [(ngModel)]="register.gender"
+                                                        [ngClass]="{'is-invalid': submitted && field.gender.errors}">
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female </option>
+                                                        <option value="others">Others</option>
+                                                </select>
+
+                                                <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
+                                                        <div *ngIf="field.gender.errors">Gender is required</div>
+                                                </div>
                                         </div>
-                                </div>
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Date Of Birth</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                        <i class="bi bi-calendar-date-fill"></i>
+                                                                <i class="bi bi-calendar-date-fill"></i>
                                                         </span>
-                                                     </div>
-                                                     <input type="date" name="dob" class="form-control" formControlName="dob"
-                                                     [(ngModel)]="register.dob"
-                                                     [ngClass]="{'is-invalid': submitted && field.dob.errors}">
-                                             <div *ngIf="submitted && field.dob.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.dob.errors">Date of birth is required</div>
-                                             </div>
+                                                </div>
+                                                <input type="date" name="dob" class="form-control" formControlName="dob"
+                                                        [(ngModel)]="register.dob"
+                                                        [ngClass]="{'is-invalid': submitted && field.dob.errors}">
+                                                <div *ngIf="submitted && field.dob.errors" class="invalid-feedback">
+                                                        <div *ngIf="field.dob.errors">Date of birth is required</div>
+                                                </div>
                                         </div>
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">Marital Status</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                                 <i class="bi bi-postcard-heart-fill"></i>
                                                         </span>
-                                                     </div>
-                                                     <select  class="form-control" formControlName="maritalStatus"
-                       
-                                                     [(ngModel)]="register.maritalstatus" [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}" >
-                                                        <option value="Married">Married</option>
+                                                </div>
+                                                <select class="form-control" formControlName="maritalStatus"
+                                                        [(ngModel)]="register.maritalstatus"
+                                                        [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
+                                                        <option value="married">Married</option>
                                                         <option value="Unmarried">Unmarried </option>
-                                                           
-                                                   </select>   
-                                        <div *ngIf="submitted && field.maritalStatus.errors" class="invalid-feedback">
-                                                
-                                                <div *ngIf="field.maritalStatus.errors">Marital status is required</div>
+
+                                                </select>
+                                                <div *ngIf="submitted && field.maritalStatus.errors"
+                                                        class="invalid-feedback">
+
+                                                        <div *ngIf="field.maritalStatus.errors">Marital status is
+                                                                required</div>
+                                                </div>
                                         </div>
                                 </div>
-                                </div>
-                        
+
                                 <div class="col-md-4">
                                         <label class="form-label">Mobile Number</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                                 <i class="bi bi-telephone-fill"></i>
                                                         </span>
-                                                     </div>
-                                                     <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
-                                                     <input type="text" name="mobilenumber" class="form-control"
-                                                     formControlName="mobile" [(ngModel)]="register.mobilenumber"
-                                                     [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
-                                             <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.mobile.errors['required']">Mobile number is
-                                                             required</div>
-                                                     <div *ngIf="field.mobile.errors['min']">Enter 10 digit number</div>
-                                                     <div *ngIf="field.mobile.errors['max']">Enter 10 digit number</div>
-                                             </div>
+                                                </div>
+                                                <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
+                                                <input type="text" name="mobilenumber" class="form-control"
+                                                        formControlName="mobile" [(ngModel)]="register.mobilenumber"
+                                                        [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
+                                                <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
+                                                        <div *ngIf="field.mobile.errors['required']">Mobile number is
+                                                                required</div>
+                                                        <div *ngIf="field.mobile.errors['min']">Enter 10 digit number
+                                                        </div>
+                                                        <div *ngIf="field.mobile.errors['max']">Enter 10 digit number
+                                                        </div>
+                                                </div>
                                         </div>
                                 </div>
-                              
+
                                 <div class="col-md-4">
                                         <label class="form-label">Alternate Number</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                                 <i class="bi bi-telephone-forward-fill"></i>
                                                         </span>
-                                                     </div>
-                                                     <input type="text" name="alternate" class="form-control"
-                                                     formControlName="alternate" [(ngModel)]="register.alternatenumber"
-                                                     [ngClass]="{'is-invalid': submitted && field.alternate.errors}">
-                                             <div *ngIf="submitted && field.alternate.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.alternate.errors['required']">Alternate number is
-                                                             required</div>
-                                                     <div *ngIf="field.alternate.errors['min']">Enter 10 digit number</div>
-                                                     <div *ngIf="field.alternate.errors['max']">Enter 10 digit number</div>
-                                             </div>
+                                                </div>
+                                                <input type="text" name="alternate" class="form-control"
+                                                        formControlName="alternate"
+                                                        [(ngModel)]="register.alternatenumber"
+                                                        [ngClass]="{'is-invalid': submitted && field.alternate.errors}">
+                                                <div *ngIf="submitted && field.alternate.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="field.alternate.errors['required']">Alternate number
+                                                                is
+                                                                required</div>
+                                                        <div *ngIf="field.alternate.errors['min']">Enter 10 digit number
+                                                        </div>
+                                                        <div *ngIf="field.alternate.errors['max']">Enter 10 digit number
+                                                        </div>
+                                                </div>
                                         </div>
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">EmailId</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                                 <i class="bi bi-envelope-fill"></i>
                                                         </span>
-                                                     </div>
-                                        <input type="email" name="email" class="form-control" formControlName="email"
-                                                [(ngModel)]="register.emailid"
-                                                [ngClass]="{'is-invalid': submitted && field.email.errors}">
-                                        <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
-                                                <div *ngIf="field.email.errors">Email is required</div>
-                                                <div *ngIf="field.email.errors.pattern">Enter valid email</div>
-                                        </div>
+                                                </div>
+                                                <input type="email" name="email" class="form-control"
+                                                        formControlName="email" [(ngModel)]="register.emailid"
+                                                        [ngClass]="{'is-invalid': submitted && field.email.errors}">
+                                                <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
+                                                        <div *ngIf="field.email.errors">Email is required</div>
+                                                        <div *ngIf="field.email.errors.pattern">Enter valid email</div>
+                                                </div>
                                         </div>
                                 </div>
                                 <div class="col-md-4 ">
                                         <label class="form-label">Password</label>
                                         <div class="input-group">
-                                                
+
                                                 <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                                <i class="bi bi-eye-slash-fill"></i>                                                        </span>
-                                                     </div>
-                                                     <input type="password" name="Password" class="form-control"
-                                                     formControlName="password" [(ngModel)]="register.password"
-                                                     [ngClass]="{'is-invalid' : submitted && field.password.errors}">
-                                             <div *ngIf="submitted && field.password.errors" class="invalid-feedback">
-                                                     <div *ngIf="field.password.errors">Password is required</div>
-                                             </div>
+                                                                <i class="bi bi-eye-slash-fill"></i> </span>
+                                                </div>
+                                                <input type="password" name="Password" class="form-control"
+                                                        formControlName="password" [(ngModel)]="register.password"
+                                                        [ngClass]="{'is-invalid' : submitted && field.password.errors}">
+                                                <div *ngIf="submitted && field.password.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="field.password.errors">Password is required</div>
+                                                </div>
                                         </div>
                                 </div>
                         </div>
@@ -194,67 +206,71 @@
                                         <div class="col-md-4">
                                                 <label class="form-label">Date Of Joining</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
-                                                           <i class="bi bi-calendar-date-fill"></i>
+                                                                        <i class="bi bi-calendar-date-fill"></i>
                                                                 </span>
-                                                             </div>
-                                                             <input type="date" name="doj" class="form-control" formControlName="dateofjoining"
-                                                             (change)="changevalue($event)"
-                                                                     [(ngModel)]="register.dateofjoining"
-                                                                     [ngClass]="{'is-invalid': submitted && field.dateofjoining.errors}">
-                                                             <div *ngIf="submitted && field.dateofjoining.errors" class="invalid-feedback">
-                                                                     <div *ngIf="field.dateofjoining.errors">Date Of Joining is required</div>
-                                                             </div>
+                                                        </div>
+                                                        <input type="date" name="doj" class="form-control"
+                                                                formControlName="dateofjoining"
+                                                                (change)="changevalue($event)"
+                                                                [(ngModel)]="register.dateofjoining"
+                                                                [ngClass]="{'is-invalid': submitted && field.dateofjoining.errors}">
+                                                        <div *ngIf="submitted && field.dateofjoining.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.dateofjoining.errors">Date Of Joining
+                                                                        is required</div>
+                                                        </div>
                                                 </div>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Department</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-card-heading"></i>
                                                                 </span>
-                                                             </div>
-                                                <select 
-                                                        formControlName="department" class="form-control" [(ngModel)]="register.department"
-                                                        [ngClass]="{'is-invalid' : submitted && field.department.errors}">
-                                                        <option value="" selected>Select Option</option>
-                                                        <option >Software</option>
-                                                        <option>Design</option>
-                                                        <option>Marketing</option>
-                                                        <option>Sales</option>
+                                                        </div>
+                                                        <select formControlName="department" class="form-control"
+                                                                [(ngModel)]="register.department"
+                                                                [ngClass]="{'is-invalid' : submitted && field.department.errors}">
+                                                                <option value="" selected>Select Option</option>
+                                                                <option>Software</option>
+                                                                <option>Design</option>
+                                                                <option>Marketing</option>
+                                                                <option>Sales</option>
 
-                                                        
-                                                </select>
-                                                <div *ngIf="submitted && field.department.errors"
-                                                class="invalid-feedback">
-                                                <div *ngIf="field.department.errors">Department is required
+
+                                                        </select>
+                                                        <div *ngIf="submitted && field.department.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.department.errors">Department is
+                                                                        required
+                                                                </div>
+                                                        </div>
                                                 </div>
-                                        </div>
-                                                </div>
-                                               
-                                                
+
+
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Designation</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-person-lines-fill"></i>
                                                                 </span>
-                                                             </div>
-                                                <!-- <div class="input-group">
+                                                        </div>
+                                                        <!-- <div class="input-group">
                                                 
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-person-lines-fill"></i>
                                                                 </span>
                                                              </div> -->
-                                                             <!-- <input type="text" name="designation" class="form-control"
+                                                        <!-- <input type="text" name="designation" class="form-control"
                                                              formControlName="designation" [(ngModel)]="register.designation"
                                                              [ngClass]="{'is-invalid': submitted && field.designation.errors}">
                                                      <div *ngIf="submitted && field.designation.errors"
@@ -263,128 +279,184 @@
                                                              </div>
                                                      </div>
                                                 </div> -->
-                                                <select 
-                                                formControlName="designation" class="form-control" [(ngModel)]="register.designation"
-                                                [ngClass]="{'is-invalid' : submitted && field.designation.errors}">
-                                                <option value="" selected>Select Option</option>
-                                                <option >Software Engineer trainee</option>
-                                                <option>Software Developer</option>
-                                                <option>Designing</option>
-                                                <option>Sales</option>
-                                                <option>Marketing</option>
-                                                <option>Testing</option>
- 
-                                                
-                                        </select>
-                                        <div *ngIf="submitted && field.designation.errors"
-                                        class="invalid-feedback">
-                                        <div *ngIf="field.designation.errors">Designation is required
-                                        </div>
-                                </div>
+                                                        <select formControlName="designation" class="form-control"
+                                                                [(ngModel)]="register.designation"
+                                                                [ngClass]="{'is-invalid' : submitted && field.designation.errors}">
+                                                                <option value="" selected>Select Option</option>
+                                                                <option>Software Engineer trainee</option>
+                                                                <option>Software Developer</option>
+                                                                <option>Designing</option>
+                                                                <option>Sales</option>
+                                                                <option>Marketing</option>
+                                                                <option>Testing</option>
+                                                                <option>HR</option>
+                                                                <option>Manager</option>
+                                                                <option>MD</option>
+
+
+                                                        </select>
+                                                        <div *ngIf="submitted && field.designation.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.designation.errors">Designation is
+                                                                        required
+                                                                </div>
+                                                        </div>
                                                 </div>
-                                        
+
                                         </div>
-                                        
+
                                         <div class="col-md-4">
                                                 <label class="form-label">Other Experience</label>
                                                 <div class="input-group">
-                                                
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
-                                                                        <i class="bi bi-list-ul"></i>                                                        </span>
-                                                             </div>
-                                                             <input name="Other Experience" class="form-control"
-                                                             formControlName="otherExperience"
-                                                             (keypress)="keyPressNumbers($event)"
-                                                             (change)="changevalue($event)"
-                                                             [(ngModel)]="register.otherexperience"
-                                                             [ngClass]="{'is-invalid' : submitted && field.otherExperience.errors}">
-                                                     <div *ngIf="submitted && field.otherExperience.errors"
-                                                             class="invalid-feedback">
-                                                             <div *ngIf="field.otherExperience.errors">Experience required
-                                                             </div>
-                                                     </div>
-                                                </div>  
+                                                                        <i class="bi bi-list-ul"></i> </span>
+                                                        </div>
+                                                        <input name="Other Experience" class="form-control"
+                                                                formControlName="otherExperience"
+                                                                (keypress)="keyPressNumbers($event)"
+                                                                (change)="changevalue($event)"
+                                                                [(ngModel)]="register.otherexperience"
+                                                                [ngClass]="{'is-invalid' : submitted && field.otherExperience.errors}">
+                                                        <div *ngIf="submitted && field.otherExperience.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.otherExperience.errors">Experience
+                                                                        required
+                                                                </div>
+                                                        </div>
+                                                </div>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">CAPE Experience</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
-                                                                        <i class="bi bi-list-ul"></i>                                                                </span>
-                                                             </div>
-                                                             <input type="number" name="CAPE Experience"
-                                                             (keypress)="keyPressNumbers($event)"
-                                                              class="form-control" readonly
-                                                             formControlName="capeExperience"
-                                                             [(ngModel)]="register.capeexperience"
-                                                             [ngClass]="{'is-invalid' : submitted && field.capeExperience.errors}">
-                                                     <div *ngIf="submitted && field.capeExperience.errors"
-                                                             class="invalid-feedback">
-                                                             <div *ngIf="field.capeExperience.errors">Experience required
-                                                             </div>
-                                                     </div>
+                                                                        <i class="bi bi-list-ul"></i> </span>
+                                                        </div>
+                                                        <input type="number" name="CAPE Experience"
+                                                                (keypress)="keyPressNumbers($event)"
+                                                                class="form-control" readonly
+                                                                formControlName="capeExperience"
+                                                                [(ngModel)]="register.capeexperience"
+                                                                [ngClass]="{'is-invalid' : submitted && field.capeExperience.errors}">
+                                                        <div *ngIf="submitted && field.capeExperience.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.capeExperience.errors">Experience
+                                                                        required
+                                                                </div>
+                                                        </div>
                                                 </div>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Total Experience</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
-                                                                        <i class="bi bi-list-ul"></i>                                                                </span>
-                                                             </div>
-                                                             <input type="number" name="totalExperience" readonly
-                                                             class="form-control" formControlName="totalExperience"
-                                                             (keypress)="keyPressNumbers($event)"
-                                                             [(ngModel)]="register.totalexperience"
-                                                             [ngClass]="{'is-invalid' : submitted && field.totalExperience.errors}">
-                                                     <div *ngIf="submitted && field.totalExperience.errors"
-                                                             class="invalid-feedback">
-                                                             <div *ngIf="field.totalExperience.errors">Experience required
-                                                             </div>
-                                                     </div>
+                                                                        <i class="bi bi-list-ul"></i> </span>
+                                                        </div>
+                                                        <input type="number" name="totalExperience" readonly
+                                                                class="form-control" formControlName="totalExperience"
+                                                                (keypress)="keyPressNumbers($event)"
+                                                                [(ngModel)]="register.totalexperience"
+                                                                [ngClass]="{'is-invalid' : submitted && field.totalExperience.errors}">
+                                                        <div *ngIf="submitted && field.totalExperience.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.totalExperience.errors">Experience
+                                                                        required
+                                                                </div>
+                                                        </div>
                                                 </div>
                                         </div>
                                         <div class="col-md-4 ">
-                                                <label>States</label>
+                                                <label>Country</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
-                                                <i class="bi bi-geo-alt-fill"></i>
- 
+                                                                        <i class="bi bi-geo-alt-fill"></i>
+
 
                                                                 </span>
-                                                             </div>
+                                                        </div>
 
-                                                <select 
-                                                        formControlName="state"class="form-control" [(ngModel)]="register.state"
-                                                        [ngClass]="{'is-invalid' : submitted && field.state.errors}">
-                                                        <option *ngFor="let state of States; let i = index">{{state}}
-                                                        </option>
-                                                </select>
-                                                <div *ngIf="submitted && field.state.errors" class="invalid-feedback">
-                                                        <div *ngIf="field.state.errors">State is required</div>
+                                                        <select formControlName="country"  (change)="designer1changeCountry($event)"
+                                                                class="form-control"
+                                                                
+                                                                [ngClass]="{'is-invalid' : submitted && field.country.errors}" >
+                                                                <option value="" selected>Select Country Name</option>
+                                                         <option *ngFor="let country of countryList"
+                                                         >{{country.name}}</option>
+                                                               
+                                                        </select>
+                                                        <div *ngIf="submitted && field.country.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.country.errors">country is required
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                </div>
+                                        
+                                        <div class="col-md-4 ">
+                                                <label>States</label>
+                                                <div class="input-group">
+
+                                                        <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                        <i class="bi bi-geo-alt-fill"></i>
+
+
+                                                                </span>
+                                                        </div>
+
+                                                       <select formControlName="state"
+                                                                class="form-control" [(ngModel)]="register.state"
+                                                              
+                                                               
+                                                             
+                                                             
+                                                                [ngClass]="{'is-invalid' : submitted && field.state.errors}">
+                                                                <!-- <option *ngFor="let state of States; let i = index">{{state}}
+                                                                        
+                                                        </option> -->
+                                                        <option value="" selected>Select State Name</option>
+                                                        <option *ngFor="let state of stateList1"
+                                                       >{{state.name}}</option>
+                                                              
+                                                     
+                                                       </select>
+                                                        <div *ngIf="submitted && field.state.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.state.errors">State is required</div>
+                                                        </div>
                                                 </div>
                                         </div>
-                                                </div>
-                                                
+
                                         <div class="col-md-4">
                                                 <label class="form-label">City</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
-                                                                        <i class="bi bi-geo-alt-fill"></i>                                                        </span>
-                                                             </div>
-                                                             <input type="text" name="city" class="form-control"
-                                                             formControlName="city" [(ngModel)]="register.city"
-                                                             [ngClass]="{'is-invalid': submitted && field.city.errors}">
-                                                     <div *ngIf="submitted && field.city.errors" class="invalid-feedback">
-                                                             <div *ngIf="field.city.errors">City is required</div>
-                                                     </div>
+                                                                        <i class="bi bi-geo-alt-fill"></i> </span>
+                                                        </div>
+
+                                                        <input type="text" name="city" class="form-control"
+                                                                formControlName="city" [(ngModel)]="register.city"
+                                                               
+                                                                
+                                                          
+                                                                [ngClass]="{'is-invalid': submitted && field.city.errors}">
+                                                               
+                                                                
+                                                             
+                                                        
+                                                        <div *ngIf="submitted && field.city.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.city.errors">City is required</div>
+                                                        </div>
                                                 </div>
                                         </div>
                                         <!-- <div class="col-md-4">        
@@ -406,54 +478,66 @@
                                         <div class="col-md-4">
                                                 <label class="form-label">Manager Name</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-person-fill"></i>
                                                                 </span>
-                                                             </div>
-                                                             <input type="text" name="manager" class="form-control"
-                                                             formControlName="managername" [(ngModel)]="register.managername"
-                                                             [ngClass]="{'is-invalid': submitted && field.managername.errors}">
-                                                     <div *ngIf="submitted && field.managername.errors" class="invalid-feedback">
-                                                             <div *ngIf="field.managername.errors">Manager Name is required</div>
-                                                     </div>
+                                                        </div>
+                                                        <input type="text" name="manager" class="form-control"
+                                                                formControlName="managername"
+                                                                [(ngModel)]="register.managername"
+                                                                [ngClass]="{'is-invalid': submitted && field.managername.errors}">
+                                                        <div *ngIf="submitted && field.managername.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.managername.errors">Manager Name is
+                                                                        required</div>
+                                                        </div>
                                                 </div>
                                         </div>
                                         <div class="col-md-4">
                                                 <label class="form-label">Manager Email</label>
                                                 <div class="input-group">
-                                                        
+
                                                         <div class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-envelope-fill"></i>
                                                                 </span>
-                                                             </div>
-                                                             <input type="email" name="Memail" class="form-control"
-                                                             formControlName="manageremail"(focusout)="emailvalidation($event)"
-                                                             [(ngModel)]="register.manageremail"
-                                                             [ngClass]="{'is-invalid': submitted && field.manageremail.errors}">
-                                                     <div *ngIf="submitted && field.manageremail.errors" class="invalid-feedback">
-                                                             <div *ngIf="field.manageremail.errors">Manager Email is required</div>
-                                                             <div *ngIf="field.email.errors.pattern">Enter valid email</div>
-                                                     </div>
+                                                        </div>
+                                                        <input type="email" name="Memail" class="form-control"
+                                                                formControlName="manageremail"
+                                                                (focusout)="emailvalidation($event)"
+                                                                [(ngModel)]="register.manageremail"
+                                                                [ngClass]="{'is-invalid': submitted && field.manageremail.errors}">
+                                                        <div *ngIf="submitted && field.manageremail.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="field.manageremail.errors">Manager Email is
+                                                                        required</div>
+                                                                <div *ngIf="field.email.errors.pattern">Enter valid
+                                                                        email</div>
+                                                        </div>
                                                 </div>
                                         </div>
 
                                 </div>
                         </div>
                         <div class="row">
-                                <div  class="col-md-12 text-center justify-content-center">
-                                             <div>
-                                                <p  class="alert alert-success alert-dismissible fade show" *ngIf="priyanka" id="errMsg"><strong>Success!</strong> Registered.</p> 
-                                             </div>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                <div class="col-md-12 text-center justify-content-center">
+                                        <div>
+                                                <p class="alert alert-success alert-dismissible fade show"
+                                                        *ngIf="priyanka" id="errMsg"><strong>Success!</strong>
+                                                        Registered.</p>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                                style="margin-top:40px;">Save</button>
+                                        <button type="submit" (click)="Home()" class="btn btn-primary"
+                                                style="margin-left:20px; margin-top:40px;">Back</button>
                                 </div>
-                                   
+
                         </div>
-                               
-                                      
-                                    
+
+
+
                 </div>
         </div>
 </form>

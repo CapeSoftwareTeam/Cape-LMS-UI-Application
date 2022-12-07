@@ -53,6 +53,8 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
   changePassword(user:User):Observable<any>{
     return this.http.put<any>(this.apiurl+'/changePassword',user,{responseType:'text' as 'json'})
   }
+  
+ 
 
   }
 
