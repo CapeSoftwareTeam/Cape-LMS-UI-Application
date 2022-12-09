@@ -84,15 +84,16 @@ export class LeaveStatusComponent implements OnInit {
     this.enableApprove = true;
     this.enableSubmit = false;
 
-    this.statusagree.statusUpdate(historyid, status, this.empId).subscribe(
+    this.statusagree.statusUpdate(historyid, status, this.empid).subscribe(
       data => {
 
    this.detailsdata.push(status);
         console.log("updated successfully")
         console.log(status);
+        this.ngOnInit();
       }
     );
-    this.ngOnInit();
+    
   }
 
   getpendingData() {
@@ -162,7 +163,7 @@ export class LeaveStatusComponent implements OnInit {
     this.route.navigate(['/home']);
   }
   submit(historyid: Number, status: string, empid:string){
-    this.statusagree.statusUpdate(historyid, status, this.empid).subscribe(
+    this.statusagree.statusUpdate(historyid, status, empid).subscribe(
       data=>{ this.applyleave.status='pending' }
     )
     console.log("U can submit here")
@@ -176,6 +177,17 @@ export class LeaveStatusComponent implements OnInit {
     // this.apply.leaveRegister(this.applyLeave).subscribe(
     //   data => { this.leave.push(this.postleave) }
     // )
+  }
+  delete(historyid:Number){
+this.statusagree.deleteHistory(historyid).subscribe(
+  data=>{
+    this.ngOnInit();
+    console.log("data for delete is passed");
+  
+  }
+  
+)
+
   }
 }
 

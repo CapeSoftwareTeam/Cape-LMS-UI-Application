@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { end, start } from '@popperjs/core';
 import { ApplyLeave } from '../models/apply-leave.model';
+import { LeaveTracking } from '../models/leave-tracking.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
 import { HolidayservicesService } from '../services/holidayservices.service';
@@ -15,6 +16,11 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
+  findHalfToDays:any;
+  findHalfDays:any;
+  findDays:any;
+  historyid:any;
+  minus:any=0.5;
   showMorning: boolean = false;
   callLms: boolean = true;
   back: boolean = false;
@@ -29,15 +35,16 @@ export class ApplyLeaveComponent implements OnInit {
 
   FrommyDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
-    return day !== 0 && day !== 6;
+    return day !== 0 ;
   }
   TomyDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
-    return day !== 0 && day !== 6;
+    return day !== 0 ;
   }
   modalReference: any;
   countinNumber: any;
   personDetails = new Register();
+  leavetrack=new LeaveTracking();
   name: any;
   designation: any;
   department: any;
@@ -53,6 +60,9 @@ export class ApplyLeaveComponent implements OnInit {
   holidays: any = [];
   Includepublicholiday: any;
   manageremail: any;
+  fulldays: any;
+  halfdays: any;
+  cl: any;
 
 
   constructor(private route: Router,
@@ -103,11 +113,14 @@ export class ApplyLeaveComponent implements OnInit {
 
     console.log(this.empid);
     this.postleave = new FormGroup({
-      leaveType: new FormControl(''),
-      noofdays: new FormControl(''),
-      fromdate: new FormControl(''),
-      todate: new FormControl(''),
-      reasonforapply: new FormControl(''),
+      leaveType: new FormControl('',Validators.required),
+      noofdays: new FormControl('',Validators.required),
+      fromdate: new FormControl('',Validators.required),
+      chooseDays:new FormControl('',Validators.required),
+      chooseFromDays:new FormControl('',Validators.required),
+      chooseToDays:new FormControl('',Validators.required),
+      todate: new FormControl('',Validators.required),
+      reasonforapply: new FormControl('',Validators.required),
       status: new FormControl('pending'),
     });
     // this.getnumber();
@@ -129,16 +142,11 @@ export class ApplyLeaveComponent implements OnInit {
       }
     )
   }
-  leaveApply(success: any) {
-    if (this.selectedItem == 'casual') {
-      let lastDate = this.applyLeave.approveddate.getMonth;
-      let cl = this.applyLeave.casualLeave;
-      let presentDate = this.applyLeave.createddate.getMonth;
-      if (presentDate == lastDate) {
-        console.log("openmodal popup and say no casual leave is available");
-      }
-    }
+  leaveApply(success: any,failure:any) {
 
+    // if(this.postleave.invalid){
+    //   return true;
+    // }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;
@@ -153,19 +161,93 @@ export class ApplyLeaveComponent implements OnInit {
     this.applyLeave.todate = this.postleave.value.todate;
     this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
     this.applyLeave.status = this.postleave.value.status;
-    this.apply.leaveRegister(this.applyLeave).subscribe(
-      data => { this.leave.push(this.applyLeave) }
-    )
-    this.modalReference = this.modalService.open(success, { size: 'm' })
-    console.log("applied")
+
+    this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
+      data=>{
+       this.leavetrack=JSON.parse(data);
+
+       
+        if(this.postleave.value.leaveType=="casual"){      
+          // if(this.leavetrack.carryForwardLeave==undefined ){
+          //   this.leavetrack.carryForwardLeave=0.0;
+          //   this.modalReference = this.modalService.open(failure, { size: 'm' });
+           if(this.countinNumber>this.leavetrack.carryForwardLeave ||this.leavetrack.carryForwardLeave==undefined){
+            this.modalReference = this.modalService.open(failure, { size: 'm' });
+           }
+          else{
+            this.apply.leaveRegister(this.applyLeave).subscribe(
+              data => { this.leave.push(this.applyLeave) }
+            )
+            this.modalReference = this.modalService.open(success, { size: 'm' })
+            console.log("applied")
+           }
+        
+      }
+        else if(this.postleave.value.leaveType=="sick"){
+          if(this.countinNumber>this.leavetrack.sickLeave){
+            this.modalReference = this.modalService.open(failure, { size: 'm' });
+           }else{
+            this.apply.leaveRegister(this.applyLeave).subscribe(
+              data => { this.leave.push(this.applyLeave) }
+            )
+            this.modalReference = this.modalService.open(success, { size: 'm' })
+            console.log("applied")
+        }
+    
+      }
+      else if(this.postleave.value.leaveType=="bereavement"){
+        if(this.countinNumber>this.leavetrack.bereavementLeave){
+          this.modalReference = this.modalService.open(failure, { size: 'm' });
+         }else{
+          this.apply.leaveRegister(this.applyLeave).subscribe(
+            data => { this.leave.push(this.applyLeave) }
+          )
+          this.modalReference = this.modalService.open(success, { size: 'm' })
+          console.log("applied")
+      }
+  
+    }
+    else if(this.postleave.value.leaveType=="privilege"){
+      if(this.countinNumber>this.leavetrack.privilegeLeave){
+        this.modalReference = this.modalService.open(failure, { size: 'm' });
+       }else{
+        this.apply.leaveRegister(this.applyLeave).subscribe(
+          data => { this.leave.push(this.applyLeave) }
+        )
+        this.modalReference = this.modalService.open(success, { size: 'm' })
+        console.log("applied")
+    }
+
   }
-  cancel() {
-    this.route.navigate(['/home']);
+  else if(this.postleave.value.leaveType=="maternity"){
+    if(this.countinNumber>this.leavetrack.maternityLeave){
+      this.modalReference = this.modalService.open(failure, { size: 'm' });
+     }else{
+      this.apply.leaveRegister(this.applyLeave).subscribe(
+        data => { this.leave.push(this.applyLeave) }
+      )
+      this.modalReference = this.modalService.open(success, { size: 'm' })
+      console.log("applied")
   }
+
+}
+     })
+
+   
+    // this.apply.leaveRegister(this.applyLeave).subscribe(
+    //   data => { this.leave.push(this.applyLeave) }
+    // )
+    // this.modalReference = this.modalService.open(success, { size: 'm' })
+    // console.log("applied")
+  }
+  
   selected() {
     console.log(this.selectedItem);
   }
   save() {
+    // if(this.postleave.invalid){
+    //   return true;
+    // }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;
@@ -184,6 +266,27 @@ export class ApplyLeaveComponent implements OnInit {
       data => { this.leave.push(this.postleave) }
     )
     this.route.navigate(['/home']);
+  }
+  proceed(){
+    this.applyLeave.empid = this.empid;
+    this.applyLeave.name = this.name;
+    this.applyLeave.department = this.department;
+    this.applyLeave.designation = this.designation;
+    this.applyLeave.experience = this.experience;
+    this.applyLeave.location = this.location;
+    this.applyLeave.managername = this.managername;
+    this.applyLeave.manageremail=this.manageremail;
+    this.applyLeave.leaveType = this.postleave.value.leaveType;
+    this.applyLeave.noofdays = this.countinNumber;
+    this.applyLeave.fromdate = this.postleave.value.fromdate;
+    this.applyLeave.todate = this.postleave.value.todate;
+    this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+    this.applyLeave.status = 'pending';
+    this.apply.leaveRegister(this.applyLeave).subscribe(
+      data => { this.leave.push(this.postleave) }
+    )
+    this.route.navigate(['/home']);
+    this.modalReference.close();
   }
 
   count: any;
@@ -423,21 +526,110 @@ export class ApplyLeaveComponent implements OnInit {
 
       var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
       console.log(workingDateArray);
+
+      // this.countinNumber = workingDateArray.length;
+      // var rates = document.getElementById('frommrng').value;
+      // var full = document.querySelector('input[name="full"]:checked');
+      // var half = document.querySelector('input[name="half"]:checked');
+      //  var frommrng = document.querySelectorAll('input[name="frommrng"]:checked');
+      //  var fromevng = document.querySelectorAll('input[name="fromevng"]:checked');
+      //  var tomrng = document.querySelectorAll('input[name="tomrng"]:checked');
+      //  var toevng = document.querySelectorAll('input[name="toevng"]:checked');
+  // let daysradioBtns=document.querySelectorAll("input[name='datefirst']");
+          // let findSelected=()=>{
+          //   let Dselected=document.querySelector("input[name='']:checked");
+          //   // let fselected=document.querySelector("input[name='fromdate']:checked");
+          //   // let
+          //   console.log(Dselected);
+          // }
+          // daysradioBtns.forEach(daysbtn=>{
+          //   daysbtn.addEventListener("change",findSelected)
+          // });
+  
+
+        if(this.postleave.value.chooseDays=="HalfDay"){
+        
+
+  if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
+this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
+  let number=workingDateArray.length-this.minus;
+  this.countinNumber = number-this.minus;
+}else{
+  this.countinNumber = workingDateArray.length-this.minus;
+  // console.log("no either or is here"+this.countinNumber);
+}
+//  if(this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays =="tofull"
+//  ||this.postleave.value.chooseFromDays=="afternoontoHalf" && this.postleave.value.chooseFromDays =="fromfull"||
+//  this.postleave.value.chooseFromDays=="morningfromHalf" && this.postleave.value.chooseFromDays =="tofull"||
+//   this.postleave.value.chooseFromDays=="morningtoHalf" &&this.postleave.value.chooseFromDays =="fromfull")
+    
+
+  // if((frommrng!=null && fromevng!=null) || (toevng!=null && tomrng!=null))
+  // {
+    // document.getElementsByName("fromdate").forEach(radio=>{if(radio.checked){console.log(radio.value)}})
+ 
+    // console.log("half either or is here"+this.countinNumber);
+  // }else 
+  //   if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null) ){
+  //     let number=workingDateArray.length-this.minus;
+  //     this.countinNumber = number-this.minus;
+  
+  //   // }
+  // }
+}
+// else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
+// this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
+ // if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null)){
+ 
+  // }else{
+  //   this.countinNumber = workingDateArray.length-this.minus;
+  //   console.log(this.countinNumber);
+  // }
+
+// } 
+
+      //  }
       
-      this.countinNumber = workingDateArray.length;
-      console.log(workingDateArray.length);
+       if(this.postleave.value.chooseDays=="FullDay"){ 
+// if(this.fulldays){
+  if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
+    this.countinNumber = workingDateArray.length;
+  }
+}
+
     }
   }
-
+  handlerFull(event:any){
+    this.fulldays=event.target.value;
+    console.log(this.fulldays);
+  }
+  handlerHalf(event:any){
+    this.halfdays=event.target.value;
+  }
   ok() {
     this.modalReference.close();
     this.route.navigate(['/home']);
+  }
+  cancel(){
+    this.registerDetails.deleteHistory(this.historyid).subscribe(
+      data=>{
+        this.ngOnInit();
+        console.log("data for delete is passed");
+      
+      }
+      
+    )
+    this.modalReference.close();
+   
   }
   hideDays() {
     this.showMorning = false;
   }
   showDays() {
     this.showMorning = true;
+  }
+  pageNavigate(){
+    this.route.navigate(["/home"])
   }
 
 }

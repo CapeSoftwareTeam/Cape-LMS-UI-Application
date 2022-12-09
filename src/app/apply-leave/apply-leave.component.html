@@ -42,12 +42,14 @@
     <label><b>Leave Duration: </b></label></div>
   <div class="col-7" style="display: inline-flex;">
 <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" (click)="hideDays()"/>
+  <input class="form-check-input" type="radio" name="chooseDays"  value="FullDay" (click)="hideDays()"  
+  formControlName="chooseDays" [(ngModel)]="findDays">
   <label class="form-check-label" for="inlineRadio1" style="display:contents">Full Day</label>
 </div>
 <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" (click)="showDays()" />
-  <label class="form-check-label" for="inlineRadio1" style="display:contents">Half A Day </label>
+  <input class="form-check-input" type="radio" name="chooseDays"  value="HalfDay" (click)="showDays()" 
+  formControlName="chooseDays" [(ngModel)]="findDays">
+  <label class="form-check-label" for="inlineRadio1" style="display:contents">Half Day </label>
 </div>
 <!-- <div class="form-check form-check-inline">
   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
@@ -105,16 +107,29 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
           <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
           <div class="col-7" style="display: inline-flex;">
-<div class="form-check form-check-inline" >
-  <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
-  <input class="form-check-input" type="radio"  >   
-  
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" value="morningfromHalf" name="chooseFromDays" 
+              formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
+            </div>
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" value="afternoonfromHalf" name="chooseFromDays"  
+              formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label>
+            </div>
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" value="fromfull" name="chooseFromDays"  
+              formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Full</label>
+            </div>
+  <!-- <mat-radio-group>
+    <mat-radio-button value="morningfromHalf" name="chooseFromDays" 
+  formControlName="chooseFromDays" [(ngModel)]="findHalfDays" >Morning Half</mat-radio-button>
+    <mat-radio-button value="afternoonfromHalf" name="chooseFromDays"  
+    formControlName="chooseFromDays" [(ngModel)]="findHalfDays">Afternoon Half</mat-radio-button>
+  </mat-radio-group> -->
+
 </div>
-<div class="form-check form-check-inline">
-  <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label> 
-  <input class="form-check-input" type="radio" >
- </div>
- </div>
 </div>
 <br>
         <div class="row" style="justify-content:center;text-align: center;">
@@ -139,15 +154,37 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
           <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
             <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
             <div class="col-7" style="display: inline-flex;">
-  <div class="form-check form-check-inline" >
-    <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
-    <input class="form-check-input" type="radio"  >   
+              <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+                <input class="form-check-input" type="radio" value="morningtoHalf" name="chooseToDays"  
+                formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
+                <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
+              </div>
+              <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+                <input class="form-check-input" type="radio" value="afternoontoHalf" name="chooseToDays" 
+                formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
+                
+                <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label>
+              </div>
+              <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+                <input class="form-check-input" type="radio" value="tofull" name="chooseToDays" 
+                formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
+                <label class="form-check-label" for="inlineRadio1" style="display:contents">Full </label>
+              </div>
+
+    <!-- <mat-radio-group>
+      <mat-radio-button value="morningtoHalf" name="chooseToDays"  
+      formControlName="chooseToDays" [(ngModel)]="findHalfToDays">Morning Half</mat-radio-button>
+      <mat-radio-button value="afternoontoHalf" name="chooseToDays" 
+      formControlName="chooseToDays" [(ngModel)]="findHalfToDays">Afternoon Half</mat-radio-button>
+    </mat-radio-group> -->
+    <!-- <label class="form-check-label" for="inlineRadio1" style="display:contents" >Morning Half</label>
+    <input class="form-check-input" type="radio"  name="todate"  value="Morning" formcontrolName="datenext">   
     
   </div>
   <div class="form-check form-check-inline">
-    <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label> 
-    <input class="form-check-input" type="radio" >
-   </div>
+    <label class="form-check-label" for="inlineRadio1" style="display:contents" >Afternoon Half</label> 
+    <input class="form-check-input" type="radio" name="todate"  value="Afternoon" formcontrolName="datenext">
+   </div> -->
    </div>
   </div>
         <!-- </div>focusout -->
@@ -176,9 +213,9 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
         <hr>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
-            <button type="button" class="btn btn-danger" id="cancel"(click)="cancel()" style="margin-right: 23px;">Cancel</button>
+            <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" style="margin-right: 23px;">Cancel</button>
             <button type="button" class="btn btn-primary" style="margin-right: 23px;" (click)="save()">Save changes</button>
-             <button type="button" class="btn btn-success"(click)="leaveApply(success)" style="margin-right: 23px;"> Apply leave</button>
+             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure)" style="margin-right: 23px;"> Apply leave</button>
           </div>
         </div>
       </div>
@@ -247,7 +284,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     The leave which your are selected is unavailable. You will get Loss of pay if you proceed.
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary">proceed</button>
+    <button type="button" class="btn btn-primary" (click)="proceed()">proceed</button>
     <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
   </div>
 </ng-template>

@@ -133,8 +133,11 @@
         <!-- <span class="mobile-label">
           {{element.status}} <p>{{}}</p>
         </span> -->
-            <button mat-flat-button  (click)="submit(element.historyid,empid,'pending')" style="color:blue">submit</button>
-           
+            <button mat-flat-button  (click)="submit(element.historyid,empid,'pending')" style="color:blue">Submit</button>
+            <button mat-flat-button  style="color:rgb(228, 8, 8)" (click)="delete(element.historyid)"> Delete
+              <!-- <i class="material-icons" id="delmessage" style="font-size:18px">delete</i>
+              <p class="hide" style="float:right">  Delete</p> -->
+            </button>
            </mat-cell>
     
       </ng-container>

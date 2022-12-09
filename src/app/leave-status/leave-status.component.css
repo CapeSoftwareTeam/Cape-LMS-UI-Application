@@ -86,3 +86,11 @@ margin-top:15px;
   padding-right: 10px;
   background-color: aqua;
   }
+  .hide {
+    display: none;
+  }
+      
+  #delmessage:hover + .hide {
+    display: block;
+    color: red;
+  }

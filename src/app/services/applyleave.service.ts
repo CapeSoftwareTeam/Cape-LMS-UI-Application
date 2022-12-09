@@ -24,5 +24,9 @@ export class ApplyleaveService {
   getMemberDetails(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl + '/' + "getMemberdetails" + '/'+empid,{responseType:'text' as 'json'});
   }
+  LeaveTrackPopUpdetails(empid:any):Observable<any>{
+    return this.http.get<any>(this.apiurl + '/' + "leavetrack" +'/' +empid,{responseType: 'text' as 'json'})
   }
+  }
+  
 
