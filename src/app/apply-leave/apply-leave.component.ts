@@ -144,9 +144,9 @@ export class ApplyLeaveComponent implements OnInit {
   }
   leaveApply(success: any,failure:any) {
 
-    // if(this.postleave.invalid){
-    //   return true;
-    // }
+    if(this.postleave.invalid){
+      return ;
+    }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;
@@ -245,9 +245,9 @@ export class ApplyLeaveComponent implements OnInit {
     console.log(this.selectedItem);
   }
   save() {
-    // if(this.postleave.invalid){
-    //   return true;
-    // }
+    if(this.postleave.invalid){
+      return ;
+    }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;
@@ -437,6 +437,72 @@ export class ApplyLeaveComponent implements OnInit {
 
       this.countinNumber = workingDateArray.length;
       console.log(workingDateArray.length);
+      if(workingDateArray.length==0){
+        this.countinNumber=0
+      }
+
+    if(this.postleave.value.chooseDays=="HalfDay"){
+    
+      if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
+// if(this.count!=this.pluscount){
+if(workingDateArray.length==0){
+        this.countinNumber=0
+      }
+else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
+this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
+let number=workingDateArray.length-this.minus;
+this.countinNumber = number-this.minus;
+}else{
+this.countinNumber = workingDateArray.length-this.minus;
+// console.log("no either or is here"+this.countinNumber);
+}
+//  if(this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays =="tofull"
+//  ||this.postleave.value.chooseFromDays=="afternoontoHalf" && this.postleave.value.chooseFromDays =="fromfull"||
+//  this.postleave.value.chooseFromDays=="morningfromHalf" && this.postleave.value.chooseFromDays =="tofull"||
+//   this.postleave.value.chooseFromDays=="morningtoHalf" &&this.postleave.value.chooseFromDays =="fromfull")
+
+      }
+// if((frommrng!=null && fromevng!=null) || (toevng!=null && tomrng!=null))
+// {
+// document.getElementsByName("fromdate").forEach(radio=>{if(radio.checked){console.log(radio.value)}})
+
+// console.log("half either or is here"+this.countinNumber);
+// }else 
+//   if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null) ){
+//     let number=workingDateArray.length-this.minus;
+//     this.countinNumber = number-this.minus;
+
+//   // }
+// }
+// }
+// else{
+//   if(this.count== this.pluscount){
+//   if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoonfromHalf"||
+//   this.postleave.value.chooseFromDays=="afternoontoHalf"|| this.postleave.value.chooseFromDays=="morningtoHalf"){
+//   this.countinNumber = workingDateArray.length-this.minus;
+// }
+// }
+// }
+// else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
+// this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
+// if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null)){
+
+// }else{
+//   this.countinNumber = workingDateArray.length-this.minus;
+//   console.log(this.countinNumber);
+// }
+
+// } 
+}
+  //  }
+  
+if(this.postleave.value.chooseDays=="FullDay"){ 
+// if(this.fulldays){
+if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
+this.countinNumber = workingDateArray.length;
+}
+}
+
     }
 
     if (this.department == 'Software') {
@@ -545,12 +611,18 @@ export class ApplyLeaveComponent implements OnInit {
           // daysradioBtns.forEach(daysbtn=>{
           //   daysbtn.addEventListener("change",findSelected)
           // });
-  
+          if(workingDateArray.length==0){
+            this.countinNumber=0
+          }
 
         if(this.postleave.value.chooseDays=="HalfDay"){
         
-
-  if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
+          if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
+// if(this.count!=this.pluscount){
+  if(workingDateArray.length==0){
+            this.countinNumber=0
+          }
+ else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
 this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
   let number=workingDateArray.length-this.minus;
   this.countinNumber = number-this.minus;
@@ -563,7 +635,7 @@ this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.
 //  this.postleave.value.chooseFromDays=="morningfromHalf" && this.postleave.value.chooseFromDays =="tofull"||
 //   this.postleave.value.chooseFromDays=="morningtoHalf" &&this.postleave.value.chooseFromDays =="fromfull")
     
-
+          }
   // if((frommrng!=null && fromevng!=null) || (toevng!=null && tomrng!=null))
   // {
     // document.getElementsByName("fromdate").forEach(radio=>{if(radio.checked){console.log(radio.value)}})
@@ -576,7 +648,15 @@ this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.
   
   //   // }
   // }
-}
+// }
+// else{
+//   if(this.count== this.pluscount){
+//   if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoonfromHalf"||
+//   this.postleave.value.chooseFromDays=="afternoontoHalf"|| this.postleave.value.chooseFromDays=="morningtoHalf"){
+//   this.countinNumber = workingDateArray.length-this.minus;
+// }
+// }
+// }
 // else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
 // this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
  // if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null)){
@@ -587,10 +667,10 @@ this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.
   // }
 
 // } 
-
+}
       //  }
       
-       if(this.postleave.value.chooseDays=="FullDay"){ 
+if(this.postleave.value.chooseDays=="FullDay"){ 
 // if(this.fulldays){
   if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
     this.countinNumber = workingDateArray.length;
