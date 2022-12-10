@@ -63,6 +63,7 @@ export class ApplyLeaveComponent implements OnInit {
   fulldays: any;
   halfdays: any;
   cl: any;
+  saturdays1: any=[];
 
 
   constructor(private route: Router,
@@ -352,9 +353,10 @@ export class ApplyLeaveComponent implements OnInit {
       }
 
       if (this.count.getMonth() == this.pluscount.getMonth() && this.count.getFullYear() == this.pluscount.getFullYear()) {
+        this.saturdays=[];
         this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
         this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
-        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+        this.saturdays= getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
         console.log(this.saturdays)
         for (let r = 0; r < this.saturdays.length; r++) {
 
@@ -365,19 +367,20 @@ export class ApplyLeaveComponent implements OnInit {
       }
       else if ((this.count.getFullYear() != this.pluscount.getFullYear()) || this.count.getMonth() != this.pluscount.getMonth()) {
         this.Alternatesaturday = [];
+        this.saturdays=[];
         this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
         this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
         // if(this.saturdays.getMonth()== this.count.getMonth()){
-        // this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+        this.saturdays=getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
         // }
         // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
-        this.saturdays = getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0);
+        this.saturdays1=(getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
         // }
-
+        this.saturdays= this.saturdays.concat(this.saturdays1);
         console.log(this.saturdays)
         for (let r = 0; r < this.saturdays.length; r++) {
           let tempDate = this.saturdays[r].getMonth() + 1;
-          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate());
+          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate())+1;
         }
       }
       //  else if(this.count.getMonth()==this.pluscount.getMonth()){}
