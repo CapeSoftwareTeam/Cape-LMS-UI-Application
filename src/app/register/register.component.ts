@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Register } from '../models/register';
-
 import { RegisterserviceService } from '../services/registerservice.service';
-import csc from 'country-state-city';
-import { ICountry, IState, ICity } from 'country-state-city';
-import { Subscription } from 'rxjs';
-import { state } from '@angular/animations';
 import { CscService } from '../csc.service';
 
 interface Country {
@@ -26,7 +21,7 @@ export class RegisterComponent implements OnInit {
   priyanka:boolean=false;
   prod:boolean=false;
   RegisterationForm!: FormGroup;
- 
+  currentDate:any=new Date();
 
   countries: Country[]=[]; 
   states: string[]=[];
@@ -74,10 +69,13 @@ export class RegisterComponent implements OnInit {
    this.siteService.retrieveState(arr.code).subscribe(
     data => {
    this.stateList1 = JSON.parse(data) 
-     }
+   this.countryList = JSON.parse(data)
+    }
     )};
      }
   }
+
+  
 
   empid(event: any){
    this.Empid=this.register.empid;
@@ -110,6 +108,10 @@ export class RegisterComponent implements OnInit {
   )
 
    }
+  
+
+
+
   
   //  getCountries(){
   //   this.countries=csc.getAllCountries();
@@ -178,6 +180,8 @@ export class RegisterComponent implements OnInit {
         console.log( this.countryList)
       }
     )
+
+    this.countryCode='91';
     // this.initForm();
     // this.initDropdownSettings();
     // this.getCountries();
@@ -207,7 +211,7 @@ export class RegisterComponent implements OnInit {
   // this.countryDropdownSettings();
   //   this.handleValueChanges();
    
-  this.countryCode='91';
+
 
 //   this.countryChange.valueChanges.subscribe((country))=>{
 //     this.states.reset();
@@ -283,6 +287,9 @@ countryChange(country: any) {
   this.countryCode = country.dialCode;
 }
 
+clear(){
+  this.RegisterationForm.reset();
+}
   submitFunction() {
 
   
@@ -297,6 +304,8 @@ countryChange(country: any) {
         this.priyanka=true;
         setTimeout(() => {
           this.priyanka = false;
+          this.clear();
+          this.submitted = false;
         }, 3000);
         console.log("success")
       },
