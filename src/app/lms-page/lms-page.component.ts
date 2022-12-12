@@ -44,11 +44,12 @@ export class LmsPageComponent implements OnInit {
   year: String = '';
   remainingcl: String = '';
   teamdetails:any=[];
-  department:any;
-  name: String = '';
+ 
   personDetails = new Register();
   exp = new LeaveDetails();
   leaveDetails = new LeaveTracking();
+  department:any;
+  name: String = '';
   designation: String = '';
   leavestatus: boolean = false;
   casual: any;

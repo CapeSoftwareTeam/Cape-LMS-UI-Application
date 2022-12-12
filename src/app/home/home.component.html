@@ -76,6 +76,7 @@
           <hr *ngIf="admin">
           <a mat-list-item (click)="calleditholidays()" *ngIf="admin">Add holidays</a>
           <a mat-list-item (click)="callRegister()" *ngIf="admin">Add Employee</a>
+          <a mat-list-item (click)="callEmployeeLeave()" *ngIf="admin"> Apply Leave for Employee </a>
           <a mat-list-item (click)="callRegister()" *ngIf="superadmin">Add HR</a>
       
           <!-- <button type="button" class="btn btn-light" (click)="signout()" *ngIf="admin">
@@ -86,7 +87,8 @@
       <div class="content" mat-elevation-z8>
  
     <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
-  
+
+
   </div>
     </mat-tab>
   </mat-tab-group>

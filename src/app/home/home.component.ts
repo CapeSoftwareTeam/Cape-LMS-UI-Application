@@ -62,21 +62,21 @@ export class HomeComponent implements OnInit {
     private registerDetails: LeaveStatusServiceService) { }
 
 
-  ngAfterViewInit(): void {
-    this.move.observe(['(max-width:800px)']).subscribe((data) => {
-      if (this.selected) {
-        if (data.matches) {
-          this.sidenav.mode = 'over';
-          this.sidenav.close();
-        } else {
-          this.sidenav.mode = 'side';
-          this.sidenav.open();
+  // ngAfterViewInit(): void {
+  //   this.move.observe(['(max-width:800px)']).subscribe((data) => {
+  //     if (this.selected) {
+  //       if (data.matches) {
+  //         this.sidenav.mode = 'over';
+  //         this.sidenav.close();
+  //       } else {
+  //         this.sidenav.mode = 'side';
+  //         this.sidenav.open();
 
-        }
-      }
-    }
-    );
-  }
+  //       }
+  //     }
+  //   }
+  //   );
+  // }
 
   // if(tab[0]==selected){
   //   this.EnableLms=true;
@@ -205,6 +205,9 @@ export class HomeComponent implements OnInit {
   }
   callRegister(){
     this.route.navigate(['/register']);
+  }
+  callEmployeeLeave(){
+    this.route.navigate(['/employeeleave'])
   }
 
   getSelectedindex(event: any) {

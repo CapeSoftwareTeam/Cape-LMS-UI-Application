@@ -48,6 +48,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
 
 
 @NgModule({
@@ -67,7 +68,9 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
     ChangeNumberComponent,
     FrontpageComponent,HistoryComponent,
     PublicHolidaysComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    EmployeeLeaveComponent,
+   
 
   ],
   imports: [

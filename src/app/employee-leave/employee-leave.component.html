@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="column" >
+<input type="text" id="myInput" (input)="searchname()" placeholder="Search for names.." title="Type in a name" [(ngModel)]="filter">
+</div>
+</div>
+<div class="row">
+    <div class="column" style="margin-top:20px" *ngFor="let team of members filter : searchText">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 style="margin-top:60px ;">{{team.name}}</h1>
+                <p>{{team.department}} & {{team.designation}}</p>
+                <p>Cape - {{team.city}}</p>
+              </div>
+              <div class="flip-card-back">
+                <!-- <p>John Doe</p> -->
+                <p style="margin-top:20px ;">casual - available</p>
+                <p>sick - unavailable</p>
+                <p>bereavement - available</p>
+                <p>privilege - available</p>
+                <p>maternity - unavailable</p>
+                <button type="button" class="btn btn-outline-success">Apply Leave</button>
+              </div>
+            </div>
+          </div>
+      <!-- <div class="card">
+        <h3>{Name}</h3>
+        <p>{department} - {designation}</p>
+        <p>{location}</p>
+      </div> -->
+    </div>
+    <!-- <div class="column" >
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 style="margin-top:60px ;">Joe Doe</h1>
+                <p>Architect & Engineer</p>
+                <p>Cape-Chennai</p>
+              </div>
+              <div class="flip-card-back">
+                 <p>John Doe</p> -->
+               <!-- <p>casual - available</p>
+                <p>sick - unavailable</p>
+                <p>bereavement - available</p>
+                <p>privilege - available</p>
+                <p>maternity - unavailable</p>
+                <button type="button" class="btn btn-outline-success">Apply Leave</button>
+              </div>
+            </div>
+          </div> -->
+<!--   
+    <div class="column">
+      <div class="card">
+        <h3>{Name}</h3>
+        <p>{department} - {designation}</p>
+        <p>{location}</p>
+      </div>
+    </div> -->
+   
+  </div>
+
+      <button type="button" class="btn btn-outline-danger" (click)="backHome()">Back</button>

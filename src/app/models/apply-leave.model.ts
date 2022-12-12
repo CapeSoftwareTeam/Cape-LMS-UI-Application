@@ -3,28 +3,28 @@ export class ApplyLeave {
   historyid!: number;
   registerid!: number;
   empid!: string;
-  name!: String;
-  department!: String;
+  name!: string;
+  department!: string;
   experience!: number;
   createddate!: Date;
-  leaveType!: String;
-  reasonforapply!: String;
+  leaveType!: string;
+  reasonforapply!: string;
   fromdate!: Date;
   todate!: Date;
   noofdays!: number;
-  location!: String;
-  status!: String;
+  location!: string;
+  status!: string;
   lopdays!: number;
   casualLeave!: number;
   sickLeave!: number;
   privilegeLeave!: number;
   bereavementLeave!: number;
   maternityLeave!: number;
-  createdby!: String;
+  createdby!: string;
   approveddate!: Date;
-  approvedby!: String;
-  managername!:String
-  designation!:String
+  approvedby!: string;
+  managername!:string
+  designation!:string
   manageremail: any;
 
 }
