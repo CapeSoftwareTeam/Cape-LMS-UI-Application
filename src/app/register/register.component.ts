@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Register } from '../models/register';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { CscService } from '../csc.service';
+import { exclamationSquareFill } from 'ngx-bootstrap-icons';
 
 interface Country {
   shortName: string;
@@ -20,17 +21,22 @@ export class RegisterComponent implements OnInit {
   fullDate:any;
   priyanka:boolean=false;
   prod:boolean=false;
+  prod1:boolean=false;
+  prod2:boolean=false;
+  prod3:boolean=false;
   RegisterationForm!: FormGroup;
   currentDate:any=new Date();
-
+  Alternate:any;
   countries: Country[]=[]; 
   states: string[]=[];
   cities: string[]=[];
   Empid:any;
+  Email:any;
+  Mobile:any;
   countryCode:any;
   stateList1: any=[];
   countryList: any=[];
- 
+  
   
   // subscriptions:Subscription[]=[];
   
@@ -76,38 +82,102 @@ export class RegisterComponent implements OnInit {
   }
 
   
-
+//checking empid duplicates 
   empid(event: any){
    this.Empid=this.register.empid;
+   
    let tempArr : any=[];
    
-
-
    this.registerService.getEmpid().subscribe(
     data => {
    
      tempArr = JSON.parse(data);
-     for(let j of tempArr){
-      if(j.empid==this.Empid){
-        
+     for(let j of tempArr)
+     {
+      if(j.empid==this.Empid ){
         this.prod=true;
-        setTimeout(() => {
+      }
+       }
+         setTimeout(() => {
           this.prod = false;
+          
         }, 2000);
         console.log("empid registered")
+        // else{
+        //   console.log("bug")
+        // }
       }
-      else{
-        console.log("bug")
-      }
+    
+     )
+    
      }
-      
-    },
-    error => {
-      console.log("empid err")
+     // checking mobile number duplicates
+ mobile(event:any){
+  this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
+      this.Mobile= this.register.mobilenumber;
+      let  tempArr : any=[];
+
+this.registerService.getEmpid().subscribe(
+  data =>{
+    tempArr = JSON.parse(data);
+    for(let j of tempArr){
+     
+      if(j.mobilenumber==this.Mobile){
+this.prod1=true;
+setTimeout(() => {
+  this.prod1=false;
+}, 3000);
+console.log("same mobilenumber")
+      }
+    }
+  }
+)
+           
+     }
+     //checking alternate mobile number duplicates
+ alter(event:any){
+  this.register.alternatenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.alternate
+  this.Alternate = this.register.alternatenumber;
+  let tempArr : any=[];
+  this. registerService.getEmpid().subscribe(
+    data =>{
+      tempArr = JSON.parse(data);
+      for(let j of tempArr){
+        if(j.alternatenumber== this.Alternate){
+          this.prod2=true;
+          setTimeout(()=>{
+            this.prod2=false;
+          }, 3000);
+          console.log("same alternatenumber")
+        }
+      }
     }
   )
+ }
 
+     
+   //checking email duplicates    
+   email(event:any){
+    this.Email=this.register.emailid;
+    let tempArr:any=[];
+    this.registerService.getEmpid().subscribe(
+      data=>{
+        tempArr = JSON.parse(data);
+        for(let j of tempArr){
+          if(j.emailid==this.Email){
+            this.prod3 = true;
+            setTimeout(()=>{
+              this.prod3=false;
+            },3000);
+            console.log("same email")
+          }
+        }
+      }
+    )
    }
+
+   
+
   
 
 

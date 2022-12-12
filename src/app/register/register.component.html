@@ -125,7 +125,7 @@
                                                         </span>
                                                 </div>
                                                 <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
-                                                <input type="text" name="mobilenumber" class="form-control"
+                                                <input type="text" name="mobilenumber" (focusout)="mobile($event)"class="form-control"
                                                         formControlName="mobile" [(ngModel)]="register.mobilenumber"
                                                         [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
                                                 <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
@@ -137,6 +137,8 @@
                                                         </div>
                                                 </div>
                                         </div>
+                                        <p *ngIf="prod1" style="color:rgba(255, 0, 0, 0.844)">Mobile Number is already
+                                                exists</p>
                                 </div>
 
                                 <div class="col-md-4">
@@ -148,7 +150,7 @@
                                                                 <i class="bi bi-telephone-forward-fill"></i>
                                                         </span>
                                                 </div>
-                                                <input type="text" name="alternate" class="form-control"
+                                                <input type="text" name="alternate" (focusout)="alter($event)" class="form-control"
                                                         formControlName="alternate"
                                                         [(ngModel)]="register.alternatenumber"
                                                         [ngClass]="{'is-invalid': submitted && field.alternate.errors}">
@@ -163,6 +165,8 @@
                                                         </div>
                                                 </div>
                                         </div>
+                                        <p *ngIf="prod2" style="color:rgba(255, 0, 0, 0.844)">Alternate Number is already
+                                                exists</p>
                                 </div>
                                 <div class="col-md-4">
                                         <label class="form-label">EmailId</label>
@@ -173,7 +177,7 @@
                                                                 <i class="bi bi-envelope-fill"></i>
                                                         </span>
                                                 </div>
-                                                <input type="email" name="email" class="form-control"
+                                                <input type="email" name="email" (focusout)="email($event)" class="form-control"
                                                         formControlName="email" [(ngModel)]="register.emailid"
                                                         [ngClass]="{'is-invalid': submitted && field.email.errors}">
                                                 <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
@@ -181,6 +185,8 @@
                                                         <div *ngIf="field.email.errors.pattern">Enter valid email</div>
                                                 </div>
                                         </div>
+                                        <p *ngIf="prod3" style="color:rgba(255, 0, 0, 0.844)">Email id is already
+                                                exists</p>
                                 </div>
                                 <div class="col-md-4 ">
                                         <label class="form-label">Password</label>
