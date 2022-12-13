@@ -31,6 +31,9 @@ export class HistoryService {
   getHistoryBasedOnRole(role:any):Observable<any>{
     return this.http.get<any>(this.apiurl+'/getHistoryBasedOnRole'+'/' + role, {responseType: 'text' as 'json'});
   }
+  putHistory():Observable<any> {
+    return this.http.put<any>(this.apiurl+'/dowloadHistory',{responseType: 'text' as 'json'});
+  }
   
   // public downloadPDF(basicLpsId: any,userName: any,projectName: any) {
     

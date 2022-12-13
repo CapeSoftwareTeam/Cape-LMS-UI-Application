@@ -46,11 +46,17 @@ h1{
  .example-container {
   display: flexbox;
   flex-direction: column;
-  max-height: 600px;
-  min-width: 300px;
+    height: 400px;
+    overflow: auto;
+ }
+  
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
   
 
-}
+
 h1 {
   justify-content: center;
   margin-top: 60px;
@@ -79,9 +85,18 @@ display: none;
         
   }
 
+ 
+  th, td {
+    overflow: hidden;
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .mat-header-row {
     display: none;
     margin-right: 50px;
+    table-layout: fixed;
   } 
 
   .mat-row {
@@ -120,6 +135,7 @@ display: none;
 
  #btn{
   margin-left: 90%;
+  margin-bottom: 20px;
  }   
  #deleteHistory{
   position:relative;
@@ -148,6 +164,60 @@ display: none;
 
 }
 
+/* Css mat tab */
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+
+}
+h2 {
+  justify-content: center;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.mobile-label {
+  display: none;
+}
+
+@media(max-width: 600px) {
+  .mobile-label {
+    width: 80px;
+    display: inline-block;
+        font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
+
+#back{
+margin-top:15px;
+  margin-left: 50%;
+}
+  }
+#card{
+  place-content: center;
+  border-radius: 9px;
+  display: inline-block;
+  margin-left: 612px;
+  padding-left: 10px;
+  top: 272px;
+  padding-right: 10px;
+  background-color: aqua;
+  }
+
 
 /* Spinner Code */
 .loader {
@@ -171,4 +241,5 @@ display: none;
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
  

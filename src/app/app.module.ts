@@ -32,8 +32,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { LmsPageComponent } from './lms-page/lms-page.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {Ng2TelInputModule} from 'ng2-tel-input';
-import { IntlInputPhoneModule } from 'intl-input-phone';
 import { ChangeNumberComponent } from './change-number/change-number.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
 import { HistoryComponent } from './history/history.component';
@@ -49,6 +47,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
+
+
+
+
 
 
 @NgModule({
@@ -93,19 +95,18 @@ import { EmployeeLeaveComponent } from './employee-leave/employee-leave.componen
     MatTabsModule,
     MatInputModule,
     MatFormFieldModule,
-    IntlInputPhoneModule,
     MatSortModule,
     MatMenuModule,
     MatDialogModule,
-    Ng2TelInputModule,
-    IntlInputPhoneModule,
     MatSortModule,
     MatNativeDateModule,
     MatDatepickerModule,
     NgOtpInputModule,
     MatExpansionModule,
-   NgOtpInputModule,
-     NgMultiSelectDropDownModule 
+   
+    NgOtpInputModule,
+ 
+    NgMultiSelectDropDownModule.forRoot()
 
 
   ],
