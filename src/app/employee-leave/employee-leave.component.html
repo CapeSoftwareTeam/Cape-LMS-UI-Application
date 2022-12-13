@@ -19,7 +19,7 @@
                 <p>bereavement - available</p>
                 <p>privilege - available</p>
                 <p>maternity - unavailable</p>
-                <button type="button" class="btn btn-outline-success">Apply Leave</button>
+                <button type="button" class="btn btn-outline-success" (click)="applyleave(applyLeave)">Apply Leave</button>
               </div>
             </div>
           </div>
@@ -60,3 +60,16 @@
   </div>
 
       <button type="button" class="btn btn-outline-danger" (click)="backHome()">Back</button>
+
+      <ng-template #applyLeave let-modal>
+        <div class="modal-header" style="text-align: center; display: block">
+          <h4 class="modal-title" id="modal-basic-title">APPLY LEAVE</h4>
+        </div>
+        <div class="modal-body">
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" >proceed</button>
+          <button type="button" class="btn btn-danger">cancel</button>
+        </div>
+      </ng-template>

@@ -148,6 +148,7 @@ export class ApplyLeaveComponent implements OnInit {
     if(this.postleave.invalid){
       return ;
     }
+    
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;

@@ -54,6 +54,9 @@ this.registerDetails.getMemberDetails(this.empid).subscribe(
       backHome(){
         this.route.navigate(['/home']);
       }
+      applyleave(applyLeave:any){
+        
+      }
 
     }
 //   myFunction() {
