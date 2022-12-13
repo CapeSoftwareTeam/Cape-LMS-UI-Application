@@ -12,7 +12,7 @@ export class Register {
     designation!:String;
     capeexperience!:any;
     otherexperience!:any;
-    country!:String;
+    country!:any;
     city!:String;
     state!:String
     password!:String;

@@ -388,9 +388,9 @@
                                                                 </span>
                                                         </div>
 
-                                                        <select formControlName="country"  (change)="designer1changeCountry($event)"
+                                                        <select formControlName="country"  (change)="changeCountry1($event)"
                                                                 class="form-control"
-                                                                
+                                                                [(ngModel)]="register.country"
                                                                 [ngClass]="{'is-invalid' : submitted && field.country.errors}" >
                                                                 <option value="" selected>Select Country Name</option>
                                                          <option *ngFor="let country of countryList"
@@ -417,7 +417,7 @@
                                                                 </span>
                                                         </div>
 
-                                                       <select formControlName="state"
+                                                       <select formControlName="state" 
                                                                 class="form-control" [(ngModel)]="register.state"
                                                               
                                                                

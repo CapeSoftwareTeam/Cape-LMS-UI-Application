@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Register } from '../models/register';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { CscService } from '../csc.service';
-import { exclamationSquareFill } from 'ngx-bootstrap-icons';
+
 
 interface Country {
   shortName: string;
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
       return true;
     }
   }
-  designer1changeCountry(e: any) {
+  changeCountry1(e: any) {
      let changedValue;
      if(e.target != undefined) {
      changedValue = e.target.value;
@@ -75,12 +75,26 @@ export class RegisterComponent implements OnInit {
    this.siteService.retrieveState(arr.code).subscribe(
     data => {
    this.stateList1 = JSON.parse(data) 
-   this.countryList = JSON.parse(data)
+  
     }
     )};
      }
   }
+// changeCountry1(e:any){
+//   let changedValue;
+//   if(e.target!=undefined){
+//     changedValue = e.target.value;
 
+//   }
+//   else{
+//     changedValue=e;
+//   }
+//   this.countryList=[];
+ 
+      
+    
+  
+// }
   
 //checking empid duplicates 
   empid(event: any){
@@ -101,7 +115,7 @@ export class RegisterComponent implements OnInit {
          setTimeout(() => {
           this.prod = false;
           
-        }, 2000);
+        }, 3000);
         console.log("empid registered")
         // else{
         //   console.log("bug")
@@ -113,7 +127,7 @@ export class RegisterComponent implements OnInit {
      }
      // checking mobile number duplicates
  mobile(event:any){
-  this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
+  // this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
       this.Mobile= this.register.mobilenumber;
       let  tempArr : any=[];
 
@@ -136,7 +150,7 @@ console.log("same mobilenumber")
      }
      //checking alternate mobile number duplicates
  alter(event:any){
-  this.register.alternatenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.alternate
+  // this.register.alternatenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.alternate
   this.Alternate = this.register.alternatenumber;
   let tempArr : any=[];
   this. registerService.getEmpid().subscribe(
@@ -156,7 +170,7 @@ console.log("same mobilenumber")
  }
 
      
-   //checking email duplicates    
+   //checking email duplicates     
    email(event:any){
     this.Email=this.register.emailid;
     let tempArr:any=[];
