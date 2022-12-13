@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { FrontpageComponent } from '../frontpage/frontpage.component';
-import { LoginComponent } from '../login/login.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { User } from '../models/user';
+
 import { RegisterserviceService } from '../services/registerservice.service';
 
 @Component({
@@ -11,62 +12,83 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./forgotpassword.component.css']
 })
 export class ForgotpasswordComponent implements OnInit {
-  @ViewChild(LoginComponent)
-  child!: LoginComponent;
-  forgot:boolean=false;
- submitted:boolean=false;
- password:any;
- email:any;
+
+  forgot: boolean = false;
+  submitted: boolean = false;
+
+  successMsgPasword: boolean = false;
 
   forgotpasswordform = new FormGroup({
-    password:new FormControl('')
-    ,newPassword: new FormControl('')
+    password: new FormControl()
+    , newPassword: new FormControl()
 
   });
-  emailid: any;;
 
-  constructor(private fb:FormBuilder,private registerService:RegisterserviceService,private route:ActivatedRoute) { }
+  user = new User();
+  showErrorMessage: boolean = false;
+  errorMessage: string = '';
+  constructor(private fb: FormBuilder, private registerService: RegisterserviceService, private route: ActivatedRoute, private router: Router,
+  ) { }
 
 
 
-  ngOnInit(): void {    
-     
+  ngOnInit(): void {
+
     this.forgotpasswordform = this.fb.group({
       password: ['', [
         Validators.required,
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]],newPassword:['', [
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]], newPassword: ['', [
           Validators.required,
           Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]]
-  });
+    });
   }
-  onSubmit(){
-    this.submitted=true;
+  validation() {
+
+  }
+  onSubmit() {
+    this.submitted = true;
 
     //Breaks if form is invalid
-    if(this.forgotpasswordform.invalid) {
+    if (this.forgotpasswordform.invalid) {
       return;
     }
-    if(this.forgotpasswordform.value.password!=this.forgotpasswordform.value.newPassword){
-      this.forgot=true;
+
+    // otp Validation 6 digit
+    if (this.forgotpasswordform.value.password != this.forgotpasswordform.value.newPassword) {
+      this.forgot = true;
       setTimeout(() => {
-        this.forgot=false;
+        this.forgot = false;
       }, 3000);
     }
-    else{
-      this.email=this.route.snapshot.paramMap.get('email') || '{}'
-  
-    this.password=this.forgotpasswordform.value.password
-    this.registerService.updatePassWord(this.email,this.password).subscribe(
-      data=>{
-          
-      }
-    )
+
+
+    this.user.password = this.forgotpasswordform.value.password;;
+    this.user.email = this.route.snapshot.paramMap.get('email') || '{}';
+    //upadate password
+    this.registerService.updatePassWord(this.user).subscribe((data: string) => {
+
+      this.successMsgPasword = true;
+      setTimeout(() => {
+        this.successMsgPasword = false;
+        this.router.navigate(['/login'])
+      }, 3000);
+
+
+    }, error => {
+
+
     }
-      
-    
+    )
+
+
+
 
   }
-get f(){
-  return this.forgotpasswordform.controls;
-}
+  back() {
+    this.router.navigate(['/login']);
+  }
+  //get controls
+  get f() {
+    return this.forgotpasswordform.controls;
+  }
 }

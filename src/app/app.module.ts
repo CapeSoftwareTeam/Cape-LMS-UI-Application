@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, } from '@angular/common/http';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
@@ -49,10 +49,7 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
 import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
 
 
-
-
-
-
+import { NgCircleProgressModule } from 'ng-circle-progress';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,7 +103,30 @@ import { EmployeeLeaveComponent } from './employee-leave/employee-leave.componen
    
     NgOtpInputModule,
  
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+  
+     NgMultiSelectDropDownModule, NgCircleProgressModule.forRoot({
+      "radius": 60,
+      "space": -10,
+      "outerStrokeGradient": true,
+      "outerStrokeWidth": 10,
+      "outerStrokeColor": "#4882c2",
+      "outerStrokeGradientStopColor": "#53a9ff",
+      "innerStrokeColor": "#e7e8ea",
+      "innerStrokeWidth": 2,
+      "title": "Uploading",
+      "animateTitle": false,
+      "animationDuration": 1000,
+      "showUnits": false,
+      "showBackground": false,
+      "clockwise": false,
+      "startFromZero": true,
+      "lazy": true
+     })
+     
+     
+      
+  
 
 
   ],
@@ -114,7 +134,9 @@ import { EmployeeLeaveComponent } from './employee-leave/employee-leave.componen
     provide:HTTP_INTERCEPTORS,
     useClass:TokenServiceService,
     multi:true
-  }],
+  },{provide: MAT_RADIO_DEFAULT_OPTIONS,
+    useValue: { color: 'primary' },},
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

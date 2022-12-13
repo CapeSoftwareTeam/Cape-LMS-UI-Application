@@ -12,8 +12,7 @@ import { GlobalErrorHandlerService } from '../global-error-handler.service';
 
 
 
-// import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 @Component({
   selector: 'app-login',
@@ -61,15 +60,7 @@ export class LoginComponent implements OnInit {
   ,emailid:new FormControl(''), otp :new FormControl('')})
   otpErrorMsg: boolean=false;
   otperrorMsg: any;
-  // @ViewChild(TokenServiceService) tokenServiceService: any;
-
-  // ngAfterViewInit() {
-  //    console.log("its messsege read")
-  // this.errorMessage= this.tokenServiceService.errorMessage;
-  //   console.log(this.errorMessage)
-  // }
-  // @Input()
-  // TokenServiceService!: string;
+  
   
  
   constructor(private modalService: NgbModal ,
@@ -82,23 +73,35 @@ export class LoginComponent implements OnInit {
       this.configOption1.SelectorClass = "ToolTipType1"; 
    
     }
+
+    
     Otp!: string;
   showOtpComponent = false;
  
+  //npm otp length and css add
   config :NgOtpInputConfig = {
     allowNumbersOnly: true,
     length:6,
     isPasswordInput: false,
     disableAutoFocus: false,
     placeholder: '',  
-    inputClass:'each_input',
-    containerClass:'all_inputs'
+    inputStyles: {
+      'font-size': 'initial',
+      'color': '#28a745',
+      'width': '35px',
+      'height': '45px',
+      
+      'background': 'rgba(255, 255, 255, 0.25)'
+     }
   
   };
+  // get the value enter in ng otp input boxes
   onOtpChange(otp: any) {
     this.Otp = otp;
     
   }
+
+  //login check box change event 
   validate(event:any){
     
     if(event.value == "empid"){
@@ -154,6 +157,7 @@ export class LoginComponent implements OnInit {
   
 disable1 : boolean = false;
 
+//otp checkbox change event
 validateOtp(event:any){
 if(event.value=="mobileNumber"){
    this.otpgenerateform.controls.emailid.setValue('');
@@ -173,39 +177,42 @@ else{
   this.otpgenerateform.controls.emailid.setValidators([Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
 }
 }
+
+//forget password click function
   otpValidation(){
     this.disable1 = true;
     this.otp=true;
     this.loginPage=false;
     this.showErrorMessage=false;
 
-    // this.modalReference = this.modalService.open(otpGenerate)
+    
   }
+
+  //cancel button click function
   onCancel() {
     this.disable1 = false;
     this.otp=false
     this.loginPage=true;
   }
-  onCountryChange(country: any) {
-    this.countryCode = country.dialCode;
-  }
-  
-login(flag:any){
+ 
+  //login click function
+login(){
  
   this.submitted=true;
 
   
-    // this.user.emailid
-  // this.user.emailid = this.loginForm.value.emailidLogin;
-
+   
+//break point form validation
   if(this.loginForm.invalid) {
     return;
   }
+
+  
   if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.mobileNumberLogin?.length==0){
     this.submitted=true;
   }
   
-  // if(flag){
+  // service call for login
     this.registerService.authenticate( this.user).subscribe(data=>{ 
       this.isLogin = true;
       sessionStorage.setItem('empid',JSON.parse(data).register.empid);
@@ -223,51 +230,40 @@ login(flag:any){
       }, 3000);
     }
     )
-  // }
-  // else{
-  //   if(this.globalErrorHandler.errorMessage==""){
-  //     this.showErrorMessage=true;
-  //     this.errorMessage=this.globalErrorHandler.errorMessage;
-  //     setTimeout(() => {
-  //       this.showErrorMessage=false;
-  //       this.errorMessage="";
-  //     }, 3000);
-  //   }
-  // }
- 
-    
-    // error=>{
-    //   this.showErrorMessage = true;
-      
-    //   this.errorMessage = JSON.parse(error.error).message;
-    //      setTimeout(() => {
-    //       this.showErrorMessage=false;
-    //      }, 3000);
-    // }
-
-  
 
 }
+
+// otp submit
 submitForm(){
-  // this.submit=true;
-
-
-  // if(this.otpgenerateform.invalid) {
-  //   return;
-  // }
+  
   if(this.Otp==null || this.Otp.length!=6){
     this.errorOtp=true;
     
-    
+    this.config.inputStyles={
+           'color':'red',
+           'font-size': 'initial',
+           'box-shadow':' #f44336 0px 0px 15px'
+    }
  
     setTimeout(() => {
       this.errorOtp=false;
+     this.config.inputStyles
+      ={
+        'color':'#28a745',
+        'font-size': 'initial',
+        'width': '35px',
+      'height': '45px',
+      
+      'background': 'rgba(255, 255, 255, 0.25)'
+ }
     }, 3000);
   }
 
   this.user.email=this.Email;
   this.user.otp=this.Otp;
   this.user.otpSession=this.otpsession;
+
+  // service call for verifying otp
   this.registerService.verifyOtp(this.user).subscribe((data: any)=>{
     this.router.navigate(['/forgotpassword',{email:this.Email}]);
   },
@@ -285,6 +281,7 @@ submitForm(){
   } )
   
 }
+// otp generate
 generate():any{
   
   this.submit=true;
@@ -314,11 +311,11 @@ generate():any{
     this.userName=this.email;
   }
 
-
+// service for otp send
   this.registerService.sendOtp(this.userName).subscribe((data: string)=>
     {
-      this.Email=JSON.parse(data)[0];
-      this.otpsession=JSON.parse(data)[1];
+      this.otpsession=JSON.parse(data)[0];
+      this.Email=JSON.parse(data)[1];
       
    
       this.successMsgOtp = true;
@@ -345,8 +342,7 @@ generate():any{
       }
      
     }
-    )
-    
+    ) 
    
 }
 
@@ -357,9 +353,6 @@ get f(){
 get g(){
   return this.otpgenerateform.controls;
 }
-getFuntion(event:any){
-console.log(event);
 
-}
 
 }

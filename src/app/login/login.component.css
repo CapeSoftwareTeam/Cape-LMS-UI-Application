@@ -71,16 +71,19 @@ p{
 #otpGenerate{
     width: 300px;
 }
-#closeModal{
+/* #closeModal{
     margin-left: 300px;
     margin-top: 20px;
-}
+    display: block;
+    
+   
+} */
 #closeMode:hover{
     background-color: red;
 }
 .modal-title{
     text-align: center;
-   
+ 
 }
 .card{
   
@@ -100,3 +103,35 @@ p{
 ::ng-deep .each_input:focus{
     border: 2px solid red!important;
   }
+  .mat-mdc-radio-button ~ .mat-mdc-radio-button {
+    margin-left: 5px;
+  }
+  mat-radio-button{
+    margin-left: 20px;
+  }
+
+
+  .close-button{
+    float: right;
+    margin-right: 15px;
+    size: 23px;
+   
+  }
+  
+  .close-icon {
+    transition: 1s ease-in-out;
+  }
+  
+  .close-icon:hover {
+    transform: rotate(180deg);
+  }
+/*   
+  ::ng-deep .icon-inside .close-button{
+    float: right;
+    top:-52px;
+    right:-52px;
+  }
+  
+  ::ng-deep .icon-inside .mat-dialog-container {
+   overflow: unset
+  } */

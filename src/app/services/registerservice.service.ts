@@ -38,8 +38,8 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
   sendOtp(userName:any):Observable<any>{
     return this.http.get<any>(this.apiurl+'/sendotp'+'/'+userName,{ responseType:'text' as 'json'})
   }
-  updatePassWord(email:any,passWord:any):Observable<any>{
-    return this.http.put<any>(this.apiurl+'/updatePassword'+'/'+email+'/'+passWord,{responseType:'text' as 'json'})
+  updatePassWord(user:User):Observable<any>{
+    return this.http.put<any>(this.apiurl+'/updatePassword',user,{responseType:'text' as 'json'})
   }
 
   getEmpid():Observable<any>{

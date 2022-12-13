@@ -1,12 +1,16 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { arrowRightShort } from 'ngx-bootstrap-icons';
+import { GlobalErrorHandlerService } from '../global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { FileUploadService } from '../services/file-upload.service';
 import { HistoryService } from '../services/historyservice.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
@@ -17,6 +21,9 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+doSomethingWithCurrentValue($event: number) {
+throw new Error('Method not implemented.');
+}
   superadmin:boolean=false;
   admin:boolean=false;
   blurMode:boolean=false;
@@ -54,12 +61,35 @@ export class HomeComponent implements OnInit {
   managerName: any;
   leftoverApproval:any=[];
 
+  // file upload
+  errorMessage: any;
+  showErrorMessage: boolean = false;
+  fileName: String="";
+  fileSize: any;
+  file!: any;
+  formFile:any;
+  fileId:any;
+  upload:boolean=false;
+  updateFile1:boolean=false;
+  update:boolean=false;
+  successMsg:boolean=false;
+  showErrorMessage1:boolean=false;
+  fileUpload:boolean=true;
+  cancel:boolean=true;
+  fileName1:string='';
+  filename1:boolean=false;
+  filename2:boolean=true;
+  loading1:boolean=false;
+  updateButton:boolean=true;
+
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
     private getDetails: ApplyleaveService,
     private modalService: NgbModal,
-    private registerDetails: LeaveStatusServiceService) { }
+    private registerDetails: LeaveStatusServiceService,
+    private globalErrorHandler: GlobalErrorHandlerService,private fileUploadService:FileUploadService,
+    private registerService:RegisterserviceService) { }
 
 
   // ngAfterViewInit(): void {
@@ -78,11 +108,14 @@ export class HomeComponent implements OnInit {
   //   );
   // }
 
+  leavePolicy = new FormGroup({fileid:new FormControl(),filesize:new FormControl(),filename:new FormControl()})
+
   // if(tab[0]==selected){
   //   this.EnableLms=true;
   // }
 
   ngOnInit(): void {
+    
     this.lmspage=true;
      
     this.empid = sessionStorage.getItem("empid");
@@ -169,6 +202,20 @@ export class HomeComponent implements OnInit {
       }
     );
   
+    // retrive file
+    this.registerService.getForm(this.empid).subscribe(data=>{
+      if(JSON.parse(data).designation!="HR"){
+               this.updateButton=false;
+      }
+    })
+   
+    this.fileUploadService.retriveFile(34).subscribe(data=>{
+      this.f.filename.setValue(JSON.parse(data).fileName);
+      this.fileSize = JSON.parse(data).fileSize;
+      this.f.fileid.setValue(JSON.parse(data).fileId);
+      
+     
+    })
   
   }
 
@@ -215,7 +262,7 @@ export class HomeComponent implements OnInit {
 
   }
   termsCondition(termsContent: any) {
-    this.modalReference = this.modalService.open(termsContent, { size: 'xl' })
+    this.modalReference = this.modalService.open(termsContent, { size: 'm' })
   }
   onCancel() {
     this.modalReference.close();
@@ -249,6 +296,91 @@ export class HomeComponent implements OnInit {
   // }
 
   //   }
+  get f() {
+    return this.leavePolicy.controls;
+  }
+
+
+// file upload functions
+  onChange(event:any){
+    this.file = event.target.files;
+   
+    this.fileSize = Math.round(this.file[0].size / 1024) + " KB";
+    this.fileName1=this.file[0].name;
+    if(this.fileName1!=null){
+      this.filename1=true;
+      this.filename2=false;
+    }
+  }
+  updateFile(event:any){
+      if(this.file==null){
+        this.showErrorMessage1=true;
+        setTimeout(() => {
+          this.showErrorMessage1=false
+        }, 3000);
+      }
+    const formData: FormData = new FormData();
+    for (let f of this.file) {
+      formData.append('file', f, f.name);
+    }
+  this.fileId=this.f.fileid.value;
+    this.formFile = formData;
+
+    this.fileUploadService.updateFile(formData,this.fileId,this.fileSize).subscribe(data=>{
+      this.loading1=true;
+      this.updateFile1=false;
+      setTimeout(() => {
+           
+        this.loading1=false;
+        this.successMsg=true;
+        setTimeout(() => {
+          this.updateFile1=false;
+          this.successMsg=false;
+          this.fileUpload=true;
+          this.cancel=true;
+          this.ngOnInit();
+        }, 2000);
+      }, 2000);
+    
+    })
+  
+}
+
+  onUpload(){
+    const formData: FormData = new FormData();
+    for (let f of this.file) {
+      formData.append('file', f, f.name);
+    }
+    
+    this.formFile = formData;
+            
+   this.fileUploadService.fileUploadLms(formData,this.fileSize).subscribe(data=>{
+   
+   },
+   error=>{
+    this.showErrorMessage = true;
+    this.errorMessage = this.globalErrorHandler.errorMessage;
+    setTimeout(() => {
+      this.showErrorMessage = false;
+    }, 3000);
+   })
+  }
+  onDownload(){
+         this.fileUploadService.fileDownload(this.f.fileid.value);
+  }
+  updateFileMethod(){
+this.updateFile1=true;
+this.fileUpload=false;
+this.cancel=false;
+  }
+  back(){
+    this.updateFile1=false;
+    this.fileUpload=true;
+    this.cancel=true;
+  }
+
+
+
   signout(){
     // this.blurMode=true
     this.spinner=true;
