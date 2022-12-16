@@ -13,7 +13,7 @@ export class LeaveStatusServiceService {
   getUpdates():Observable<any>{
     return this.http.get<any>(this.apiurl+"/"+'history2',{responseType:'text' as'json'});
   }
-  statusUpdate(historyId:Number,empid:String,status:string):Observable<any>{
+  statusUpdate(historyId:Number,empid:String,status:String):Observable<any>{
     return this.http.put<any>(this.apiurl+"/"+'hrapprove'+"/"+historyId+"/"+empid+"/"+status,{responseType:'text' as 'json'});
   }
   getMemberDetails(empid:String):Observable<any>{

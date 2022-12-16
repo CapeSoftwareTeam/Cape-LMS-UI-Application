@@ -46,10 +46,11 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
-import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
+
 
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +69,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     FrontpageComponent,HistoryComponent,
     PublicHolidaysComponent,
     EmployeeDetailsComponent,
-    EmployeeLeaveComponent,
+    ComingSoonComponent,
    
 
   ],

@@ -1,9 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription, timer } from 'rxjs';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { LeaveDetails } from '../models/leave-details.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
@@ -19,6 +20,19 @@ import { RegisterserviceService } from '../services/registerservice.service';
 })
 
 export class LmsPageComponent implements OnInit {
+
+  digits:number[]=[ 1,2,3,4,5,6,7,8,9,10,11,12];
+  hourHandPosition=0;
+  minuteHandPosition=0;
+  secondHandPosition=0;
+dateTime={
+  year:'',
+  month:'',
+  day:'',
+  hour:'',
+  minute:'',
+  second:'',
+};
   modeModal: boolean = false;
   panelOpenState: boolean = false;
   hideTeamDetails:boolean=false;
@@ -82,7 +96,7 @@ export class LmsPageComponent implements OnInit {
   city: any;
   members:any =[]
   memberName: any;
-  
+  counter!:Subscription
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
@@ -106,7 +120,11 @@ export class LmsPageComponent implements OnInit {
     //     return this._highestGrossingMovies;
     // }
   ngOnInit(): void {
-
+// setInterval(()=>{
+//   const date=new Date();
+//   this.updateClock(date);
+// },1000);
+this.startClock();
     this.empid = sessionStorage.getItem("empid");
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
@@ -235,6 +253,38 @@ this.city=this.personDetails.city;
     // }
   }
 
-  
-  
+//   updateClock(date:any){
+//     this.secHand.nativeElement.style.transform='rotate('+date.getSeconds()*6+'deg)';
+//     this.minHand.nativeElement.style.transform='rotate('+date.getSeconds()*6+'deg)';
+//     this.hrHand.nativeElement.style.transform='rotate('+date.getSeconds()*6+'deg)';
+//   }
+  startClock(){
+    this.counter=timer(0,1000).subscribe(
+      (res)=>{
+        let date=new Date();
+        let seconds=date.getSeconds();
+        let minutes=date.getMinutes();
+        let hour=date.getHours();
+        let day=date.getDate();
+        let month=date.getMonth() +1;
+        let year =date.getFullYear();
+
+this.dateTime.year=this.displayDoubleDights(year);
+this.dateTime.month=this.displayDoubleDights(month);
+this.dateTime.day=this.displayDoubleDights(day);
+this.dateTime.hour=this.displayDoubleDights(hour);
+this.dateTime.minute=this.displayDoubleDights(minutes);
+this.dateTime.second=this.displayDoubleDights(seconds);
+
+        this.secondHandPosition=seconds * 6;
+        this.minuteHandPosition=minutes * 6;
+        this.hourHandPosition=(hour >11 ? hour - 12: hour) * 30 
+        + Math.floor(minutes/12)*6;
+
+    }
+  );
 }
+displayDoubleDights(value:number):string{
+  return('00' + value).slice(-2);
+}
+ }

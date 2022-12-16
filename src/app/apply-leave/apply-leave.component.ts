@@ -9,6 +9,7 @@ import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
 import { HolidayservicesService } from '../services/holidayservices.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
+import { RegisterserviceService } from '../services/registerservice.service';
 
 @Component({
   selector: 'app-apply-leave',
@@ -16,6 +17,8 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
+
+  hideIfsick:boolean=true;
   findHalfToDays:any;
   findHalfDays:any;
   findDays:any;
@@ -64,6 +67,23 @@ export class ApplyLeaveComponent implements OnInit {
   halfdays: any;
   cl: any;
   saturdays1: any=[];
+  leftoverApproval: any=[];
+  members: any=[];
+  city: any;
+  selectedEmployee: any;
+  Selectedname: any;
+  selectedEmpid: any;
+  selectedName: any;
+  selectedexperience: any;
+  selectedlocation: any;
+  personDetailbsd: any=[];
+  personname: any;
+  persondepartment: any;
+  persondesignation: any;
+  personlocation: any;
+  personexperience: any;
+  personmanagername: any;
+  personmanageremail: any;
 
 
   constructor(private route: Router,
@@ -73,7 +93,8 @@ export class ApplyLeaveComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
-    private getPublicHolidays: HolidayservicesService) { }
+    private getPublicHolidays: HolidayservicesService,
+    private teamdetails: RegisterserviceService) { }
 
   applyLeave = new ApplyLeave();
 
@@ -81,7 +102,7 @@ export class ApplyLeaveComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    
     this.empid = sessionStorage.getItem("empid");
 
     this.getPublicHolidays.getLeave().subscribe(
@@ -99,7 +120,6 @@ export class ApplyLeaveComponent implements OnInit {
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
-
         this.name = this.personDetails.name;
         console.log(this.name);
         this.department = this.personDetails.department;
@@ -107,7 +127,8 @@ export class ApplyLeaveComponent implements OnInit {
         this.experience = this.personDetails.totalexperience;
         this.location = this.personDetails.city;
         this.managername = this.personDetails.managername;
-        this.manageremail = this.personDetails.manageremail
+        this.manageremail = this.personDetails.manageremail;
+        this.city=this.personDetails.city;
         ;
       })
 
@@ -142,27 +163,75 @@ export class ApplyLeaveComponent implements OnInit {
         this.applyLeave = JSON.parse(data);
       }
     )
+    this.teamdetails.getEmpid().subscribe(
+          data => {
+            this.leftoverApproval =JSON.parse(data)
+              for (let team of this.leftoverApproval){
+                if(team.managername==this.name && team.department==this.department && team.city==this.city){
+               this.members.push(team);
+                }
+              }
+          }
+        );
+       
   }
   leaveApply(success: any,failure:any) {
 
-    if(this.postleave.invalid){
-      return ;
+    // if(this.postleave.invalid){
+    //   return ;
+    // }
+    if(this.selectedEmployee == this.empid){
+      this.applyLeave.empid = this.selectedEmpid;
+      this.applyLeave.name =   this.personname;
+      this.applyLeave.department = this.persondepartment;
+      this.applyLeave.designation = this.persondesignation;
+      this.applyLeave.experience = this.personexperience;
+      this.applyLeave.location = this.personlocation;
+      this.applyLeave.managername = this.personmanagername;
+      this.applyLeave.manageremail= this.personmanageremail;
+      this.applyLeave.leaveType = this.postleave.value.leaveType;
+      this.applyLeave.noofdays = this.countinNumber;
+      this.applyLeave.fromdate = this.postleave.value.fromdate;
+      this.applyLeave.todate = this.postleave.value.todate;
+      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.status = 'pending';
+      this.apply.leaveRegister(this.applyLeave).subscribe(
+        data => { this.leave.push(this.postleave) }
+      )
+    }else{
+      this.applyLeave.empid = this.selectedEmpid;
+      this.applyLeave.name =   this.personname;
+      this.applyLeave.department = this.persondepartment;
+      this.applyLeave.designation = this.persondesignation;
+      this.applyLeave.experience = this.personexperience;
+      this.applyLeave.location = this.personlocation;
+      this.applyLeave.managername = this.personmanagername;
+      this.applyLeave.manageremail= this.personmanageremail;
+      this.applyLeave.leaveType = this.postleave.value.leaveType;
+      this.applyLeave.noofdays = this.countinNumber;
+      this.applyLeave.fromdate = this.postleave.value.fromdate;
+      this.applyLeave.todate = this.postleave.value.todate;
+      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.status = 'pending';
+      this.apply.leaveRegister(this.applyLeave).subscribe(
+        data => { this.leave.push(this.postleave) }
+      )
     }
-    
-    this.applyLeave.empid = this.empid;
-    this.applyLeave.name = this.name;
-    this.applyLeave.department = this.department;
-    this.applyLeave.designation = this.designation;
-    this.applyLeave.experience = this.experience;
-    this.applyLeave.location = this.location;
-    this.applyLeave.managername = this.managername;
-    this.applyLeave.manageremail= this.manageremail;
-    this.applyLeave.leaveType = this.postleave.value.leaveType;
-    this.applyLeave.noofdays = this.countinNumber;
-    this.applyLeave.fromdate = this.postleave.value.fromdate;
-    this.applyLeave.todate = this.postleave.value.todate;
-    this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
-    this.applyLeave.status = this.postleave.value.status;
+
+    // this.applyLeave.empid = this.selectedEmployee;
+    // this.applyLeave.name =   this.personname;
+    // this.applyLeave.department = this.persondepartment;
+    // this.applyLeave.designation = this.persondesignation;
+    // this.applyLeave.experience = this.personexperience;
+    // this.applyLeave.location = this.personlocation;
+    // this.applyLeave.managername = this.personmanagername;
+    // this.applyLeave.manageremail= this.personmanageremail;
+    // this.applyLeave.leaveType = this.postleave.value.leaveType;
+    // this.applyLeave.noofdays = this.countinNumber;
+    // this.applyLeave.fromdate = this.postleave.value.fromdate;
+    // this.applyLeave.todate = this.postleave.value.todate;
+    // this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+    // this.applyLeave.status = this.postleave.value.status;
 
     this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
       data=>{
@@ -247,9 +316,9 @@ export class ApplyLeaveComponent implements OnInit {
     console.log(this.selectedItem);
   }
   save() {
-    if(this.postleave.invalid){
-      return ;
-    }
+    // if(this.postleave.invalid){
+    //   return ;
+    // }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;
@@ -270,23 +339,44 @@ export class ApplyLeaveComponent implements OnInit {
     this.route.navigate(['/home']);
   }
   proceed(){
-    this.applyLeave.empid = this.empid;
-    this.applyLeave.name = this.name;
-    this.applyLeave.department = this.department;
-    this.applyLeave.designation = this.designation;
-    this.applyLeave.experience = this.experience;
-    this.applyLeave.location = this.location;
-    this.applyLeave.managername = this.managername;
-    this.applyLeave.manageremail=this.manageremail;
-    this.applyLeave.leaveType = this.postleave.value.leaveType;
-    this.applyLeave.noofdays = this.countinNumber;
-    this.applyLeave.fromdate = this.postleave.value.fromdate;
-    this.applyLeave.todate = this.postleave.value.todate;
-    this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
-    this.applyLeave.status = 'pending';
-    this.apply.leaveRegister(this.applyLeave).subscribe(
-      data => { this.leave.push(this.postleave) }
-    )
+    if(this.selectedEmployee == this.empid){
+      this.applyLeave.empid = this.empid;
+      this.applyLeave.name = this.name;
+      this.applyLeave.department = this.department;
+      this.applyLeave.designation = this.designation;
+      this.applyLeave.experience = this.experience;
+      this.applyLeave.location = this.location;
+      this.applyLeave.managername = this.managername;
+      this.applyLeave.manageremail=this.manageremail;
+      this.applyLeave.leaveType = this.postleave.value.leaveType;
+      this.applyLeave.noofdays = this.countinNumber;
+      this.applyLeave.fromdate = this.postleave.value.fromdate;
+      this.applyLeave.todate = this.postleave.value.todate;
+      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.status = 'pending';
+      this.apply.leaveRegister(this.applyLeave).subscribe(
+        data => { this.leave.push(this.postleave) }
+      )
+    }else{
+      this.applyLeave.empid = this.selectedEmpid;
+      this.applyLeave.name =   this.personname;
+      this.applyLeave.department = this.persondepartment;
+      this.applyLeave.designation = this.persondesignation;
+      this.applyLeave.experience = this.personexperience;
+      this.applyLeave.location = this.personlocation;
+      this.applyLeave.managername = this.personmanagername;
+      this.applyLeave.manageremail= this.personmanageremail;
+      this.applyLeave.leaveType = this.postleave.value.leaveType;
+      this.applyLeave.noofdays = this.countinNumber;
+      this.applyLeave.fromdate = this.postleave.value.fromdate;
+      this.applyLeave.todate = this.postleave.value.todate;
+      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.status = 'pending';
+      this.apply.leaveRegister(this.applyLeave).subscribe(
+        data => { this.leave.push(this.postleave) }
+      )
+    }
+    
     this.route.navigate(['/home']);
     this.modalReference.close();
   }
@@ -715,5 +805,58 @@ if(this.postleave.value.chooseDays=="FullDay"){
   pageNavigate(){
     this.route.navigate(["/home"])
   }
+  findifsick(event:any){
+    if(event.target.value=='sick'){
+      this.hideIfsick=false;
+    }else{
+      this.hideIfsick=true;
+    }
 
-}
+  }
+  selectToSend(event:any){
+    this.teamdetails.getEmpid().subscribe(
+      data => {
+        this.personDetailbsd = JSON.parse(data);
+        for(let i of this.personDetailbsd){
+            if(event.target.value==i.empid){
+              this.selectedEmpid=event.target.value;
+              this.personname=i.name;
+              this.persondepartment = i.department;
+              this.persondesignation = i.designation;
+              this.personexperience = i.totalexperience;
+              this.personlocation = i.city;
+              this.personmanagername = i.managername;
+              this.personmanageremail = i.manageremail;
+              }
+          }
+        
+        }
+    )
+    // this.teamdetails.getEmpid().subscribe(
+    //   data => {
+    //     this.leftoverApproval =JSON.parse(data)
+    //       for (let team of this.leftoverApproval){
+    //         if(team.managername==this.name && team.department==this.department && team.city==this.city){
+    //        this.members.push(team);
+    //        this.selectedEmployee=event.target.value;
+
+    //        if(this.selectedEmployee){
+    //         console.log(this.members.team.empid);
+    //          this.selectedEmpid=this.members.empid;
+    //          this.selectedName=this.members.name;
+    //          this.selectedexperience= this.members.experience;
+    //          this.selectedlocation=this.members.location;
+    //        }
+    //         }
+    //       }
+    //   }
+    // );
+   
+ 
+          }
+        }
+  
+  
+
+
+// }

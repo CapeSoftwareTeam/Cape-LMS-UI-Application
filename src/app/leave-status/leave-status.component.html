@@ -55,8 +55,10 @@
         <span class="mobile-label">Status</span>
         <!-- <button mat-flat-button>Basic</button>
       <button mat-flat-button color="primary">Primary</button> -->
+     
          <button mat-flat-button  class="success"  (click)="approve(element.historyid,empid,'Approved')" style="color:blue">Approve</button>
           <button mat-flat-button class="failure"  (click)="approve(element.historyid,empid,'Rejected')"  style="color:blue">Decline</button>
+          <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(showDocument)"></i>
           
           <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
          </mat-cell>
@@ -133,11 +135,13 @@
         <!-- <span class="mobile-label">
           {{element.status}} <p>{{}}</p>
         </span> -->
-            <button mat-flat-button  (click)="submit(element.historyid,empid,'pending')" style="color:blue">Submit</button>
+        
+            <button mat-flat-button  (click)="submit(element.historyid,empid,'pending')" style="color:rgb(28, 5, 240)" >Submit</button>
             <button mat-flat-button  style="color:rgb(228, 8, 8)" (click)="delete(element.historyid)"> Delete
               <!-- <i class="material-icons" id="delmessage" style="font-size:18px">delete</i>
               <p class="hide" style="float:right">  Delete</p> -->
             </button>
+            <button mat-flat-button  (click)="uploadDocument(uploading)" *ngIf="element.leaveType=='sick'"><i class='fa fa-cloud-upload' style="color:rgb(24, 204, 132);font-size:28px" ></i></button>
            </mat-cell>
     
       </ng-container>
@@ -162,4 +166,26 @@
   
   <!-- </div>
   </div>style="margin-left: 50%;margin:66px"  -->
-  
+  <ng-template #uploading let-modal>
+    <div class="modal-header" style="justify-content: space-evenly;">
+      <h4 class="modal-title" id="modal-basic-title">Upload Document </h4>
+    </div>
+    <div class="modal-body">
+    <input type="file">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-info" (click)="uploadhere()">Upload</button>
+     <button type="button" class="btn btn-outline-danger" (click)="upload()">Back</button>
+    </div>
+  </ng-template>
+  <ng-template #showDocument let-modal>
+    <div class="modal-header" style="justify-content: space-evenly;">
+      <h4 class="modal-title" id="modal-basic-title" style="color:blue;justify-content: center; ">Attached Document</h4>
+    </div>
+    <div class="modal-body">
+    <p>View pdf</p>
+    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>
+    </div>
+  </ng-template>

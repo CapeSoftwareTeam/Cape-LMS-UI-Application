@@ -98,23 +98,95 @@
         <div class="card-footer">
           {{remainingml}} remaining
         </div>
+      </div>
+    </div>
+    <br>
+    <br>
+        <div class="col-md-12" style="float: inherit;top:10px">
+          <div class="card" > 
+       
+              <div class="main_div">
+                <div class="center_div">
+                  <div class="pie-chart" style="float:left;margin-right: 343px;">
+
+                    <p>
+                      Casual Leave <span style="color:cornflowerblue"> </span><br>
+                      Sick Leave<span style="color:crimson"> </span><br>
+                      Bereavement Leave<span style="color:rgb(249, 236, 86)"> </span><br>
+                      Privilege Leave<span style="color:lawngreen"> </span><br>
+                      Maternity Leave<span style="color:hotpink"> </span><br>
+                    </p>
+             
+                  </div>
+                </div>
+                </div>
+
+          </div>
+          </div>
       
   </div>
-</div>
-</div>
+
+
 <div class="rightcolumn">
-  <div class="card" style="background-color:#f1f8f2;padding:20px">
+  <div class="card" style="background-color: rgb(10, 10, 10);">
+<!-- <h5><b style="color: white;">Time is precious</b>  </h5> -->
+    <div class="clock-wrapper black-border">
+      <div class="clock-analog shadow">
+       
+        <span *ngFor="let digit of digits" class="digit digit-{{digit}}"
+        [ngStyle]="{'transform':'rotate('+digit * 30+'deg)'}">
+
+          <b [ngStyle]="{'transform':'rotate(-'+ digit * 30+'deg)'}">{{digit}}</b>
+        </span>
+        <div class="hand hour-hand" [ngStyle]="{'transform':'rotate('+ hourHandPosition +'deg)'}"></div>
+        <div class="hand minute-hand" [ngStyle]="{'transform':'rotate('+ minuteHandPosition +'deg)'}"></div>
+        <div class="hand second-hand"
+        [ngStyle]="{'transform':'rotate('+ secondHandPosition +'deg)'}">
+
+        </div>
+        </div>
+
+        <br>
+        <div class="clock-digital shadow">
+          <span class="date year">{{dateTime.day}}</span>
+          <span class="date month">{{dateTime.month}}</span>
+          <span class="date year">{{dateTime.year}}</span>
+          <span class="date separator"> - </span>
+          <span class="date hour">{{dateTime.hour}}</span> 
+          <span class="date minute">{{dateTime.minute}}</span> 
+          <span class="date second">{{dateTime.second}}</span>  
+       </div>
+    </div>
+    <!-- <div class="dummy-card">
+      
+<div class="clock">
+  <div class="num num1"><div>1</div></div>
+  <div class="num num2"><div>2</div></div>
+  <div class="num num3"><div>3</div></div>
+  <div class="num num4"><div>4</div></div>
+  <div class="num num5"><div>5</div></div>
+  <div class="num num6"><div>6</div></div>
+  <div class="num num7"><div>7</div></div>
+  <div class="num num8"><div>8</div></div>
+  <div class="num num9"><div>9</div></div>
+  <div class="num num10"><div>10</div></div>
+  <div class="num num11"><div>11</div></div>
+  <div class="num num12"><div>12</div></div>
+</div>
+</div> -->
+  </div>
+  <!-- <div class="card" style="background-color:#f1f8f2;padding:20px">
     <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h6><i class="fa fa-group" style="padding-right:15px;"></i> Teams Members </h6>
         </mat-panel-title>
-        <!-- <mat-panel-description>
+      <mat-panel-description>
           Meet your Team members here
           <mat-icon>date_range</mat-icon>
         </mat-panel-description> -->
-      </mat-expansion-panel-header>
+       <!--  </mat-expansion-panel-header>
       <hr>
       <div *ngFor="let team of members; "style="padding:8px">
       <i class='fa fa-user' ></i>
@@ -124,7 +196,7 @@
                           (closed)="panelOpenState = false">                  
 </mat-expansion-panel>
 </mat-expansion-panel>
-</mat-accordion>
+</mat-accordion> -->
 <!-- <h4 style="text-align:center;justify-content:center">style="font-size:medium;float:right;"
   <i class="fa fa-group" style="font-size:25px;padding-right:15px;"></i>Team Details
   <i class="fa fa-caret-down" style="font-size:25px; padding-left:10px" (click)="enableHideTeamDetails()"></i></h4>
@@ -135,16 +207,9 @@
         <!--        -->
     <!-- <h6 style="color:grey;font-size:x-small" *ngFor="let team of members; "></h6>  -->
   <!-- </i>  -->
-</div> 
+<!-- </div>  -->
 <br>
-<div class="card">
 
-
-  
-
-          
-
-      </div>
   </div>
 </div>
   <!-- <div class="container vertical sample" *ngFor="let team of form; let i=index;>

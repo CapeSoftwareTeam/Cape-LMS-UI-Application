@@ -1,9 +1,13 @@
+import { Element } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { elementAt } from 'rxjs';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { ApplyleaveService } from '../services/applyleave.service';
+import { FileUploadService } from '../services/file-upload.service';
 import { HistoryService } from '../services/historyservice.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 
@@ -13,6 +17,9 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./leave-status.component.css']
 })
 export class LeaveStatusComponent implements OnInit {
+  // selectedFiles: FileList;
+	// currentFile: File;
+  // showifsick:boolean=false;
   @ViewChild('dataPaginator', { static: false }) dataPaginator!: MatPaginator;
   empid: any
   notification: number = 0;
@@ -35,12 +42,15 @@ export class LeaveStatusComponent implements OnInit {
   department: any;
   managerName: any;
   name: any;
+  modalReference: any;
   constructor(private statusservice: LeaveStatusServiceService,
     private statusagree: LeaveStatusServiceService,
     private route: Router,
-    private leaveRegister:ApplyleaveService,
+     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
-    private departmentService:HistoryService) { }
+    private departmentService:HistoryService,
+    private fileUploadService:FileUploadService,
+    ) { }
 
   ngOnInit(): void {
  
@@ -63,10 +73,11 @@ export class LeaveStatusComponent implements OnInit {
        
         this.getpendingData();
         this.getstatusData();
+       
       }
     );
-  
-
+  // if(Element.l)
+ 
 //  for(let i of JSON.parse(data)){
 //   this.department!=i.department;
 //   details.push(i);
@@ -84,12 +95,9 @@ export class LeaveStatusComponent implements OnInit {
     this.enableApprove = true;
     this.enableSubmit = false;
 
-    this.statusagree.statusUpdate(historyid, status, this.empid).subscribe(
+    this.statusagree.statusUpdate(historyid,this.empid, status).subscribe(
       data => {
-
-   this.detailsdata.push(status);
-        console.log("updated successfully")
-        console.log(status);
+        this.detailsdata.push(status);
         this.ngOnInit();
       }
     );
@@ -135,15 +143,25 @@ export class LeaveStatusComponent implements OnInit {
         this.statusservice.separationDetails(this.empid).subscribe(
           data => {
             let c = [];
+            let dhana=[];
             for (let item of JSON.parse(data)) {
+
            
               if (item.status == 'not submitted' ) {
                 c.push(item);
+                // dhana.push(item.leaveType);
+                // if((item.leaveType)==='sick'){
+                //   this.showifsick=true;
+                // }
                 this.notification = c.length;
+              
               }
-            
+           
             }
+            
+            
             this.dataSource2 = new MatTableDataSource(c);
+       
             this.dataSource2.paginator = this.dataPaginator;
             console.log("retrived not submitted successfully")
           }
@@ -162,11 +180,13 @@ export class LeaveStatusComponent implements OnInit {
   back() {
     this.route.navigate(['/home']);
   }
-  submit(historyid: Number, status: string, empid:string){
-    this.statusagree.statusUpdate(historyid, status, empid).subscribe(
-      data=>{ this.applyleave.status='pending' }
+  submit(historyid: Number, empid:string, status: string){
+    this.statusagree.statusUpdate(historyid, empid, status).subscribe(
+      data=>{ this.applyleave.status='pending';
+      this.ngOnInit(); 
+    }
     )
-    console.log("U can submit here")
+
 
     // this.applyLeave.leaveType = this.postleave.value.leaveType;
     // this.applyLeave.noofdays = this.countinNumber;
@@ -188,6 +208,46 @@ this.statusagree.deleteHistory(historyid).subscribe(
   
 )
 
+  }
+  // selectFile(event) {
+  //   this.selectedFiles = event.target.files;
+  // }
+  upload(){
+    //   this.currentFile = this.selectedFiles.item(0);
+  //   this.fileUploadService.fileUploadLms(formData,fileSize).subscribe(response => {
+	// 	this.selectedFiles.value = '';
+  //    if (response instanceof HttpResponse) {
+	// 	 this.msg = response.body;
+  //       console.log(response.body);
+  //     }	  
+  //   });    
+  // }
+    this.modalReference.close();
+
+  }
+  uploadDocument(uploading:any){
+    this.modalReference = this.modalService.open(uploading, { size: 'm' });
+  
+  }
+  uploadhere(){
+    this.modalReference.close();
+  }
+  viewpdf(showDocument:any){
+    this.modalReference= this.modalService.open(showDocument, { size: 'xl' });
+    
+      //   this.currentFile = this.selectedFiles.item(0);
+  //   this.fileUploadService.retriveFile(fileId:any).subscribe(response => {
+	// 	this.selectedFiles.value = '';
+  //    if (response instanceof HttpResponse) {
+	// 	 this.msg = response.body;
+  //       console.log(response.body);
+  //     }	  
+  //   });    
+  // }
+  }
+  
+  backToleavestatus(){
+    this.modalReference.close();
   }
 }
 

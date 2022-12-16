@@ -11,13 +11,25 @@
           </div>
         </div>
         <hr>
+        <div class="row" style="justify-content:center;text-align: center;" >
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;" >
+              <label><b>Select Employee </b></label>
+            </div>
+              <div class="col-7">
+                <select class="formcontrol" (change)="selectToSend($event)">
+                  <option [ngValue]="null" disabled >Select Employee</option>
+                  <option value="{{this.empid}}">{{this.empid}} - {{this.name}}</option>
+                  <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
+                </select>
+            </div>
+          </div>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
             <label><b>Leave Type: </b></label></div>
             <div class="col-7" >
             <select class="formcontrol" formControlName="leaveType" style="height: 40px;
-            float: left;width: 75%;margin-top: 6px;height: fit-content;" >
-              <option [ngValue]="null" disabled>Select Country</option>
+            float: left;width: 75%;margin-top: 6px;height: fit-content;" (change)="findifsick($event)">
+              <option [ngValue]="null" disabled >Select leave type</option>
               <option value="casual">Casual Leave</option>
               <option value="sick">Sick Leave</option>
               <option value="bereavement">Bereavement Leave</option>
@@ -213,8 +225,8 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
             <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" style="margin-right: 23px;">Cancel</button>
-            <button type="button" class="btn btn-primary" style="margin-right: 23px;" (click)="save()">Save changes</button>
-             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure)" style="margin-right: 23px;"> Apply leave</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 23px;"  (click)="save()">Save changes</button>
+             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure)" style="margin-right: 23px;" *ngIf="hideIfsick"> Apply leave</button>
           </div>
         </div>
       </div>

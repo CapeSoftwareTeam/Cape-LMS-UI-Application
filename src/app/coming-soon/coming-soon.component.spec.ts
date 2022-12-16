@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmployeeLeaveComponent } from './employee-leave.component';
+import { ComingSoonComponent } from './coming-soon.component';
 
-describe('EmployeeLeaveComponent', () => {
-  let component: EmployeeLeaveComponent;
-  let fixture: ComponentFixture<EmployeeLeaveComponent>;
+describe('ComingSoonComponent', () => {
+  let component: ComingSoonComponent;
+  let fixture: ComponentFixture<ComingSoonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EmployeeLeaveComponent ]
+      declarations: [ ComingSoonComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EmployeeLeaveComponent);
+    fixture = TestBed.createComponent(ComingSoonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

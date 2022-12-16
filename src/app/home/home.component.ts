@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
 doSomethingWithCurrentValue($event: number) {
 throw new Error('Method not implemented.');
 }
+ comingsoon:boolean=false;
   superadmin:boolean=false;
   admin:boolean=false;
   blurMode:boolean=false;
@@ -220,12 +221,13 @@ throw new Error('Method not implemented.');
   }
 
 
-  addTab() {
-    this.tabs.push('New');
-  }
-  removeTab(index: number) {
-    this.tabs.splice(index, 1);
-  }
+  // addTab() {
+  //   this.tabs.push('New');
+  // }
+  // removeTab(index: number) {
+  //   this.tabs.splice(index, 1);
+  // }
+  
   OpenModalBox() {
     this.modeModal = true;
   }
@@ -255,6 +257,9 @@ throw new Error('Method not implemented.');
   }
   callEmployeeLeave(){
     this.route.navigate(['/employeeleave'])
+  }
+  callEmployeeDetails(){
+    this.route.navigate(['/employeedetails'])
   }
 
   getSelectedindex(event: any) {
@@ -393,4 +398,5 @@ this.cancel=false;
   }, 3000);
   
   }
+ 
 }
