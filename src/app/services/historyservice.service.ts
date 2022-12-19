@@ -1,9 +1,10 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { download } from 'ngx-bootstrap-icons';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+const FileSaver = require('file-saver');
 @Injectable({
   providedIn: 'root'
 })
@@ -31,8 +32,33 @@ export class HistoryService {
   getHistoryBasedOnRole(role:any):Observable<any>{
     return this.http.get<any>(this.apiurl+'/getHistoryBasedOnRole'+'/' + role, {responseType: 'text' as 'json'});
   }
-  putHistory():Observable<any> {
-    return this.http.put<any>(this.apiurl+'/dowloadHistory',{responseType: 'text' as 'json'});
+  selectedDeleteAllHistory(historyData:any):Observable<any>{
+    return this.http.put<any>(this.apiurl+'/deleteAllHistory',historyData, {responseType: 'text' as 'json'});
+  }
+  putHistory(historyData:any) {
+     this.http.put<any>(this.apiurl+'/downloadHistory',historyData,{responseType: 'text' as 'json'}).subscribe(
+    
+             data =>{
+             this.downloadPDF();
+             },
+             error=>{
+              
+             }
+           );
+  }
+
+  downloadPDF(){
+    this.http.put<any>(this.apiurl+'/downloadPdf',{responseType: 'blob'}).subscribe(
+      data => {
+        debugger
+        const fileName = "projectName"+'.pdf';
+        FileSaver.saveAs(data, fileName);
+      },
+      error=>{
+    console.log("his");
+    
+      }
+    );
   }
   
   // public downloadPDF(basicLpsId: any,userName: any,projectName: any) {

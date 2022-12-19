@@ -5,17 +5,20 @@ import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { clipboardCheck, filter } from 'ngx-bootstrap-icons';
+import { DatePipe } from '@angular/common'
 ;
 import { RegisterserviceService } from '../services/registerservice.service';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, NgModel} from '@angular/forms';
 import { HistoryService } from '../services/historyservice.service';
 import { Router } from '@angular/router';
 import { start } from '@popperjs/core';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
+
 
 
 
@@ -26,6 +29,7 @@ const year = today.getFullYear();
 
 })
 export class HistoryComponent implements OnInit {
+ 
 filterHistory= new ApplyLeave();
 filterdate:any;
   spinner: boolean = false;
@@ -37,7 +41,7 @@ filterdate:any;
   cancelled: boolean = false;
   enableDelete: boolean = false;
   empid: any;
-  displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+  displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
   // displayedColumns: any=[];
   Color!: 'pink';
   dataSource1!: MatTableDataSource<any>;
@@ -57,6 +61,8 @@ filterdate:any;
   role: any;
   details: any;
   selectedRow: any = [];
+  modalReference : any;
+
   // hide:boolean=true;
   displayedColumnsForUser: any;
   displayedColumnsForAdmin: any;
@@ -67,215 +73,14 @@ filterdate:any;
   tempStateName :any=[];
   tempCityName :any=[];
   employeeData :any=[];
-
-    listChildChanged :any= [];
-    departmentList=["software","sales","Designing","Marketing","Testing"]
-    arr = [
-      {
-        id: "group_1",
-        name: "Filter",
-        items: [
-          {
-            id: "group_1.abc",
-            name: "Department",
-            checked: false,
-            expand: true,
-            childs: [
-              {
-                id: "group_1.abc.action_See_List",
-                name: "software",
-                checked: false
-              },
-              {
-                id: "group_1.abc.action_Edit",
-                name: "sales",
-                checked: false
-              },
-              {
-                id: "group_1.abc.action_See_List",
-                name: "Designing",
-                checked: false
-              },
-              {
-                id: "group_1.abc.action_See_List",
-                name: "Marketing",
-                checked: false
-              },
-              {
-                id: "group_1.abc.action_See_List",
-                name: "Testing",
-                checked: false
-              },
-              
-            ]
-          },
-          {
-            id: "group_1.def",
-            name: "Location",
-            checked: false,
-            expand: true,
-            childs: [
-              {
-
-              id: "group_1.def.action_See_List",
-                name: "country",
-                checked: false
-              },
-              {
-                id: "group_1.def.action_See_List",
-                name: "State",
-                checked: false
-              },
-              {
-                id: "group_1.def.action_Edit",
-                name: "City",
-                checked: false
-              },
-            ]
-          },
-          
-        ]
-      }
-    ]
   stateList: any=[];
   basicStart: any;
   fromDate!: string;
   toDate!: string;
 
   historypdf: any=[];
-
-  
-  
-
-  //    checkMinusSquare(item:any):any {
-  //   const count = item.childs.filter((x: { checked: boolean; }) => x.checked == true).length;
-  //   if (count > 0 && count < item.childs.length) {
-     
-      
-  //     //  this.dataSource2.filter = item.child.value.trim().toLowerCase();
-  //     return true;
-  //   } else if (count == 0) {
-  //     return false;
-  //   }
-  // }
-
-  // checkParent(group_i:any, i:any) {
-  //   this.arr[group_i].items[i].checked = !this.arr[group_i].items[i].checked;
-  //   if (this.arr[group_i].items[i].checked) {
-  //     this.arr[group_i].items[i].childs.map(x => (x.checked = true));
-  //   } else {
-  //     this.arr[group_i].items[i].childs.map(x => (x.checked = false));
-  //   }
-  //   this.arr[group_i].items[i].childs.forEach(x => {
-  //     // if (this.listChildChanged.findIndex(el => el.id == x.id) == -1) {
-  //     //   this.listChildChanged.push(x);
-  //     // }
-  //   });
-  // }
-
-  // w(group_i :any, parent_i:any, i:any) {
-  //   let temparr:any;
-  //   temparr=this.arr[group_i].items[parent_i].childs[i];
-    
-
-  //   this.arr[group_i].items[parent_i].childs[i].checked = !this.arr[group_i]
-  //     .items[parent_i].childs[i].checked;
-  //   const count = this.arr[group_i].items[parent_i].childs.filter(
-  //     el => el.checked == true
-     
-      
-
-  //   ).length;
-
-
-//     var $filterCheckboxes = $('input[type="checkbox"]');
-// var filterFunc = function() {   
-  
-//   var selectedFilters = [];
-
-//   $filterCheckboxes.filter(':checked').each(function() {
-
-//     if (!selectedFilters.hasOwnProperty(this.name)) {
-//       selectedFilters[] = [];
-//     }
-
-//     selectedFilters[this.name].push(this.value);
-//   });
-
-//   // create a collection containing all of the filterable elements
-//   var $filteredResults = $('.flower');
-
-//   // loop over the selected filter name -> (array) values pairs
-//   $.each(selectedFilters, function(name, filterValues) {
-
-//     // filter each .flower element
-//     $filteredResults = $filteredResults.filter(function() {
-
-//       var matched = false,
-//         currentFilterValues = $(this).data('category').split(' ');
-
-//       // loop over each category value in the current .flower's data-category
-//       $.each(currentFilterValues, function(_, currentFilterValue) {
-
-//         // if the current category exists in the selected filters array
-//         // set matched to true, and stop looping. as we're ORing in each
-//         // set of filters, we only need to match once
-
-//         if ($.inArray(currentFilterValue, filterValues) != -1) {
-//           matched = true;
-//           return false;
-//         }
-//       });
-
-//       // if matched is true the current .flower element is returned
-//       return matched;
-
-//     });
-//   });
-
-//   $('.flower').hide().filter($filteredResults).show();
-// }
-
-// $filterCheckboxes.on('change', filterFunc);  
-
-
-    
-   
-    // if (count == this.arr[group_i].items[parent_i].childs.length) {
-    //   this.arr[group_i].items[parent_i].checked = true;
-    
-      
-        
-    //     this.dataSource1.filter = temparr.name.trim().toLowerCase();
-    //     this.dataSource2.filter=temparr.name.trim().toLowerCase();
-      
-    
-    // } else  {
-    //   this.arr[group_i].items[parent_i].checked = false;
-    //   if(count<=1){
-    //     this.dataSource1.filter = temparr.name.trim().toLowerCase();
-    //     this.dataSource2.filter=temparr.name.trim().toLowerCase();
-    //   }
-    //   else{
-       
-    //       this.dataSource1.filter = temparr.name.trim().toLowerCase();
-    //       this.dataSource2.filter=temparr.name.trim().toLowerCase();
-        
-    //   }
-      
-      
-    // }
-    // if (this.listChildChanged.findIndex(el => el.id == this.arr[group_i].items[parent_i].childs[i].id) == -1) {
-    //   this.listChildChanged.push(this.arr[group_i].items[parent_i].childs[i]);
-    // }
-  // }
-
-  // getListChildChanged() {
-  //   console.log(this.listChildChanged);
-  // }
-  
-   
-
+  empArr: any;
+  HRdata: any=[];
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource1.filter = filterValue.trim().toLowerCase();
@@ -288,16 +93,7 @@ filterdate:any;
   })
     
 
-//     datePickerFilter(event:Event){
-//       this.campaignOne.value
-//       this.campaignOne.value.start
-//       const filterValue = (event.target as HTMLInputElement).value;
-//       this.dataSource1.filter = filterValue.trim().toLowerCase();
-//       this.dataSource2.filter = filterValue.trim().toLowerCase();
-  
-      
-//       console.log("datePicker")
-//  }
+//   
 
 range!:any;
  
@@ -321,7 +117,7 @@ range!:any;
  
   selection = new SelectionModel<Element>(true, []);
   constructor(private historyService: HistoryService, private registerService: RegisterserviceService,
-    private route: Router
+    private route: Router , private modalService : NgbModal
     // private registerService: RegisterserviceService,
   ) {
     // this.designation="softwaremanager";
@@ -330,6 +126,144 @@ range!:any;
     this.dataSource1 = new MatTableDataSource<any>();
     this.dataSource2 = new MatTableDataSource<any>();
   }
+
+   
+    listChildChanged :any = [];
+    arr = [
+    {
+      id: "group_1",
+      name: "Group 1",
+      items: [
+        {
+          id: "group_1.abc",
+          name: "Department",
+          checked: false,
+          expand: true,
+          childs: [
+            {
+              id: "group_1.abc.action_See_List",
+              name: "Software",
+              checked: false
+            },
+            {
+              id: "group_1.abc.action_Edit",
+              name: "Sales",
+              checked: false
+            },
+            {
+              id: "group_1.abc.action_Delete",
+              name: "Designing",
+              checked: false
+            },
+            {
+              id: "group_1.abc.action_Print",
+              name: "Marketing",
+              checked: false
+            },
+            {
+              id: "group_1.abc.action_Print",
+              name: "Testing",
+              checked: false
+            }
+          ]
+        },
+        {
+          id: "group_1.def",
+          name: "Location",
+          checked: false,
+          expand: true,
+          childs: [
+            {
+              id: "group_1.def.action_See_List",
+              name: "country",
+              checked: false
+            },
+            {
+              id: "group_1.def.action_Edit",
+              name: "State",
+              checked: false
+            },
+            {
+              id: "group_1.def.action_Delete",
+              name: "City",
+              checked: false
+            }
+           
+          ]
+        }
+      ]
+    }
+  ]
+
+  checkMinusSquare(item:any) {
+    const count = item.childs.filter((x: { checked: boolean; }) => x.checked == true).length;
+    if (count > 0 && count < item.childs.length) {
+      return true;
+    } else if (count == 0) {
+      return false;
+    }
+    return null;
+  }
+
+  checkParent(group_i:any, i:any) {
+    this.arr[group_i].items[i].checked = !this.arr[group_i].items[i].checked;
+    if (this.arr[group_i].items[i].checked) {
+      this.arr[group_i].items[i].childs.map(x => (x.checked = true));
+    } else {
+      this.arr[group_i].items[i].childs.map(x => (x.checked = false));
+    }
+    this.arr[group_i].items[i].childs.forEach(x => {
+      if (this.listChildChanged.findIndex((el: { [x: string]: string; }) => el['id'] == x.id) == -1) {
+        console.log("issue need check");
+          // this.listChildChanged.arr.push(x);
+      }
+    });
+  }
+
+  checkChild(group_i:any, parent_i:any, i:any) {
+
+    let tempDepartment:any=[]
+    this.arr[group_i].items[parent_i].childs[i].checked = !this.arr[group_i]
+      .items[parent_i].childs[i].checked;
+    const count = this.arr[group_i].items[parent_i].childs.filter(
+      el => el.checked == true
+    ).length;
+    if (count == this.arr[group_i].items[parent_i].childs.length) {
+      this.arr[group_i].items[parent_i].checked = true;
+    } else {
+      this.arr[group_i].items[parent_i].checked = false;
+    }
+    if (this.listChildChanged.findIndex((el: { [x: string]: string; }) => el['id'] == this.arr[group_i].items[parent_i].childs[i].id) == -1) {
+      console.log(this.arr[group_i].items[parent_i].childs[i]);
+      if(this.arr[group_i].items[parent_i].childs[i].checked==true){
+        this.listChildChanged.push(this.arr[group_i].items[parent_i].childs[i])
+
+      }
+      
+      
+      // this.listChildChanged.push(this.arr.push(this.arr[group_i].items[parent_i].childs[i]));
+    }
+    for(let z of this.employeeData){
+      for(let y of this.listChildChanged){
+        if(y.checked){
+          if(y.name==z.department){
+            tempDepartment.push(z)
+          }
+        }
+      }
+    }
+    this.dataSource2 = new MatTableDataSource(tempDepartment);
+    this.dataSource2.sort = this.historySort;
+    this.dataSource2.paginator = this.historyPaginatorUser;
+  }
+
+  getListChildChanged() {
+    console.log(this.listChildChanged);
+  }
+
+
+   
+
  
 
   ngOnInit(): void {
@@ -374,14 +308,29 @@ range!:any;
     this.registerService.getForm(this.empid).subscribe(
       data => {
         designation = JSON.parse(data).designation;
+       let emailId = JSON.parse(data).emailId;
+       if(emailId=="gk@capeindia.net"){
+                  
+        this.historyService.getHistory().subscribe(
+          data => {
+            this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
+            // this.HRdata;
+              for (let value of JSON.parse(data)) {  
+                if (designation=="HR") {
+                  this.HRdata.push(value);
+                }  
+          }
+        }
+        )};
+      
         //user
         if (designation == "software trainee" || designation == "Designing" || designation == "Software Devloper" ||
           designation == "Testing" || designation == "Sales" || designation == "Marketing") {
-          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'leavetype', 'reasonForApply'];
+          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'leaveType', 'reasonForApply'];
 
           this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
             data => {
-              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
+              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
               this.dataSource1 = new MatTableDataSource(JSON.parse(data));
               this.dataSource1.sort = this.historySort;
               this.dataSource1.paginator = this.historyPaginatorAdmin;
@@ -391,23 +340,35 @@ range!:any;
 
 
         }
+
+
+              
+              
+
+            
+          
+        
         else if (designation == "HR") {
 
           this.enableDelete = true;
+          
 
           //this.display = false;
-          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
 
           this.enable = true;
+          
           this.historyService.getHistory().subscribe(
             data => {
 
+
               // this.delShow = true;
-              this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+              this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
               this.employeeData = [];
               for (let value of JSON.parse(data)) {  
                 if (this.empid != value.empid) {
                    this.employeeData.push(value);
+                   this.empArr=this.employeeData
                   // if((value.fromDate == this.campaignTwo.controls.start) && (value.toDate == this.campaignTwo.controls.end)){
                   //   employeeData.push(value);
                   // }
@@ -417,11 +378,12 @@ range!:any;
               this.dataSource2.sort = this.historySort;
               this.dataSource2.paginator = this.historyPaginatorUser;
             });
+            
 
           this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
             data => {
               // this.delShow = true;
-              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
+              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
               this.dataSource1 = new MatTableDataSource(JSON.parse(data));
               this.dataSource1.sort = this.historySort;
               this.dataSource1.paginator = this.historyPaginatorAdmin;
@@ -440,7 +402,7 @@ range!:any;
             data => {
               // this.delShow = true;
 
-              this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
+              this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
               let employeeData = [];
               for (let value of JSON.parse(data)) {
                 if (this.empid != value.empid) {
@@ -456,7 +418,7 @@ range!:any;
             data => {
 
 
-              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location'];
+              this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
 
               this.dataSource1 = new MatTableDataSource(JSON.parse(data));
               this.dataSource1.sort = this.historySort;
@@ -465,12 +427,7 @@ range!:any;
         }
       });
 
-    // this.registerService.getMemberDetails(this.empid).subscribe(data => {
-    //   let details = JSON.parse(data);
-    //   this.role = this.details.designation();
-
-
-    // }) 
+   
   }
 
   selectedtab(event: any) {
@@ -508,40 +465,21 @@ range!:any;
 
   downloadPdf() {
     this.enable = true;
-    // this.historyService.getHistory().subscribe(
-    //   data => {
-    //   let downloadDetails=JSON.parse(data);
-
-
-        // this.delShow = true;
-        // this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leavetype', 'reasonForApply', 'location', 'delete'];
-        // this.employeeData = [];
-        // for (let value of JSON.parse(data)) {  
-          // if (this.empid != value.empid) {
-            //  this.employeeData.push(value);
-            // if((value.fromDate == this.campaignTwo.controls.start) && (value.toDate == this.campaignTwo.controls.end)){
-            //   employeeData.push(value);
-            // }
-          
-    //  this.empid= sessionStorage.getItem("empid");
-    // this.filterHistory.empid = downloadDetails.value.empid;
-    //  this.filterHistory.department =downloadDetails.value.department;
-    // this.filterHistory.createddate= downloadDetails.value.createddate;
-    // this.filterHistory.createddate= downloadDetails.value.fromDate;
-    // this.filterHistory.createddate= downloadDetails.value.toDate;
-    // this.filterHistory.createddate= downloadDetails.value.lopdays;
-    // this.filterHistory.createddate= downloadDetails.value.reasonForApply;
-    // this.filterHistory.createddate= downloadDetails.value.noOfDays;
-    // this.filterHistory.createddate= downloadDetails.value.createdby;
-    // this.filterHistory.createddate= downloadDetails.value.name;
-    // this.filterHistory.createddate= downloadDetails.value.leavetype;
-    // this.filterHistory.createddate= downloadDetails.value.approvedBy;
-    // this.filterHistory.createddate= downloadDetails.value.approvedDate;
-    // this.filterHistory.createddate= downloadDetails.value.location;
-    this. historyService.putHistory().subscribe(
-      data=>{
-     this.historypdf.push(this.dataSource2)
-    });
+    let listOfHistoryData = [];
+    for(let historyData of this.dataSource2.filteredData){
+        historyData.toDate = new Date(historyData.todate).toLocaleDateString(); 
+        historyData.todate = null; 
+        historyData.fromDate = new Date(historyData.fromdate).toLocaleDateString();
+        historyData.fromdate = null;
+        listOfHistoryData.push(historyData);
+    }
+    this. historyService.putHistory(listOfHistoryData)
+    //.subscribe(
+    //   data=>{
+    //     console.log("done");
+        
+    // //  this.historypdf.push(this.dataSource2)
+    // });
 
 
     this.spinner = true;
@@ -552,13 +490,35 @@ range!:any;
     }, 2000);
   }
 
+  deleteAllHistory(DeleteTemplate : any){
+    this.modalReference = this.modalService.open(DeleteTemplate ,{centered:true,size: "md"})
+  }
+  
+  deleteTempl(ChangetheStatus :any){
+    this.modalReference = this.modalService.open(ChangetheStatus,{centered:true,size: "md"})
+  }
+  closeTemp(){
+    this,this.modalReference.close();
+  }
 
+  selectedDeleterows(){
+  
+    this.historyService.selectedDeleteAllHistory(this.selectedRow).subscribe(
+      data => {
+        this.ngOnInit();
+        this.closeTemp(); 
+        setTimeout(() => {
 
+        }, 2000);
+      }
+    )
+  }
   deleteHistory(historyid: number) {
 
     this.historyService.deleteHistory(historyid).subscribe(
       data => {
         this.ngOnInit();
+        this.closeTemp();
         setTimeout(() => {
 
         }, 2000);
@@ -568,6 +528,7 @@ range!:any;
     )
   }
 }
+
 
 function applyFilter(event: Event | undefined, Event: { new(type: string, eventInitDict?: EventInit | undefined): Event; prototype: Event; readonly AT_TARGET: number; readonly BUBBLING_PHASE: number; readonly CAPTURING_PHASE: number; readonly NONE: number; }) {
   throw new Error('Function not implemented.');
