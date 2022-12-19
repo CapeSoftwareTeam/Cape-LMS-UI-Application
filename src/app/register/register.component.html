@@ -16,7 +16,7 @@
 
                                                 </div>
                                                 <input type="text" name="empid" (focusout)="empid($event)"
-                                                        placeholder="Enter employee id" class="form-control"
+                                                        placeholder="Enter Employee id" class="form-control"
                                                         formControlName="empid" [(ngModel)]="register.empid"
                                                         [ngClass]="{ 'is-invalid': submitted && field.empid.errors }">
                                                 <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
@@ -38,7 +38,7 @@
                                                                 <i class="bi bi-person-fill"></i> </span>
                                                 </div>
                                                 <input type="text" name="name" class="form-control"
-                                                        formControlName="name" [(ngModel)]="register.name"
+                                                        formControlName="name" [(ngModel)]="register.name"  placeholder="Enter Name"
                                                         [ngClass]="{'is-invalid': submitted && field.name.errors}">
                                                 <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
                                                         <div *ngIf="field.name.errors">Name field is required</div>
@@ -61,8 +61,9 @@
                                                 </div>
 
                                                 <select class="form-control" formControlName="gender"
-                                                        [(ngModel)]="register.gender"
+                                                        [(ngModel)]="register.gender"  placeholder="Select Gender"
                                                         [ngClass]="{'is-invalid': submitted && field.gender.errors}">
+                                                        <!-- <option value="" selected>Please Choose</option> -->
                                                         <option value="male">Male</option>
                                                         <option value="female">Female </option>
                                                         <option value="others">Others</option>
@@ -83,7 +84,7 @@
                                                         </span>
                                                 </div>
                                                 <input type="date" name="dob" class="form-control" formControlName="dob"
-                                                        [(ngModel)]="register.dob"
+                                                        [(ngModel)]="register.dob"  placeholder="Select  Date of Birth"
                                                         [ngClass]="{'is-invalid': submitted && field.dob.errors}">
                                                 <div *ngIf="submitted && field.dob.errors" class="invalid-feedback">
                                                         <div *ngIf="field.dob.errors">Date of birth is required</div>
@@ -100,7 +101,7 @@
                                                         </span>
                                                 </div>
                                                 <select class="form-control" formControlName="maritalStatus"
-                                                        [(ngModel)]="register.maritalstatus"
+                                                        [(ngModel)]="register.maritalstatus"  placeholder="Select Marital Status"
                                                         [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
                                                         <option value="married">Married</option>
                                                         <option value="Unmarried">Unmarried </option>
@@ -126,7 +127,7 @@
                                                 </div>
                                                 <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
                                                 <input type="text" name="mobilenumber" (focusout)="mobile($event)"class="form-control"
-                                                        formControlName="mobile" [(ngModel)]="register.mobilenumber"
+                                                        formControlName="mobile" [(ngModel)]="register.mobilenumber"  placeholder="Enter Mobile Number"
                                                         [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
                                                 <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
                                                         <div *ngIf="field.mobile.errors['required']">Mobile number is
@@ -151,7 +152,7 @@
                                                         </span>
                                                 </div>
                                                 <input type="text" name="alternate" (focusout)="alter($event)" class="form-control"
-                                                        formControlName="alternate"
+                                                        formControlName="alternate"  placeholder="Enter Alternate Mobile Number"
                                                         [(ngModel)]="register.alternatenumber"
                                                         [ngClass]="{'is-invalid': submitted && field.alternate.errors}">
                                                 <div *ngIf="submitted && field.alternate.errors"
@@ -177,8 +178,8 @@
                                                                 <i class="bi bi-envelope-fill"></i>
                                                         </span>
                                                 </div>
-                                                <input type="email" name="email" (focusout)="email($event)" class="form-control"
-                                                        formControlName="email" [(ngModel)]="register.emailid"
+                                                <input type="email" name="email" (focusout)="email($event)" class="form-control" (keyup)="getemail($event)"
+                                                        formControlName="email" [(ngModel)]="register.emailid"  placeholder="Enter Email Id"
                                                         [ngClass]="{'is-invalid': submitted && field.email.errors}">
                                                 <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
                                                         <div *ngIf="field.email.errors">Email is required</div>
@@ -197,7 +198,7 @@
                                                                 <i class="bi bi-eye-slash-fill"></i> </span>
                                                 </div>
                                                 <input type="password" name="Password" class="form-control"
-                                                        formControlName="password" [(ngModel)]="register.password"
+                                                        formControlName="password" [(ngModel)]="register.password"  placeholder="Enter Password"
                                                         [ngClass]="{'is-invalid' : submitted && field.password.errors}">
                                                 <div *ngIf="submitted && field.password.errors"
                                                         class="invalid-feedback">
@@ -219,7 +220,7 @@
                                                                 </span>
                                                         </div>
                                                         <input type="date" max="{{currentDate|date:'yyyy-MM-dd'}}" name="doj" class="form-control"
-                                                                formControlName="dateofjoining"
+                                                                formControlName="dateofjoining"  placeholder="Select Date Of Joining"
                                                                 (change)="changevalue($event)"
                                                                 [(ngModel)]="register.dateofjoining"
                                                                 [ngClass]="{'is-invalid': submitted && field.dateofjoining.errors}">
@@ -240,7 +241,7 @@
                                                                 </span>
                                                         </div>
                                                         <select formControlName="department" class="form-control"
-                                                                [(ngModel)]="register.department"
+                                                                [(ngModel)]="register.department"  placeholder="Select Department"
                                                                 [ngClass]="{'is-invalid' : submitted && field.department.errors}">
                                                                 <option value="" selected>Select Option</option>
                                                                 <option>Software</option>
@@ -286,7 +287,7 @@
                                                      </div>
                                                 </div> -->
                                                         <select formControlName="designation" class="form-control"
-                                                                [(ngModel)]="register.designation"
+                                                                [(ngModel)]="register.designation"  placeholder="Select Designation"
                                                                 [ngClass]="{'is-invalid' : submitted && field.designation.errors}">
                                                                 <option value="" selected>Select Option</option>
                                                                 <option>Software Engineer trainee</option>
@@ -311,7 +312,7 @@
 
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" *ngIf="Hide">
                                                 <label class="form-label">Other Experience</label>
                                                 <div class="input-group">
 
@@ -320,7 +321,7 @@
                                                                         <i class="bi bi-list-ul"></i> </span>
                                                         </div>
                                                         <input name="Other Experience" class="form-control"
-                                                                formControlName="otherExperience"
+                                                                formControlName="otherExperience"  placeholder="Enter Other Experience"
                                                                 (keypress)="keyPressNumbers($event)"
                                                                 (change)="changevalue($event)"
                                                                 [(ngModel)]="register.otherexperience"
@@ -333,7 +334,7 @@
                                                         </div>
                                                 </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" *ngIf="Hide">
                                                 <label class="form-label">CAPE Experience</label>
                                                 <div class="input-group">
 
@@ -341,7 +342,7 @@
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-list-ul"></i> </span>
                                                         </div>
-                                                        <input type="number" name="CAPE Experience"
+                                                        <input type="number" name="CAPE Experience"  placeholder="Cape Experience(readonly"
                                                                 (keypress)="keyPressNumbers($event)"
                                                                 class="form-control" readonly
                                                                 formControlName="capeExperience"
@@ -355,7 +356,7 @@
                                                         </div>
                                                 </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4"*ngIf="Hide">
                                                 <label class="form-label">Total Experience</label>
                                                 <div class="input-group">
 
@@ -363,7 +364,7 @@
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-list-ul"></i> </span>
                                                         </div>
-                                                        <input type="number" name="totalExperience" readonly
+                                                        <input type="number" name="totalExperience" readonly  placeholder=" Total Experience (readonly)"
                                                                 class="form-control" formControlName="totalExperience"
                                                                 (keypress)="keyPressNumbers($event)"
                                                                 [(ngModel)]="register.totalexperience"
@@ -388,7 +389,7 @@
                                                                 </span>
                                                         </div>
 
-                                                        <select formControlName="country"  (change)="changeCountry1($event)"
+                                                        <select formControlName="country"  (change)="changeCountry1($event)"  placeholder="Select Country"
                                                                 class="form-control"
                                                                 [(ngModel)]="register.country"
                                                                 [ngClass]="{'is-invalid' : submitted && field.country.errors}" >
@@ -406,7 +407,7 @@
                                 </div>
                                         
                                         <div class="col-md-4 ">
-                                                <label>States</label>
+                                                <label>State</label>
                                                 <div class="input-group">
 
                                                         <div class="input-group-prepend">
@@ -418,7 +419,7 @@
                                                         </div>
 
                                                        <select formControlName="state" 
-                                                                class="form-control" [(ngModel)]="register.state"
+                                                                class="form-control" [(ngModel)]="register.state"  placeholder="Select State"
                                                               
                                                                
                                                              
@@ -450,7 +451,7 @@
                                                         </div>
 
                                                         <input type="text" name="city" class="form-control"
-                                                                formControlName="city" [(ngModel)]="register.city"
+                                                                formControlName="city" [(ngModel)]="register.city"  placeholder="Enter City"
                                                                
                                                                 
                                                           
@@ -481,7 +482,7 @@
          <label class="form-label"> Updated By</label>
          <input type="text" name="updateBy" class="form-control" [formControl]="updatedBy">
 </div> -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" *ngIf="Hide">
                                                 <label class="form-label">Manager Name</label>
                                                 <div class="input-group">
 
@@ -491,7 +492,7 @@
                                                                 </span>
                                                         </div>
                                                         <input type="text" name="manager" class="form-control"
-                                                                formControlName="managername"
+                                                                formControlName="managername"  placeholder="Enter Manager Name"
                                                                 [(ngModel)]="register.managername"
                                                                 [ngClass]="{'is-invalid': submitted && field.managername.errors}">
                                                         <div *ngIf="submitted && field.managername.errors"
@@ -501,7 +502,7 @@
                                                         </div>
                                                 </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" *ngIf="Hide">
                                                 <label class="form-label">Manager Email</label>
                                                 <div class="input-group">
 
@@ -510,7 +511,7 @@
                                                                         <i class="bi bi-envelope-fill"></i>
                                                                 </span>
                                                         </div>
-                                                        <input type="email" name="Memail" class="form-control"
+                                                        <input type="email" name="Memail" class="form-control"  placeholder="Enter Manager Email"
                                                                 formControlName="manageremail"
                                                                 (focusout)="emailvalidation($event)"
                                                                 [(ngModel)]="register.manageremail"

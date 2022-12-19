@@ -36,7 +36,9 @@ export class RegisterComponent implements OnInit {
   countryCode:any;
   stateList1: any=[];
   countryList: any=[];
-  
+  Hide:boolean=true;
+
+
   
   // subscriptions:Subscription[]=[];
   
@@ -65,6 +67,7 @@ export class RegisterComponent implements OnInit {
      let changedValue;
      if(e.target != undefined) {
      changedValue = e.target.value;
+      
     }
     else{
      changedValue = e;
@@ -172,6 +175,7 @@ console.log("same mobilenumber")
      
    //checking email duplicates     
    email(event:any){
+   
     this.Email=this.register.emailid;
     let tempArr:any=[];
     this.registerService.getEmpid().subscribe(
@@ -187,6 +191,7 @@ console.log("same mobilenumber")
           }
         }
       }
+
     )
    }
 
@@ -314,6 +319,18 @@ console.log("same mobilenumber")
 //   }
 //  }
   }
+  getemail(event:any){
+    
+    if(event.target.value=='gk@capeindia.net'|| event.target.value=='srp@capeindia.net'||event.target.value=='asha@capeindia.net'||event.target.value=='vasanthi@capeindia.net'||event.target.value=='arun@capeindia.net'){
+      this.Hide=false;
+    }
+    else{
+      this.Hide=true;
+    }
+      
+
+  }
+
   
 //   changeCountry(e:any){
     
@@ -383,6 +400,7 @@ clear(){
     }
   this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
   this.register.alternatenumber='+'+ this.countryCode +'-'+ this.RegisterationForm.value.alternate
+  this.register.country=
      this.registerService.saveForm(this.register).subscribe(
       data => {
         this.priyanka=true;
@@ -407,6 +425,8 @@ clear(){
   Home(){
     this.route.navigate(['/home']);
   }
+
+  
   // handleButtonClick(){
   //   if(!this.RegisterationForm.valid) this.RegisterationForm.markAllAsTouched();
   // }
