@@ -82,6 +82,13 @@ throw new Error('Method not implemented.');
   filename2:boolean=true;
   loading1:boolean=false;
   updateButton:boolean=true;
+  greet: string="";
+  isShow: boolean = false;
+  open:boolean=false;
+  
+  togglecount:number = 0;
+  valueBot: string="";
+  
 
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
@@ -219,7 +226,9 @@ throw new Error('Method not implemented.');
     })
   
   }
-
+ 
+ 
+ 
 
   // addTab() {
   //   this.tabs.push('New');
@@ -398,5 +407,13 @@ this.cancel=false;
   }, 3000);
   
   }
+  onCancell(){
+    this.open =false;
+      }
+      toggleStatus(){
+        this.open=true;
+      
+      }
+ 
  
 }

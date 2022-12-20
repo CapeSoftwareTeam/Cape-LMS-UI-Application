@@ -255,4 +255,43 @@
   <div class="dot1"></div>
   <div class="dot2"></div>
 </div> 
+<div class="chat-circle" class="btn-btn-raised" >
+  <div class="chat-overlay"></div>
+  <div class="tooltipBot glow">
+     
+      <img src="..\assets\chat img.png" (click)="toggleStatus()" style="width: 55px;
+          position: relative;
+          margin-left: 1473px;
+          top: 42px;
+          margin-top: 1000px;
+          ">
+          <span class="tooltiptextBot">Live Chat</span>
+  </div>
+</div>
+<div class="chat-box resizable" style="height:60%;" *ngIf="open">
+  <div class="chat-box-header">
+      <i class="bi bi-x-circle" style="margin-left:307px;margin-top:10px;" (click)="onCancell()" ></i>
+      <span><img src=..\assets\chatblue.jpg style="
+      width: 50px;
+  position: relative;
+  margin-top: -55px;
+  height: 44px;
+  margin-right: 279px;"></span>
+          
+          <span class="chat-box-toggle" style="top:0%; overflow-y:scroll;"></span>
+          
+          <ng-container >
+              <div class="message">
+
+              </div>
+              <div class="input">
+                  <input  type="text" 
+                  class="form-control" id="botUserInput" placeholder="type something....">
+                 </div>
+          </ng-container>
+         
+  </div>
+</div>
+
+
 
