@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalErrorHandlerService {
   errorMessage: string="";
-
+apphistoryid:any;
+leavefileId:any
   constructor() { 
     console.log(this.errorMessage);
   }

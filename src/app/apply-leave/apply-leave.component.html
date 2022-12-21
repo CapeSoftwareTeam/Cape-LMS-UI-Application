@@ -1,7 +1,12 @@
 <form [formGroup]="postleave">
   <div class="container">
     <!-- <h6 style="margin-left: 92%;color: #a6a2a2;"><strong>{{empid}}</strong></h6> -->
-    <div class="card" style="margin-top:40px">    
+    <div class="card" style="margin-top:40px">  
+      <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+
+                    style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
+
+                    {{errorMessage}}</p>     
       <div class="card-body">
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
@@ -16,9 +21,9 @@
               <label><b>Select Employee </b></label>
             </div>
               <div class="col-7">
-                <select class="formcontrol" (change)="selectToSend($event)">
+                <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid">
                   <option [ngValue]="null" disabled >Select Employee</option>
-                  <option value="{{this.empid}}">{{this.empid}} - {{this.name}}</option>
+                  <option value="{{this.empid}}" selected>{{this.empid}} - {{this.name}}</option>
                   <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
                 </select>
             </div>
@@ -220,13 +225,21 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               style="height: 40px;float: left;width: 75%;margin-top: 6px;"></textarea>
           </div>
         </div>
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-6"  style="float: left;width: 25%;margin-top: 6px;">
+              <label><b>IU</b></label></div>
+              <div class="col-7">
+              <textarea formControlName="reasonforapply"
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;"></textarea>
+          </div>
+        </div>
         <br>
         <hr>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
             <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" style="margin-right: 23px;">Cancel</button>
-            <button type="button" class="btn btn-primary" style="margin-right: 23px;"  (click)="save()">Save changes</button>
-             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure)" style="margin-right: 23px;" *ngIf="hideIfsick"> Apply leave</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 23px;" *ngIf="hideIfnotme" (click)="save()">Save changes</button>
+             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure,onbehalf)" style="margin-right: 23px;" *ngIf="hideIfsick"> Apply leave</button>
           </div>
         </div>
       </div>
@@ -312,5 +325,37 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="ok()">OK</button>
+  </div>
+</ng-template>
+
+<ng-template #onbehalf let-modal>
+  <div class="modal-header">
+    <div class="modal-title" id="modal-basic-title">
+      <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
+    </div>
+  </div>
+  <div class="modal-body" style="text-align:center">
+  Are you sure you want to proceed request for {{this.defaultEmpid}} ?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onbehalfAprroved(update)">OK</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #update let-modal>
+  <div class="modal-header">
+    <div class="modal-title" id="modal-basic-title">
+      <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
+    </div>
+  </div>
+  <div class="modal-body" style="text-align:center">
+<ul>
+
+</ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onAprroved()">OK</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>
   </div>
 </ng-template>

@@ -4,6 +4,7 @@
       <div class="col-md-4" style="float: left;">
       <div class="card" >
         <div class="card-header" style="justify-content: center;text-align: center;">
+             
           <!-- <h6>NO of days taken</h6>fa fa-child -->
           <h3 style="font-size:large; justify-content: center;font-family: cursive"><i class="fas fa-icons bounce" style="font-size: 25px;"></i><strong> Casual leave</strong></h3>
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
@@ -102,7 +103,7 @@
     </div>
     <br>
     <br>
-        <div class="col-md-12" style="float: inherit;top:10px">
+        <!-- <div class="col-md-12" style="float: inherit;top:10px">
           <div class="card" > 
        
               <div class="main_div">
@@ -123,40 +124,24 @@
 
           </div>
           </div>
-      
+       -->
   </div>
 
 
 <div class="rightcolumn">
-  <div class="card" style="background-color: rgb(10, 10, 10);">
+  <div class="card" style="background-color: white;">
 <!-- <h5><b style="color: white;">Time is precious</b>  </h5> -->
-    <div class="clock-wrapper black-border">
-      <div class="clock-analog shadow">
-       
-        <span *ngFor="let digit of digits" class="digit digit-{{digit}}"
-        [ngStyle]="{'transform':'rotate('+digit * 30+'deg)'}">
-
-          <b [ngStyle]="{'transform':'rotate(-'+ digit * 30+'deg)'}">{{digit}}</b>
-        </span>
-        <div class="hand hour-hand" [ngStyle]="{'transform':'rotate('+ hourHandPosition +'deg)'}"></div>
-        <div class="hand minute-hand" [ngStyle]="{'transform':'rotate('+ minuteHandPosition +'deg)'}"></div>
-        <div class="hand second-hand"
-        [ngStyle]="{'transform':'rotate('+ secondHandPosition +'deg)'}">
-
-        </div>
-        </div>
-
-        <br>
-        <div class="clock-digital shadow">
-          <span class="date year">{{dateTime.day}}</span>
-          <span class="date month">{{dateTime.month}}</span>
-          <span class="date year">{{dateTime.year}}</span>
-          <span class="date separator"> - </span>
-          <span class="date hour">{{dateTime.hour}}</span> 
-          <span class="date minute">{{dateTime.minute}}</span> 
-          <span class="date second">{{dateTime.second}}</span>  
-       </div>
-    </div>
+<div class="clock-wrapper black-border">
+  <div class="clock-digital shadow"  style="height: inherit;" >
+    <span class="date year">{{dateTime.day}}   -  </span>
+    <span class="date month">{{dateTime.month}}   -  </span>
+    <span class="date year">{{dateTime.year}}</span>
+    <span class="date separator"> - </span>
+    <span class="date hour">{{dateTime.hour}}  :  </span> 
+    <span class="date minute">{{dateTime.minute}}  :  </span> 
+    <span class="date second">{{dateTime.second}}</span>  
+ </div>
+</div>
     <!-- <div class="dummy-card">
       
 <div class="clock">

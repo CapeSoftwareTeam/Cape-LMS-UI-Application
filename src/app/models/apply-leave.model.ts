@@ -2,6 +2,7 @@ export class ApplyLeave {
  // [x: string]: any;
   historyid!: number;
   registerid!: number;
+  fileid!:Number;
   empid!: string;
   name!: string;
   department!: string;

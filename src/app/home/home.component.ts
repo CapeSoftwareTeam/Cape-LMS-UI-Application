@@ -264,9 +264,7 @@ throw new Error('Method not implemented.');
   callRegister(){
     this.route.navigate(['/register']);
   }
-  callEmployeeLeave(){
-    this.route.navigate(['/employeeleave'])
-  }
+
   callEmployeeDetails(){
     this.route.navigate(['/employeedetails'])
   }

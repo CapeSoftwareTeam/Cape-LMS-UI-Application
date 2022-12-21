@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { end, start } from '@popperjs/core';
+import { GlobalErrorHandlerService } from '../global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
 import { Register } from '../models/register';
@@ -17,13 +18,15 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
-
-  hideIfsick:boolean=true;
-  findHalfToDays:any;
-  findHalfDays:any;
-  findDays:any;
-  historyid:any;
-  minus:any=0.5;
+  b:any=[];
+  hideIfnotme: boolean = true;
+  defaultEmpid: any
+  hideIfsick: boolean = true;
+  findHalfToDays: any;
+  findHalfDays: any;
+  findDays: any;
+  historyid!: number;
+  minus: any = 0.5;
   showMorning: boolean = false;
   callLms: boolean = true;
   back: boolean = false;
@@ -38,16 +41,16 @@ export class ApplyLeaveComponent implements OnInit {
 
   FrommyDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
-    return day !== 0 ;
+    return day !== 0;
   }
   TomyDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
-    return day !== 0 ;
+    return day !== 0;
   }
   modalReference: any;
   countinNumber: any;
   personDetails = new Register();
-  leavetrack=new LeaveTracking();
+  leavetrack = new LeaveTracking();
   name: any;
   designation: any;
   department: any;
@@ -66,9 +69,9 @@ export class ApplyLeaveComponent implements OnInit {
   fulldays: any;
   halfdays: any;
   cl: any;
-  saturdays1: any=[];
-  leftoverApproval: any=[];
-  members: any=[];
+  saturdays1: any = [];
+  leftoverApproval: any = [];
+  members: any = [];
   city: any;
   selectedEmployee: any;
   Selectedname: any;
@@ -76,7 +79,7 @@ export class ApplyLeaveComponent implements OnInit {
   selectedName: any;
   selectedexperience: any;
   selectedlocation: any;
-  personDetailbsd: any=[];
+  personDetailbsd: any = [];
   personname: any;
   persondepartment: any;
   persondesignation: any;
@@ -84,17 +87,20 @@ export class ApplyLeaveComponent implements OnInit {
   personexperience: any;
   personmanagername: any;
   personmanageremail: any;
-
+  detailsdata: any=[];
+  showErrorMessage: boolean=false;
+  errorMessage: string='';
+status:any
 
   constructor(private route: Router,
-    private apply: ApplyleaveService,
-    private fb: FormBuilder,
-    private getDetails: ApplyleaveService,
-    private activeRoute: ActivatedRoute,
-    private modalService: NgbModal,
-    private registerDetails: LeaveStatusServiceService,
-    private getPublicHolidays: HolidayservicesService,
-    private teamdetails: RegisterserviceService) { }
+              private apply: ApplyleaveService,
+              private fb: FormBuilder,
+              private modalService: NgbModal,
+              private registerDetails: LeaveStatusServiceService,
+              private getPublicHolidays: HolidayservicesService,
+              private teamdetails: RegisterserviceService,
+              private statusagree: LeaveStatusServiceService,
+              private globalErrorHandler: GlobalErrorHandlerService) { }
 
   applyLeave = new ApplyLeave();
 
@@ -102,21 +108,21 @@ export class ApplyLeaveComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+
     this.empid = sessionStorage.getItem("empid");
 
     this.getPublicHolidays.getLeave().subscribe(
       data => {
-        let temp=[];
+        let temp = [];
         this.Includepublicholiday = JSON.parse(data);
-        for(let leave of this.Includepublicholiday){
+        for (let leave of this.Includepublicholiday) {
           this.holidays.push(leave.date);
-          
+
         }
       }
     );
 
-    
+
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
@@ -128,21 +134,21 @@ export class ApplyLeaveComponent implements OnInit {
         this.location = this.personDetails.city;
         this.managername = this.personDetails.managername;
         this.manageremail = this.personDetails.manageremail;
-        this.city=this.personDetails.city;
+        this.city = this.personDetails.city;
         ;
       })
 
 
     console.log(this.empid);
     this.postleave = new FormGroup({
-      leaveType: new FormControl('',Validators.required),
-      noofdays: new FormControl('',Validators.required),
-      fromdate: new FormControl('',Validators.required),
-      chooseDays:new FormControl('',Validators.required),
-      chooseFromDays:new FormControl('',Validators.required),
-      chooseToDays:new FormControl('',Validators.required),
-      todate: new FormControl('',Validators.required),
-      reasonforapply: new FormControl('',Validators.required),
+      leaveType: new FormControl('', Validators.required),
+      noofdays: new FormControl('', Validators.required),
+      fromdate: new FormControl('', Validators.required),
+      chooseDays: new FormControl('', Validators.required),
+      chooseFromDays: new FormControl('', Validators.required),
+      chooseToDays: new FormControl('', Validators.required),
+      todate: new FormControl('', Validators.required),
+      reasonforapply: new FormControl('', Validators.required),
       status: new FormControl('pending'),
     });
     // this.getnumber();
@@ -150,168 +156,190 @@ export class ApplyLeaveComponent implements OnInit {
       data => {
         this.Includepublicholiday = JSON.parse(data);
         console.log(this.Includepublicholiday);
-        for(let e=0;e<=this.Includepublicholiday;e++){
-        // for(let e of this.Includepublicholiday){
-        this.holidays=this.Includepublicholiday.date;
-        console.log(this.holidays);
+        for (let e = 0; e <= this.Includepublicholiday; e++) {
+          // for(let e of this.Includepublicholiday){
+          this.holidays = this.Includepublicholiday.date;
+          console.log(this.holidays);
+        }
+      }, error=>{
+        this.showErrorMessage=true;
+        this.errorMessage=this.globalErrorHandler.errorMessage;
+        setTimeout(() => {
+          this.showErrorMessage=false;
+        }, 3000);
+  
       }
-    }
     );
 
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.applyLeave = JSON.parse(data);
+      },error=>{
+        this.showErrorMessage=true;
+        this.errorMessage=this.globalErrorHandler.errorMessage;
+        setTimeout(() => {
+          this.showErrorMessage=false;
+        }, 3000);
       }
     )
     this.teamdetails.getEmpid().subscribe(
-          data => {
-            this.leftoverApproval =JSON.parse(data)
-              for (let team of this.leftoverApproval){
-                if(team.managername==this.name && team.department==this.department && team.city==this.city){
-               this.members.push(team);
-                }
-              }
+      data => {
+        this.leftoverApproval = JSON.parse(data)
+        for (let team of this.leftoverApproval) {
+          if(this.designation=="Manager"){
+            if (team.managername == this.name && team.department == this.department && team.city == this.city) {
+              this.members.push(team);
+            }
           }
-        );
-       
+          else if(this.designation=="HR"){
+            if (team.managername == this.name && team.designation == "Manager") {
+              this.members.push(team);
+          }
+          }
+        }
+      },error=>{
+        this.showErrorMessage=true;
+        this.errorMessage=this.globalErrorHandler.errorMessage;
+        setTimeout(() => {
+          this.showErrorMessage=false;
+        }, 3000);
+      }
+     );
+
   }
-  leaveApply(success: any,failure:any) {
+  leaveApply(success: any, failure: any,onbehalf:any) {
 
     // if(this.postleave.invalid){
     //   return ;
     // }
-    if(this.selectedEmployee == this.empid){
-      this.applyLeave.empid = this.selectedEmpid;
-      this.applyLeave.name =   this.personname;
+    if (this.defaultEmpid != this.empid) {
+      this.applyLeave.empid = this.defaultEmpid;
+      this.applyLeave.name = this.personname;
       this.applyLeave.department = this.persondepartment;
       this.applyLeave.designation = this.persondesignation;
       this.applyLeave.experience = this.personexperience;
       this.applyLeave.location = this.personlocation;
       this.applyLeave.managername = this.personmanagername;
-      this.applyLeave.manageremail= this.personmanageremail;
+      this.applyLeave.manageremail = this.personmanageremail;
       this.applyLeave.leaveType = this.postleave.value.leaveType;
       this.applyLeave.noofdays = this.countinNumber;
       this.applyLeave.fromdate = this.postleave.value.fromdate;
       this.applyLeave.todate = this.postleave.value.todate;
       this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
       this.applyLeave.status = 'pending';
+      // this.applyLeave.createdby=this.personname;
       this.apply.leaveRegister(this.applyLeave).subscribe(
-        data => { this.leave.push(this.postleave) }
+        data => { 
+      },error=>{
+          this.showErrorMessage=true;
+          this.errorMessage=this.globalErrorHandler.errorMessage;
+          setTimeout(() => {
+            this.showErrorMessage=false;
+    
+          }, 3000);
+        }
       )
-    }else{
-      this.applyLeave.empid = this.selectedEmpid;
-      this.applyLeave.name =   this.personname;
-      this.applyLeave.department = this.persondepartment;
-      this.applyLeave.designation = this.persondesignation;
-      this.applyLeave.experience = this.personexperience;
-      this.applyLeave.location = this.personlocation;
-      this.applyLeave.managername = this.personmanagername;
-      this.applyLeave.manageremail= this.personmanageremail;
-      this.applyLeave.leaveType = this.postleave.value.leaveType;
-      this.applyLeave.noofdays = this.countinNumber;
-      this.applyLeave.fromdate = this.postleave.value.fromdate;
-      this.applyLeave.todate = this.postleave.value.todate;
-      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
-      this.applyLeave.status = 'pending';
-      this.apply.leaveRegister(this.applyLeave).subscribe(
-        data => { this.leave.push(this.postleave) }
-      )
+   
+      this.modalReference=this.modalService.open(onbehalf,{ size: 'm' })
     }
+    else {
+      this.applyLeave.empid = this.empid;
+      this.applyLeave.name = this.name;
+      this.applyLeave.department = this.department;
+      this.applyLeave.designation = this.designation;
+      this.applyLeave.experience = this.experience;
+      this.applyLeave.location = this.location;
+      this.applyLeave.managername = this.managername;
+      this.applyLeave.manageremail = this.manageremail;
+      this.applyLeave.leaveType = this.postleave.value.leaveType;
+      this.applyLeave.noofdays = this.countinNumber;
+      this.applyLeave.fromdate = this.postleave.value.fromdate;
+      this.applyLeave.todate = this.postleave.value.todate;
+      this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.status = 'pending';
+      // this.apply.leaveRegister(this.applyLeave).subscribe(
+      // data => { this.leave.push(this.postleave) }
+      // )
 
-    // this.applyLeave.empid = this.selectedEmployee;
-    // this.applyLeave.name =   this.personname;
-    // this.applyLeave.department = this.persondepartment;
-    // this.applyLeave.designation = this.persondesignation;
-    // this.applyLeave.experience = this.personexperience;
-    // this.applyLeave.location = this.personlocation;
-    // this.applyLeave.managername = this.personmanagername;
-    // this.applyLeave.manageremail= this.personmanageremail;
-    // this.applyLeave.leaveType = this.postleave.value.leaveType;
-    // this.applyLeave.noofdays = this.countinNumber;
-    // this.applyLeave.fromdate = this.postleave.value.fromdate;
-    // this.applyLeave.todate = this.postleave.value.todate;
-    // this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
-    // this.applyLeave.status = this.postleave.value.status;
+      this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
+        data => {
+          this.leavetrack = JSON.parse(data);
 
-    this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
-      data=>{
-       this.leavetrack=JSON.parse(data);
+
+          if (this.postleave.value.leaveType == "casual") {
+            if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
+              this.modalReference = this.modalService.open(failure, { size: 'm' });
+            }
+            else {
+              this.apply.leaveRegister(this.applyLeave).subscribe(
+                data => { this.leave.push(this.applyLeave) }
+              )
+              this.modalReference = this.modalService.open(success, { size: 'm' })
+              console.log("applied")
+            }
+
+          }
+          else if (this.postleave.value.leaveType == "sick") {
+            if (this.countinNumber > this.leavetrack.sickLeave) {
+              this.modalReference = this.modalService.open(failure, { size: 'm' });
+            } else {
+              this.apply.leaveRegister(this.applyLeave).subscribe(
+                data => { this.leave.push(this.applyLeave) }
+              )
+              this.modalReference = this.modalService.open(success, { size: 'm' })
+              console.log("applied")
+            }
+
+          }
+          else if (this.postleave.value.leaveType == "bereavement") {
+            if (this.countinNumber > this.leavetrack.bereavementLeave) {
+              this.modalReference = this.modalService.open(failure, { size: 'm' });
+            } else {
+              this.apply.leaveRegister(this.applyLeave).subscribe(
+                data => { this.leave.push(this.applyLeave) }
+              )
+              this.modalReference = this.modalService.open(success, { size: 'm' })
+              console.log("applied")
+            }
+
+          }
+          else if (this.postleave.value.leaveType == "privilege") {
+            if (this.countinNumber > this.leavetrack.privilegeLeave) {
+              this.modalReference = this.modalService.open(failure, { size: 'm' });
+            } else {
+              this.apply.leaveRegister(this.applyLeave).subscribe(
+                data => { this.leave.push(this.applyLeave) }
+              )
+              this.modalReference = this.modalService.open(success, { size: 'm' })
+              console.log("applied")
+            }
+
+          }
+          else if (this.postleave.value.leaveType == "maternity") {
+            if (this.countinNumber > this.leavetrack.maternityLeave) {
+              this.modalReference = this.modalService.open(failure, { size: 'm' });
+            } else {
+              this.apply.leaveRegister(this.applyLeave).subscribe(
+                data => { this.leave.push(this.applyLeave) }
+              )
+              this.modalReference = this.modalService.open(success, { size: 'm' })
+              console.log("applied")
+            }
+
+          }
+        },error=>{
+          this.showErrorMessage=true;
+          this.errorMessage=this.globalErrorHandler.errorMessage;
+          setTimeout(() => {
+            this.showErrorMessage=false;
+          }, 3000);
+        })
 
        
-        if(this.postleave.value.leaveType=="casual"){      
-          // if(this.leavetrack.carryForwardLeave==undefined ){
-          //   this.leavetrack.carryForwardLeave=0.0;
-          //   this.modalReference = this.modalService.open(failure, { size: 'm' });
-           if(this.countinNumber>this.leavetrack.carryForwardLeave ||this.leavetrack.carryForwardLeave==undefined){
-            this.modalReference = this.modalService.open(failure, { size: 'm' });
-           }
-          else{
-            this.apply.leaveRegister(this.applyLeave).subscribe(
-              data => { this.leave.push(this.applyLeave) }
-            )
-            this.modalReference = this.modalService.open(success, { size: 'm' })
-            console.log("applied")
-           }
-        
-      }
-        else if(this.postleave.value.leaveType=="sick"){
-          if(this.countinNumber>this.leavetrack.sickLeave){
-            this.modalReference = this.modalService.open(failure, { size: 'm' });
-           }else{
-            this.apply.leaveRegister(this.applyLeave).subscribe(
-              data => { this.leave.push(this.applyLeave) }
-            )
-            this.modalReference = this.modalService.open(success, { size: 'm' })
-            console.log("applied")
-        }
-    
-      }
-      else if(this.postleave.value.leaveType=="bereavement"){
-        if(this.countinNumber>this.leavetrack.bereavementLeave){
-          this.modalReference = this.modalService.open(failure, { size: 'm' });
-         }else{
-          this.apply.leaveRegister(this.applyLeave).subscribe(
-            data => { this.leave.push(this.applyLeave) }
-          )
-          this.modalReference = this.modalService.open(success, { size: 'm' })
-          console.log("applied")
-      }
-  
     }
-    else if(this.postleave.value.leaveType=="privilege"){
-      if(this.countinNumber>this.leavetrack.privilegeLeave){
-        this.modalReference = this.modalService.open(failure, { size: 'm' });
-       }else{
-        this.apply.leaveRegister(this.applyLeave).subscribe(
-          data => { this.leave.push(this.applyLeave) }
-        )
-        this.modalReference = this.modalService.open(success, { size: 'm' })
-        console.log("applied")
-    }
-
-  }
-  else if(this.postleave.value.leaveType=="maternity"){
-    if(this.countinNumber>this.leavetrack.maternityLeave){
-      this.modalReference = this.modalService.open(failure, { size: 'm' });
-     }else{
-      this.apply.leaveRegister(this.applyLeave).subscribe(
-        data => { this.leave.push(this.applyLeave) }
-      )
-      this.modalReference = this.modalService.open(success, { size: 'm' })
-      console.log("applied")
-  }
-
-}
-     })
-
-   
-    // this.apply.leaveRegister(this.applyLeave).subscribe(
-    //   data => { this.leave.push(this.applyLeave) }
-    // )
-    // this.modalReference = this.modalService.open(success, { size: 'm' })
-    // console.log("applied")
-  }
   
+  }
+
   selected() {
     console.log(this.selectedItem);
   }
@@ -326,7 +354,7 @@ export class ApplyLeaveComponent implements OnInit {
     this.applyLeave.experience = this.experience;
     this.applyLeave.location = this.location;
     this.applyLeave.managername = this.managername;
-    this.applyLeave.manageremail=this.manageremail;
+    this.applyLeave.manageremail = this.manageremail;
     this.applyLeave.leaveType = this.postleave.value.leaveType;
     this.applyLeave.noofdays = this.countinNumber;
     this.applyLeave.fromdate = this.postleave.value.fromdate;
@@ -338,8 +366,8 @@ export class ApplyLeaveComponent implements OnInit {
     )
     this.route.navigate(['/home']);
   }
-  proceed(){
-    if(this.selectedEmployee == this.empid){
+  proceed() {
+    if (this.defaultEmpid == this.empid) {
       this.applyLeave.empid = this.empid;
       this.applyLeave.name = this.name;
       this.applyLeave.department = this.department;
@@ -347,7 +375,7 @@ export class ApplyLeaveComponent implements OnInit {
       this.applyLeave.experience = this.experience;
       this.applyLeave.location = this.location;
       this.applyLeave.managername = this.managername;
-      this.applyLeave.manageremail=this.manageremail;
+      this.applyLeave.manageremail = this.manageremail;
       this.applyLeave.leaveType = this.postleave.value.leaveType;
       this.applyLeave.noofdays = this.countinNumber;
       this.applyLeave.fromdate = this.postleave.value.fromdate;
@@ -357,15 +385,15 @@ export class ApplyLeaveComponent implements OnInit {
       this.apply.leaveRegister(this.applyLeave).subscribe(
         data => { this.leave.push(this.postleave) }
       )
-    }else{
+    } else {
       this.applyLeave.empid = this.selectedEmpid;
-      this.applyLeave.name =   this.personname;
+      this.applyLeave.name = this.personname;
       this.applyLeave.department = this.persondepartment;
       this.applyLeave.designation = this.persondesignation;
       this.applyLeave.experience = this.personexperience;
       this.applyLeave.location = this.personlocation;
       this.applyLeave.managername = this.personmanagername;
-      this.applyLeave.manageremail= this.personmanageremail;
+      this.applyLeave.manageremail = this.personmanageremail;
       this.applyLeave.leaveType = this.postleave.value.leaveType;
       this.applyLeave.noofdays = this.countinNumber;
       this.applyLeave.fromdate = this.postleave.value.fromdate;
@@ -374,9 +402,10 @@ export class ApplyLeaveComponent implements OnInit {
       this.applyLeave.status = 'pending';
       this.apply.leaveRegister(this.applyLeave).subscribe(
         data => { this.leave.push(this.postleave) }
-      )
+      ) 
+
     }
-    
+
     this.route.navigate(['/home']);
     this.modalReference.close();
   }
@@ -393,26 +422,26 @@ export class ApplyLeaveComponent implements OnInit {
     this.pluscount = this.todate;
     console.log(this.pluscount);
   }
-  getnumber() { 
+  getnumber() {
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
         this.department = this.personDetails.department;
       });
-   
+
     let dd = this.count;
-   
+
     let d = this.pluscount;
-    
+
     this.empid = sessionStorage.getItem("empid");
 
     if (this.department != 'Software') {
-      console.log(this.department)
+   
       // for complete saturday and sunday
       var getDateArray = function (start: string | number | Date, end: number | Date) {
         var arr = new Array();
         var dt = new Date(start);
-        console.log("dt=", dt);
+  
         while (dt <= end) {
           arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
           dt.setDate(dt.getDate() + 1);
@@ -439,57 +468,42 @@ export class ApplyLeaveComponent implements OnInit {
           date = new Date(year, month, day);
           console.log(date)
         }
-        console.log(saturdays)
+    
         return saturdays;
       }
 
       if (this.count.getMonth() == this.pluscount.getMonth() && this.count.getFullYear() == this.pluscount.getFullYear()) {
-        this.saturdays=[];
+        this.saturdays = [];
         this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
         this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
-        this.saturdays= getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-        console.log(this.saturdays)
+        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+
         for (let r = 0; r < this.saturdays.length; r++) {
 
           let tempDate = this.saturdays[r].getMonth() + 1;
           this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1
         }
-        console.log(this.Alternatesaturday);
+      
       }
       else if ((this.count.getFullYear() != this.pluscount.getFullYear()) || this.count.getMonth() != this.pluscount.getMonth()) {
         this.Alternatesaturday = [];
-        this.saturdays=[];
+        this.saturdays = [];
         this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
         this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
         // if(this.saturdays.getMonth()== this.count.getMonth()){
-        this.saturdays=getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
         // }
         // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
-        this.saturdays1=(getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
+        this.saturdays1 = (getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
         // }
-        this.saturdays= this.saturdays.concat(this.saturdays1);
-        console.log(this.saturdays)
+        this.saturdays = this.saturdays.concat(this.saturdays1);
+
         for (let r = 0; r < this.saturdays.length; r++) {
           let tempDate = this.saturdays[r].getMonth() + 1;
-          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate())+1;
+          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1;
         }
       }
-      //  else if(this.count.getMonth()==this.pluscount.getMonth()){}
-      // if(this.saturdays.getMonth()== this.count.getMonth())
 
-      //     this.Alternatesaturday=[];
-      //    this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-      //    this.saturdays = getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0);
-      //     console.log(this.saturdays)
-
-      //   for(let r=0;r<this.saturdays.length;r++){
-
-      //     let tempDate=this.saturdays[r].getMonth()+1;
-      //     this.Alternatesaturday.push(this.saturdays[r].getFullYear()+"-"+tempDate+"-"+this.saturdays[r].getDate())
-
-      //   }
-      //   console.log( this.Alternatesaturday );
-      //    }
       var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
         var arr = dates.filter(function (dt: any) {
           return holidaysArray.indexOf(dt) < 0;
@@ -511,15 +525,15 @@ export class ApplyLeaveComponent implements OnInit {
 
       }
 
-      
+
 
       var startDate = new Date(this.count); //YYYY-MM-DD
       var endDate = new Date(this.pluscount); //YYYY-MM-DD
 
       var officalHolidays = this.holidays; //YYYY-MM-DD
       var workingWeekends = this.Alternatesaturday;//YYYY-MM-DD
-      console.log(workingWeekends);
-  
+     
+
       var dateArray = getDateArray(startDate, endDate);
 
       var holidaysArray = prepareDateArray(officalHolidays);
@@ -527,75 +541,39 @@ export class ApplyLeaveComponent implements OnInit {
       var workingWeekendsArray = prepareDateArray(workingWeekends);
 
       var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
-      console.log(workingDateArray);
+     
 
       this.countinNumber = workingDateArray.length;
       console.log(workingDateArray.length);
-      if(workingDateArray.length==0){
-        this.countinNumber=0
+      if (workingDateArray.length == 0) {
+        this.countinNumber = 0
       }
 
-    if(this.postleave.value.chooseDays=="HalfDay"){
-    
-      if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
-// if(this.count!=this.pluscount){
-if(workingDateArray.length==0){
-        this.countinNumber=0
-      }
-else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
-this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
-let number=workingDateArray.length-this.minus;
-this.countinNumber = number-this.minus;
-}else{
-this.countinNumber = workingDateArray.length-this.minus;
-// console.log("no either or is here"+this.countinNumber);
-}
-//  if(this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays =="tofull"
-//  ||this.postleave.value.chooseFromDays=="afternoontoHalf" && this.postleave.value.chooseFromDays =="fromfull"||
-//  this.postleave.value.chooseFromDays=="morningfromHalf" && this.postleave.value.chooseFromDays =="tofull"||
-//   this.postleave.value.chooseFromDays=="morningtoHalf" &&this.postleave.value.chooseFromDays =="fromfull")
+      if (this.postleave.value.chooseDays == "HalfDay") {
+
+        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+          // if(this.count!=this.pluscount){
+          if (workingDateArray.length == 0) {
+            this.countinNumber = 0
+          }
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseFromDays == "afternoontoHalf" ||
+            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseFromDays == "morningtoHalf") {
+            let number = workingDateArray.length - this.minus;
+            this.countinNumber = number - this.minus;
+          } else {
+            this.countinNumber = workingDateArray.length - this.minus;
+
+          }
+
+
+        }
 
       }
-// if((frommrng!=null && fromevng!=null) || (toevng!=null && tomrng!=null))
-// {
-// document.getElementsByName("fromdate").forEach(radio=>{if(radio.checked){console.log(radio.value)}})
-
-// console.log("half either or is here"+this.countinNumber);
-// }else 
-//   if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null) ){
-//     let number=workingDateArray.length-this.minus;
-//     this.countinNumber = number-this.minus;
-
-//   // }
-// }
-// }
-// else{
-//   if(this.count== this.pluscount){
-//   if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoonfromHalf"||
-//   this.postleave.value.chooseFromDays=="afternoontoHalf"|| this.postleave.value.chooseFromDays=="morningtoHalf"){
-//   this.countinNumber = workingDateArray.length-this.minus;
-// }
-// }
-// }
-// else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
-// this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
-// if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null)){
-
-// }else{
-//   this.countinNumber = workingDateArray.length-this.minus;
-//   console.log(this.countinNumber);
-// }
-
-// } 
-}
-  //  }
-  
-if(this.postleave.value.chooseDays=="FullDay"){ 
-// if(this.fulldays){
-if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
-this.countinNumber = workingDateArray.length;
-}
-}
+      if (this.postleave.value.chooseDays == "FullDay") {
+        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+          this.countinNumber = workingDateArray.length;
+        }
+      }
 
     }
 
@@ -609,7 +587,7 @@ this.countinNumber = workingDateArray.length;
           dt.setDate(dt.getDate() + 1);
 
         }
-        console.log(arr);
+
         return arr;
       }
       function getSaturdays(year: number, month: number) {
@@ -626,7 +604,7 @@ this.countinNumber = workingDateArray.length;
           date = new Date(year, month, day);
           console.log(date)
         }
-        console.log(saturdays)
+      
         return saturdays;
       }
       this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
@@ -636,7 +614,7 @@ this.countinNumber = workingDateArray.length;
         for (var i = 0; i < dtArr.length; i++) {
           arr.push((new Date(dtArr[i])).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
         }
-        console.log("in prepare array", arr)
+    
         return arr;
       }
 
@@ -665,12 +643,18 @@ this.countinNumber = workingDateArray.length;
       }
       this.getPublicHolidays.getLeave().subscribe(
         data => {
-          let temp=[];
+          let temp = [];
           this.Includepublicholiday = JSON.parse(data);
-          for(let leave of this.Includepublicholiday){
+          for (let leave of this.Includepublicholiday) {
             this.holidays.push(leave.date);
-            
+
           }
+        },error=>{
+          this.showErrorMessage=true;
+          this.errorMessage=this.globalErrorHandler.errorMessage;
+          setTimeout(() => {
+            this.showErrorMessage=false;
+          }, 3000);
         }
       );
       var startDate = new Date(this.count); //YYYY-MM-DD
@@ -685,178 +669,179 @@ this.countinNumber = workingDateArray.length;
       var workingWeekendsArray = prepareDateArray(workingWeekends);
 
       var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
-      console.log(workingDateArray);
-
-      // this.countinNumber = workingDateArray.length;
-      // var rates = document.getElementById('frommrng').value;
-      // var full = document.querySelector('input[name="full"]:checked');
-      // var half = document.querySelector('input[name="half"]:checked');
-      //  var frommrng = document.querySelectorAll('input[name="frommrng"]:checked');
-      //  var fromevng = document.querySelectorAll('input[name="fromevng"]:checked');
-      //  var tomrng = document.querySelectorAll('input[name="tomrng"]:checked');
-      //  var toevng = document.querySelectorAll('input[name="toevng"]:checked');
-  // let daysradioBtns=document.querySelectorAll("input[name='datefirst']");
-          // let findSelected=()=>{
-          //   let Dselected=document.querySelector("input[name='']:checked");
-          //   // let fselected=document.querySelector("input[name='fromdate']:checked");
-          //   // let
-          //   console.log(Dselected);
-          // }
-          // daysradioBtns.forEach(daysbtn=>{
-          //   daysbtn.addEventListener("change",findSelected)
-          // });
-          if(workingDateArray.length==0){
-            this.countinNumber=0
-          }
-
-        if(this.postleave.value.chooseDays=="HalfDay"){
-        
-          if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
-// if(this.count!=this.pluscount){
-  if(workingDateArray.length==0){
-            this.countinNumber=0
-          }
- else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
-this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
-  let number=workingDateArray.length-this.minus;
-  this.countinNumber = number-this.minus;
-}else{
-  this.countinNumber = workingDateArray.length-this.minus;
-  // console.log("no either or is here"+this.countinNumber);
-}
-//  if(this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays =="tofull"
-//  ||this.postleave.value.chooseFromDays=="afternoontoHalf" && this.postleave.value.chooseFromDays =="fromfull"||
-//  this.postleave.value.chooseFromDays=="morningfromHalf" && this.postleave.value.chooseFromDays =="tofull"||
-//   this.postleave.value.chooseFromDays=="morningtoHalf" &&this.postleave.value.chooseFromDays =="fromfull")
     
-          }
-  // if((frommrng!=null && fromevng!=null) || (toevng!=null && tomrng!=null))
-  // {
-    // document.getElementsByName("fromdate").forEach(radio=>{if(radio.checked){console.log(radio.value)}})
- 
-    // console.log("half either or is here"+this.countinNumber);
-  // }else 
-  //   if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null) ){
-  //     let number=workingDateArray.length-this.minus;
-  //     this.countinNumber = number-this.minus;
-  
-  //   // }
-  // }
-// }
-// else{
-//   if(this.count== this.pluscount){
-//   if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoonfromHalf"||
-//   this.postleave.value.chooseFromDays=="afternoontoHalf"|| this.postleave.value.chooseFromDays=="morningtoHalf"){
-//   this.countinNumber = workingDateArray.length-this.minus;
-// }
-// }
-// }
-// else if(this.postleave.value.chooseFromDays=="morningfromHalf"&& this.postleave.value.chooseFromDays=="afternoontoHalf"||
-// this.postleave.value.chooseFromDays=="afternoonfromHalf"&& this.postleave.value.chooseFromDays=="morningtoHalf"){
- // if((frommrng!= null && tomrng!= null)||(frommrng!= null && toevng!= null)||(toevng!= null&& frommrng!= null)){
- 
-  // }else{
-  //   this.countinNumber = workingDateArray.length-this.minus;
-  //   console.log(this.countinNumber);
-  // }
 
-// } 
-}
-      //  }
-      
-if(this.postleave.value.chooseDays=="FullDay"){ 
-// if(this.fulldays){
-  if(this.count!=(this.pluscount) ||this.count==(this.pluscount)){
-    this.countinNumber = workingDateArray.length;
-  }
-}
+      if (workingDateArray.length == 0) {
+        this.countinNumber = 0
+      }
+
+      if (this.postleave.value.chooseDays == "HalfDay") {
+
+        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+          // if(this.count!=this.pluscount){
+          if (workingDateArray.length == 0) {
+            this.countinNumber = 0
+          }
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseFromDays == "afternoontoHalf" ||
+            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseFromDays == "morningtoHalf") {
+            let number = workingDateArray.length - this.minus;
+            this.countinNumber = number - this.minus;
+          } else {
+            this.countinNumber = workingDateArray.length - this.minus;
+
+          }
+
+
+        }
+
+      }
+
+
+      if (this.postleave.value.chooseDays == "FullDay") {
+
+        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+          this.countinNumber = workingDateArray.length;
+        }
+      }
 
     }
   }
-  handlerFull(event:any){
-    this.fulldays=event.target.value;
-    console.log(this.fulldays);
+  handlerFull(event: any) {
+    this.fulldays = event.target.value;
+ 
   }
-  handlerHalf(event:any){
-    this.halfdays=event.target.value;
+  handlerHalf(event: any) {
+    this.halfdays = event.target.value;
   }
   ok() {
     this.modalReference.close();
     this.route.navigate(['/home']);
   }
-  cancel(){
-    this.registerDetails.deleteHistory(this.historyid).subscribe(
-      data=>{
-        this.ngOnInit();
-        console.log("data for delete is passed");
-      
-      }
-      
-    )
-    this.modalReference.close();
-   
-  }
+  cancel() {
+    this.statusagree.getUpdates().subscribe(
+      data => {
+     console.log(data);
+        this.leftoverApproval =JSON.parse(data)
+        for (let item of this.leftoverApproval) {
+          if (item.status == 'pending' && item.empid==this.defaultEmpid ) {
+
+            this.historyid=item.historyid;
+            this.globalErrorHandler.apphistoryid=this.historyid;
+          }
+
+          }
+          this.statusagree.deleteHistory(this.historyid).subscribe(
+            data => {
+              
+            }
+          
+          )
+          this.modalReference.close();})
+ 
+          
+          
+          }    
+
+
+  
   hideDays() {
     this.showMorning = false;
   }
   showDays() {
     this.showMorning = true;
   }
-  pageNavigate(){
+  pageNavigate() {
     this.route.navigate(["/home"])
   }
-  findifsick(event:any){
-    if(event.target.value=='sick'){
-      this.hideIfsick=false;
-    }else{
-      this.hideIfsick=true;
+  findifsick(event: any) {
+    if (this.defaultEmpid == this.empid) {
+      if (event.target.value == 'sick') {
+        this.hideIfsick = false;
+      } else {
+        this.hideIfsick = true;
+      }
+    }
+    else {
+
     }
 
+
   }
-  selectToSend(event:any){
+
+
+  selectToSend(event: any) {
+
+    this.defaultEmpid = this.empid;
+
+
     this.teamdetails.getEmpid().subscribe(
       data => {
         this.personDetailbsd = JSON.parse(data);
-        for(let i of this.personDetailbsd){
-            if(event.target.value==i.empid){
-              this.selectedEmpid=event.target.value;
-              this.personname=i.name;
-              this.persondepartment = i.department;
-              this.persondesignation = i.designation;
-              this.personexperience = i.totalexperience;
-              this.personlocation = i.city;
-              this.personmanagername = i.managername;
-              this.personmanageremail = i.manageremail;
-              }
+
+        for (let i of this.personDetailbsd) {
+
+          if (event.target.value == i.empid) {
+
+            this.defaultEmpid = event.target.value;
+            this.personname = i.name;
+            this.persondepartment = i.department;
+            this.persondesignation = i.designation;
+            this.personexperience = i.totalexperience;
+            this.personlocation = i.city;
+            this.personmanagername = i.managername;
+            this.personmanageremail = i.manageremail;
           }
-        
         }
+
+      }
     )
-    // this.teamdetails.getEmpid().subscribe(
-    //   data => {
-    //     this.leftoverApproval =JSON.parse(data)
-    //       for (let team of this.leftoverApproval){
-    //         if(team.managername==this.name && team.department==this.department && team.city==this.city){
-    //        this.members.push(team);
-    //        this.selectedEmployee=event.target.value;
+    if (event.target.value != this.empid) {
+      this.hideIfnotme = false;
+    } else {
+      this.hideIfnotme = true;
+    }
 
-    //        if(this.selectedEmployee){
-    //         console.log(this.members.team.empid);
-    //          this.selectedEmpid=this.members.empid;
-    //          this.selectedName=this.members.name;
-    //          this.selectedexperience= this.members.experience;
-    //          this.selectedlocation=this.members.location;
-    //        }
-    //         }
-    //       }
-    //   }
-    // );
-   
- 
+  }
+  onbehalfAprroved(update:any){
+    this.statusagree.getUpdates().subscribe(
+      data => {
+     console.log(data);
+        this.leftoverApproval =JSON.parse(data)
+        for (let item of this.leftoverApproval) {
+          if (item.status == 'pending' && item.empid==this.defaultEmpid ) {
+          // ?this.b.push(item);
+            this.historyid=item.historyid;
+           this.modalReference.close();
+          
           }
-        }
-  
-  
+          }
+          
+          
+          this.modalReference=this.modalService.open(update,{ size: 'm' })
+          
+          
+    })
+  console.log(this.historyid)
+  this.globalErrorHandler.apphistoryid=this.historyid;
+ 
+    
+  }
+  onAprroved(){
 
 
-// }
+this.status="Approved"
+
+
+    this.statusagree.statusUpdate(this.historyid,this.defaultEmpid,this.status ).subscribe(
+      data => {
+    
+        this.detailsdata.push(this.status);
+          
+          this.modalReference.close();
+      }
+    );
+    
+  }
+}
+
+

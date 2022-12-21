@@ -32,4 +32,12 @@ export class LeaveStatusServiceService {
     return this.http.delete<any>(this.apiurl + "/mystatusDel" + "/" + historyId,{responseType:'text' as 'json'});
  }
 
+ fileUpdate(historyId:Number,fileId:Number):Observable<any>{
+  return this.http.put<any>(this.apiurl+"/"+'fileUpdate'+"/"+historyId+"/"+fileId,{responseType:'text' as 'json'});
+}
+
+getHistoryId(historyId:Number):Observable<any>{
+  return this.http.get<any>(this.apiurl + "/getHistoryId" + "/" + historyId,{responseType:'text' as 'json'});
+}
+
 }
