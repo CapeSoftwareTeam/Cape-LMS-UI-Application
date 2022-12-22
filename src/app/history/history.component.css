@@ -86,12 +86,12 @@ display: none;
   }
 
  
-  th, td {
+  /* th, td {
     overflow: hidden;
     width: 200px;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
+  } */
 
   .mat-header-row {
     display: none;
@@ -128,10 +128,10 @@ display: none;
     background-color:#f2f2f2;
   }
 
-  .header-align-right {
+  /* .header-align-right {
       text-align: center;
       justify-content: flex-end;
-    }
+    } */
 
  #btn{
   margin-left: 90%;
@@ -179,6 +179,10 @@ h2 {
 .mat-table {
   overflow: auto;
   max-height: 500px;
+  border: ridge;
+  
+
+
 }
 
 .mobile-label {
@@ -231,6 +235,15 @@ margin-top:15px;
   left: 47%;
   animation: spin 1s linear infinite;
 }
+.picker{
+  
+    position: absolute;
+    right: 0px;
+    top: 4%;
+    width: 230px;
+    padding: 10px;
+  }
+
 
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -240,6 +253,42 @@ margin-top:15px;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.mat-header-row,
+.mat-footer-row,
+.mat-row {
+  min-width: 1920px;
+}
+
+@media (max-width: 1200px) {
+  .mat-header-row,
+  .mat-footer-row,
+  .mat-row {
+    min-width: 2500px;
+  }
+}
+
+@media (max-width: 992px) {
+  .mat-header-row,
+  .mat-footer-row,
+  .mat-row {
+    min-width: 3000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-header-row,
+  .mat-footer-row,
+  .mat-row {
+    min-width: 4000px;
+  }
+}
+.tableFixHead,
+.tableFixHead td {
+  box-shadow: inset 1px -1px #000;
+}
+.tableFixHead th {
+  box-shadow: inset 1px 1px #000, 0 1px #000;
 }
 
  

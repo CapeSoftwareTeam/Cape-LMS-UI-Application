@@ -11,10 +11,12 @@ import { RegisterserviceService } from '../services/registerservice.service';
 import {FormGroup, FormControl, NgModel} from '@angular/forms';
 import { HistoryService } from '../services/historyservice.service';
 import { Router } from '@angular/router';
-import { start } from '@popperjs/core';
+import { start, State } from '@popperjs/core';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { state } from '@angular/animations';
+import { CscService } from '../csc.service';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -51,6 +53,7 @@ filterdate:any;
   element: Element[] = [];
   loading = false;
   formGroup:any;
+
   @ViewChild('historyPaginatorUser', { static: false }) historyPaginatorUser!: MatPaginator;
   @ViewChild('historyPaginatorAdmin', { static: false }) historyPaginatorAdmin!: MatPaginator;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -67,6 +70,7 @@ filterdate:any;
   displayedColumnsForUser: any;
   displayedColumnsForAdmin: any;
   delShow: boolean = false;
+  hideShow:boolean = false;
   state: any=[];
   country: any=[];
   city: any=[];
@@ -81,6 +85,7 @@ filterdate:any;
   historypdf: any=[];
   empArr: any;
   HRdata: any=[];
+  countryList: any;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource1.filter = filterValue.trim().toLowerCase();
@@ -117,7 +122,7 @@ range!:any;
  
   selection = new SelectionModel<Element>(true, []);
   constructor(private historyService: HistoryService, private registerService: RegisterserviceService,
-    private route: Router , private modalService : NgbModal
+    private route: Router , private modalService : NgbModal , private  siteService: CscService
     // private registerService: RegisterserviceService,
   ) {
     // this.designation="softwaremanager";
@@ -126,13 +131,15 @@ range!:any;
     this.dataSource1 = new MatTableDataSource<any>();
     this.dataSource2 = new MatTableDataSource<any>();
   }
+  
+  
 
    
     listChildChanged :any = [];
     arr = [
     {
       id: "group_1",
-      name: "Group 1",
+      name: "Using Filter",
       items: [
         {
           id: "group_1.abc",
@@ -143,27 +150,31 @@ range!:any;
             {
               id: "group_1.abc.action_See_List",
               name: "Software",
-              checked: false
+              checked: false,
+              expand:false
             },
             {
               id: "group_1.abc.action_Edit",
               name: "Sales",
-              checked: false
+              checked: false,
+              expand:false
             },
             {
               id: "group_1.abc.action_Delete",
               name: "Designing",
-              checked: false
+              checked: false,
+              expand:false
             },
             {
               id: "group_1.abc.action_Print",
               name: "Marketing",
-              checked: false
+              checked: false,expand:false
             },
             {
               id: "group_1.abc.action_Print",
               name: "Testing",
-              checked: false
+              checked: false,
+              expand:false
             }
           ]
         },
@@ -176,17 +187,20 @@ range!:any;
             {
               id: "group_1.def.action_See_List",
               name: "country",
-              checked: false
+              checked: false,
+              expand:true
             },
             {
               id: "group_1.def.action_Edit",
               name: "State",
-              checked: false
+              checked: false,
+              expand:true
             },
             {
               id: "group_1.def.action_Delete",
               name: "City",
-              checked: false
+              checked: false,
+              expand:true
             }
            
           ]
@@ -267,6 +281,12 @@ range!:any;
  
 
   ngOnInit(): void {
+    this.siteService.retrieveCountry().subscribe(
+      data => {
+        this.countryList = JSON.parse(data);
+        console.log( this.countryList)
+      }
+    )
 
     
 
@@ -287,7 +307,7 @@ range!:any;
     //  this.city=City.getAllCities();
 
      this.empid = sessionStorage.getItem('empid');
-    // // Fetching city details
+    // // // Fetching city details
     // for(let i of State.getAllStates()){
     //   if(i.countryCode=="IN"){
     //    this.tempStateName.push(i.name);
@@ -303,7 +323,6 @@ range!:any;
     //   }
     // };
     // this.stateList=this.tempStateName;
-
     let designation = '';
     this.registerService.getForm(this.empid).subscribe(
       data => {
@@ -437,6 +456,14 @@ range!:any;
     else {
       this.delShow = true;
     }
+    if (event.target.innerText == 'My History') {
+      this.hideShow = false;
+    }
+    else {
+      this.hideShow = true;
+    }
+
+
   }
 
   back() {
@@ -462,6 +489,12 @@ range!:any;
               this.dataSource2.paginator = this.historyPaginatorUser;
  
    }
+   datechanger(){
+     if(this.range.value.start==null &&this.range.value.end==null){
+               this.ngOnInit();
+     }
+   }
+
 
   downloadPdf() {
     this.enable = true;
@@ -500,6 +533,53 @@ range!:any;
   closeTemp(){
     this,this.modalReference.close();
   }
+  ///state country city code
+//   designer1changeCountry(e: any) {
+
+//     let changedValue;
+  
+//     if(e.target != undefined) {
+  
+//       changedValue = e.target.value;
+  
+//     }
+  
+//     else{
+  
+//       changedValue = e;
+  
+//     }
+  
+//     this.stateList1 = [];
+  
+//       for(let arr of this.countryList) {
+  
+//         if( arr.name == changedValue) {
+  
+//           this.siteService.retrieveState(arr.code).subscribe(
+  
+//             data => {
+  
+//               this.stateList1 = JSON.parse(data)
+  
+//             }
+  
+//           )};
+  
+//       }
+//       <option value="" selected>Select State Name</option>
+
+//     <option *ngFor="let state of stateList1">
+
+// {{state.name}}</option>
+
+                                                             
+
+                                                     
+
+//   </select>
+  
+  
 
   selectedDeleterows(){
   

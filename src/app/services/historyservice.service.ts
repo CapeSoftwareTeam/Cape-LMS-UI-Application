@@ -9,6 +9,7 @@ const FileSaver = require('file-saver');
   providedIn: 'root'
 })
 export class HistoryService {
+
   
   apiurl=environment.apiurl_history;
   constructor(private http: HttpClient) { }
@@ -47,33 +48,33 @@ export class HistoryService {
            );
   }
 
-  downloadPDF(){
-    this.http.put<any>(this.apiurl+'/downloadPdf',{responseType: 'blob'}).subscribe(
-      data => {
-        debugger
-        const fileName = "projectName"+'.pdf';
-        FileSaver.saveAs(data, fileName);
-      },
-      error=>{
-    console.log("his");
+  // downloadPDF(){
+  //   this.http.put<any>(this.apiurl+'/pdfDownload',{responseType: 'blob'}).subscribe(
+  //     data => {
+  //       debugger
+  //       const fileName = "projectName"+'.pdf';
+  //       FileSaver.saveAs(data, fileName);
+  //     },
+  //     error=>{
+  //   console.log("his");
     
-      }
-    );
-  }
+  //     }
+  //   );
+  // }
   
-  // public downloadPDF(basicLpsId: any,userName: any,projectName: any) {
+   public downloadPDF() {
     
-//   return   this.http.get(this.apiUrl + '/printFinalPDF'+'/'+userName+ '/' +basicLpsId+ '/' +projectName, { responseType: 'blob' }).subscribe(
-//        data =>{
+   return   this.http.get(this.apiurl + '/pdfDownload', { responseType: 'blob' }).subscribe(
+        data =>{
          
-//          const fileName = projectName+'.pdf';
-//          FileSaver.saveAs(data, fileName);
-//        },
-//        error=>{
+         const fileName = +'.pdf';
+          FileSaver.saveAs(data, fileName);
+       },
+        error=>{
         
-//        }
-//      )
-// }
+       }
+      )
+ }
 }
 																	   
 	

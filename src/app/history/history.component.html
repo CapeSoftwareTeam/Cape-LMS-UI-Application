@@ -5,7 +5,7 @@
     style="font-weight: bold;color:rgb(226, 101, 142); font-size: xx-large;text-align:center ;font-style:inherit ;margin-inline-start: 5px ;"><i style='font-size:30px' class='fas'>&#xf2b9;</i>
     HISTORY DETAILS</h1>
 
-
+    <div *ngIf="hideShow">
      <ul *ngFor="let group of arr; index as i">
       <span class="font-weight-bold text-primary">{{group.name}}</span>
       <li *ngFor="let item of group.items; index as j">
@@ -18,22 +18,39 @@
         </span>
         <span class="cursor-pointer" (click)="item.expand = !item.expand">{{item.name}}</span>
         <ul [class.d-none]="item.expand">
+          
           <li *ngFor="let child of item.childs; index as k">
+            <span class="cursor-pointer caret"
+            [ngClass]="child.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+            (click)="child.expand = !child.expand"></span>
+       
             <span class="mr-1" [ngClass]="child.checked ? 'fas fa-check-square' : 'far fa-square'"
               (click)="checkChild(i,  j, k )">
             </span>
             <span class="cursor-pointer" (click)="checkChild(i, j, k )">{{child.name}}</span>
+            <ul [class.d-none]="item.expand">
+          
+              <li *ngFor="let child of countryList; index as k">
+                <!-- <span class="cursor-pointer caret"
+                [ngClass]="child.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+                (click)="child.expand = !child.expand"></span>
+           
+                <span class="mr-1" [ngClass]="child.checked ? 'fas fa-check-square' : 'far fa-square'"
+                  (click)="checkChild(i,  j, k )">
+                </span> -->
+                <span class="cursor-pointer" (click)="checkChild(i, j, k )">{{child.name}}</span>
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
     </ul>
-    
+    </div>
     
 
-
-      <mat-form-field appearance="fill">
-        <mat-label >Enter a date range</mat-label>
-        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+      <mat-form-field appearance="fill" (keyup)="datechanger()" *ngIf="hideShow" class="picker" >
+        <mat-label  >Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
           <input [(ngModel)]="fromDate" matStartDate formControlName="start" placeholder="Start date">
           <input  [(ngModel)]="toDate" matEndDate formControlName="end" placeholder="End date">
           
@@ -43,6 +60,7 @@
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
+      
 
    <div class="row">
     <div class="col" id="filter">
@@ -356,10 +374,11 @@
   
   
             <mat-header-row *matHeaderRowDef="displayedColumnsForAdmin sticky: true"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumnsForAdmin;" (dblclick)="selectedRow.push(row)"
+            <mat-row *matRowDef="let row; columns: displayedColumnsForAdmin;" (dblclick)="selectedRow.push(row) "
               [style.background]="selectedRow.indexOf(row)!= -1 ? 'LightBlue': '' "
               [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true">
               (mouseout)="row.hovered = false"></mat-row>
+
             <mat-row class="mat-row" *matNoDataRow>
   
             </mat-row>
