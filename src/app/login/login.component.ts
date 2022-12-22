@@ -24,9 +24,12 @@ export class LoginComponent implements OnInit {
   submitted:boolean=false;
   submit:boolean=false;
   errorMsg: boolean=false;
+  errorMsgLogin:boolean=false;
   showErrorMessage: boolean=false;
+  showErrorMessage1:boolean=false;
+  errorMessage1:string='';
   dhana:boolean=true;
-  errorMessage:String='';
+  errorMessage:string='';
   sentOtp:boolean = false;
   disable:boolean=true;
   configOption1: ConfigurationOptions;
@@ -138,7 +141,7 @@ export class LoginComponent implements OnInit {
     
       mobileNumberLogin: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),Validators.required]],
       emailidLogin:['',[Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}"),Validators.required]],
-      password:['',[Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),Validators.required]]
+      password:['',[Validators.required]]
   });
   this.otpgenerateform=this.formbuilder.group({otpgenerate:['',Validators.required],
     mobileNumber: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]
@@ -204,7 +207,18 @@ login(){
    
 //break point form validation
   if(this.loginForm.invalid) {
-    return;
+    if(this.loginForm.value.userValidation==""){
+this.errorMsgLogin=true;
+
+setTimeout(() => {
+  this.errorMsgLogin=false;
+}, 3000);
+return;
+    }
+    else{
+      return;
+    }
+    
   }
 
   
@@ -223,14 +237,30 @@ login(){
       this.router.navigate(['/home',{email:JSON.parse(data).register.emailid}]);
     },
     error=>{
-      this.showErrorMessage=true;
+      
       this.errorMessage=this.globalErrorHandler.errorMessage;
+      if(this.errorMessage=="Something went wrong, Please try again later"){
+        this.showErrorMessage1=true;
+        this.errorMessage1=this.errorMessage;
+        this.loginPage=false;
+        // setTimeout(() => {
+        //   this.showErrorMessage1=false;
+        //   window.location.reload()
+        // // this.router.navigate(['/frontpage'])
+        // }, 4000);
+      }
+      else{
+        this.showErrorMessage=true;
+      }
       setTimeout(() => {
         this.showErrorMessage=false;
       }, 3000);
     }
     )
 
+}
+gotoHome(){
+  this.router.navigate(['/frontpage'])
 }
 
 // otp submit
@@ -286,13 +316,20 @@ generate():any{
   
   this.submit=true;
   
+
   if(this.otpgenerateform.invalid) {
-    return;
+    if(this.otpgenerateform.value.otpgenerate==""){
+      this.errorMsg=true;
+    }
+    else{
+      return;
+    }
+    
   }
  
  
   if(this.otpgenerateform.value.emailid?.length==0 && this.otpgenerateform.value.mobileNumber?.length==0 ||this.otpgenerateform.value.emailid?.valueOf==undefined
-    ||this.otpgenerateform.value.mobileNumber?.valueOf==undefined ){
+    ||this.otpgenerateform.value.mobileNumber?.valueOf==undefined){
     this.errorMsg=true;
     this.showErrorMessage=false;
     setTimeout(() => {

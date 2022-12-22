@@ -144,7 +144,7 @@
                     Updated Successfully!</p>
          <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
                     style="text-align:center ;margin-left: 20px;margin-right:20px;">
-                    <strong>Error!</strong>{{errorMessage}}</p>
+                    <strong>Error! </strong>{{errorMessage}}</p>
          <p *ngIf="showErrorMessage1" class="alert alert-danger alert-dismissible fade show"
                     style="text-align:center ;margin-left: 20px;margin-right:20px;">
                     <strong>Error!</strong> Please choose a File</p>          
@@ -190,17 +190,28 @@
      <label class="form-lable">File Name</label>
      <input type="text" formControlName="filename" class="form-control" >
      <br>
-   
+     
      <button type="button" class="btn btn-success btn-xs mr-4" (click)="onUpload()" *ngIf="upload"><i class="fa fa-file" ></i>upload</button>
-
-     <button type="button" class="btn btn-primary btn-xs mr-4" (click)="updateFileMethod()" style="margin-left: 120px;" *ngIf="updateButton"> <i class="bi bi-pencil-square"></i> Update</button>
-    
-
-     <button type="button" class="btn btn-success btn-xs mr-4" (click)="onDownload()" href='javascript:void(0)' title="Download" >
-      <i class="bi bi-download" style="color: white;"></i> Download</button>
-    </div>
+    <div class="row">
+      <div class="text-center justify-content-center col-md-12" style="margin-bottom: -20px;">
+        <button type="button"  class="btn btn-success " (click)="onDownload()" *ngIf="!updateButton" id="userDownload"style="align-items: center;"> <i class="bi bi-download" style="color: white;" ></i> Download</button>
       </div>
-   
+    </div>
+    
+      <div class="row" style="margin-bottom:15px;margin-top: 10px; ">
+        <div class="col">
+     <button type="button" class="btn btn-primary form-control btn-block" (click)="updateFileMethod()"  *ngIf="updateButton"> <i class="bi bi-pencil-square"></i> Update</button>
+    </div>
+    <div class="col">
+     <button type="button" class="btn btn-success form-control btn-block" (click)="onDownload()" href='javascript:void(0)' title="Download" *ngIf="downloadButton" >
+      <i class="bi bi-download" style="color: white;" ></i> Download</button>
+    </div>
+    
+  </div>
+  
+     </div>
+     
+   </div>
   
 </form>
 </ng-template>
@@ -254,7 +265,7 @@
   <div class="dot1"></div>
   <div class="dot2"></div>
 </div> 
-<div class="chat-circle" class="btn-btn-raised" >
+<!-- <div class="chat-circle" class="btn-btn-raised" >
   <div class="chat-overlay"></div>
   <div class="tooltipBot glow">
      
@@ -266,8 +277,8 @@
           ">
           <span class="tooltiptextBot">Live Chat</span>
   </div>
-</div>
-<div class="chat-box resizable" style="height:60%;" *ngIf="open">
+</div> -->
+<!-- <div class="chat-box resizable" style="height:60%;" *ngIf="open">
   <div class="chat-box-header">
       <i class="bi bi-x-circle" style="margin-left:307px;margin-top:10px;" (click)="onCancell()" ></i>
       <span><img src=..\assets\chatblue.jpg style="
@@ -290,7 +301,7 @@
           </ng-container>
          
   </div>
-</div>
+</div> -->
 
 
 

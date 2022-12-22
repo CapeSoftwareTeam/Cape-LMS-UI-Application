@@ -89,7 +89,8 @@ throw new Error('Method not implemented.');
   togglecount:number = 0;
   valueBot: string="";
   
-
+  downloadButton:boolean=true;
+ 
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
@@ -214,17 +215,11 @@ throw new Error('Method not implemented.');
     this.registerService.getForm(this.empid).subscribe(data=>{
       if(JSON.parse(data).designation!="HR"){
                this.updateButton=false;
+               this.downloadButton=false;
       }
     })
    
-    this.fileUploadService.retriveFile(34).subscribe(data=>{
-      this.f.filename.setValue(JSON.parse(data).fileName);
-      this.fileSize = JSON.parse(data).fileSize;
-      this.f.fileid.setValue(JSON.parse(data).fileId);
-      
-     
-    })
-  
+   
   }
  
  
@@ -274,7 +269,25 @@ throw new Error('Method not implemented.');
 
   }
   termsCondition(termsContent: any) {
+
     this.modalReference = this.modalService.open(termsContent, { size: 'm' })
+
+    this.fileUploadService.retriveFile(34).subscribe(data=>{
+      this.f.filename.setValue(JSON.parse(data).fileName);
+      this.fileSize = JSON.parse(data).fileSize;
+      this.f.fileid.setValue(JSON.parse(data).fileId);
+      
+     
+    },error=>{
+      this.showErrorMessage=true;
+      this.errorMessage=this.globalErrorHandler.errorMessage;
+      setTimeout(() => {
+        this.showErrorMessage=false;
+       this.ngOnInit();
+       this.onCancel();
+      }, 3000);
+    })
+  
   }
   onCancel() {
     this.modalReference.close();
@@ -341,6 +354,7 @@ throw new Error('Method not implemented.');
     this.fileUploadService.updateFile(formData,this.fileId,this.fileSize).subscribe(data=>{
       this.loading1=true;
       this.updateFile1=false;
+      
       setTimeout(() => {
            
         this.loading1=false;
@@ -350,10 +364,18 @@ throw new Error('Method not implemented.');
           this.successMsg=false;
           this.fileUpload=true;
           this.cancel=true;
+          this.downloadButton=true;
+          this.updateButton=true;
           this.ngOnInit();
         }, 2000);
       }, 2000);
     
+    },error=>{
+      this.showErrorMessage=true;
+      this.errorMessage=this.globalErrorHandler.errorMessage;
+      setTimeout(() => {
+        this.showErrorMessage=false;
+      }, 3000);
     })
   
 }
@@ -367,7 +389,7 @@ throw new Error('Method not implemented.');
     this.formFile = formData;
             
    this.fileUploadService.fileUploadLms(formData,this.fileSize).subscribe(data=>{
-   
+                 
    },
    error=>{
     this.showErrorMessage = true;
@@ -384,11 +406,22 @@ throw new Error('Method not implemented.');
 this.updateFile1=true;
 this.fileUpload=false;
 this.cancel=false;
+this.updateButton=false;
+this.downloadButton=false;
   }
   back(){
     this.updateFile1=false;
     this.fileUpload=true;
     this.cancel=true;
+    this.showErrorMessage1=false;
+     // retrive file
+     this.registerService.getForm(this.empid).subscribe(data=>{
+      if(JSON.parse(data).designation=="HR"){
+               this.downloadButton=true;
+               this.updateButton=true;
+      }
+    })
+    
   }
 
 

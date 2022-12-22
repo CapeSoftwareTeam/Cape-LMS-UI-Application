@@ -34,7 +34,7 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit():void {
     this.empId = sessionStorage.getItem('empid')
     this.changePasswordForm = this.fb.group({
-      oldPassword: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]],
+      oldPassword: ['', [Validators.required]],
       newpassword: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]],
      
     });

@@ -135,3 +135,7 @@ p{
   ::ng-deep .icon-inside .mat-dialog-container {
    overflow: unset
   } */
+  .responsive{
+    width: 100%;
+    height: auto;
+  }

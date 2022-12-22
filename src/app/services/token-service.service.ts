@@ -52,12 +52,13 @@ export class TokenServiceService implements HttpInterceptor{
     if(error.error instanceof ErrorEvent){
       // client side error
         errorMessage=error.error.message;
+
     }
     else if(error.status==404){
           errorMessage="file not Found"
     }
     else if(error.status==500){
-      errorMessage="Something went wrong, Please try again later.."
+      errorMessage="Something went wrong, Please try again later"
     }
     else{
       // server side error

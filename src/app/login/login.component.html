@@ -1,6 +1,9 @@
 <html>
 
 <body>
+    <p *ngIf="showErrorMessage1;then template" class="alert alert-danger alert-dismissible fade show"
+                    style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
+                    {{errorMessage1}}</p>
     <div class="card" *ngIf="loginPage">
 
 
@@ -9,6 +12,9 @@
             <div class="title"><span>LOGIN HERE!!</span></div>
             <hr>
             <form [formGroup]="loginForm">
+                <p *ngIf="errorMsgLogin" class="alert alert-danger alert-dismissible fade show"
+                style="text-align:center ;margin-left: 20px;margin-right:20px;">Please Select Email,EmpId or mobileNumber 
+                to proceed further!</p>
                 <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
                     style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
                     {{errorMessage}}</p>
@@ -244,3 +250,10 @@
 </body>
 
 </html>
+<ng-template #template let-modal>
+    <div class="modal-body" style="text-align: center;margin-bottom: 100px;" >
+    <img src="../assets/errormsgfor500.jpg"  alt="Loading. Please wait." width="600" height="400" class="responsive"><br>
+    <a (click)="gotoHome()" style="color: rgb(55, 89, 202);cursor: pointer;">Go to Home Page</a>
+</div>
+
+</ng-template>
