@@ -21,6 +21,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  managerasadmin: boolean=false;
 doSomethingWithCurrentValue($event: number) {
 throw new Error('Method not implemented.');
 }
@@ -202,7 +203,10 @@ throw new Error('Method not implemented.');
       var a= document.getElementById('avatar');
       a!.innerHTML=displayAvatar;
 
-       if(this.designation=='Manager'||this.designation=='HR'){
+      if(this.designation=='Manager'){
+        this.managerasadmin=true;
+       }
+       if(this.designation=='HR'){
          this.admin=true;
        }
        if(this.designation=='MD'){

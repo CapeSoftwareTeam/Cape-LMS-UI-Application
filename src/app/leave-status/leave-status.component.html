@@ -58,7 +58,7 @@
          
              <button mat-flat-button  class="success"  (click)="approve(element.historyid,empid,'Approved')" style="color:blue">Approve</button>
               <button mat-flat-button class="failure"  (click)="approve(element.historyid,empid,'Rejected')"  style="color:blue">Decline</button>
-              <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(element.historyid,showDocument)"></i>
+              <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
               
               <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
              </mat-cell>
@@ -132,7 +132,7 @@
      
          <button mat-flat-button  class="success"  (click)="approve(element.historyid,empid,'Approved')" style="color:blue">Approve</button>
           <button mat-flat-button class="failure"  (click)="approve(element.historyid,empid,'Rejected')"  style="color:blue">Decline</button>
-          <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(element.historyid,showDocument)"></i>
+          <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
           
           <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
          </mat-cell>
@@ -258,7 +258,7 @@
     </div>
     <div class="modal-body">
     <p></p>
-    <button type="button" (click)="viewpdffile()">Download</button>
+    <button type="button" class="btn btn-info" (click)="viewpdffile()">Download <i class='fas fa-download'></i></button>
     </div>
     <div class="modal-footer">
      <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>

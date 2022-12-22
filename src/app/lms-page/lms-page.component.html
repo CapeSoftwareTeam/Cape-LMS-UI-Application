@@ -10,15 +10,15 @@
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
-          <span class="text-success" style="font-size: 13px;">{{remainingcl}} days taken | <span class="text-danger" style="font-size: 13px;">{{expcl}} days in total</span></span>
+          <span class="text-success" style="font-size: 13px;">{{remaincl}} remaining | <span class="text-danger" style="font-size: 13px;">{{expcl}} days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" 
             attr.aria-valuenow ="{{calcl}}" [style.width]="calcl + '%'" aria-valuemin="0" attr.aria-valuemax="{{expcl}}" >{{calcl}}</div>
             <!-- <div class="progress-bar progress-bar-striped[style.width]="{{calcl}} + '%" progress-bar-animated" attr.aria-valuenow="{{calcl}}"style="width:40%"></div> -->
           </div>
         </div>
-        <div class="card-footer">
-          {{remainingcl}} days remaining
+        <div class="card-footer" style="justify-content: center;text-align: center;">
+         {{this.minuscl}} leave taken
         </div>
       </div>
     </div>
@@ -30,14 +30,14 @@
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
-          <span class="text-success" style="font-size: 13px;">{{remainingpl}} days taken | <span class="text-danger" style="font-size: 13px;">{{exppl}} days in total</span></span>
+          <span class="text-success" style="font-size: 13px;">{{remainingpl}}remaining | <span class="text-danger" style="font-size: 13px;">{{exppl}} days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-info progress-bar-animated active" role="progressbar" 
             attr.aria-valuenow ="{{calpl}}" [style.width]="calpl + '%'" aria-valuemin="0" attr.aria-valuemax="{{exppl}}" >{{calpl}}</div>
           </div>
         </div>
-        <div class="card-footer">
-          {{remainingpl}} remaining
+        <div class="card-footer" style="justify-content: center;text-align: center;">
+          {{this.minuspl}} leave taken
         </div>
       </div>
     </div>
@@ -49,14 +49,14 @@
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
-          <span class="text-success" style="font-size: 13px;">{{remainingsl}} days taken | <span class="text-danger" style="font-size: 13px;">{{expsl}} days in total</span></span>
+          <span class="text-success" style="font-size: 13px;">{{remainingsl}}remaining | <span class="text-danger" style="font-size: 13px;">{{expsl}} days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated active" role="progressbar" 
             attr.aria-valuenow ="{{calsl}}" [style.width]="calsl + '%'" aria-valuemin="0" attr.aria-valuemax="{{expsl}}" >{{calsl}}</div>
           </div>
         </div>
-        <div class="card-footer">
-          {{remainingsl}} remaining
+        <div class="card-footer" style="justify-content: center;text-align: center;">
+          {{this.minussl}} leave taken
         </div>
       </div>
     </div>
@@ -70,14 +70,14 @@
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
-          <span class="text-success" style="font-size: 13px;">{{remainingbl}} days taken | <span class="text-danger" style="font-size: 13px;">{{expbl}} days in total</span></span>
+          <span class="text-success" style="font-size: 13px;">{{remainingbl}} remaining | <span class="text-danger" style="font-size: 13px;">{{expbl}} days in total</span></span>
           <div class="progress">
             <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated active" role="progressbar" 
             attr.aria-valuenow ="{{calbl}}" [style.width]="calbl + '%'" aria-valuemin="0" attr.aria-valuemax="{{expbl}}" >{{calbl}}</div>
           </div>
         </div>
-        <div class="card-footer">
-          {{remainingbl}} remaining
+        <div class="card-footer" style="justify-content: center;text-align: center;">
+       {{this.minusbl}} leave taken   
         </div>
       </div>
       </div>
@@ -89,15 +89,15 @@
           <h5 style="font-size: 17px;color: #898686;"> Jan {{year}} - Dec {{year}}</h5>
         </div>
         <div class="card-body" style="text-align: center;">
-          <span class="text-success" style="font-size: 13px;">{{remainingml}} days taken | <span class="text-danger" style="font-size: 13px;">{{expml}} days in total</span></span>
+          <span class="text-success" style="font-size: 13px;">{{remainingml}} remaining | <span class="text-danger" style="font-size: 13px;">{{expml}} days in total</span></span>
           <div class="progress">
              
             <div class="progress-bar progress-bar-striped bg-success progress-bar-animated active" role="progressbar" 
             attr.aria-valuenow ="{{calml}}" [style.width]="calml + '%'" aria-valuemin="0" attr.aria-valuemax="{{expml}}" >{{calml}}</div>
           </div>
         </div>
-        <div class="card-footer">
-          {{remainingml}} remaining
+        <div class="card-footer" style="justify-content: center;text-align: center;">
+          {{this.minusml}} leave taken
         </div>
       </div>
     </div>

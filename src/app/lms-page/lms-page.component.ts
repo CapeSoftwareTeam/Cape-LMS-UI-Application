@@ -21,7 +21,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
 
 export class LmsPageComponent implements OnInit {
 
-  digits:number[]=[ 1,2,3,4,5,6,7,8,9,10,11,12];
+
   hourHandPosition=0;
   minuteHandPosition=0;
   secondHandPosition=0;
@@ -97,6 +97,11 @@ dateTime={
   members:any =[]
   memberName: any;
   counter!:Subscription
+  minuscl: any;
+  minussl: any;
+  minusbl: any;
+  minuspl: any;
+  minusml: any;
  
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
@@ -125,6 +130,7 @@ dateTime={
 //   const date=new Date();
 //   this.updateClock(date);
 // },1000);
+
 this.startClock();
     this.empid = sessionStorage.getItem("empid");
     this.registerDetails.getMemberDetails(this.empid).subscribe(
@@ -147,13 +153,24 @@ this.city=this.personDetails.city;
     this.getDetails.leaveTracking(this.empid).subscribe(
       data => {
         let leaveDetails = JSON.parse(data);
-        this.year = leaveDetails.year;
-        this.remainingcl = leaveDetails.carryForwardLeave;
-        this.remaincl=leaveDetails.casualLeave
-        this.remainingsl = leaveDetails.sickLeave;
-        this.remainingbl = leaveDetails.bereavementLeave;
-        this.remainingpl = leaveDetails.privilegeLeave;
-        this.remainingml = leaveDetails.maternityLeave;
+        if(leaveDetails=="undefined"|| leaveDetails=="null"){
+          this.year =  "new Date().getFullYear()";
+          this.remainingcl = "0";
+          this.remaincl=leaveDetails.casualLeave
+          this.remainingsl = "0";
+          this.remainingbl = "0";
+          this.remainingpl = "0";
+          this.remainingml ="0";
+        }else{
+          this.year = leaveDetails.year;
+          this.remainingcl = leaveDetails.carryForwardLeave;
+          this.remaincl=leaveDetails.casualLeave
+          this.remainingsl = leaveDetails.sickLeave;
+          this.remainingbl = leaveDetails.bereavementLeave;
+          this.remainingpl = leaveDetails.privilegeLeave;
+          this.remainingml = leaveDetails.maternityLeave;
+        }
+      
         // this.
       }
     );
@@ -181,12 +198,7 @@ this.city=this.personDetails.city;
         this.exp = JSON.parse(data);
         console.log(this.exp)
 
-        // console.log(this.experience);
-        // console.log(this.empexperience);
-
-        // console.log(this.experience);
-        // this.experience = this.exp.experience;
-        // console.log(this.experience);
+       
         this.expcl = this.exp.casualLeave;
         console.log(this.expcl);
         this.expsl = this.exp.sickLeave;
@@ -203,6 +215,15 @@ this.city=this.personDetails.city;
         this.calpl=Math.floor((this.remainingpl/this.exppl)*100);
         this.calbl=Math.floor((this.remainingbl/this.expbl)*100);
         this.calml=Math.floor((this.remainingml/this.expml)*100);
+
+
+this.minuscl=this.expcl-this.remaincl;
+this.minussl=this.expsl-this.remainingsl;
+this.minusbl=this.expbl-this.remainingbl;
+this.minuspl=this.exppl-this.remainingpl;
+this.minusml=this.expml-this.remainingml;
+
+
       }
     );
     

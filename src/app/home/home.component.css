@@ -215,7 +215,7 @@ mat-sidenav{
 div.content {
   margin-left: 200px;
   padding: 1px 16px;
-  height: 1000px;
+  height: 640px;
 }
 
 @media screen and (max-width: 700px) {
@@ -372,7 +372,7 @@ div.content {
   font-size: 16px;
   margin: 15px;
 }
-circle-progress {
+/* circle-progress {
   margin-left: 150px;
 }
 .chat-overlay {
@@ -395,7 +395,7 @@ circle-progress {
   max-height:100vh;
   border-radius:5px;  
 /*   box-shadow: 0px 5px 35px 9px #464a92; */
-  box-shadow: 0px 5px 35px 9px #ccc;
+  /* box-shadow: 0px 5px 35px 9px #ccc;
 }
 .chat-box-toggle {
   float:right;
@@ -416,15 +416,15 @@ circle-progress {
   position: relative;  
   height: 400px;  
   /* height:auto; */
-  border:1px solid #ccc;  
+  /* border:1px solid #ccc;  
   overflow: hidden;
   background: rgb(234, 238, 243) none repeat;
 }
 .chat-box-body:after {
   content: "";
   opacity: 0.1;
-  top: 0;
-  left: 0;
+  top: 0; */
+  /* left: 0;
   bottom: 0;
   right: 0;
   height:100%;
@@ -454,18 +454,18 @@ circle-progress {
     margin-bottom: 0;
 }
 .chat-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #ccc;
+  /* color: #ccc;
 }
 .chat-input::-moz-placeholder { /* Firefox 19+ */
-  color: #ccc;
+  /* color: #ccc;
 }
 .chat-input:-ms-input-placeholder { /* IE 10+ */
-  color: #ccc;
-}
-.chat-input:-moz-placeholder { /* Firefox 18- */
-  color: #ccc;
-}
-.chat-submit {  
+  /* color: #ccc;
+} */
+/* .chat-input:-moz-placeholder { /* Firefox 18- */
+  /* color: #ccc;
+} */
+/* .chat-submit {  
   position:absolute;
   bottom:3px;
   right:10px;
@@ -575,14 +575,14 @@ circle-progress {
   border-radius: 6px;
   padding: 5px 0;
   /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  /* top: -5px; */
+  /* position: absolute; */
+  /* z-index: 1; */
+  /* top: -5px;
   left: 85%;
   font-size: 14px;
   top: 5%;
-}
-.tooltipBot .tooltiptextBot::after {
+} */
+/* .tooltipBot .tooltiptextBot::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -605,9 +605,4 @@ circle-progress {
   background: transparent;
   margin-top:500px;
   
-}
-
-
-
-
-
+}  */

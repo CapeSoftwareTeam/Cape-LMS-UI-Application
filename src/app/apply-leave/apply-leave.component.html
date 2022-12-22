@@ -39,7 +39,7 @@
               <option value="sick">Sick Leave</option>
               <option value="bereavement">Bereavement Leave</option>
               <option value="privilege">Privilege Leave</option>
-              <option value="maternity">Maternity Leave</option>
+              <option value="maternity" *ngIf="noMatchGender">Maternity Leave</option>
             </select>
             <!-- <mat-form-field appearance="fill">
   <mat-select formControlName="leaveType"  [(ngModel)]="selectedItem" (select)="selected()">
@@ -212,7 +212,9 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
             </div>
               <div class="col-7">
               <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}} 
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly >
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly 
+              placeholder="Click here..... "><br><br>
+              <p *ngIf="showGetNumberError" style="color:red;"><b>Click confirm once date is selected...!!!!</b></p>
             </div>
           </div>
  <br>
@@ -225,14 +227,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               style="height: 40px;float: left;width: 75%;margin-top: 6px;"></textarea>
           </div>
         </div>
-        <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-6"  style="float: left;width: 25%;margin-top: 6px;">
-              <label><b>IU</b></label></div>
-              <div class="col-7">
-              <textarea formControlName="reasonforapply"
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;"></textarea>
-          </div>
-        </div>
+      
         <br>
         <hr>
         <div class="row" style="justify-content:center;text-align: center;">

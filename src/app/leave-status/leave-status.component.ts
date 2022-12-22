@@ -1,14 +1,11 @@
-import { Element } from '@angular/compiler';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { elementAt } from 'rxjs';
 import { ApplyLeave } from '../models/apply-leave.model';
-import { ApplyleaveService } from '../services/applyleave.service';
 import { FileUploadService } from '../services/file-upload.service';
-import { HistoryService } from '../services/historyservice.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 
 @Component({
@@ -17,6 +14,7 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./leave-status.component.css']
 })
 export class LeaveStatusComponent implements OnInit {
+  
   hrAdmin:boolean=false;
   @ViewChild('dataPaginator', { static: false }) dataPaginator!: MatPaginator;
   empid: any
@@ -51,60 +49,42 @@ export class LeaveStatusComponent implements OnInit {
   fileId: any;
  historyIdFor:any;
   fileIdFor: any;
-  constructor(private statusservice: LeaveStatusServiceService,
-    private statusagree: LeaveStatusServiceService,
-    private route: Router,
-     private modalService: NgbModal,
-    private registerDetails: LeaveStatusServiceService,
-    private fileUploadService:FileUploadService,
-    ) { }
 
-  ngOnInit(): void {
+constructor(private statusservice: LeaveStatusServiceService,
+              private statusagree: LeaveStatusServiceService,
+              private route: Router,
+              private modalService: NgbModal,
+              private registerDetails: LeaveStatusServiceService,
+              private fileUploadService:FileUploadService ) { }
+
+ngOnInit(): void {
  
-    this.empid = sessionStorage.getItem("empid");
-    this.registerDetails.getMemberDetails(this.empid).subscribe(
-      data => {
-        this.personDetails = JSON.parse(data);
-        this.name=this.personDetails.name;
-        this.department=this.personDetails.department;
-        this.designation=this.personDetails.designation;
-        this.managerName=this.personDetails.managerName;
-        if(this.designation=='Manager'){
-          this.admin=true;
+    // to retrieve login member details
+      this.empid = sessionStorage.getItem("empid"); //get login employee id from session storage
+      this.registerDetails.getMemberDetails(this.empid).subscribe
+      (data => {
+          this.personDetails = JSON.parse(data);
+          this.name=this.personDetails.name;
+          this.department=this.personDetails.department;
+          this.designation=this.personDetails.designation;
+          this.managerName=this.personDetails.managerName;
+            if(this.designation=='Manager'){this.admin=true}
+              if(this.designation=="HR"){ this.admin=true; this.hrAdmin=true;}
         }
-        if(this.designation=="HR"){
-          this.admin=true;
-          this.hrAdmin=true;
-        }
-      });
+      );
 
-      
-    this.statusservice.getUpdates().subscribe(
-      data => {
-       
-        this.getpendingData();
-        this.getstatusData();
-       
-      }
-    );
-    this.fileUploadService.retriveFile(34).subscribe(data=>{
-      // this.f.filename.setValue(JSON.parse(data).fileName);
-      // this.fileSize = JSON.parse(data).fileSize;
-      // this.f.fileid.setValue(JSON.parse(data).fileId);
-      
-     
-    })
-  // if(Element.l)
- 
-//  for(let i of JSON.parse(data)){
-//   this.department!=i.department;
-//   details.push(i);
-//  }
+      // for update call
+      this.statusservice.getUpdates().subscribe(
+          data => {
+            this.getpendingData();
+            this.getstatusData();
+         }
+      );
 
-    // let empId : sessionStorage.getItem("empid");
+      this.fileUploadService.retriveFile(34).subscribe(data=>{})
+}
 
-  }
-
+//Update the status
   approve(historyid: Number, empid:String,status: string) {
     this.showmessage = true;
     setTimeout(() => { this.showmessage = false; }, 4000);
@@ -120,8 +100,8 @@ export class LeaveStatusComponent implements OnInit {
   
   }
 
+// retrieve all pending data
   getpendingData() {
-    // this.name==this.managername
     this.empid = sessionStorage.getItem("empid");
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
@@ -131,72 +111,60 @@ export class LeaveStatusComponent implements OnInit {
         this.designation=this.personDetails.designation;
         this.managerName=this.personDetails.managerName
     
-    if(this.designation=='Manager'){
-    this.statusservice.getUpdates().subscribe(
-      data => {
-        let b = [];
-        this.leftoverApproval =JSON.parse(data)
-        for (let item of this.leftoverApproval) {
-          if(this.designation=="Manager"){
-         if(item.managername==this.name && item.department==this.department ){
-          if (item.status == 'pending') {
-            console.log("condition true");
-            b.push(item);
-            this.notification = b.length;
-          }
+        if(this.designation=='Manager'){
+          this.statusservice.getUpdates().subscribe(data => {
+            let b = [];
+            this.leftoverApproval =JSON.parse(data)
+              for (let item of this.leftoverApproval) {
+                if(this.designation=="Manager"){
+                  if(item.managername==this.name && item.department==this.department ){
+                    if (item.status == 'pending') {
+                      console.log("condition true");
+                      b.push(item);
+                      this.notification = b.length;
+                    }
+                  }
+                }
+              }
+            this.dataSource1 = new MatTableDataSource(b);
+            this.dataSource1.paginator = this.dataPaginator;
+          });
         }
-      }
-         
+        else if(this.designation=='HR'){
+          this.statusservice.getUpdates().subscribe(data => {
+          let g = [];
+            this.leftoverApproval =JSON.parse(data)
+              for (let item of this.leftoverApproval) {
+                if(this.designation=="HR"){
+                  if(item.managername==this.name || item.designation=="Manager"){
+                    if(item.status=="pending"){
+                      g.push(item);
+                    }
+                  }
+                }
+                this.dataSource1 = new MatTableDataSource(g);
+                this.dataSource1.paginator = this.dataPaginator;
+              }
+          });      
+          this.statusservice.getUpdates().subscribe(data => {
+          let r = [];
+          this.leftoverApproval =JSON.parse(data)
+            for (let item of this.leftoverApproval) {
+              if(this.designation=="HR"){
+                if( item.status=="pending" && item.designation!="Manager"){
+                  r.push(item);
+                  this.notification = r.length;  
+                }
+              }
+              this.dataSource3 = new MatTableDataSource(r);
+              this.dataSource3.paginator = this.dataPaginator;
+            }
+          });
         }
-        this.dataSource1 = new MatTableDataSource(b);
-        this.dataSource1.paginator = this.dataPaginator;
-        console.log("retrived pending successfully")
-      }
-    );
+    })
   }
-  else if(this.designation=='HR'){
-    this.statusservice.getUpdates().subscribe(
-      data => {
-        let g = [];
-        this.leftoverApproval =JSON.parse(data)
-        for (let item of this.leftoverApproval) {
-          if(this.designation=="HR"){
-         if(item.managername==this.name || item.designation=="Manager"){
-          if(item.status=="pending"){
-            g.push(item);
-          }
-
-      }
-         
-        }
-        this.dataSource1 = new MatTableDataSource(g);
-        this.dataSource1.paginator = this.dataPaginator;
-        console.log("retrived pending successfully")
-      }
-     } );
-     this.statusservice.getUpdates().subscribe(
-      data => {
-        let r = [];
-        this.leftoverApproval =JSON.parse(data)
-        for (let item of this.leftoverApproval) {
-          if(this.designation=="HR"){
-         if( item.status=="pending" && item.designation!="Manager"){
-            r.push(item);
-            this.notification = r.length;  
-      
-      }
-         
-        }
-        this.dataSource3 = new MatTableDataSource(r);
-        this.dataSource3.paginator = this.dataPaginator;
-        console.log("retrived pending successfully")
-      }
-     } );
-  }
-  
-})
-}
  
+  //retrieve all  submitted data t
   getstatusData() {
     this.empid = sessionStorage.getItem("empid");
         this.statusservice.separationDetails(this.empid).subscribe(
@@ -253,10 +221,10 @@ export class LeaveStatusComponent implements OnInit {
     // )
   }
   delete(historyid:Number){
-this.statusagree.deleteHistory(historyid).subscribe(
-  data=>{
-    this.ngOnInit();
-    console.log("data for delete is passed");
+   this.statusagree.deleteHistory(historyid).subscribe(
+    data=>{
+      this.ngOnInit();
+      console.log("data for delete is passed");
   
   }
   
@@ -314,7 +282,7 @@ this.statusagree.deleteHistory(historyid).subscribe(
     this.statusagree.getHistoryId(historyId).subscribe(data=>{
            this.fileIdFor=JSON.parse(data).fileid;
     })
-    this.modalReference= this.modalService.open(showDocument, { size: 'xl' });
+    this.modalReference= this.modalService.open(showDocument, { size: 'm' });
   }
   
   backToleavestatus(){

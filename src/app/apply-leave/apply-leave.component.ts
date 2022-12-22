@@ -18,7 +18,9 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
+  noMatchGender:boolean=false;
   b:any=[];
+  showGetNumberError:boolean=false;
   hideIfnotme: boolean = true;
   defaultEmpid: any
   hideIfsick: boolean = true;
@@ -91,6 +93,8 @@ export class ApplyLeaveComponent implements OnInit {
   showErrorMessage: boolean=false;
   errorMessage: string='';
 status:any
+  persongender: any;
+  personMartialstatus: any;
 
   constructor(private route: Router,
               private apply: ApplyleaveService,
@@ -138,8 +142,6 @@ status:any
         ;
       })
 
-
-    console.log(this.empid);
     this.postleave = new FormGroup({
       leaveType: new FormControl('', Validators.required),
       noofdays: new FormControl('', Validators.required),
@@ -151,13 +153,12 @@ status:any
       reasonforapply: new FormControl('', Validators.required),
       status: new FormControl('pending'),
     });
-    // this.getnumber();
+  
     this.getPublicHolidays.getLeave().subscribe(
       data => {
         this.Includepublicholiday = JSON.parse(data);
         console.log(this.Includepublicholiday);
         for (let e = 0; e <= this.Includepublicholiday; e++) {
-          // for(let e of this.Includepublicholiday){
           this.holidays = this.Includepublicholiday.date;
           console.log(this.holidays);
         }
@@ -551,13 +552,19 @@ status:any
 
       if (this.postleave.value.chooseDays == "HalfDay") {
 
-        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+        if (this.count.toDateString() != (this.pluscount.toDateString())) {
           // if(this.count!=this.pluscount){
           if (workingDateArray.length == 0) {
             this.countinNumber = 0
           }
-          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseFromDays == "afternoontoHalf" ||
-            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseFromDays == "morningtoHalf") {
+          else if(this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
+          || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
+            let number = workingDateArray.length - this.minus;
+            this.countinNumber = number - this.minus;
+          }
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
+            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+           ) {
             let number = workingDateArray.length - this.minus;
             this.countinNumber = number - this.minus;
           } else {
@@ -567,12 +574,30 @@ status:any
 
 
         }
+        else if(this.count.toDateString() == (this.pluscount.toDateString())){
+          if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+          || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
+            this.countinNumber = workingDateArray.length - this.minus;
+          }else{
+            this.countinNumber = workingDateArray.length - this.minus; 
+          }
+         
+        }
 
-      }
+        }
+
+      
       if (this.postleave.value.chooseDays == "FullDay") {
         if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
           this.countinNumber = workingDateArray.length;
         }
+      }
+      if(this.countinNumber==0){
+        setTimeout(() => {
+          this.showGetNumberError=true;
+  
+        }, 3000);
+      
       }
 
     }
@@ -677,13 +702,25 @@ status:any
 
       if (this.postleave.value.chooseDays == "HalfDay") {
 
-        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+        if(this.count == (this.pluscount)){
+          if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+          || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
+            this.countinNumber = workingDateArray.length - this.minus;
+          }
+          else{
+            this.countinNumber = workingDateArray.length - this.minus; 
+          }
+         
+        }
+        else if (this.count != (this.pluscount)) {
           // if(this.count!=this.pluscount){
           if (workingDateArray.length == 0) {
             this.countinNumber = 0
           }
-          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseFromDays == "afternoontoHalf" ||
-            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseFromDays == "morningtoHalf") {
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
+            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"||this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
+            || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"
+           ) {
             let number = workingDateArray.length - this.minus;
             this.countinNumber = number - this.minus;
           } else {
@@ -693,6 +730,7 @@ status:any
 
 
         }
+     
 
       }
 
@@ -703,7 +741,12 @@ status:any
           this.countinNumber = workingDateArray.length;
         }
       }
+if(this.countinNumber==0){
+  setTimeout(() => {
+    this.showGetNumberError=true;
 
+  }, 3000);
+}
     }
   }
   handlerFull(event: any) {
@@ -734,12 +777,10 @@ status:any
             data => {
               
             }
-          
+
           )
           this.modalReference.close();})
- 
-          
-          
+          this.route.navigate(['/home']);
           }    
 
 
@@ -771,9 +812,9 @@ status:any
 
   selectToSend(event: any) {
 
-    this.defaultEmpid = this.empid;
-
-
+    // this.defaultEmpid = this.empid;
+    // this.postleave.controls['leaveType'].setValue('');
+    this.noMatchGender=false;
     this.teamdetails.getEmpid().subscribe(
       data => {
         this.personDetailbsd = JSON.parse(data);
@@ -790,11 +831,19 @@ status:any
             this.personlocation = i.city;
             this.personmanagername = i.managername;
             this.personmanageremail = i.manageremail;
+            this.persongender=i.gender;
+            this.personMartialstatus=i.maritalstatus;
+            if(this.persongender=="female" && this.personMartialstatus=="married"){
+              this.noMatchGender=true;
+            }
+           
           }
         }
 
       }
     )
+    
+
     if (event.target.value != this.empid) {
       this.hideIfnotme = false;
     } else {
@@ -838,6 +887,7 @@ this.status="Approved"
         this.detailsdata.push(this.status);
           
           this.modalReference.close();
+          this.route.navigate(['/home']);
       }
     );
     
