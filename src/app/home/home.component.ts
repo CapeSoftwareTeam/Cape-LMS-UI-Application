@@ -22,9 +22,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
 })
 export class HomeComponent implements OnInit {
   managerasadmin: boolean=false;
-doSomethingWithCurrentValue($event: number) {
-throw new Error('Method not implemented.');
-}
+
  comingsoon:boolean=false;
   superadmin:boolean=false;
   admin:boolean=false;
@@ -125,6 +123,12 @@ throw new Error('Method not implemented.');
   // }
 
   ngOnInit(): void {
+    this.spinner=true;
+    this.blurMode=true;
+    setTimeout(() => {  
+      this.blurMode=false;
+      this.spinner=false;
+  }, 3000);
     
     this.lmspage=true;
      

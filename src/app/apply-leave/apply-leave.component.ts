@@ -344,7 +344,7 @@ status:any
   selected() {
     console.log(this.selectedItem);
   }
-  save() {
+  Save(save:any) {
     // if(this.postleave.invalid){
     //   return ;
     // }
@@ -364,8 +364,56 @@ status:any
     this.applyLeave.status = 'not submitted';
     this.apply.leaveRegister(this.applyLeave).subscribe(
       data => { this.leave.push(this.postleave) }
-    )
-    this.route.navigate(['/home']);
+    )    
+     this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
+      data => {
+        this.leavetrack = JSON.parse(data);
+        if (this.postleave.value.leaveType == "casual") {
+          if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
+            this.modalReference = this.modalService.open(save, { size: 'm' });
+          }else{
+            this.route.navigate(['/home']);
+          }
+        }
+        else if (this.postleave.value.leaveType == "sick") {
+          if (this.countinNumber > this.leavetrack.sickLeave) {
+            this.modalReference = this.modalService.open(save, { size: 'm' });
+          }else{
+            this.route.navigate(['/home']); 
+          }
+        }
+        else if (this.postleave.value.leaveType == "bereavement") {
+          if (this.countinNumber > this.leavetrack.bereavementLeave) {
+            this.modalReference = this.modalService.open(save, { size: 'm' });
+          }
+          else{
+            this.route.navigate(['/home']);
+          }
+        }
+        else if (this.postleave.value.leaveType == "privilege") {
+          if (this.countinNumber > this.leavetrack.privilegeLeave) {
+            this.modalReference = this.modalService.open(save, { size: 'm' });
+          }
+          else{
+            this.route.navigate(['/home']);
+          }
+        }
+        else if (this.postleave.value.leaveType == "maternity") {
+          if (this.countinNumber > this.leavetrack.maternityLeave) {
+            this.modalReference = this.modalService.open(save, { size: 'm' });
+          }
+          else{
+            this.route.navigate(['/home']);
+          }
+        }
+      },error=>{
+        this.showErrorMessage=true;
+        this.errorMessage=this.globalErrorHandler.errorMessage;
+        setTimeout(() => {
+          this.showErrorMessage=false;
+        }, 3000);
+      })
+
   }
   proceed() {
     if (this.defaultEmpid == this.empid) {
@@ -593,9 +641,9 @@ status:any
         }
       }
       if(this.countinNumber==0){
+        this.showGetNumberError=true;
         setTimeout(() => {
-          this.showGetNumberError=true;
-  
+          this.showGetNumberError=false;
         }, 3000);
       
       }
@@ -742,11 +790,12 @@ status:any
         }
       }
 if(this.countinNumber==0){
+  this.showGetNumberError=true;
   setTimeout(() => {
-    this.showGetNumberError=true;
-
-  }, 3000);
+    this.showGetNumberError=false;
+  }, 3000)
 }
+
     }
   }
   handlerFull(event: any) {
@@ -892,6 +941,33 @@ this.status="Approved"
     );
     
   }
-}
+  okforsubmit(){
+    this.modalReference.close();
+  }
+  cancelsave(){
+    this.statusagree.getUpdates().subscribe(
+      data => {
+     console.log(data);
+        this.leftoverApproval =JSON.parse(data)
+        for (let item of this.leftoverApproval) {
+          if (item.status == 'not submitted' && item.empid==this.defaultEmpid ) {
+
+            this.historyid=item.historyid;
+            this.globalErrorHandler.apphistoryid=this.historyid;
+          }
+
+          }
+          this.statusagree.deleteHistory(this.historyid).subscribe(
+            data => {
+              
+            }
+
+          )
+          this.modalReference.close();})
+          // this.route.navigate(['/home']);
+          }    
+
+  }
+// }
 
 

@@ -214,7 +214,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}} 
               style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly 
               placeholder="Click here..... "><br><br>
-              <p *ngIf="showGetNumberError" style="color:red;"><b>Click confirm once date is selected...!!!!</b></p>
+              <p *ngIf="showGetNumberError" style="color:red;"><b>Select date and Click confirm once date is selected...!!!!</b></p>
             </div>
           </div>
  <br>
@@ -233,7 +233,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-md-12">
             <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" style="margin-right: 23px;">Cancel</button>
-            <button type="button" class="btn btn-primary" style="margin-right: 23px;" *ngIf="hideIfnotme" (click)="save()">Save changes</button>
+            <button type="button" class="btn btn-primary" style="margin-right: 23px;" *ngIf="hideIfnotme" (click)="Save(save)">Save changes</button>
              <button type="button" class="btn btn-success"(click)="leaveApply(success,failure,onbehalf)" style="margin-right: 23px;" *ngIf="hideIfsick"> Apply leave</button>
           </div>
         </div>
@@ -340,17 +340,29 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 
 <ng-template #update let-modal>
   <div class="modal-header">
+      <div class="modal-title" id="modal-basic-title">
+        <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
+      </div>
+    </div>
+    <div class="modal-body" style="text-align:center">
+      Your Leave has been successfully Updated. Press Ok to continue
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onAprroved()">OK</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #save let-modal>
+  <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
     </div>
   </div>
   <div class="modal-body" style="text-align:center">
-<ul>
-
-</ul>
+    The leave which your are selected is unavailable. You will get Loss of pay if you submit and proceed.
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onAprroved()">OK</button>
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="okforsubmit()">OK</button>
+    <button type="button" class="btn btn-danger" style="text-align: center;justify-content: center;" (click)="cancelsave()">Cancel</button>
   </div>
 </ng-template>
