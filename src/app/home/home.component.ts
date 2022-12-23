@@ -1,17 +1,14 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { arrowRightShort } from 'ngx-bootstrap-icons';
 import { GlobalErrorHandlerService } from '../global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
 import { FileUploadService } from '../services/file-upload.service';
-import { HistoryService } from '../services/historyservice.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
 
@@ -20,10 +17,10 @@ import { RegisterserviceService } from '../services/registerservice.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
   managerasadmin: boolean=false;
-
- comingsoon:boolean=false;
+  comingsoon:boolean=false;
   superadmin:boolean=false;
   admin:boolean=false;
   blurMode:boolean=false;
@@ -60,8 +57,6 @@ export class HomeComponent implements OnInit {
   initials: String='';
   managerName: any;
   leftoverApproval:any=[];
-
-  // file upload
   errorMessage: any;
   showErrorMessage: boolean = false;
   fileName: String="";
@@ -84,10 +79,8 @@ export class HomeComponent implements OnInit {
   greet: string="";
   isShow: boolean = false;
   open:boolean=false;
-  
   togglecount:number = 0;
   valueBot: string="";
-  
   downloadButton:boolean=true;
   
   clicktab(event:any){
@@ -230,7 +223,6 @@ export class HomeComponent implements OnInit {
        }
       }
     );
-  
     // retrive file
     this.registerService.getForm(this.empid).subscribe(data=>{
       if(JSON.parse(data).designation!="HR"){
@@ -286,7 +278,6 @@ export class HomeComponent implements OnInit {
 
   getSelectedindex(event: any) {
     this.tabName = this.tabs[event];
-
     if(this.tabName=="Time Schedule"||this.tabName=="Relieving Employee Details"){
       this.comingsoon=true;
     }
@@ -294,9 +285,6 @@ export class HomeComponent implements OnInit {
       this.comingsoon=false;
       this.ngOnInit();
     }
-    
-    console.log( this.tabName);
-
   }
   termsCondition(termsContent: any) {
 
@@ -433,11 +421,11 @@ export class HomeComponent implements OnInit {
          this.fileUploadService.fileDownload(this.f.fileid.value);
   }
   updateFileMethod(){
-this.updateFile1=true;
-this.fileUpload=false;
-this.cancel=false;
-this.updateButton=false;
-this.downloadButton=false;
+    this.updateFile1=true;
+    this.fileUpload=false;
+    this.cancel=false;
+    this.updateButton=false;
+    this.downloadButton=false;
   }
   back(){
     this.updateFile1=false;
@@ -450,11 +438,8 @@ this.downloadButton=false;
                this.downloadButton=true;
                this.updateButton=true;
       }
-    })
-    
+     })  
   }
-
-
 
   signout(){
     // this.blurMode=true
@@ -472,9 +457,6 @@ this.downloadButton=false;
     this.open =false;
       }
       toggleStatus(){
-        this.open=true;
-      
+        this.open=true;  
       }
- 
- 
 }

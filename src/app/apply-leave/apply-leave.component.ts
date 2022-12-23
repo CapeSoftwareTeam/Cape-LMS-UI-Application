@@ -18,6 +18,8 @@ import { RegisterserviceService } from '../services/registerservice.service';
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
+  submitted:boolean=false;
+  showGetNumberfullError:boolean=false;
   noMatchGender:boolean=false;
   b:any=[];
   showGetNumberError:boolean=false;
@@ -40,7 +42,8 @@ export class ApplyLeaveComponent implements OnInit {
   dayOfWeek: any = [];
   fromdate: any;
   todate: any;
-
+  msg:boolean=false;
+  msg1:boolean=false;
   FrommyDateFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
     return day !== 0;
@@ -92,9 +95,13 @@ export class ApplyLeaveComponent implements OnInit {
   detailsdata: any=[];
   showErrorMessage: boolean=false;
   errorMessage: string='';
-status:any
+  status:any
   persongender: any;
   personMartialstatus: any;
+  count: any;
+  pluscount: any;
+  difference: any;
+  differentdays: any;
 
   constructor(private route: Router,
               private apply: ApplyleaveService,
@@ -110,22 +117,32 @@ status:any
 
   postleave !: FormGroup;
 
-  ngOnInit(): void {
+ngOnInit(): void {
 
+  this.postleave = new FormGroup({
+    empid:new FormControl('', Validators.required),
+
+    leaveType: new FormControl('', Validators.required),
+    noofdays: new FormControl('', Validators.required),
+    fromdate: new FormControl('', Validators.required),
+    chooseDays: new FormControl('', Validators.required),
+    chooseFromDays: new FormControl('', Validators.required),
+    chooseToDays: new FormControl('', Validators.required),
+    todate: new FormControl('', Validators.required),
+    reasonforapply: new FormControl('', Validators.required),
+    status: new FormControl('pending'),
+  });
 
     this.empid = sessionStorage.getItem("empid");
-
     this.getPublicHolidays.getLeave().subscribe(
       data => {
         let temp = [];
         this.Includepublicholiday = JSON.parse(data);
         for (let leave of this.Includepublicholiday) {
           this.holidays.push(leave.date);
-
         }
       }
     );
-
 
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
@@ -140,20 +157,9 @@ status:any
         this.manageremail = this.personDetails.manageremail;
         this.city = this.personDetails.city;
         ;
-      })
+      }
+    )
 
-    this.postleave = new FormGroup({
-      leaveType: new FormControl('', Validators.required),
-      noofdays: new FormControl('', Validators.required),
-      fromdate: new FormControl('', Validators.required),
-      chooseDays: new FormControl('', Validators.required),
-      chooseFromDays: new FormControl('', Validators.required),
-      chooseToDays: new FormControl('', Validators.required),
-      todate: new FormControl('', Validators.required),
-      reasonforapply: new FormControl('', Validators.required),
-      status: new FormControl('pending'),
-    });
-  
     this.getPublicHolidays.getLeave().subscribe(
       data => {
         this.Includepublicholiday = JSON.parse(data);
@@ -165,10 +171,9 @@ status:any
       }, error=>{
         this.showErrorMessage=true;
         this.errorMessage=this.globalErrorHandler.errorMessage;
-        setTimeout(() => {
-          this.showErrorMessage=false;
-        }, 3000);
-  
+          setTimeout(() => {
+            this.showErrorMessage=false;
+          }, 3000);
       }
     );
 
@@ -176,40 +181,52 @@ status:any
       data => {
         this.applyLeave = JSON.parse(data);
       },error=>{
-        this.showErrorMessage=true;
-        this.errorMessage=this.globalErrorHandler.errorMessage;
-        setTimeout(() => {
-          this.showErrorMessage=false;
-        }, 3000);
-      }
+          this.showErrorMessage=true;
+          this.errorMessage=this.globalErrorHandler.errorMessage;
+            setTimeout(() => {
+              this.showErrorMessage=false;
+            }, 3000);
+        }
     )
+
     this.teamdetails.getEmpid().subscribe(
       data => {
         this.leftoverApproval = JSON.parse(data)
-        for (let team of this.leftoverApproval) {
-          if(this.designation=="Manager"){
-            if (team.managername == this.name && team.department == this.department && team.city == this.city) {
-              this.members.push(team);
+          for (let team of this.leftoverApproval) {
+            if(this.designation=="Manager"){
+              if (team.managername == this.name && team.department == this.department && team.city == this.city) {
+                this.members.push(team);
+              }
             }
-          }
-          else if(this.designation=="HR"){
-            if (team.managername == this.name && team.designation == "Manager") {
-              this.members.push(team);
-          }
-          }
-        }
+            else if(this.designation=="HR"){
+              if (team.managername == this.name && team.designation == "Manager") {
+                this.members.push(team);
+              }
+            }
+         }
       },error=>{
-        this.showErrorMessage=true;
-        this.errorMessage=this.globalErrorHandler.errorMessage;
-        setTimeout(() => {
-          this.showErrorMessage=false;
-        }, 3000);
-      }
-     );
+          this.showErrorMessage=true;
+          this.errorMessage=this.globalErrorHandler.errorMessage;
+            setTimeout(() => {
+             this.showErrorMessage=false;
+            }, 3000);
+        }
+    );
+}
 
-  }
   leaveApply(success: any, failure: any,onbehalf:any) {
+    this.submitted=true;
+    if(this.field.chooseDays.value==undefined ){
+this.msg=true;
+setTimeout(() => {
+  this.msg=false;
+}, 3000);
+return
 
+
+    }
+   
+    
     // if(this.postleave.invalid){
     //   return ;
     // }
@@ -228,22 +245,18 @@ status:any
       this.applyLeave.todate = this.postleave.value.todate;
       this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
       this.applyLeave.status = 'pending';
-      // this.applyLeave.createdby=this.personname;
-      this.apply.leaveRegister(this.applyLeave).subscribe(
-        data => { 
-      },error=>{
-          this.showErrorMessage=true;
-          this.errorMessage=this.globalErrorHandler.errorMessage;
-          setTimeout(() => {
-            this.showErrorMessage=false;
-    
-          }, 3000);
-        }
-      )
-   
+        this.apply.leaveRegister(this.applyLeave).subscribe(
+          data => { },error=>{
+                       this.showErrorMessage=true;
+                       this.errorMessage=this.globalErrorHandler.errorMessage;
+                        setTimeout(() => {
+                          this.showErrorMessage=false;
+                        }, 3000);
+                      }
+        )
       this.modalReference=this.modalService.open(onbehalf,{ size: 'm' })
     }
-    else {
+    else{
       this.applyLeave.empid = this.empid;
       this.applyLeave.name = this.name;
       this.applyLeave.department = this.department;
@@ -261,93 +274,83 @@ status:any
       // this.apply.leaveRegister(this.applyLeave).subscribe(
       // data => { this.leave.push(this.postleave) }
       // )
+        this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
+          data => {
+            this.leavetrack = JSON.parse(data);
+              if (this.postleave.value.leaveType == "casual") {
+                if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
+                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                }
+                else{
+                this.apply.leaveRegister(this.applyLeave).subscribe(
+                  data => { this.leave.push(this.applyLeave) }
+                )
+                this.modalReference = this.modalService.open(success, { size: 'm' })
+                }
+              }
+              else if (this.postleave.value.leaveType == "sick") {
+                if (this.countinNumber > this.leavetrack.sickLeave) {
+                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                } 
+                else{
+                  this.apply.leaveRegister(this.applyLeave).subscribe(
+                    data => { this.leave.push(this.applyLeave) }
+                  )
+                 this.modalReference = this.modalService.open(success, { size: 'm' })
+                }
+              }
+              else if (this.postleave.value.leaveType == "bereavement") {
+                if (this.countinNumber > this.leavetrack.bereavementLeave) {
+                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                }
+                else {
+                  this.apply.leaveRegister(this.applyLeave).subscribe(
+                    data => { this.leave.push(this.applyLeave) }
+                  )
+                 this.modalReference = this.modalService.open(success, { size: 'm' })
+                }
+              }
+              else if (this.postleave.value.leaveType == "privilege") {
+                if (this.countinNumber > this.leavetrack.privilegeLeave) {
+                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                }
+                else {
+                  this.apply.leaveRegister(this.applyLeave).subscribe(
+                  data => { this.leave.push(this.applyLeave) }
+                  )
+                 this.modalReference = this.modalService.open(success, { size: 'm' })
+                }
 
-      this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
-        data => {
-          this.leavetrack = JSON.parse(data);
-
-
-          if (this.postleave.value.leaveType == "casual") {
-            if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
-              this.modalReference = this.modalService.open(failure, { size: 'm' });
+              }
+              else if (this.postleave.value.leaveType == "maternity") {
+                if (this.countinNumber > this.leavetrack.maternityLeave) {
+                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                }
+                else{
+                  this.apply.leaveRegister(this.applyLeave).subscribe(
+                  data => { this.leave.push(this.applyLeave) }
+                  )
+                 this.modalReference = this.modalService.open(success, { size: 'm' })
+                }
+              }
+          },error=>{
+            this.showErrorMessage=true;
+            this.errorMessage=this.globalErrorHandler.errorMessage;
+              setTimeout(() => {this.showErrorMessage=false;},3000);
             }
-            else {
-              this.apply.leaveRegister(this.applyLeave).subscribe(
-                data => { this.leave.push(this.applyLeave) }
-              )
-              this.modalReference = this.modalService.open(success, { size: 'm' })
-              console.log("applied")
-            }
-
-          }
-          else if (this.postleave.value.leaveType == "sick") {
-            if (this.countinNumber > this.leavetrack.sickLeave) {
-              this.modalReference = this.modalService.open(failure, { size: 'm' });
-            } else {
-              this.apply.leaveRegister(this.applyLeave).subscribe(
-                data => { this.leave.push(this.applyLeave) }
-              )
-              this.modalReference = this.modalService.open(success, { size: 'm' })
-              console.log("applied")
-            }
-
-          }
-          else if (this.postleave.value.leaveType == "bereavement") {
-            if (this.countinNumber > this.leavetrack.bereavementLeave) {
-              this.modalReference = this.modalService.open(failure, { size: 'm' });
-            } else {
-              this.apply.leaveRegister(this.applyLeave).subscribe(
-                data => { this.leave.push(this.applyLeave) }
-              )
-              this.modalReference = this.modalService.open(success, { size: 'm' })
-              console.log("applied")
-            }
-
-          }
-          else if (this.postleave.value.leaveType == "privilege") {
-            if (this.countinNumber > this.leavetrack.privilegeLeave) {
-              this.modalReference = this.modalService.open(failure, { size: 'm' });
-            } else {
-              this.apply.leaveRegister(this.applyLeave).subscribe(
-                data => { this.leave.push(this.applyLeave) }
-              )
-              this.modalReference = this.modalService.open(success, { size: 'm' })
-              console.log("applied")
-            }
-
-          }
-          else if (this.postleave.value.leaveType == "maternity") {
-            if (this.countinNumber > this.leavetrack.maternityLeave) {
-              this.modalReference = this.modalService.open(failure, { size: 'm' });
-            } else {
-              this.apply.leaveRegister(this.applyLeave).subscribe(
-                data => { this.leave.push(this.applyLeave) }
-              )
-              this.modalReference = this.modalService.open(success, { size: 'm' })
-              console.log("applied")
-            }
-
-          }
-        },error=>{
-          this.showErrorMessage=true;
-          this.errorMessage=this.globalErrorHandler.errorMessage;
-          setTimeout(() => {
-            this.showErrorMessage=false;
-          }, 3000);
-        })
-
-       
+        )  
     }
-  
   }
 
   selected() {
     console.log(this.selectedItem);
   }
+
   Save(save:any) {
-    // if(this.postleave.invalid){
-    //   return ;
-    // }
+    this.submitted=true;
+    if(this.postleave.invalid){
+      return ;
+    }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;
@@ -362,59 +365,56 @@ status:any
     this.applyLeave.todate = this.postleave.value.todate;
     this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
     this.applyLeave.status = 'not submitted';
-    this.apply.leaveRegister(this.applyLeave).subscribe(
-      data => { this.leave.push(this.postleave) }
-    )    
-     this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
-      data => {
-        this.leavetrack = JSON.parse(data);
-        if (this.postleave.value.leaveType == "casual") {
-          if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
-            this.modalReference = this.modalService.open(save, { size: 'm' });
-          }else{
-            this.route.navigate(['/home']);
-          }
-        }
-        else if (this.postleave.value.leaveType == "sick") {
-          if (this.countinNumber > this.leavetrack.sickLeave) {
-            this.modalReference = this.modalService.open(save, { size: 'm' });
-          }else{
-            this.route.navigate(['/home']); 
-          }
-        }
-        else if (this.postleave.value.leaveType == "bereavement") {
-          if (this.countinNumber > this.leavetrack.bereavementLeave) {
-            this.modalReference = this.modalService.open(save, { size: 'm' });
-          }
-          else{
-            this.route.navigate(['/home']);
-          }
-        }
-        else if (this.postleave.value.leaveType == "privilege") {
-          if (this.countinNumber > this.leavetrack.privilegeLeave) {
-            this.modalReference = this.modalService.open(save, { size: 'm' });
-          }
-          else{
-            this.route.navigate(['/home']);
-          }
-        }
-        else if (this.postleave.value.leaveType == "maternity") {
-          if (this.countinNumber > this.leavetrack.maternityLeave) {
-            this.modalReference = this.modalService.open(save, { size: 'm' });
-          }
-          else{
-            this.route.navigate(['/home']);
-          }
-        }
-      },error=>{
-        this.showErrorMessage=true;
-        this.errorMessage=this.globalErrorHandler.errorMessage;
-        setTimeout(() => {
-          this.showErrorMessage=false;
-        }, 3000);
-      })
 
+    this.apply.leaveRegister(this.applyLeave).subscribe(data => {this.leave.push(this.postleave)})    
+      this.apply.LeaveTrackPopUpdetails(this.empid).subscribe(
+        data => {
+          this.leavetrack = JSON.parse(data);
+            if (this.postleave.value.leaveType == "casual") {
+              if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
+                this.modalReference = this.modalService.open(save, { size: 'm' });
+              }else{
+                this.route.navigate(['/home']);
+              }
+            }
+            else if (this.postleave.value.leaveType == "sick") {
+              if (this.countinNumber > this.leavetrack.sickLeave) {
+                this.modalReference = this.modalService.open(save, { size: 'm' });
+              }else{
+                this.route.navigate(['/home']); 
+              }
+            }
+          else if (this.postleave.value.leaveType == "bereavement") {
+            if (this.countinNumber > this.leavetrack.bereavementLeave) {
+              this.modalReference = this.modalService.open(save, { size: 'm' });
+            }
+            else{
+              this.route.navigate(['/home']);
+            }
+          }
+          else if (this.postleave.value.leaveType == "privilege") {
+            if (this.countinNumber > this.leavetrack.privilegeLeave) {
+              this.modalReference = this.modalService.open(save, { size: 'm' });
+            }
+            else{
+              this.route.navigate(['/home']);
+            }
+          }
+          else if (this.postleave.value.leaveType == "maternity") {
+            if (this.countinNumber > this.leavetrack.maternityLeave) {
+              this.modalReference = this.modalService.open(save, { size: 'm' });
+            }
+            else{
+              this.route.navigate(['/home']);
+            }
+          }
+        },error=>{
+          this.showErrorMessage=true;
+          this.errorMessage=this.globalErrorHandler.errorMessage;
+            setTimeout(() => {this.showErrorMessage=false;}, 3000);
+        })
   }
+
   proceed() {
     if (this.defaultEmpid == this.empid) {
       this.applyLeave.empid = this.empid;
@@ -434,7 +434,7 @@ status:any
       this.apply.leaveRegister(this.applyLeave).subscribe(
         data => { this.leave.push(this.postleave) }
       )
-    } else {
+    }else {
       this.applyLeave.empid = this.selectedEmpid;
       this.applyLeave.name = this.personname;
       this.applyLeave.department = this.persondepartment;
@@ -459,10 +459,6 @@ status:any
     this.modalReference.close();
   }
 
-  count: any;
-  pluscount: any;
-  difference: any;
-  differentdays: any;
   getfirstnumber() {
     this.count = this.fromdate;
     console.log(this.count);
@@ -477,89 +473,73 @@ status:any
         this.personDetails = JSON.parse(data);
         this.department = this.personDetails.department;
       });
-
-    let dd = this.count;
-
-    let d = this.pluscount;
-
-    this.empid = sessionStorage.getItem("empid");
-
-    if (this.department != 'Software') {
-   
-      // for complete saturday and sunday
-      var getDateArray = function (start: string | number | Date, end: number | Date) {
-        var arr = new Array();
-        var dt = new Date(start);
-  
-        while (dt <= end) {
-          arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
-          dt.setDate(dt.getDate() + 1);
-        }
-        return arr;
-      }
-      var prepareDateArray = function (dtArr: string | any[]) {
-        var arr = new Array();
-        for (var i = 0; i < dtArr.length; i++) {
-          arr.push((new Date(dtArr[i])).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
-        }
-        return arr;
-      }
-      function getSaturdays(year: number, month: number) {
-        let day, date;
-        let saturdays = [];
-        day = 1;
-        date = new Date(year, month, day);
+        let dd = this.count;
+        let d = this.pluscount;
+        this.empid = sessionStorage.getItem("empid");
+          if (this.department != 'Software') {
+           // for complete saturday and sunday
+           var getDateArray = function (start: string | number | Date, end: number | Date) {
+           var arr = new Array();
+           var dt = new Date(start);
+            while (dt <= end) {
+              arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
+              dt.setDate(dt.getDate() + 1);
+            }
+            return arr;
+           }
+           var prepareDateArray = function (dtArr: string | any[]) {
+           var arr = new Array();
+            for (var i = 0; i < dtArr.length; i++) {
+              arr.push((new Date(dtArr[i])).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
+            }
+            return arr;
+           }
+    function getSaturdays(year: number, month: number) {
+      let day, date;
+      let saturdays = [];
+      day = 1;
+      date = new Date(year, month, day);
         while (date.getMonth() === month) {
-          if (date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
+          if(date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
             saturdays.push(new Date(year, month, day));
           }
           day += 1;
           date = new Date(year, month, day);
-          console.log(date)
         }
-    
         return saturdays;
-      }
-
-      if (this.count.getMonth() == this.pluscount.getMonth() && this.count.getFullYear() == this.pluscount.getFullYear()) {
-        this.saturdays = [];
-        this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
-        this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
-        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-
-        for (let r = 0; r < this.saturdays.length; r++) {
-
-          let tempDate = this.saturdays[r].getMonth() + 1;
-          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1
+    }
+        if (this.count.getMonth() == this.pluscount.getMonth() && this.count.getFullYear() == this.pluscount.getFullYear()) {
+          this.saturdays = [];
+          this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
+          this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
+          this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+            for (let r = 0; r < this.saturdays.length; r++) {
+              let tempDate = this.saturdays[r].getMonth() + 1;
+              this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1
+            }
         }
-      
-      }
-      else if ((this.count.getFullYear() != this.pluscount.getFullYear()) || this.count.getMonth() != this.pluscount.getMonth()) {
-        this.Alternatesaturday = [];
-        this.saturdays = [];
-        this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
-        this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
-        // if(this.saturdays.getMonth()== this.count.getMonth()){
-        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-        // }
-        // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
-        this.saturdays1 = (getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
-        // }
-        this.saturdays = this.saturdays.concat(this.saturdays1);
-
-        for (let r = 0; r < this.saturdays.length; r++) {
-          let tempDate = this.saturdays[r].getMonth() + 1;
-          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1;
+        else if ((this.count.getFullYear() != this.pluscount.getFullYear()) || this.count.getMonth() != this.pluscount.getMonth()) {
+          this.Alternatesaturday = [];
+          this.saturdays = [];
+          this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
+          this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
+          // if(this.saturdays.getMonth()== this.count.getMonth()){
+          this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+          // }
+          // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
+          this.saturdays1 = (getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
+          // }
+          this.saturdays = this.saturdays.concat(this.saturdays1);
+            for (let r = 0; r < this.saturdays.length; r++) {
+              let tempDate = this.saturdays[r].getMonth() + 1;
+              this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1;
+            }
         }
-      }
-
-      var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
+        var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
         var arr = dates.filter(function (dt: any) {
           return holidaysArray.indexOf(dt) < 0;
         });
-
         var result = arr.filter(function (dt: any) {
-          console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1);
           if (dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1) {
             if (workingWeekendDates.indexOf(dt) > -1) {
               return dt;
@@ -569,100 +549,74 @@ status:any
             return dt;
           }
         });
-
         return result;
-
       }
-
-
-
       var startDate = new Date(this.count); //YYYY-MM-DD
       var endDate = new Date(this.pluscount); //YYYY-MM-DD
-
       var officalHolidays = this.holidays; //YYYY-MM-DD
       var workingWeekends = this.Alternatesaturday;//YYYY-MM-DD
-     
-
       var dateArray = getDateArray(startDate, endDate);
-
       var holidaysArray = prepareDateArray(officalHolidays);
-
       var workingWeekendsArray = prepareDateArray(workingWeekends);
-
       var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
-     
-
-      this.countinNumber = workingDateArray.length;
-      console.log(workingDateArray.length);
-      if (workingDateArray.length == 0) {
-        this.countinNumber = 0
-      }
-
-      if (this.postleave.value.chooseDays == "HalfDay") {
-
-        if (this.count.toDateString() != (this.pluscount.toDateString())) {
-          // if(this.count!=this.pluscount){
+        this.countinNumber = workingDateArray.length;
           if (workingDateArray.length == 0) {
             this.countinNumber = 0
           }
-          else if(this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
-          || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
-            let number = workingDateArray.length - this.minus;
-            this.countinNumber = number - this.minus;
+          if (this.postleave.value.chooseDays == "HalfDay") {
+            
+            if (this.count.toDateString() != (this.pluscount.toDateString())) {
+              if(this.postleave.value.chooseFromDays =="fromfull" && this.postleave.value.chooseToDays=="tofull"){
+                this.showGetNumberfullError=true;
+                setTimeout(() => { this.showGetNumberfullError=false;}, 3000);
+               
+              }
+            // if(this.count!=this.pluscount){
+              if (workingDateArray.length == 0) {
+                this.countinNumber = 0
+              }
+            else if(this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
+                 || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
+              let number = workingDateArray.length - this.minus;
+              this.countinNumber = number - this.minus;
+            }
+            else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
+              this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf") {
+                let number = workingDateArray.length - this.minus;
+                this.countinNumber = number - this.minus;
+            }else {
+              this.countinNumber = workingDateArray.length - this.minus;
+            }
+            }
+            else if(this.count.toDateString() == (this.pluscount.toDateString())){
+              if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+                  || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
+                this.countinNumber = workingDateArray.length - this.minus;
+              }else{
+                this.countinNumber = workingDateArray.length - this.minus; 
+              }
+            }
+          } 
+          if (this.postleave.value.chooseDays == "FullDay") {
+            if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+              this.countinNumber = workingDateArray.length;
+            }
           }
-          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
-            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
-           ) {
-            let number = workingDateArray.length - this.minus;
-            this.countinNumber = number - this.minus;
-          } else {
-            this.countinNumber = workingDateArray.length - this.minus;
-
+          if(this.countinNumber==0){
+            this.showGetNumberError=true;
+            setTimeout(() => {this.showGetNumberError=false;}, 3000);
           }
-
-
         }
-        else if(this.count.toDateString() == (this.pluscount.toDateString())){
-          if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
-          || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
-            this.countinNumber = workingDateArray.length - this.minus;
-          }else{
-            this.countinNumber = workingDateArray.length - this.minus; 
+        if (this.department == 'Software') {
+          var getDateArray = function (start: string | number | Date, end: number | Date) {
+          var arr = new Array();
+          var dt = new Date(start);
+            while (dt <= end) {
+              arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
+              dt.setDate(dt.getDate() + 1);
+            }
+            return arr;
           }
-         
-        }
-
-        }
-
-      
-      if (this.postleave.value.chooseDays == "FullDay") {
-        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
-          this.countinNumber = workingDateArray.length;
-        }
-      }
-      if(this.countinNumber==0){
-        this.showGetNumberError=true;
-        setTimeout(() => {
-          this.showGetNumberError=false;
-        }, 3000);
-      
-      }
-
-    }
-
-    if (this.department == 'Software') {
-      var getDateArray = function (start: string | number | Date, end: number | Date) {
-        var arr = new Array();
-        var dt = new Date(start);
-        console.log("dt=", dt);
-        while (dt <= end) {
-          arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
-          dt.setDate(dt.getDate() + 1);
-
-        }
-
-        return arr;
-      }
       function getSaturdays(year: number, month: number) {
         let day, date;
         let saturdays = [];
@@ -676,34 +630,26 @@ status:any
           day += 1;
           date = new Date(year, month, day);
           console.log(date)
-        }
-      
+        } 
         return saturdays;
       }
       this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-
       var prepareDateArray = function (dtArr: string | any[]) {
         var arr = new Array();
         for (var i = 0; i < dtArr.length; i++) {
           arr.push((new Date(dtArr[i])).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
         }
-    
         return arr;
       }
-
       var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
-
-        //       // remove holidays
+        // remove holidays
         var arr = dates.filter(function (dt: any) {
           return holidaysArray.indexOf(dt) < 0;
         });
-
-        //       // remove weekend dates that are not working dates
+        // remove weekend dates that are not working dates
         var result = arr.filter(function (dt: any) {
           console.log(dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1);
           if (dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1) {
-
-            // if((saturdays.)&&(dt.indexOf("Sun")-1)){
             if (workingWeekendDates.indexOf(dt) > -1) {
               return dt;
             }
@@ -720,7 +666,6 @@ status:any
           this.Includepublicholiday = JSON.parse(data);
           for (let leave of this.Includepublicholiday) {
             this.holidays.push(leave.date);
-
           }
         },error=>{
           this.showErrorMessage=true;
@@ -734,106 +679,74 @@ status:any
       var endDate = new Date(this.pluscount); //YYYY-MM-DD
       officalHolidays = this.holidays //YYYY-MM-DD
       workingWeekends = ["2021-10-05"] //YYYY-MM-DD
-
       var dateArray = getDateArray(startDate, endDate);
-
       var holidaysArray = prepareDateArray(officalHolidays);
-
       var workingWeekendsArray = prepareDateArray(workingWeekends);
-
-      var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
-    
-
-      if (workingDateArray.length == 0) {
-        this.countinNumber = 0
-      }
-
-      if (this.postleave.value.chooseDays == "HalfDay") {
-
-        if(this.count == (this.pluscount)){
-          if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
-          || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
-            this.countinNumber = workingDateArray.length - this.minus;
-          }
-          else{
-            this.countinNumber = workingDateArray.length - this.minus; 
-          }
-         
+      var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray); 
+        if (workingDateArray.length == 0) {
+          this.countinNumber = 0
         }
-        else if (this.count != (this.pluscount)) {
-          // if(this.count!=this.pluscount){
-          if (workingDateArray.length == 0) {
-            this.countinNumber = 0
+        if (this.postleave.value.chooseDays == "HalfDay") {
+          if(this.count == (this.pluscount)){
+            if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+                || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
+              this.countinNumber = workingDateArray.length - this.minus;
+            }
+            else{
+              this.countinNumber = workingDateArray.length - this.minus; 
+            } 
           }
-          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
-            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"||this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
-            || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"
-           ) {
-            let number = workingDateArray.length - this.minus;
-            this.countinNumber = number - this.minus;
-          } else {
-            this.countinNumber = workingDateArray.length - this.minus;
-
+          else if (this.count != (this.pluscount)) {
+            if (workingDateArray.length == 0) {
+              this.countinNumber = 0
+            }
+            else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
+               this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"||this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
+                || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf") {
+              let number = workingDateArray.length - this.minus;
+              this.countinNumber = number - this.minus;
+            }else {
+              this.countinNumber = workingDateArray.length - this.minus;
+            }
           }
-
-
         }
-     
-
-      }
-
-
-      if (this.postleave.value.chooseDays == "FullDay") {
-
-        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
-          this.countinNumber = workingDateArray.length;
+        if (this.postleave.value.chooseDays == "FullDay") {
+          if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+            this.countinNumber = workingDateArray.length;
+          }
         }
+          if(this.countinNumber==0){
+             this.showGetNumberError=true;
+              setTimeout(() => {this.showGetNumberError=false;}, 3000)
+          }
       }
-if(this.countinNumber==0){
-  this.showGetNumberError=true;
-  setTimeout(() => {
-    this.showGetNumberError=false;
-  }, 3000)
-}
-
-    }
   }
+
   handlerFull(event: any) {
     this.fulldays = event.target.value;
- 
   }
   handlerHalf(event: any) {
     this.halfdays = event.target.value;
   }
-  ok() {
+  ok(){
     this.modalReference.close();
     this.route.navigate(['/home']);
   }
   cancel() {
     this.statusagree.getUpdates().subscribe(
       data => {
-     console.log(data);
         this.leftoverApproval =JSON.parse(data)
         for (let item of this.leftoverApproval) {
           if (item.status == 'pending' && item.empid==this.defaultEmpid ) {
-
             this.historyid=item.historyid;
             this.globalErrorHandler.apphistoryid=this.historyid;
           }
-
-          }
-          this.statusagree.deleteHistory(this.historyid).subscribe(
-            data => {
-              
-            }
-
-          )
+        }
+        this.statusagree.deleteHistory(this.historyid).subscribe(data => {})
           this.modalReference.close();})
           this.route.navigate(['/home']);
-          }    
+  }    
 
-
-  
   hideDays() {
     this.showMorning = false;
   }
@@ -847,31 +760,19 @@ if(this.countinNumber==0){
     if (this.defaultEmpid == this.empid) {
       if (event.target.value == 'sick') {
         this.hideIfsick = false;
-      } else {
+      }else {
         this.hideIfsick = true;
       }
-    }
-    else {
-
-    }
-
-
+    }else {}
   }
 
-
   selectToSend(event: any) {
-
-    // this.defaultEmpid = this.empid;
-    // this.postleave.controls['leaveType'].setValue('');
     this.noMatchGender=false;
     this.teamdetails.getEmpid().subscribe(
       data => {
         this.personDetailbsd = JSON.parse(data);
-
         for (let i of this.personDetailbsd) {
-
           if (event.target.value == i.empid) {
-
             this.defaultEmpid = event.target.value;
             this.personname = i.name;
             this.persondepartment = i.department;
@@ -882,92 +783,64 @@ if(this.countinNumber==0){
             this.personmanageremail = i.manageremail;
             this.persongender=i.gender;
             this.personMartialstatus=i.maritalstatus;
-            if(this.persongender=="female" && this.personMartialstatus=="married"){
-              this.noMatchGender=true;
-            }
-           
+              if(this.persongender=="female" && this.personMartialstatus=="married"){
+                this.noMatchGender=true;
+              }
           }
         }
-
       }
     )
-    
-
     if (event.target.value != this.empid) {
       this.hideIfnotme = false;
     } else {
       this.hideIfnotme = true;
     }
-
   }
+
   onbehalfAprroved(update:any){
     this.statusagree.getUpdates().subscribe(
       data => {
-     console.log(data);
         this.leftoverApproval =JSON.parse(data)
         for (let item of this.leftoverApproval) {
           if (item.status == 'pending' && item.empid==this.defaultEmpid ) {
-          // ?this.b.push(item);
             this.historyid=item.historyid;
-           this.modalReference.close();
-          
+            this.modalReference.close(); 
           }
-          }
-          
-          
-          this.modalReference=this.modalService.open(update,{ size: 'm' })
-          
-          
-    })
-  console.log(this.historyid)
-  this.globalErrorHandler.apphistoryid=this.historyid;
- 
-    
+        } 
+        this.modalReference=this.modalService.open(update,{ size: 'm' })   
+      })
+      this.globalErrorHandler.apphistoryid=this.historyid;
   }
+
   onAprroved(){
-
-
-this.status="Approved"
-
-
-    this.statusagree.statusUpdate(this.historyid,this.defaultEmpid,this.status ).subscribe(
+   this.status="Approved"
+   this.statusagree.statusUpdate(this.historyid,this.defaultEmpid,this.status ).subscribe(
       data => {
-    
-        this.detailsdata.push(this.status);
-          
-          this.modalReference.close();
-          this.route.navigate(['/home']);
+        this.detailsdata.push(this.status);      
+        this.modalReference.close();
+        this.route.navigate(['/home']);
       }
-    );
-    
+    ); 
   }
+
   okforsubmit(){
     this.modalReference.close();
+    this.route.navigate(['/home']);
   }
   cancelsave(){
     this.statusagree.getUpdates().subscribe(
       data => {
-     console.log(data);
         this.leftoverApproval =JSON.parse(data)
         for (let item of this.leftoverApproval) {
-          if (item.status == 'not submitted' && item.empid==this.defaultEmpid ) {
-
+          if (item.status == 'not submitted' && item.empid==this.defaultEmpid){
             this.historyid=item.historyid;
             this.globalErrorHandler.apphistoryid=this.historyid;
           }
-
-          }
-          this.statusagree.deleteHistory(this.historyid).subscribe(
-            data => {
-              
-            }
-
-          )
-          this.modalReference.close();})
-          // this.route.navigate(['/home']);
-          }    
-
-  }
-// }
-
-
+        }
+        this.statusagree.deleteHistory(this.historyid).subscribe(data => {})
+        this.modalReference.close();})
+  }    
+  get field(): any {
+    return this.postleave.controls;
+  } 
+}

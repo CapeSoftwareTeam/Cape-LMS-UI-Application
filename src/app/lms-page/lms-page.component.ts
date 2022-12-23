@@ -21,7 +21,7 @@ import { RegisterserviceService } from '../services/registerservice.service';
 
 export class LmsPageComponent implements OnInit {
 
-
+  hidematernity:boolean=false;
   hourHandPosition=0;
   minuteHandPosition=0;
   secondHandPosition=0;
@@ -54,11 +54,9 @@ dateTime={
   modalReference: any;
   loading: boolean = false;
   isChecked: boolean = false;
-  //  namelist=[{name:'sangeetha'},{name:'shinchan'},{name:'dora'},{name:'jackie chan'}];
   year: String = '';
   remainingcl: String = '';
   teamdetails:any=[];
- 
   personDetails = new Register();
   exp = new LeaveDetails();
   leaveDetails = new LeaveTracking();
@@ -68,7 +66,6 @@ dateTime={
   leavestatus: boolean = false;
   casual: any;
   sick: any;
-
   empexperience: any;
   cl: any;
   sl: any;
@@ -102,6 +99,11 @@ dateTime={
   minusbl: any;
   minuspl: any;
   minusml: any;
+  martialstatus: any;
+  gender: any;
+  leaveTotal: any;
+  trackdetails: any;
+  counttotal: any;
  
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
@@ -130,6 +132,7 @@ dateTime={
 //   const date=new Date();
 //   this.updateClock(date);
 // },1000);
+
 
 this.startClock();
     this.empid = sessionStorage.getItem("empid");
@@ -190,6 +193,12 @@ this.city=this.personDetails.city;
         this.department = this.personDetails.department;
         this.designation = this.personDetails.designation;
         this.empexperience = this.personDetails.totalexperience;
+        this.martialstatus=this.personDetails.maritalstatus;
+        this.gender=this.personDetails.gender;
+        if(this.martialstatus=="married" && this.gender=="female"){
+          this.hidematernity=true;
+        }
+        else{ this.hidematernity=false;}
       }
     )
     this.firstentry.getExpLeaveDetails(this.empid).subscribe(
@@ -223,6 +232,9 @@ this.minusbl=this.expbl-this.remainingbl;
 this.minuspl=this.exppl-this.remainingpl;
 this.minusml=this.expml-this.remainingml;
 
+this.leaveTotal = this.remaincl+this.remainingsl + this.remainingbl+this.remainingpl +this.remainingml;
+this.trackdetails= this.expcl + this.expsl + this.expbl +this.exppl+ this.expml;
+ this.counttotal=Math.floor((this.leaveTotal/this.trackdetails)*100);
 
       }
     );
@@ -310,4 +322,20 @@ displayDoubleDights(value:number):string{
   return('00' + value).slice(-2);
 }
 
+//   let cp=document.querySelector(".circular-progress"),
+//   pv=document.querySelector(".progress-value");
+
+//   let pstartvalue=0,
+//    pendvalue=90,
+//  speed=100;
+//   let progress =setInterval(()=>{
+//     pstartvalue++;
+
+//     pv.textContent=`${pstartvalue}%`
+//     cp.style.background =`conic-gradient(#7d2ae8 ${pstartvalue * 3.6}deg , #ededed 0deg)`
+//     if(pstartvalue==pendvalue){
+//       clearInterval(progress);
+//     }
+//   },100);
+// }
  }

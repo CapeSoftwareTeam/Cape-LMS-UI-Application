@@ -21,11 +21,16 @@
               <label><b>Select Employee </b></label>
             </div>
               <div class="col-7">
-                <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid">
+                <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid" formControlName="empid"
+                 [ngClass]="{'is-invalid' : submitted && field.empid.errors}">
                   <option [ngValue]="null" disabled >Select Employee</option>
                   <option value="{{this.empid}}" selected>{{this.empid}} - {{this.name}}</option>
                   <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
                 </select>
+                <div *ngIf="submitted && field.empid.errors"
+                class="invalid-feedback">
+                <div *ngIf="field.empid.errors">Employee Id is required</div>
+        </div>
             </div>
           </div>
         <div class="row" style="justify-content:center;text-align: center;">
@@ -33,7 +38,8 @@
             <label><b>Leave Type: </b></label></div>
             <div class="col-7" >
             <select class="formcontrol" formControlName="leaveType" style="height: 40px;
-            float: left;width: 75%;margin-top: 6px;height: fit-content;" (change)="findifsick($event)">
+            float: left;width: 75%;margin-top: 6px;height: fit-content;" (change)="findifsick($event)"
+            [ngClass]="{'is-invalid' : submitted && field.leaveType.errors}">
               <option [ngValue]="null" disabled >Select leave type</option>
               <option value="casual">Casual Leave</option>
               <option value="sick">Sick Leave</option>
@@ -41,6 +47,10 @@
               <option value="privilege">Privilege Leave</option>
               <option value="maternity" *ngIf="noMatchGender">Maternity Leave</option>
             </select>
+            <div *ngIf="submitted && field.leaveType.errors"
+            class="invalid-feedback">
+            <div *ngIf="field.leaveType.errors">Type of leave is required</div>
+    </div>
             <!-- <mat-form-field appearance="fill">
   <mat-select formControlName="leaveType"  [(ngModel)]="selectedItem" (select)="selected()">
     <mat-option value="casual">Casual Leave</mat-option>
@@ -56,7 +66,7 @@
 <div class="row" style="justify-content:center;text-align: center;">
   <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
     <label><b>Leave Duration: </b></label></div>
-  <div class="col-7" style="display: inline-flex;">
+  <div class="col-7" style="display: inline-flex;" >
 <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
   <input class="form-check-input" type="radio" name="chooseDays"  value="FullDay" (click)="hideDays()"  
   formControlName="chooseDays" [(ngModel)]="findDays">
@@ -67,6 +77,8 @@
   formControlName="chooseDays" [(ngModel)]="findDays">
   <label class="form-check-label" for="inlineRadio1" style="display:contents">Half Day </label>
 </div>
+<p *ngIf="msg" style="color: red;">Leave Duration is required</p>
+
 <!-- <div class="form-check form-check-inline">
   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
   <label class="form-check-label" for="inlineRadio1">Half in Afternoon</label>
@@ -85,7 +97,7 @@
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-               
+                
 <!-- <input type="text"
 placeholder="Datepicker"
 class="form-control"
@@ -122,7 +134,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 
 <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
           <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
-          <div class="col-7" style="display: inline-flex;">
+          <div class="col-7" style="display: inline-flex;" formControlName="chooseFromDays" >
             <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
               <input class="form-check-input" type="radio" value="morningfromHalf" name="chooseFromDays" 
               formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
@@ -138,6 +150,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
               <label class="form-check-label" for="inlineRadio1" style="display:contents">Full</label>
             </div>
+         
   <!-- <mat-radio-group>
     <mat-radio-button value="morningfromHalf" name="chooseFromDays" 
   formControlName="chooseFromDays" [(ngModel)]="findHalfDays" >Morning Half</mat-radio-button>
@@ -160,6 +173,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
                 <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
                 <mat-datepicker #pickers></mat-datepicker>
               </mat-form-field>
+             
               <!-- <input class="formcontrol" type="date" formControlName="todate" 
               style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate"> -->
               <input type="submit" (click)="getsecondnumber()" value="confirm" style="margin-top: 34px;">
@@ -169,7 +183,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
           <br>
           <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
             <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
-            <div class="col-7" style="display: inline-flex;">
+            <div class="col-7" style="display: inline-flex;"  formControlName="chooseToDays" >
               <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
                 <input class="form-check-input" type="radio" value="morningtoHalf" name="chooseToDays"  
                 formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
@@ -186,6 +200,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
                 formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
                 <label class="form-check-label" for="inlineRadio1" style="display:contents">Full </label>
               </div>
+      
 
     <!-- <mat-radio-group>
       <mat-radio-button value="morningtoHalf" name="chooseToDays"  
@@ -213,8 +228,13 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               <div class="col-7">
               <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}} 
               style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly 
-              placeholder="Click here..... "><br><br>
+              placeholder="Click here..... "  ><br><br>
               <p *ngIf="showGetNumberError" style="color:red;"><b>Select date and Click confirm once date is selected...!!!!</b></p>
+              <p *ngIf="showGetNumberfullError" style="color:red;"><b>select full for either from or to date</b></p>
+              <!-- <div *ngIf="submitted && field.noofdays.errors"
+              class="invalid-feedback">
+              <div *ngIf="field.noofdays.errors">Click field to get number of days</div>
+      </div> -->
             </div>
           </div>
  <br>
@@ -224,7 +244,12 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
               <label><b>Leave Reason: </b></label></div>
               <div class="col-7">
               <textarea formControlName="reasonforapply"
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;"></textarea>
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [ngClass]="{'is-invalid' : submitted && field.reasonforapply.errors}">
+            </textarea>
+            <div *ngIf="submitted && field.reasonforapply.errors"
+              class="invalid-feedback">
+              <div *ngIf="field.reasonforapply.errors">Reason is required</div>
+      </div>
           </div>
         </div>
       
