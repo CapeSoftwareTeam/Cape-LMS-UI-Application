@@ -89,7 +89,12 @@ export class HomeComponent implements OnInit {
   valueBot: string="";
   
   downloadButton:boolean=true;
- 
+  
+  clicktab(event:any){
+    if(event.target.value=="Time Schedule"){
+      this.comingsoon=true;
+    }
+  }
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
     private move: BreakpointObserver,
@@ -123,12 +128,13 @@ export class HomeComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.spinner=true;
-    this.blurMode=true;
-    setTimeout(() => {  
-      this.blurMode=false;
-      this.spinner=false;
-  }, 3000);
+  //   this.spinner=true;
+  //   this.blurMode=true;
+  //   setTimeout(() => {  
+  //     this.blurMode=false;
+  //     this.spinner=false;
+  // }, 3000);
+    
     
     this.lmspage=true;
      
@@ -171,7 +177,13 @@ export class HomeComponent implements OnInit {
                   this.notification = c.length;
                 }
               }
-            }
+            },error=>{
+              this.showErrorMessage = true;
+              this.errorMessage = this.globalErrorHandler.errorMessage;
+              setTimeout(() => {
+                this.showErrorMessage = false;
+              }, 3000);
+             }
           );
         }
       })
@@ -274,6 +286,16 @@ export class HomeComponent implements OnInit {
 
   getSelectedindex(event: any) {
     this.tabName = this.tabs[event];
+
+    if(this.tabName=="Time Schedule"||this.tabName=="Relieving Employee Details"){
+      this.comingsoon=true;
+    }
+    else{
+      this.comingsoon=false;
+      this.ngOnInit();
+    }
+    
+    console.log( this.tabName);
 
   }
   termsCondition(termsContent: any) {

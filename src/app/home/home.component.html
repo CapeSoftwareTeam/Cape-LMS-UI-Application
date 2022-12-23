@@ -38,9 +38,9 @@
     <mat-tab label="Time Schedule" (click)="callComingSoon()"> Time Schedule </mat-tab>
     <mat-tab label="Relieving Employee Details" (click)="callComingSoon()"> Relieving Employee Details </mat-tab> -->
   <!-- </mat-tab-group> -->
-  <mat-tab-group [selectedIndex]="selected.value"
+  <mat-tab-group [selectedIndex]="selected.value" 
     (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
-    <mat-tab style="font-family: system-ui;" *ngFor="let tab of tabs; let index = index" [label]="tab">
+    <mat-tab style="font-family: system-ui;" *ngFor="let tab of tabs; let index = index" [label]="tab" (click)="clicktab($event)">
       <!-- <button mat-raised-button
             class="example-add-tab-button"
             (click)="addTab()" style="float:right;">
@@ -62,6 +62,7 @@
          style="color:blue" routerLink="/lmspage">Click here to access</button>
       <h1 *ngIf="tabName == 'Time Schedule'"> Time Schedule </h1>
     </div>style="justify-content: center;" text-decoration: underline;-->
+ 
 
       <div class="sidebar" *ngIf="tabName == 'Leave Management Systems'">
         <br>
@@ -92,9 +93,10 @@
       <div class="content" mat-elevation-z8>
  
     <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
-    <app-coming-soon *ngIf="comingsoon && tabName == 'Time Schedule'"></app-coming-soon>
+    <app-coming-soon *ngIf="comingsoon"></app-coming-soon>
 
   </div>
+  
     </mat-tab>
   </mat-tab-group>
 

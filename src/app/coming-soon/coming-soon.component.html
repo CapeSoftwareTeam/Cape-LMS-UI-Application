@@ -1,14 +1,28 @@
-<p>coming-soon works!</p>
+
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bgimg {
+  background-image: url('../assets/image2.png');
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+}
+</style>
+
 <div class="bgimg">
-    <div class="topleft">
-      <p>Logo</p>
-    </div>
+    
     <div class="middle">
       <h1>COMING SOON</h1>
       <hr>
-      <p id="demo" style="font-size:30px"></p>
+      <p formControlName="date" style="font-size:30px;font-weight: bolder;">{{hour}} Hours:{{minute}} Minute:{{timeLeft}} Seconds Left....</p>
     </div>
-    <div class="bottomleft">
-      <p>Some text</p>
-    </div>
+    
   </div>
