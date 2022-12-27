@@ -10,6 +10,9 @@
 
         <div class="wrapper"><br>
             <div class="title"><span>LOGIN HERE!!</span></div>
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true"   >
+                <mat-icon class="close-icon" color="warn" (click)="gotoHome()" style="margin-top: -69px;margin-right: 20px; ">close</mat-icon>
+              </button>
             <hr>
             <form [formGroup]="loginForm">
                 <p *ngIf="errorMsgLogin" class="alert alert-danger alert-dismissible fade show"

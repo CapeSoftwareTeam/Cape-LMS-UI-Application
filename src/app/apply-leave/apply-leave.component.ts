@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { end, start } from '@popperjs/core';
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
 import { Register } from '../models/register';
@@ -216,15 +216,16 @@ ngOnInit(): void {
 
   leaveApply(success: any, failure: any,onbehalf:any) {
     this.submitted=true;
-    if(this.field.chooseDays.value==undefined ){
-this.msg=true;
-setTimeout(() => {
-  this.msg=false;
-}, 3000);
-return
-
-
-    }
+    if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined ){
+      this.msg=true;
+      
+      setTimeout(() => {
+        this.msg=false;
+      }, 3000);
+      return
+      
+      
+          }
    
     
     // if(this.postleave.invalid){
@@ -348,9 +349,20 @@ return
 
   Save(save:any) {
     this.submitted=true;
-    if(this.postleave.invalid){
-      return ;
-    }
+    if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined ){
+      this.msg=true;
+      
+      setTimeout(() => {
+        this.msg=false;
+      }, 3000);
+      return
+      
+      
+          }
+          
+    // if(this.postleave.invalid){
+    //   return ;
+    // }
     this.applyLeave.empid = this.empid;
     this.applyLeave.name = this.name;
     this.applyLeave.department = this.department;

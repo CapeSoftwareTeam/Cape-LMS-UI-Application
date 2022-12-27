@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable,Injector } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { LoginComponent } from '../login/login.component';
 import { ProfileserviceService } from './profileservice.service';
 
@@ -14,9 +14,7 @@ export class TokenServiceService implements HttpInterceptor{
               private globalErrorHandler: GlobalErrorHandlerService) { }
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // if(sessionStorage.getItem("token") ==null || !this.loginService.isLogin){
       if(sessionStorage.getItem("token") !=null){
-        
         let profileService=this.injector.get(ProfileserviceService);
         let tokenzedReq=req.clone({
           setHeaders:{
@@ -27,8 +25,6 @@ export class TokenServiceService implements HttpInterceptor{
         catchError((error:HttpErrorResponse)=>
         {
           const errorMessage=this.errorSet(error)
-          
-          console.log(errorMessage)
           this.globalErrorHandler.errorMessage=errorMessage;
           return throwError( ()=>new Error (this.globalErrorHandler.errorMessage));
         })
@@ -38,14 +34,11 @@ export class TokenServiceService implements HttpInterceptor{
           catchError((error:HttpErrorResponse)=>
           {
             const errorMessage=this.errorSet(error)
-            
-            console.log(errorMessage)
-            this.globalErrorHandler.errorMessage=errorMessage;
+            this.globalErrorHandler.errorMessage=errorMessage
             return throwError( ()=>new Error (this.globalErrorHandler.errorMessage));
           })
         )
-    }
-
+        }
     errorSet(error:HttpErrorResponse):string{
     let errorMessage='Something went wrong, Please try again later';
 
@@ -61,11 +54,16 @@ export class TokenServiceService implements HttpInterceptor{
       errorMessage="Something went wrong, Please try again later"
     }
     else{
+      
       // server side error
-      if(error.status!=0){
+      if(error.status!=0 &&error.error.message==undefined){
+        
         errorMessage=JSON.parse(error.error).message;
       }
+      else if(error.error.message !='' &&error.error.message!=undefined){
+        errorMessage=error.error.message;
+      }
     }
-          return errorMessage; 
-        }
+   return errorMessage; 
+  }
 }

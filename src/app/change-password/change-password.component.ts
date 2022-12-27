@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { User } from '../models/user';
 import { FileUploadService } from '../services/file-upload.service';
 import { RegisterserviceService } from '../services/registerservice.service';
@@ -18,13 +18,14 @@ export class ChangePasswordComponent implements OnInit {
   empId: any;
   submitted: boolean = false;
   succesMsg: boolean = false;
+
+  // changePasswordForm FormGroup
   changePasswordForm = new FormGroup({
     oldPassword: new FormControl(),
     newpassword: new FormControl(), 
   
   });
   user = new User();
-
   errorMessage: any;
   showErrorMessage: boolean = false;
   constructor(private fb: FormBuilder, private registerService: RegisterserviceService, private route: Router, 
@@ -32,17 +33,15 @@ export class ChangePasswordComponent implements OnInit {
   ) { }
 
   ngOnInit():void {
+    // empId get in Session Storage 
     this.empId = sessionStorage.getItem('empid')
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required]],
       newpassword: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]],
      
     });
-
-   
   }
- 
-
+//  Submit Method
   submit() {
     this.submitted = true;
     if (this.changePasswordForm.invalid) {
@@ -51,6 +50,7 @@ export class ChangePasswordComponent implements OnInit {
     this.user.oldPassword = this.changePasswordForm.value.oldPassword;
     this.user.password = this.changePasswordForm.value.newpassword;
     this.user.empId = this.empId;
+    // change Password service
     this.registerService.changePassword(this.user).subscribe(data => {
       this.succesMsg = true;
       setTimeout(() => {
@@ -69,9 +69,11 @@ export class ChangePasswordComponent implements OnInit {
     )
 
   }
+  //Back Button Method
   back() {
     this.route.navigate(['/home'])
   }
+  // get Controls
   get f() {
     return this.changePasswordForm.controls;
   }

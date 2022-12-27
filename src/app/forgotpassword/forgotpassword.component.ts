@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { User } from '../models/user';
 
 import { RegisterserviceService } from '../services/registerservice.service';
@@ -15,9 +15,9 @@ export class ForgotpasswordComponent implements OnInit {
 
   forgot: boolean = false;
   submitted: boolean = false;
-
   successMsgPasword: boolean = false;
 
+  // forgotpasswordform formGroup
   forgotpasswordform = new FormGroup({
     password: new FormControl()
     , newPassword: new FormControl()
@@ -33,7 +33,6 @@ export class ForgotpasswordComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.forgotpasswordform = this.fb.group({
       password: ['', [
         Validators.required,
@@ -42,9 +41,8 @@ export class ForgotpasswordComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)]]
     });
   }
-  validation() {
-
-  }
+  
+  // Submit Method
   onSubmit() {
     this.submitted = true;
 
@@ -79,11 +77,9 @@ export class ForgotpasswordComponent implements OnInit {
 
     }
     )
-
-
-
-
   }
+
+  //Back button Condition
   back() {
     this.router.navigate(['/login']);
   }

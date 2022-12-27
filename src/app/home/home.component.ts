@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
@@ -82,6 +82,7 @@ export class HomeComponent implements OnInit {
   togglecount:number = 0;
   valueBot: string="";
   downloadButton:boolean=true;
+  designation1: any;
   
   clicktab(event:any){
     if(event.target.value=="Time Schedule"){
@@ -217,6 +218,7 @@ export class HomeComponent implements OnInit {
        }
        if(this.designation=='HR'){
          this.admin=true;
+         this.managerasadmin=true;
        }
        if(this.designation=='MD'){
         this.superadmin=true;
@@ -225,6 +227,7 @@ export class HomeComponent implements OnInit {
     );
     // retrive file
     this.registerService.getForm(this.empid).subscribe(data=>{
+      this.designation1=JSON.parse(data).designation;
       if(JSON.parse(data).designation!="HR"){
                this.updateButton=false;
                this.downloadButton=false;
@@ -290,20 +293,40 @@ export class HomeComponent implements OnInit {
 
     this.modalReference = this.modalService.open(termsContent, { size: 'm' })
 
-    this.fileUploadService.retriveFile(34).subscribe(data=>{
+    this.fileUploadService.retriveFileName("leavePolicy").subscribe(data=>{
       this.f.filename.setValue(JSON.parse(data).fileName);
       this.fileSize = JSON.parse(data).fileSize;
       this.f.fileid.setValue(JSON.parse(data).fileId);
       
      
     },error=>{
-      this.showErrorMessage=true;
+     
       this.errorMessage=this.globalErrorHandler.errorMessage;
-      setTimeout(() => {
-        this.showErrorMessage=false;
-       this.ngOnInit();
-       this.onCancel();
-      }, 3000);
+     
+      if(this.errorMessage=="File Not Preset"){
+              if(this.designation1=="HR"){
+                this.updateFile1=true;
+                this.upload=true;
+                this.fileUpload=false;
+              }
+              else{
+                this.errorMessage="No File Here Please Contact Hr"
+                this.showErrorMessage=true;
+                setTimeout(() => {
+                  this.showErrorMessage=false;
+                  this.onCancel();
+                }, 3000);
+              }
+      }
+      else{
+         this.showErrorMessage=true;
+         setTimeout(() => {
+          this.showErrorMessage=false;
+         this.ngOnInit();
+         this.onCancel();
+        }, 3000);
+      }
+      
     })
   
   }
@@ -355,6 +378,8 @@ export class HomeComponent implements OnInit {
       this.filename2=false;
     }
   }
+  
+  // file Update Function
   updateFile(event:any){
       if(this.file==null){
         this.showErrorMessage1=true;
@@ -368,7 +393,7 @@ export class HomeComponent implements OnInit {
     }
   this.fileId=this.f.fileid.value;
     this.formFile = formData;
-
+// file Update Service
     this.fileUploadService.updateFile(formData,this.fileId,this.fileSize).subscribe(data=>{
       this.loading1=true;
       this.updateFile1=false;
@@ -384,7 +409,7 @@ export class HomeComponent implements OnInit {
           this.cancel=true;
           this.downloadButton=true;
           this.updateButton=true;
-          this.ngOnInit();
+          this.onCancel();
         }, 2000);
       }, 2000);
     
@@ -398,16 +423,30 @@ export class HomeComponent implements OnInit {
   
 }
 
+// file Upload Service
   onUpload(){
+    let componentName:any;
     const formData: FormData = new FormData();
     for (let f of this.file) {
       formData.append('file', f, f.name);
     }
-    
+    componentName="leavePolicy"
     this.formFile = formData;
-            
-   this.fileUploadService.fileUploadLms(formData,this.fileSize).subscribe(data=>{
-                 
+    
+   this.fileUploadService.fileUploadLms(formData,this.fileSize,componentName).subscribe(data=>{
+                 this.loading1=true;
+                 this.upload=false;
+                 this.updateFile1=false;
+                 setTimeout(() => {
+                  this.loading1=false;
+                  this.successMsg=true;
+                  setTimeout(() => {
+                    this.successMsg=false;
+                    this.fileUpload=true;
+                    this.onCancel();
+                  }, 2000);
+                 }, 3000);
+                
    },
    error=>{
     this.showErrorMessage = true;
@@ -417,9 +456,13 @@ export class HomeComponent implements OnInit {
     }, 3000);
    })
   }
+  
+  // file Download
   onDownload(){
          this.fileUploadService.fileDownload(this.f.fileid.value);
   }
+
+  // file Update Button Method
   updateFileMethod(){
     this.updateFile1=true;
     this.fileUpload=false;
@@ -427,18 +470,17 @@ export class HomeComponent implements OnInit {
     this.updateButton=false;
     this.downloadButton=false;
   }
+  // Back Button Method
   back(){
     this.updateFile1=false;
     this.fileUpload=true;
     this.cancel=true;
     this.showErrorMessage1=false;
-     // retrive file
-     this.registerService.getForm(this.empid).subscribe(data=>{
-      if(JSON.parse(data).designation=="HR"){
-               this.downloadButton=true;
-               this.updateButton=true;
-      }
-     })  
+    if(this.designation1=="HR"){
+      this.downloadButton=true;
+      this.updateButton=true;
+    }
+    
   }
 
   signout(){

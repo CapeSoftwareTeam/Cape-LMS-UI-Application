@@ -8,7 +8,8 @@ import { User } from '../models/user';
 import { NgOtpInputComponent, NgOtpInputConfig } from 'ng-otp-input';
 import { exclamationSquareFill } from 'ngx-bootstrap-icons';
 import { TokenServiceService } from '../services/token-service.service';
-import { GlobalErrorHandlerService } from '../global-error-handler.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
+
 
 
 
@@ -39,11 +40,11 @@ export class LoginComponent implements OnInit {
   email:any;
   mobileNumber:any;
   afterOtp:boolean=true;
- 
   countryCode:string='';
   user=new User();
-
   flag: boolean=false;
+
+  // LoginForm formGroup
   loginForm=new FormGroup({
   empid:new FormControl(''),
   password:new FormControl(''),userValidation:new FormControl(''),emailidLogin:new FormControl(''),mobileNumberLogin:new FormControl('')
@@ -57,8 +58,9 @@ export class LoginComponent implements OnInit {
   otpsession: any;
   disableMOb:boolean=false;
   successMsgOtp:boolean=false;
+  disable1 : boolean = false;
 
-
+  // otpgenerateform FormGroup
   otpgenerateform=new FormGroup({ otpgenerate:new FormControl(''),mobileNumber:new FormControl('')
   ,emailid:new FormControl(''), otp :new FormControl('')})
   otpErrorMsg: boolean=false;
@@ -77,7 +79,7 @@ export class LoginComponent implements OnInit {
    
     }
 
-    
+ 
     Otp!: string;
   showOtpComponent = false;
  
@@ -132,9 +134,6 @@ export class LoginComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    
-
-
     this.loginForm=this.formbuilder.group({
       userValidation:['',[Validators.required]],
       empid:['',[Validators.required]],
@@ -145,21 +144,11 @@ export class LoginComponent implements OnInit {
   });
   this.otpgenerateform=this.formbuilder.group({otpgenerate:['',Validators.required],
     mobileNumber: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]
-    ,emailid:['',Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")],otp:['',Validators.required],
-   
-     
+    ,emailid:['',Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")],otp:['',Validators.required],    
   });
 
-  
   }
  
-  
-
-
-
-  
-disable1 : boolean = false;
-
 //otp checkbox change event
 validateOtp(event:any){
 if(event.value=="mobileNumber"){
@@ -187,8 +176,6 @@ else{
     this.otp=true;
     this.loginPage=false;
     this.showErrorMessage=false;
-
-    
   }
 
   //cancel button click function
@@ -200,28 +187,23 @@ else{
  
   //login click function
 login(){
- 
   this.submitted=true;
 
-  
-   
 //break point form validation
   if(this.loginForm.invalid) {
     if(this.loginForm.value.userValidation==""){
-this.errorMsgLogin=true;
-
-setTimeout(() => {
-  this.errorMsgLogin=false;
-}, 3000);
-return;
-    }
-    else{
-      return;
-    }
-    
+            this.errorMsgLogin=true;
+            setTimeout(() => {
+              this.errorMsgLogin=false;
+            }, 3000);
+            return;
+                }
+       else{
+            return;
+           }
+   
   }
 
-  
   if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.mobileNumberLogin?.length==0){
     this.submitted=true;
   }
@@ -243,11 +225,6 @@ return;
         this.showErrorMessage1=true;
         this.errorMessage1=this.errorMessage;
         this.loginPage=false;
-        // setTimeout(() => {
-        //   this.showErrorMessage1=false;
-        //   window.location.reload()
-        // // this.router.navigate(['/frontpage'])
-        // }, 4000);
       }
       else{
         this.showErrorMessage=true;
@@ -259,6 +236,8 @@ return;
     )
 
 }
+
+//cancel method for login page
 gotoHome(){
   this.router.navigate(['/frontpage'])
 }
@@ -353,8 +332,6 @@ generate():any{
     {
       this.otpsession=JSON.parse(data)[0];
       this.Email=JSON.parse(data)[1];
-      
-   
       this.successMsgOtp = true;
       setTimeout(() => {
         this.disableMOb=true;
@@ -362,8 +339,6 @@ generate():any{
         this.afterOtp=false;
         this.successMsgOtp = false;
       }, 3000);
-      
-
       return this.Email;
      
     },error=>{
@@ -380,16 +355,16 @@ generate():any{
      
     }
     ) 
-   
 }
 
-
+//get loginForm Controls
 get f(){
   return this.loginForm.controls;
 }
+
+// get otpgenerateform Controls
 get g(){
   return this.otpgenerateform.controls;
 }
-
 
 }

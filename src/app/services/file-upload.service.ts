@@ -12,8 +12,8 @@ export class FileUploadService {
  
   constructor(private http:HttpClient) { }
 
-  public fileUploadLms(formData: FormData,fileSize:any): Observable<HttpEvent<number>> {
-    return this.http.post<any>( this.apiurl+ '/upload'+ '/'+fileSize,formData, {
+  public fileUploadLms(formData: FormData,fileSize:any,componentName:any): Observable<HttpEvent<number>> {
+    return this.http.post<any>( this.apiurl+ '/upload'+ '/'+fileSize+'/'+componentName,formData, {
       responseType: 'text' as 'json' 
     })
   }
@@ -29,6 +29,10 @@ export class FileUploadService {
 
   public retriveFile(fileId:any) {
     return this.http.get<any>(this.apiurl + '/retrieveFile'+'/'+fileId, { responseType:'text' as 'json'})
+  }
+  
+  public retriveFileName(componentName:any){
+ return this.http.get<any>(this.apiurl+'/retrieveFileName'+'/'+componentName,{responseType:'text' as 'json'})
   }
 
   public updateFile(formData:FormData,fileId:any,fileSize:any){
