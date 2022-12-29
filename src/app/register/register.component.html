@@ -244,10 +244,10 @@
                                                                 [(ngModel)]="register.department"  placeholder="Select Department"
                                                                 [ngClass]="{'is-invalid' : submitted && field.department.errors}">
                                                                 <option value="" selected>Select Option</option>
-                                                                <option>Software</option>
-                                                                <option>Design</option>
-                                                                <option>Marketing</option>
-                                                                <option>Sales</option>
+                                                                <option value="Software">Software</option>
+                                                                <option value="Design">Design</option>
+                                                                <option value="Marketing">Marketing</option>
+                                                                <option value="Sales">Sales</option>
 <option>HR</option>
 <option>Accounts</option>
 
@@ -291,15 +291,15 @@
                                                                 [(ngModel)]="register.designation"  placeholder="Select Designation"
                                                                 [ngClass]="{'is-invalid' : submitted && field.designation.errors}">
                                                                 <option value="" selected>Select Option</option>
-                                                                <option>Software Engineer trainee</option>
-                                                                <option>Software Developer</option>
-                                                                <option>Designing</option>
-                                                                <option>Sales</option>
-                                                                <option>Marketing</option>
-                                                                <option>Testing</option>
-                                                                <option>HR</option>
-                                                                <option>Manager</option>
-                                                                <option>MD</option>
+                                                                <option *ngIf="field.department.value=='Software'">Software Engineer trainee</option>
+                                                                <option  *ngIf="field.department.value=='Software'">Software Developer</option>
+                                                                <option *ngIf="field.department.value=='Design'">Designing</option>
+                                                                <option *ngIf="field.department.value=='Sales'">Sales</option>
+                                                                <option *ngIf="field.department.value=='Marketing'">Marketing</option>
+                                                                <option *ngIf="field.department.value=='Sales'">Testing</option>
+                                                                <option *ngIf="field.department.value=='Sales'">HR</option>
+                                                                <option *ngIf="field.department.value=='Sales'">Manager</option>
+                                                                <option *ngIf="field.department.value=='Sales'">MD</option>
 
 
                                                         </select>

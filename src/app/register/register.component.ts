@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
   Hide:boolean=true;
 
 
+
   constructor(private formBuilder: FormBuilder,private route: Router,
     private registerService: RegisterserviceService, private siteService:CscService
   ) { 
@@ -161,7 +162,8 @@ console.log("same mobilenumber")
     }
   }
 )
-           
+this.field.mobile.updateValueAndValidity();
+this.field.mobile.clearValidators();        
      }
      //checking alternate mobile number duplicates
  alter(event:any){
@@ -183,6 +185,9 @@ console.log("same mobilenumber")
       }
     }
   )
+  this.field.alternate.clearValidators();
+  this.field.alternate.updateValueAndValidity();
+
  }
 
  get field(): any {
@@ -217,6 +222,17 @@ console.log("same mobilenumber")
     event.target.value=='asha@capeindia.net'||event.target.value=='vasanthi@capeindia.net'||
     event.target.value=='arun@capeindia.net'){
       this.Hide=false;
+
+      this.field.manageremail.clearValidators();
+this.field.manageremail.updateValueAndValidity();
+this.field.managername.clearValidators();
+this.field.managername.updateValueAndValidity();
+this.field.totalExperience.clearValidators();
+this.field.totalExperience.updateValueAndValidity();
+this.field.otherExperience.clearValidators();
+this.field.otherExperience.updateValueAndValidity();
+this.field.capeExperience.clearValidators();
+this.field.capeExperience.updateValueAndValidity();
     }
     else{
       this.Hide=true;
@@ -258,6 +274,10 @@ clear(){
 
   
     this.submitted = true;
+   
+
+
+
     if (this.RegisterationForm.invalid) {
       return
     }
@@ -280,6 +300,7 @@ clear(){
     )
 
   }
+ 
   emailvalidation(e:any){
     if(!(e.target.value).includes('@capeindia.net')){
       console.log('errorr')
