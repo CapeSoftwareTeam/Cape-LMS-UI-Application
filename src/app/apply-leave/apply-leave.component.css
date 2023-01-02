@@ -62,6 +62,7 @@ align-items: center;
   padding:3em;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+ 
   @media (min-width: 60em) {
     height:75%;
    margin:5% auto;

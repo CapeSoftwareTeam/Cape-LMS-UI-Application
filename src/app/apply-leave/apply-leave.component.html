@@ -24,7 +24,8 @@
             </div>
               <div class="col-7">
                 <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid" formControlName="empid"
-                 [ngClass]="{'is-invalid' : submitted && field.empid.errors}">
+                 [ngClass]="{'is-invalid' : submitted && field.empid.errors}" style="height: 40px;
+                 float: left;width: 75%;margin-top: 6px;height: fit-content;">
                   <option [ngValue]="null" disabled >Select Employee</option>
                   <option value="{{this.empid}}" selected>{{this.empid}} - {{this.name}}</option>
                   <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
@@ -90,7 +91,7 @@
 <br>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
-              <label><b>Date From:</b> </label></div>
+              <label><b>Start Date :</b> </label></div>
               <div class="col-7">
                 <mat-form-field style="height: 40px;float: left;width: 75%;padding-left: 9px" id="field">
                   <input matInput [matDatepicker]="picker" [matDatepickerFilter]="FrommyDateFilter" placeholder="Choose a date"
@@ -116,7 +117,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 
                 <!-- <input class="formcontrol" type="date" formControlName="fromdate" 
                 style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate"> -->
-                <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 25px;">
+                <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 63px;">
                 <br>
                 <br>
                 <br>
@@ -165,7 +166,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 <br>
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6"style="float: left;width: 24%;margin-top: 6px;">
-              <label><b>Date To:</b></label>
+              <label><b>End Date :</b></label>
             </div>
             <div class="col-7">
               <mat-form-field style="height:40px; float: left; width: 75%;padding-left: 9px">
@@ -178,7 +179,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
              
               <!-- <input class="formcontrol" type="date" formControlName="todate" 
               style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate"> -->
-              <input type="submit" (click)="getsecondnumber()" value="confirm" style="margin-top: 34px;">
+              <input type="submit" (click)="getsecondnumber()" value="confirm" style="margin-top: 63px;">
             </div>
           </div>
           <br>

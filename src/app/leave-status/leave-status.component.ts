@@ -119,7 +119,6 @@ ngOnInit(): void {
                 if(this.designation=="Manager"){
                   if(item.managername==this.name && item.department==this.department ){
                     if (item.status == 'pending') {
-                      console.log("condition true");
                       b.push(item);
                       this.notification = b.length;
                     }
@@ -215,12 +214,14 @@ ngOnInit(): void {
   }
 
   uploadhere(){
+    let componentName:any;
     const formData: FormData = new FormData();
       for (let f of this.file){
         formData.append('file', f, f.name);
       }
+      componentName="leaveApply"
       this.formFile = formData;         
-      this.fileUploadService.fileUploadLms(formData,this.fileSize).subscribe(data=>{
+      this.fileUploadService.fileUploadLms(formData,this.fileSize,componentName).subscribe(data=>{
       this.fileId=data;
       this.statusagree.fileUpdate(this.historyIdFor,this.fileId).subscribe(data=>{})
       },
