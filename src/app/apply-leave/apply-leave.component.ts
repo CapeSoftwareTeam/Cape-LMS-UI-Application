@@ -882,7 +882,7 @@ ngOnInit(): void {
 
   onAprroved(){
    this.status="Approved"
-   this.statusagree.statusUpdate(this.historyid,this.defaultEmpid,this.status ).subscribe(
+   this.statusagree.statusUpdate(this.historyid,this.defaultEmpid,this.status).subscribe(
       data => {
         this.detailsdata.push(this.status);      
         this.modalReference.close();

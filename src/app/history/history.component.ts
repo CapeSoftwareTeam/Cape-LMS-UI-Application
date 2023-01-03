@@ -53,7 +53,7 @@ filterdate:any;
   element: Element[] = [];
   loading = false;
   formGroup:any;
-
+  
   @ViewChild('historyPaginatorUser', { static: false }) historyPaginatorUser!: MatPaginator;
   @ViewChild('historyPaginatorAdmin', { static: false }) historyPaginatorAdmin!: MatPaginator;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -65,7 +65,7 @@ filterdate:any;
   details: any;
   selectedRow: any = [];
   modalReference : any;
-
+  applyleave=new ApplyLeave();
   // hide:boolean=true;
   displayedColumnsForUser: any;
   displayedColumnsForAdmin: any;
@@ -530,8 +530,19 @@ range!:any;
   deleteTempl(ChangetheStatus :any){
     this.modalReference = this.modalService.open(ChangetheStatus,{centered:true,size: "md"})
   }
-  closeTemp(){
-    this,this.modalReference.close();
+  updatecalculation(historyid:any,empid:String,status:any){
+    if(status=="Approved"){
+      let changeStatus="cancelled";
+    this.historyService.revertcalculation(historyid,empid,changeStatus).subscribe(
+      data => {
+        this.modalReference.close();
+        this.ngOnInit();
+        console.log(changeStatus);
+}
+ 
+    )
+  }
+
   }
   ///state country city code
 //   designer1changeCountry(e: any) {
@@ -578,8 +589,12 @@ range!:any;
                                                      
 
 //   </select>
-  
-  
+nochange(){
+  this.modalReference.close();
+}
+closeTemp(){
+  this.modalReference.close();
+}
 
   selectedDeleterows(){
   
@@ -594,7 +609,7 @@ range!:any;
     )
   }
   deleteHistory(historyid: number) {
-
+   
     this.historyService.deleteHistory(historyid).subscribe(
       data => {
         this.ngOnInit();

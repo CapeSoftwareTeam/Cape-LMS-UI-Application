@@ -47,7 +47,10 @@ export class HistoryService {
              }
            );
   }
-
+ 
+   revertcalculation(historyId:any,status:any,empid:any) {   
+     return this.http.put<any>(this.apiurl+'/updateHistory'+'/' + historyId+"/"+status+"/"+empid, {responseType: 'text' as 'json'});
+   }
   // downloadPDF(){
   //   this.http.put<any>(this.apiurl+'/pdfDownload',{responseType: 'blob'}).subscribe(
   //     data => {
