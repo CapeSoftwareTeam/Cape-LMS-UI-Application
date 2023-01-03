@@ -101,29 +101,49 @@
         </div>
       </div>
       </div>
-      <div class="col-md-4" style="top: 10px; float: left"></div>
-      <div class="card" >
-        <div class="circular-progress blue "style=" width: 150px;
-        height: 150px !important;
-        float: left; 
-        line-height: 150px;
-        background: none;
-        margin: 20px;
-        box-shadow: none;
-        position: relative;">
-          <span class="circular-progress-left">
-                            <span class="progress-bar"></span>
-          </span>
-          <span class="circular-progress-right">
-                            <span class="progress-bar"></span>
-          </span>
-          <div class="circular-progress-value">{{counttotal}} %</div>
-        </div>
-        <p><b> Total Leave taken in this year </b></p>
-        <!-- <p class="text-success"  style="float:right">Your presence brings pleasance</p>-->
-        </div> 
-     
     
+      <div class="col-md-4" style="top: 10px; float: left" *ngIf="coverspace">
+        <div class="card" >
+          <div class="card-header" style="justify-content:center;text-align:center">
+            <h6><b>Permitted Leave types</b></h6>
+          </div>
+          <div class="card-body" style="height: 114px;margin-top: -6px;">
+            <ul>
+              <li> Casual Leave</li>
+              <li> Sick Leave</li>
+              <li> Bereavement Leave</li>
+              <li> Privilege Leave</li>
+            </ul>
+          </div>
+          <div class="card-footer" style="justify-content:center;text-align:center">
+                4/5
+          </div>
+          
+          <!-- <p class="text-success"  style="float:right">Your presence brings pleasance</p>-->
+          </div> 
+        </div>
+        <div class="col-md-4" style="top: 10px; float: left">
+          <div class="card" >
+            <div class="circular-progress blue "style=" width: 150px;
+            height: 150px !important;
+            float: left; 
+            line-height: 150px;
+            background: none;
+            margin: 10px;
+            box-shadow: none;
+            position: relative;">
+              <span class="circular-progress-left">
+                                <span class="progress-bar"></span>
+              </span>
+              <span class="circular-progress-right">
+                                <span class="progress-bar"></span>
+              </span>
+              <div class="circular-progress-value">{{counttotal}} %</div>
+            </div>
+            <p style="margin-top: -16px"><b> Total Leave taken in this year </b></p>
+            <!-- <p class="text-success"  style="float:right">Your presence brings pleasance</p>-->
+            </div> 
+          </div>
     <br>
     <br>
         <!-- <div class="col-md-12" style="float: inherit;top:10px" *ngIf="coverspace">

@@ -33,6 +33,7 @@ dateTime={
   minute:'',
   second:'',
 };
+coverspace:boolean=false;
   modeModal: boolean = false;
   panelOpenState: boolean = false;
   hideTeamDetails:boolean=false;
@@ -196,9 +197,9 @@ this.city=this.personDetails.city;
         this.martialstatus=this.personDetails.maritalstatus;
         this.gender=this.personDetails.gender;
         if(this.martialstatus=="married" && this.gender=="female"){
-          this.hidematernity=true;
+          this.hidematernity=true;this.coverspace=false;
         }
-        else{ this.hidematernity=false;}
+        else{ this.hidematernity=false;this.coverspace=true;}
       }
     )
     this.firstentry.getExpLeaveDetails(this.empid).subscribe(
