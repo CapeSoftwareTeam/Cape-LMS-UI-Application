@@ -52,6 +52,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,7 +104,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     NgOtpInputModule,
     MatExpansionModule,
     MatSidenavModule,
-   
+    MatCheckboxModule,
     NgOtpInputModule,
  
     NgMultiSelectDropDownModule.forRoot(),

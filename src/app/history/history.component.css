@@ -84,7 +84,12 @@ display: none;
         font-weight: bold;
         
   }
-
+  .picker{
+    right: 1185px;
+  }
+.mat-header-cell{
+  background-color: skyblue;
+}
  
   /* th, td {
     overflow: hidden;
@@ -126,8 +131,25 @@ display: none;
   }
   .mat-row{
     background-color:#f2f2f2;
+  
   }
 
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 16px;
+    margin: bottom;
+    margin-bottom: 80px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .text-primary{
+    margin-left: -27px;
+
+  }
+  
   /* .header-align-right {
       text-align: center;
       justify-content: flex-end;
@@ -136,11 +158,16 @@ display: none;
  #btn{
   margin-left: 90%;
   margin-bottom: 20px;
- }   
+   margin-left: 880px;
+
+}
+  
  #deleteHistory{
   position:relative;
   right: 100px;
   top: 80px;
+  margin-top: -165px;
+  margin-right: -45px;
  }
  #download{
   position: relative;
@@ -149,7 +176,10 @@ display: none;
   padding-left: 10px;
   padding-right: 10px;
   right:50px;
-  top:40px
+  top:40px;
+  margin-top: -85px;
+  margin-right: -44px;
+
  }
  #filter{
   margin-left: 20px;
@@ -169,7 +199,7 @@ display: none;
   display: flex;
   flex-direction: column;
   max-height: 500px;
-  min-width: 300px;
+  min-width: 200px;
 
 }
 h2 {
@@ -177,7 +207,7 @@ h2 {
 }
 
 .mat-table {
-  overflow: auto;
+   overflow: auto; 
   max-height: 500px;
   border: ridge;
   
@@ -222,7 +252,10 @@ margin-top:15px;
   background-color: aqua;
   }
 
+.mat-tab-labels{
+  background-color: rgb(118 189 195);
 
+}
 /* Spinner Code */
 .loader {
   border: 10px solid #f3f3f3;
@@ -238,10 +271,11 @@ margin-top:15px;
 .picker{
   
     position: absolute;
-    right: 0px;
+    right: 1185px;
     top: 4%;
     width: 230px;
     padding: 10px;
+    margin-top: 19px;
   }
 
 
@@ -291,4 +325,14 @@ margin-top:15px;
   box-shadow: inset 1px 1px #000, 0 1px #000;
 }
 
- 
+.column {
+  float: left;
+  width: 11.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

@@ -1,13 +1,78 @@
 <div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;">
 </div>
+<mat-toolbar role="toolbar" class="main-header mat-elevation-z1 sticky-header example-toolbar">
+  <mat-toolbar-row style="text-align: center;justify-content: center;">
 <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
   <h1
     style="font-weight: bold;color:rgb(226, 101, 142); font-size: xx-large;text-align:center ;font-style:inherit ;margin-inline-start: 5px ;"><i style='font-size:30px' class='fas'>&#xf2b9;</i>
     HISTORY DETAILS</h1>
+    
+   
+  <div class="col" id="btn">
+    <button *ngIf="delShow" class="btn btn-danger" title="deleteHistory" id="deleteHistory" (click)="deleteAllHistory(DeleteTemplate)"><i
+        class="bi bi-trash3-fill"></i></button>
 
-    <div *ngIf="hideShow">
+    <button *ngIf="delShow" class="btn btn-info btn-lg" title="downloadPdf" id="download" (click)="downloadPdf()"><i
+        class="bi bi-download"></i></button>
+
+    <button class="btn btn-danger" (click)="back()" title="back">Back</button>
+  </div>
+</div>
+
+</mat-toolbar-row>
+</mat-toolbar>
+<div class="row" [formGroup]="range" style="background: #d9e6e6;height: 8%;">
+  <div class="column">
+    <span>FromDate :</span>
+    <input type="date" formControlName="start" (change)="FromDate($event)" />
+  </div>
+  <div class="column">
+    <span>ToDate :</span>
+    <input type="date" formControlName="end" (change)="filterToDates($event)" />
+  </div>
+  <div class="column" style="padding-top: 22px;"><button (click)="date()">Confirm</button> <button (click)="reset()">Reset</button></div>
+
+</div>
+
+    <mat-sidenav-container class="example-container" [autosize]="autosize" fxFlexFill>
+      
+  
+      <mat-sidenav mode="side" opened="true" class="desktopDisplay" *ngIf="hideShow"
+      [ngStyle]="{'width': isExpanded ? '29px' : (!isExpanded && isShowing ? '295px' : '120px')}"
+    (mouseenter)="mouseenter()" (mouseleave)="mouseleave($event)">
+    
+    <!-- <mat-list-item (click)="showSubmenu = !showSubmenu" 
+     style="padding: 5px;">
+      <div class="col-md-2" style="position: sticky;">
+        <button class="btn btn-info"
+        style="float: left;padding: 3px 5px 3px 5px;
+        margin: 5px 4px 5px -8px;">
+        <span><i class="fa fa-calendar" aria-hidden="true"></i>
+        </span>
+        </button>
+        </div>
+        <div *ngIf="isExpanded || isShowing">
+          <span class="full-width" >DatePicker </span>
+          <mat-form-field appearance="fill" (keyup)="datechanger()" >
+            <mat-label  >Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker" (click)="detectFun()">
+              <input [(ngModel)]="fromDate" matStartDate formControlName="start" placeholder="Start date">
+              <input  [(ngModel)]="toDate" matEndDate formControlName="end" placeholder="End date">
+              
+            </mat-date-range-input>
+            <button type="button" (click)="date()"> confirm</button>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      
+    </mat-list-item> -->
+    
+    <div>
      <ul *ngFor="let group of arr; index as i">
-      <span class="font-weight-bold text-primary">{{group.name}}</span>
+   
+      <span class="font-weight-bold text-primary ">{{group.name}}</span>
       <li *ngFor="let item of group.items; index as j">
         <span class="cursor-pointer caret"
           [ngClass]="item.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
@@ -16,7 +81,7 @@
           (checkMinusSquare(item) ? 'fas fa-minus-square' : 'far fa-square')"
           (click)="checkParent(i, j)">
         </span>
-        <span class="cursor-pointer" (click)="item.expand = !item.expand">{{item.name}}</span>
+        <span class="cursor-pointer" (click)="item.expand = !item.expand">{{item.name}} </span>
         <ul [class.d-none]="item.expand">
           
           <li *ngFor="let child of item.childs; index as k">
@@ -27,18 +92,45 @@
             <span class="mr-1" [ngClass]="child.checked ? 'fas fa-check-square' : 'far fa-square'"
               (click)="checkChild(i,  j, k )">
             </span>
-            <span class="cursor-pointer" (click)="checkChild(i, j, k )">{{child.name}}</span>
-            <ul [class.d-none]="item.expand">
+            <span class="cursor-pointer" (click)="checkChild(i, j, k )">{{child.name}} 1</span>
+
+            <ul *ngIf="child.name=='country'"[class.d-none]="child.expand">
           
-              <li *ngFor="let child of countryList; index as k">
-                <!-- <span class="cursor-pointer caret"
-                [ngClass]="child.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
-                (click)="child.expand = !child.expand"></span>
+              <li *ngFor="let child1 of child.childs; index as l">
+                 <span class="cursor-pointer caret"
+                [ngClass]="child1.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+                (click)="child1.expand = !child1.expand"></span>
            
-                <span class="mr-1" [ngClass]="child.checked ? 'fas fa-check-square' : 'far fa-square'"
-                  (click)="checkChild(i,  j, k )">
-                </span> -->
-                <span class="cursor-pointer" (click)="checkChild(i, j, k )">{{child.name}}</span>
+                 <span class="mr-1" [ngClass]="child1.checked ? 'fas fa-check-square' : 'far fa-square'"
+                  (click)="checkChild2(i,  j, k,l )">
+                </span>  
+                <span class="cursor-pointer" (click)="checkChild2(i, j, k,l )">{{child1.name}} 2</span>
+                <ul [class.d-none]="child1.expand">
+          
+                  <li *ngFor="let child2 of child1.stateList; index as m">
+                     <span class="cursor-pointer caret"
+                    [ngClass]="child2.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+                    (click)="child2.expand = !child2.expand"></span>
+               
+                     <span class="mr-1" [ngClass]="child2.checked ? 'fas fa-check-square' : 'far fa-square'"
+                      (click)="checkChild3(i,  j, k,l,m )">
+                    </span>  
+                    <span class="cursor-pointer" (click)="checkChild3(i, j, k,l,m )">{{child2.name}} 3</span>
+                    <ul [class.d-none]="child1.expand">
+
+                      <li *ngFor="let child3 of child2.cityList; index as n">
+                         <span class="cursor-pointer caret"
+                        [ngClass]="child3.expand ? 'fas fa-caret-down' : 'fas fa-caret-right'"
+                        (click)="child3.expand = !child3.expand"></span>
+                   
+                         <span class="mr-1" [ngClass]="child3.checked ? 'fas fa-check-square' : 'far fa-square'"
+                          (click)="checkChild4(i,  j, k,l,m,n)">
+                        </span>  
+                        <span class="cursor-pointer" (click)="checkChild4(i, j, k,l,m,n)">{{child3.name}} 4</span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
@@ -46,56 +138,46 @@
       </li>
     </ul>
     </div>
-    
-
-      <mat-form-field appearance="fill" (keyup)="datechanger()" *ngIf="hideShow" class="picker" >
-        <mat-label  >Enter a date range</mat-label>
-        <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
-          <input [(ngModel)]="fromDate" matStartDate formControlName="start" placeholder="Start date">
-          <input  [(ngModel)]="toDate" matEndDate formControlName="end" placeholder="End date">
-          
-        </mat-date-range-input>
-        <button type="button" (click)="date()"> confirm</button>
-        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
-      
-
-   <div class="row">
-    <div class="col" id="filter">
-      <!-- <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. UsingFilter" #input
-        style="margin: top 10px; position: sticky;"> -->
-    </div>
-    <div class="col" id="btn">
-      <button *ngIf="delShow" class="btn btn-danger" title="deleteHistory" id="deleteHistory" (click)="deleteAllHistory(DeleteTemplate)"><i
-          class="bi bi-trash3-fill"></i></button>
-
-      <button *ngIf="delShow" class="btn btn-info btn-lg" title="downloadPdf" id="download" (click)="downloadPdf()"><i
-          class="bi bi-download"></i></button>
-
-      <button class="btn btn-danger" (click)="back()" title="back">Back</button>
-    </div>
-    </div>
- 
+      </mat-sidenav>
+  
+    <p *ngIf="emptyMessage" style="font-size: xx-large; text-align: center;"> your history is empty</p>
   <!-- <mat-table #table [dataSource]="dataSource" > -->
-  <mat-tab-group style="background-color:white;" mat-align-tabs="center" (click)="selectedtab($event)">
+    <mat-sidenav-content fullscreen fxFlexFill id="destination" class="pagePadding" >
+  <mat-tab-group style="background-color:white;" mat-align-tabs="center" (selectedTabChange)="tabClick($event)">
     <div class="container"> 
-      <div class="table">
-        <mat-tab label="My History">
-          <div class="example-container mat-elevation-z8">
+      <div class="table"> 
+        <mat-tab label="My History"*ngIf="myHistory">
+          <div class="example-container mat-elevation-z8"> 
             <mat-table #table [dataSource]="dataSource1">
               <div class="mat-elevation-z8" matSort #historySort="matSort" style="margin-left:10 rem;">
                 <div class="success:hover">
 
+                  <!-- <ng-container  matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef > 
+                       <mat-checkbox [checked]="isAllSelected()"
+                      (change)="masterToggle()">
+                
+                      </mat-checkbox>      
+                     </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()" >
+                      <mat-checkbox (change)="masterToggle(element)"
+                        [checked]="selection.isSelected(element)">
+                
+                      </mat-checkbox>
+                    </mat-cell> -->  
+                
+                   <!-- </ng-container>  -->
+
                   <!-- </ng-container> -->
                   <!-- Position Column -->
+                 
+
                   <ng-container matColumnDef="empId" >
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color:darkgrey;display: inline-flexbox;">
                       empId </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.empid}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">empId</span> {{element.empid}} </mat-cell>
                   </ng-container>
     
                   <!-- Name Column -->
@@ -103,122 +185,137 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium; background-color: darkgrey; "> Name
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Name</span> {{element.name}} </mat-cell>
                   </ng-container>
-    
+
                   <!-- Weight Column -->
                   <ng-container matColumnDef="appliedDate">
                     <mat-header-cell *matHeaderCellDef  mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey; display:inline-flex;">
                       Applied Date </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.createddate | date:'shortDate'}}</mat-cell>
+                    <mat-cell *matCellDef="let element"> 
+                      <span class="mobile-label">Applied Date</span>{{element.createddate | date:'shortDate'}}</mat-cell>
                   </ng-container>
-    
+
                   <!-- Symbol Column -->
                   <ng-container matColumnDef="approvedDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Approved Date
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.approveddate | date:'shortDate'}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Approved Date</span> {{element.approveddate | date:'shortDate'}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- fromDate Column -->
                   <ng-container matColumnDef="fromDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> From Date
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.fromdate | date:'shortDate'}} </mat-cell>
+                    <mat-cell *matCellDef="let element"> 
+                      <span class="mobile-label">From Date</span>{{element.fromdate | date:'shortDate'}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- toDate Column -->
                   <ng-container matColumnDef="todate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> To Date
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.todate | date:'shortDate'}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label"> To Date</span> {{element.todate | date:'shortDate'}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- noOfDays Column -->
                   <ng-container matColumnDef="noOfDays">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> No Of Days
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.noofdays}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">No Of Days</span> {{element.noofdays}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- lopDays Column -->
                   <ng-container matColumnDef="lopdays">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> LOP Days
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.lopdays}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">LOP Days</span> {{element.lopdays}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- status Column -->
                   <ng-container matColumnDef="status">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Status
                     </mat-header-cell>
                     <mat-cell *matCellDef="let element"
                       [ngStyle]="{'color': element.status == 'APPROVED'? 'green' : null || element.status == 'CANCELLED'? 'red': null || element.status == 'PENDING'? '#ff9900': null}"
-                      id="font"> {{element.status}} </mat-cell>
+                      id="font">
+                      <span class="mobile-label">Status</span> {{element.status}} </mat-cell>
                   </ng-container>
     
-                  <!-- </div> -->
-    
-    
+                  <!-- approvedBy Column -->
                   <ng-container matColumnDef="approvedBy">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size:medium;background-color: darkgrey;"> Approved By
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element.approvedby}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Approved By</span>{{element.approvedby}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- department Column -->
                   <ng-container matColumnDef="department">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Department
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.department}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Department</span> {{element.department}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- leaveType Column -->
                   <ng-container matColumnDef="leaveType">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Leave Type
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.leaveType}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Leave Type</span> {{element.leaveType}} </mat-cell>
                   </ng-container>
-    
+
+                  <!-- reasonForApply Column -->
                   <ng-container matColumnDef="reasonForApply">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Reason
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.reasonforapply}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Reason</span> {{element.reasonforapply}} </mat-cell>
                   </ng-container>
 
-    
+                  <!-- location Column -->
                   <ng-container matColumnDef="location">
                     <mat-header-cell *matHeaderCellDef mat-sort-header
                       style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Location
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.location}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                      <span class="mobile-label">Location</span> {{element.location}} </mat-cell>
                   </ng-container>
-    </div>
-    
-    
+                </div>
                 <mat-header-row *matHeaderRowDef="displayedColumnsForUser sticky: true"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumnsForUser;"
                   [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true"
                   (mouseout)="row.hovered = false"></mat-row>
                 <mat-row class="mat-row" *matNoDataRow></mat-row>
-    
               </div>
             </mat-table>
           </div>
-    
           <mat-paginator #historyPaginatorAdmin [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
           </mat-paginator>
         </mat-tab>  
       </div>
     </div>
-
-
+  
 <div class="container">
   <div class="table">
+
     <mat-tab label=" Employee's History" *ngIf="enable">
   
       <div class="example-container mat-elevation-z8">
@@ -230,24 +327,40 @@
             <mat-header-cell *matHeaderCellDef > 
                <mat-checkbox [checked]="isAllSelected()"
               (change)="toggleAll()">
-        
               </mat-checkbox>      -->
               <!-- </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()" >
               <mat-checkbox (change)="onSelectToggled(element)"
                 [checked]="selection.isSelected(element)">
-        
               </mat-checkbox>
             </mat-cell> -->
-  
               <!-- </ng-container> -->
+
               <!-- Position Column -->
+              <ng-container matColumnDef="select">
+                <mat-header-cell *matHeaderCellDef  style="font-weight:bold;color:black;font-size: medium;background-color:darkgrey;display: inline-flexbox;">
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                  </mat-header-cell>
+                
+                <mat-cell *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation() "
+                                (change)="$event ? selection.toggle(row) : selectedRow.push(row)"
+                                [checked]="selection.isSelected(row)">
+                  </mat-checkbox>
+                  </mat-cell>
+                  </ng-container>
+
+
               <ng-container matColumnDef="empId">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color:darkgrey;display: inline-flexbox;">
                   empId </mat-header-cell>
                   
-                <mat-cell  *matCellDef="let element"> {{element.empid}} </mat-cell>
+                <mat-cell  *matCellDef="let element">
+                  <span class="mobile-label">empId </span> {{element.empid}} </mat-cell>
               </ng-container>
 
               <!-- Name Column -->
@@ -255,7 +368,8 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium; background-color: darkgrey; "> Name
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                <mat-cell *matCellDef="let element"> 
+                  <span class="mobile-label"> Name</span>{{element.name}} </mat-cell>
               </ng-container>
   
               <!-- Weight Column -->
@@ -263,7 +377,8 @@
                 <mat-header-cell *matHeaderCellDef  mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey; display:inline-flex;">
                   Applied Date </mat-header-cell>
-                <mat-cell  *matCellDef="let element"> {{element.createddate | date:'shortDate'}}</mat-cell>
+                <mat-cell  *matCellDef="let element">
+                  <span class="mobile-label">Applied Date</span> {{element.createddate | date:'shortDate'}}</mat-cell>
               </ng-container>
   
               <!-- Symbol Column -->
@@ -271,88 +386,109 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Approved Date
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.approveddate | date:'shortDate'}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Approved Date</span> {{element.approveddate | date:'shortDate'}} </mat-cell>
               </ng-container>
-  
+
+             <!-- fromDate Column -->
               <ng-container matColumnDef="fromDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> From Date
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.fromdate | date:'shortDate'}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">From Date</span> {{element.fromdate | date:'shortDate'}} </mat-cell>
               </ng-container>
-  
+
+              <!-- toDate Column -->
               <ng-container matColumnDef="todate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> To Date
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.todate | date:'shortDate'}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">To Date</span> {{element.todate | date:'shortDate'}} </mat-cell>
               </ng-container>
-  
+
+              <!-- noOfDays Column -->
               <ng-container matColumnDef="noOfDays">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> No Of Days
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.noofdays}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label"> No Of Days</span> {{element.noofdays}} </mat-cell>
               </ng-container>
-  
+
+              <!-- lopDays Column -->
               <ng-container matColumnDef="lopdays">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> LOP Days
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.lopdays}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label"> LOP Days</span> {{element.lopdays}} </mat-cell>
               </ng-container>
-  
+
+              <!-- status Column -->
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Status
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element"
                   [ngStyle]="{'color': element.status =='APPROVED'? 'green' : null || element.status =='CANCELLED'? 'red': null || element.status =='PENDING'? '#ff9900': null}"
-                  id="font"> {{element.status}} </mat-cell>
+                  id="font">
+                  <span class="mobile-label">Status</span> {{element.status}} </mat-cell>
               </ng-container>
-  
+
+              <!-- approvedBy Column -->
               <ng-container matColumnDef="approvedBy">
-                <mat-header-cell *matHeaderCellDef mat-sort-header
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size:medium;background-color: darkgrey;"> Approved By
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.approvedby}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Approved By</span>{{element.approvedby}} </mat-cell>
               </ng-container>
-  
+
+              <!-- department Column -->
               <ng-container matColumnDef="department">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Department
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element" formControlName="department"> {{element.department}} </mat-cell>
+                <mat-cell *matCellDef="let element" formControlName="department">
+                  <span class="mobile-label">Department</span> {{element.department}} </mat-cell>
               </ng-container>
-  
+
+              <!-- leaveType Column -->
               <ng-container matColumnDef="leaveType">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Leave Type
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.leaveType}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label"> Leave Type</span> {{element.leaveType}} </mat-cell>
               </ng-container>
-  
+
+              <!-- reasonForApply Column -->
               <ng-container matColumnDef="reasonForApply">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Reason
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.reasonforapply}} </mat-cell>
+                <mat-cell *matCellDef="let element">
+                  <span class="mobile-label">Reason</span> {{element.reasonforapply}} </mat-cell>
               </ng-container>
 
-  
+              <!-- location Column -->
               <ng-container matColumnDef="location">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Location
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.location}} </mat-cell>
+                <mat-cell *matCellDef="let element"> 
+                  <span class="mobile-label">Location</span>{{element.location}} </mat-cell>
               </ng-container>
   
-  
+              <!-- delete Column -->
               <ng-container matColumnDef="delete">
                 <mat-header-cell *matHeaderCellDef mat-sort-header
                   style="font-weight:bold;color:black;font-size: medium;background-color: darkgrey;"> Action
                 </mat-header-cell>
                 <mat-cell style="width: auto; text-align:justify; padding:auto;" mat-cell *matCellDef="let element">
+                  <span class="mobile-label">delete</span>
                   <mat-icon class="material-icons-outlined-danger delete" (click)="deleteTempl(ChangetheStatus)"
                     *ngIf="enableDelete" title="Delete The Record"
                     style="margin-inline-start:1rem;cursor:pointer;color: red;">delete</mat-icon>
@@ -361,42 +497,40 @@
                         <p  style="justify-content: center;text-align: center;margin-top: 20px;">Click Yes to delete Employee history or Click No to change employee status?</p>
                          <div class="row" style="margin-bottom: 20px;">
                              <div class="text-center justify-content-center col-md-12">
-                               <button type="button" class="btn btn-primary" (click)="deleteHistory(element.historyid)">Yes</button>
-                               <button type="button" style="margin-left: 10px;" (click)="closeTemp()" class="btn btn-danger">No</button>
+                              <button type="button" class="btn btn-primary" (click)="deleteHistory(element.historyid)">Yes</button>
+                              <button type="button" style="margin-left: 10px;" (click)="updatecalculation(element.historyid,element.empid,element.status)" class="btn btn-danger">No</button>
+                              <button type="button" class="btn btn-danger" (click)="closeTemp()">Cancel</button>
                              </div>
                          </div>
                       </div>
                     </ng-template>
                 </mat-cell>
               </ng-container>
-  
             </div>
-  
-  
+          
             <mat-header-row *matHeaderRowDef="displayedColumnsForAdmin sticky: true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumnsForAdmin;" (dblclick)="selectedRow.push(row) "
               [style.background]="selectedRow.indexOf(row)!= -1 ? 'LightBlue': '' "
-              [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="row.hovered = true">
-              (mouseout)="row.hovered = false"></mat-row>
-
+              (click)="selectedRow.pop(row)" (click)="selection.toggle(row)"
+               [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)=" row.hovered =true "(mouseout)="row.hovered = false">
+              
+              </mat-row>
             <mat-row class="mat-row" *matNoDataRow>
-  
             </mat-row>
           </div>
-  
         </mat-table>
       </div>
-  
       <mat-paginator #historyPaginatorUser [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
       </mat-paginator>
-  
     </mat-tab>
      </div> 
 </div>
-
     </mat-tab-group>
+  </mat-sidenav-content>
+    </mat-sidenav-container>
   
-</div>
+
+
 <ng-template #DeleteTemplate let-modal> 
   <div>
     <p  style="justify-content: center;text-align: center;margin-top: 20px;">Are You sure want to Delete Employee's History?</p>

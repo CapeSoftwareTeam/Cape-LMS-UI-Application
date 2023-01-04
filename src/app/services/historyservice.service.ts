@@ -78,6 +78,10 @@ export class HistoryService {
        }
       )
  }
+  
+    getHistoryDetails():Observable<any> {
+      return this.http.get<any>(this.apiurl+'/getHistoryDetails',{responseType: 'text' as 'json'});
+    }
 }
 																	   
 	
