@@ -144,7 +144,7 @@ mat-sidenav{
   .leftcolumn, .rightcolumn {   
     width: 100%;
     padding: 0;
-    display:none;
+
     flex-direction: column;
     /* width: 100%; */
     /* display: block;

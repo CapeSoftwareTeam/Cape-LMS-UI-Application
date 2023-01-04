@@ -11,6 +11,8 @@ import { ApplyleaveService } from '../services/applyleave.service';
 import { FileUploadService } from '../services/file-upload.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
+import { ApplyLeaveComponent } from '../apply-leave/apply-leave.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -83,6 +85,7 @@ export class HomeComponent implements OnInit {
   valueBot: string="";
   downloadButton:boolean=true;
   designation1: any;
+ 
   
   clicktab(event:any){
     if(event.target.value=="Time Schedule"){
@@ -96,7 +99,8 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
     private globalErrorHandler: GlobalErrorHandlerService,private fileUploadService:FileUploadService,
-    private registerService:RegisterserviceService) { }
+    private registerService:RegisterserviceService,
+    private dialog:MatDialog) { }
 
 
   // ngAfterViewInit(): void {
@@ -208,8 +212,9 @@ export class HomeComponent implements OnInit {
         this.designation = this.personDetails.designation;
 
        let initials = this.name.charAt(0);
+       let firstletter=initials.toUpperCase()
 //  let initial=initials.toUpperCase;
-       let displayAvatar= 'C'+ initials;
+       let displayAvatar= 'C'+ firstletter;
       var a= document.getElementById('avatar');
       a!.innerHTML=displayAvatar;
 
@@ -260,7 +265,14 @@ export class HomeComponent implements OnInit {
     this.route.navigate(['/leavestatus']);
   }
   callApplyLeave(){
-     this.route.navigate(['/applyleave']);
+    
+const dialogRef=this.dialog.open(ApplyLeaveComponent,{
+disableClose: true
+});
+dialogRef.afterClosed().subscribe(data=>{
+})
+
+
   }
   callHolidays(){
      this.route.navigate(['/publicholidays']);

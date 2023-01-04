@@ -11,6 +11,7 @@ import { ApplyleaveService } from '../services/applyleave.service';
 import { HolidayservicesService } from '../services/holidayservices.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-apply-leave',
@@ -22,9 +23,10 @@ export class ApplyLeaveComponent implements OnInit {
   showGetNumberfullError:boolean=false;
   noMatchGender:boolean=false;
   b:any=[];
+  enddatehalf:any;
   showGetNumberError:boolean=false;
   hideIfnotme: boolean = true;
-  defaultEmpid: any
+  defaultEmpid: any = '';
   hideIfsick: boolean = true;
   findHalfToDays: any;
   findHalfDays: any;
@@ -106,7 +108,8 @@ export class ApplyLeaveComponent implements OnInit {
               private getPublicHolidays: HolidayservicesService,
               private teamdetails: RegisterserviceService,
               private statusagree: LeaveStatusServiceService,
-              private globalErrorHandler: GlobalErrorHandlerService) { }
+              private globalErrorHandler: GlobalErrorHandlerService,
+              private dialogRef: MatDialogRef<ApplyLeaveComponent>) { }
 
   applyLeave = new ApplyLeave();
 
@@ -399,11 +402,8 @@ ngOnInit(): void {
     }
   }
 
-  selected() {
-    console.log(this.selectedItem);
-  }
 
-  Save(save:any) {
+  Save(save:any,successave:any) {
     this.submitted=true;
     if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined ){
       this.msg=true;
@@ -412,8 +412,6 @@ ngOnInit(): void {
         this.msg=false;
       }, 3000);
       return
-      
-      
           }
           
     // if(this.postleave.invalid){
@@ -442,14 +440,14 @@ ngOnInit(): void {
               if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
                 this.modalReference = this.modalService.open(save, { size: 'm' });
               }else{
-                this.route.navigate(['/home']);
+                this.modalReference=this.modalService.open(successave, { size: 'm' })
               }
             }
             else if (this.postleave.value.leaveType == "sick") {
               if (this.countinNumber > this.leavetrack.sickLeave) {
                 this.modalReference = this.modalService.open(save, { size: 'm' });
               }else{
-                this.route.navigate(['/home']); 
+                this.modalReference=this.modalService.open(successave, { size: 'm' })
               }
             }
           else if (this.postleave.value.leaveType == "bereavement") {
@@ -457,7 +455,7 @@ ngOnInit(): void {
               this.modalReference = this.modalService.open(save, { size: 'm' });
             }
             else{
-              this.route.navigate(['/home']);
+              this.modalReference=this.modalService.open(successave, { size: 'm' })
             }
           }
           else if (this.postleave.value.leaveType == "privilege") {
@@ -465,7 +463,7 @@ ngOnInit(): void {
               this.modalReference = this.modalService.open(save, { size: 'm' });
             }
             else{
-              this.route.navigate(['/home']);
+              this.modalReference=this.modalService.open(successave, { size: 'm' })
             }
           }
           else if (this.postleave.value.leaveType == "maternity") {
@@ -473,7 +471,7 @@ ngOnInit(): void {
               this.modalReference = this.modalService.open(save, { size: 'm' });
             }
             else{
-              this.route.navigate(['/home']);
+              this.modalReference=this.modalService.open(successave, { size: 'm' })
             }
           }
         },error=>{
@@ -481,6 +479,7 @@ ngOnInit(): void {
           this.errorMessage=this.globalErrorHandler.errorMessage;
             setTimeout(() => {this.showErrorMessage=false;}, 3000);
         })
+      
   }
 
   proceed() {
@@ -536,6 +535,7 @@ ngOnInit(): void {
   getsecondnumber() {
     this.pluscount = this.todate;
     console.log(this.pluscount);
+  
   }
   getnumber() {
     this.registerDetails.getMemberDetails(this.empid).subscribe(
@@ -814,7 +814,7 @@ ngOnInit(): void {
         }
         this.statusagree.deleteHistory(this.historyid).subscribe(data => {})
           this.modalReference.close();})
-          this.route.navigate(['/home']);
+          this.dialogRef.close();
   }    
 
   hideDays() {
@@ -856,6 +856,9 @@ ngOnInit(): void {
               if(this.persongender=="female" && this.personMartialstatus=="married"){
                 this.noMatchGender=true;
               }
+              if(this.designation=="HR"){
+                this.hideIfnotme = false;
+              }
           }
         }
       }
@@ -892,7 +895,10 @@ ngOnInit(): void {
       }
     ); 
   }
-
+  succesinsave(){
+    this.modalReference.close();
+    this.route.navigate(['/home']);
+  }
   okforsubmit(){
     this.modalReference.close();
     this.route.navigate(['/home']);
@@ -909,6 +915,7 @@ ngOnInit(): void {
         }
         this.statusagree.deleteHistory(this.historyid).subscribe(data => {})
         this.modalReference.close();})
+        this.ngOnInit();
   }    
   get field(): any {
     return this.postleave.controls;
