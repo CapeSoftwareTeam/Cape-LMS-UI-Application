@@ -1,56 +1,73 @@
-<h2>Happy Holidays</h2>
 
+<div style="overflow-x: hidden;">
+  <h2 style="text-align:center;margin-top: 20px;"><span style="color: red;">CAPE</span> <span style="color: green;"> Public Holidays</span></h2>
+ 
 
+  <div class="row">
+    <div class="col-md-6">
+      <mat-label style="margin-left:20px;">Filter</mat-label>
+      <input style="margin-left:20px;" matInput (keyup)="applyFilter($event)" placeholder="Ex. TamilNadu" #input>  
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-danger" style="margin-left:80%;" (click)="back()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
+     </div>
+  </div>
 
-<div class="" id="btn">
-  <button type="button" class="btn btn-danger" (click)="back()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
+  <div class="example-container mat-elevation-z8" >
+    <div class="text-center">
+      <img src="../assets/no-data.png" class="img-fluid" *ngIf="showEmptyTable" alt="">
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" *ngIf="showTable" >
+  
+      <ng-container matColumnDef="description" >
+        <mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> DESCRIPTION </mat-header-cell>
+        <mat-cell *matCellDef="let element"  style="padding:10px;">
+          <span class="mobile-label">DESCRIPTION:</span>  {{element.description}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> LOCATION </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;">
+          <span class="mobile-label">LOCATION:</span> {{element.workLocation}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> DATE </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;">
+          <span class="mobile-label">DATE:</span>  {{element.date}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="day">
+        <mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> DAY </mat-header-cell>
+        <mat-cell *matCellDef="let element"  style="padding:10px;">
+          <span class="mobile-label">DAY:</span>  {{element.day}} </mat-cell>>
+      </ng-container>
+  
+  
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> ACTION</mat-header-cell>
+        <mat-cell *matCellDef="let element"  style="padding:10px;">
+          <i class="bi bi-trash3-fill fa-lg" (click)="deleteLeave(element.publicLeaveId)" title="Delete Leave"
+            style="margin-left: 1rem;cursor: pointer;color: red;height:30px;width:30px;"></i></mat-cell>
+      </ng-container>
+  
+  
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+  
+  </div>
+<div class="row" style="background-color: white;">
+         <div class="col-md-12">
+          <mat-paginator #holidaysPaginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+         </div>
 </div>
 
-<div class="" id="filter">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. TamilNadu" #input>
 </div>
-
-<div class="mat-elevation-z8" class="container">
-  <table mat-table [dataSource]="dataSource" class="table table-hover">
-
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> DESCRIPTION </th>
-      <td mat-cell *matCellDef="let element" class="table-info" style="padding:10px;"> {{element.description}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> LOCATION </th>
-      <td mat-cell *matCellDef="let element" class="table-info" style="padding:10px;"> {{element.workLocation}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> DATE </th>
-      <td mat-cell *matCellDef="let element" class="table-info" style="padding:10px;"> {{element.date}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="day">
-      <th mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> DAY </th>
-      <td mat-cell *matCellDef="let element" class="table-info" style="padding:10px;"> {{element.day}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef class="thead" style="padding:10px;"> ACTION</th>
-      <td mat-cell *matCellDef="let element" class="table-info" style="padding:10px;">
-        <i class="bi bi-trash3-fill fa-lg" (click)="deleteLeave(element.publicLeaveId)" title="Delete Leave"
-          style="margin-left: 1rem;cursor: pointer;color: red;height:30px;width:30px;"></i>
-    </ng-container>
-
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-
-  <mat-paginator #holidaysPaginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
-    aria-label="Select page of periodic elements">
-  </mat-paginator>
-
-</div>
+  
+  

@@ -26,6 +26,8 @@ export class PublicHolidaysComponent implements OnInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   empid: any;
+  showEmptyTable: boolean = false;
+  showTable: boolean = true;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.holidaysPaginator;
@@ -46,22 +48,38 @@ export class PublicHolidaysComponent implements OnInit {
     this.registerService.getForm(this.empid).subscribe(
       data => {
         designation = JSON.parse(data).designation;
-
+        
         if (designation == "HR") {
-          this.holidaysService.getLeave().subscribe(data => {
-            this.displayedColumns = ['description', 'location', 'date', 'day', 'action'];
-            this.dataSource = new MatTableDataSource(JSON.parse(data));
-            this.dataSource.sort = this.holidaysSort;
-            this.dataSource.paginator = this.holidaysPaginator;
+          this.holidaysService.getLeave().subscribe(
+            data => {
+              if(JSON.parse(data).length==0){
+                this.showEmptyTable = true;
+                this.showTable = false;
+              }
+              else{
+                this.displayedColumns = ['description', 'location', 'date', 'day', 'action'];
+                this.dataSource = new MatTableDataSource(JSON.parse(data));
+                this.dataSource.sort = this.holidaysSort;
+                this.dataSource.paginator = this.holidaysPaginator;
+                
+              }
+           
           })
 
         }
         else {
           this.holidaysService.getLeave().subscribe(data => {
-            this.displayedColumns = ['description', 'location', 'date', 'day'];
-            this.dataSource = new MatTableDataSource(JSON.parse(data));
-            this.dataSource.sort = this.holidaysSort;
-            this.dataSource.paginator = this.holidaysPaginator;
+            if(JSON.parse(data).length==0){
+              this.showEmptyTable = true;
+              this.showTable = false;
+            }
+            else{
+              this.displayedColumns = ['description', 'location', 'date', 'day'];
+              this.dataSource = new MatTableDataSource(JSON.parse(data));
+              this.dataSource.sort = this.holidaysSort;
+              this.dataSource.paginator = this.holidaysPaginator;
+            }
+      
           })
         }
       })

@@ -29,7 +29,9 @@ export class EmployeeDetailsComponent implements OnInit {
   paginator!: MatPaginator;
   element: Element[] = [];
   registerid: any;
-
+  modalReference: any;
+  showEmptyTable: boolean = false;
+  showTable: boolean = true;
   constructor(private registerService: RegisterserviceService,
     private route: Router,
     private dialog: MatDialog,
@@ -39,7 +41,7 @@ export class EmployeeDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployeeDetails();
-
+    
   }
 
   //Get Employee Details 
@@ -50,9 +52,14 @@ export class EmployeeDetailsComponent implements OnInit {
       tempArray = JSON.parse(data);
       let employeeData = [];
       for (let i of tempArray) {
-        if (i.status == "Active") {
+        if (i.status == "Active"&& i.designation!="HR" && i.emailid!="gk@capeindia.net" && i.emailid!="asha@capeindia.net"&&i.emailid!="srp@capeindia.net"&&i.email!="vasanthi@capeindia.net") {
           employeeData.push(i)
         }
+      }
+
+      if(employeeData.length==0){
+        this.showEmptyTable = true;
+        this.showTable = false;
       }
       this.dataSource = new MatTableDataSource<any>(employeeData);
       this.dataSource.paginator = this.employeePaginator;
@@ -75,7 +82,6 @@ export class EmployeeDetailsComponent implements OnInit {
   // Delete Employee Detail
   deleteEmployee(empid: any) {
     this.registerService.deleteForm(empid).subscribe(data => {
-      console.log("employee deleted ")
       this.getEmployeeDetails();
       this.modalService.dismissAll();
     })
@@ -99,12 +105,16 @@ export class EmployeeDetailsComponent implements OnInit {
 
   // Delete Purpose
   gotoNextModal(content: any, empid: any) {
-    this.modalService.open(content, { centered: true, backdrop: 'static' });
+    // this.modalService.open(content, { centered: true, size:'m' });
+     this.modalReference = this.modalService.open(content, {centered:true, size: 'm' })
+
+
   }
 
   // Cancel Popup Msg
   closePopup() {
     this.modalService.dismissAll();
   }
+
 
 }

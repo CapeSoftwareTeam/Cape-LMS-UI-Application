@@ -16,8 +16,8 @@ import { MatOption } from '@angular/material/core';
 })
 export class HolidaysComponent implements OnInit {
 
-  @ViewChild('select') select!: MatSelect;
-
+  @ViewChild('allSelected') select!: MatSelect;
+  
   locationList: string[] = ['TamilNadu', 'Andhra Pradesh', 'Karnataka', 'Kolkata', 'West', 'North', 'Odisha'];
   allSelected: boolean = false;
   spinner: boolean = false;
@@ -112,6 +112,7 @@ export class HolidaysComponent implements OnInit {
       if (value == element)
         this.ListData.splice(index, 1);
     });
+    this.disableSubmitBtn = true;
   }
 
   // Change Day(Integer 1-7 ) into String Format
@@ -130,12 +131,22 @@ export class HolidaysComponent implements OnInit {
   }
 
   toggleAllSelection() {
+    this.allSelected = !this.allSelected;
     if (this.allSelected) {
-      this.select.options.forEach((item: MatOption) => item.select());
+      this.select.options.forEach((item: MatOption) => {
+        console.log( item.select());
+        if(item.viewValue == 'Select All'){
+          item.deselect()
+        }
+        else{
+          item.select();
+        }
+      } );
     } else {
       this.select.options.forEach((item: MatOption) => item.deselect());
     }
   }
 
+  
 
 }

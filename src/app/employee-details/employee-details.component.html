@@ -1,111 +1,135 @@
-<div class="row">
-  <div class="col" id="btn">
-    <button type="button" class="btn btn-danger" (click)="navigateToHome()"><i class="bi bi-box-arrow-in-left"></i> Back </button>
-  </div>
 
-  <div class="col" id="filter">
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. TamilNadu" #input>
-  </div>
-</div>
+<div style="overflow-x: hidden;">
+  <h2 class="text-center" style="text-align: center;margin-top: 20px;">Employee Details</h2>
+  
+   <div class="row">
+    <div class="col-md-6" >
+      <!-- id="filter" -->
+      <mat-label style="margin-left:20px;">Filter</mat-label>
+      <input style="margin-left:20px;" matInput (keyup)="applyFilter($event)" placeholder="Ex. TamilNadu" #input>
+    </div>
+    <div class="col-md-6">
+      <button type="button" style="margin-top: 5px;margin-left:80%;"  class="btn btn-danger" (click)="navigateToHome()"><i class="bi bi-box-arrow-in-left"></i>Back</button>
+    </div>
+   </div>
+   
+  
+  <div class="example-container mat-elevation-z8">
+    <div class="text-center">
+      <img src="../assets/no-record-found.png" class="img-fluid" *ngIf="showEmptyTable" alt="">
+    </div>
 
-
-
-<div class="mat-elevation-z8" class="container">
-  <table mat-table [dataSource]="dataSource" class="table table-hover">
-
-    <ng-container matColumnDef="empId">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> EmpID </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.empid}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> NAME </th>
-      <td mat-cell *matCellDef="let element" class="table-success" style="padding:10px;"> {{element.name}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="department">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> DEPARTMENT </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.department}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="designation">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> DESIGNATION </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.designation}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="managerName">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> MANAGER NAME </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.managername}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="employeeEmail">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> EMPLOYEE MAIL </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> <a
-          href="mailto:{{element.emailid}}">Contact via Mail</a></td>
-    </ng-container>
-
-    <ng-container matColumnDef="city">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> CITY </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.city}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="state">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> STATE </th>
-      <td mat-cell *matCellDef="let element" style="padding:10px;" class="table-success"> {{element.state}} </td>
-    </ng-container>
-
-
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> ACTION </th>
-      <td style="width: auto; text-align: justify; padding:10px;" class="table-success" mat-cell
-        *matCellDef="let element">
-
-        <ng-template #content let-modal class="card">
-          <div class="">
-            <!-- modal-body -->
-            <div class="centre-text m-btm30">
-              <div style="text-align: center; margin-top:60px;">
-                <span class="warningMsg">Note: Are you sure, Want to Delete Employee Details</span>
+    <mat-table #table [dataSource]="dataSource" *ngIf="showTable" >  
+      <ng-container matColumnDef="empId" >
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> EmpID </mat-header-cell>
+        <mat-cell  *matCellDef="let element" style="padding:10px;" > 
+          <span class="mobile-label">EmpID:</span> 
+          {{element.empid}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> NAME </mat-header-cell>
+        <mat-cell *matCellDef="let element"  style="padding:10px;">
+          <span class="mobile-label">NAME:</span> 
+          {{element.name}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="department">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> DEPARTMENT </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;">
+          <span class="mobile-label">DEPARTMENT:</span> 
+          {{element.department}} </mat-cell>
+      </ng-container>
+  
+  
+      <ng-container matColumnDef="designation">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> DESIGNATION </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;"> 
+          <span class="mobile-label">DESIGNATION:</span> 
+          {{element.designation}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="managerName">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> MANAGER NAME </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;">
+          <span class="mobile-label">MANAGER NAME:</span> 
+          {{element.managername}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="employeeEmail">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> EMPLOYEE MAIL </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;" >
+          <span class="mobile-label">EMPLOYEE MAIL:</span>
+          <a href="mailto:{{element.emailid}}">Contact via Mail</a></mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> CITY </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;" >
+          <span class="mobile-label">CITY:</span> 
+          {{element.city}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> STATE </mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding:10px;" >
+          <span class="mobile-label">STATE:</span>
+           {{element.state}} </mat-cell>
+      </ng-container>
+  
+  
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef style="padding:10px;" class="thead"> ACTION </mat-header-cell>
+        <mat-cell style="width: auto; text-align: justify; padding:10px;" 
+          *matCellDef="let element"> <span class="mobile-label">ACTION:</span>
+  
+          <ng-template #content let-modal style="margin-top: 150px;">
+            <div>
+            
+              
+                <p style="text-align:center;margin-top: 10px;color:red;">Note: Are you sure, Want to Delete Employee Details</p>
+              
+              <div class="row">
+                <div class="col-md-12 text-center justify-content-center">
+                  <button type="button" style=" margin: 10px;"
+                    class="btn btn-primary btn-rounded btn-md font-weight-medium auth-form-btn" aria-label="Close"
+                    (click)="deleteEmployee(element.empid)">
+                    <i class="bi bi-arrow-right-circle"></i>&nbsp;
+                    <span aria-hidden="true">Confirm</span>
+                  </button>
+                  <button type="button" style=" margin: 10px;"
+                    class="btn btn-danger btn-rounded btn-md font-weight-medium auth-form-btn" aria-label="Close"
+                    (click)="closePopup()">
+                    <i class="bi bi-x icon"></i>
+                    <span aria-hidden="true">Cancel</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col-md-12 text-center justify-content-center">
-              <button type="button" style=" margin: 40px;position: relative; bottom: 30px; width:auto;"
-                class="btn btn-primary btn-rounded btn-md font-weight-medium auth-form-btn" aria-label="Close"
-                (click)="deleteEmployee(element.empid)">
-                <i class="bi bi-arrow-right-circle"></i>&nbsp;
-                <span aria-hidden="true">Confirm</span>
-              </button>
-              <button type="button" style=" margin: 40px;position: relative;bottom: 30px; width:auto;"
-                class="btn btn-danger btn-rounded btn-md font-weight-medium auth-form-btn" aria-label="Close"
-                (click)="closePopup()">
-                <i class="bi bi-x icon"></i>
-                <span aria-hidden="true">Cancel</span>
-              </button>
-            </div>
-          </div>
-        </ng-template>
 
-        <i class="bi bi-pencil-fill fa-lg" style="margin:10px;cursor: pointer;" (click)="editEmpDetails(element.empid)"
-          *ngIf="enableDelete" title="Edit Employee"></i>
-        <i class="bi bi-person-x-fill fa-lg" (click)="gotoNextModal(content,element.empid)" *ngIf="enableDelete"
-          title="Delete Employee" style="margin-left: 1rem;cursor: pointer;color: red;height:30px;width:30px;"></i>
-      </td>
-    </ng-container>
-
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-
-  <mat-paginator #employeePaginator [pageSizeOptions]="[5, 10, 25,100]" showFirstLastButtons
-    aria-label="Select page of periodic elements">
-  </mat-paginator>
+          </ng-template>
+  
+          <i class="bi bi-pencil-fill fa-lg" style="margin:10px;cursor: pointer;" (click)="editEmpDetails(element.empid)"
+            *ngIf="enableDelete" title="Edit Employee"></i>
+          <i class="bi bi-person-x-fill fa-lg" (click)="gotoNextModal(content,element.empid)" *ngIf="enableDelete"
+            title="Delete Employee" style="margin-left: 1rem;cursor: pointer;color: red;height:30px;width:30px;"></i>
+        </mat-cell>
+      </ng-container>
+  
+  
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+  <div class="row" style="background-color: white;">
+    <div class="col-md-12" >
+      <mat-paginator #employeePaginator [pageSizeOptions]="[5, 10, 25,100]" showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+    </div>
+  
+  </div>
+  </div>
 
 </div>

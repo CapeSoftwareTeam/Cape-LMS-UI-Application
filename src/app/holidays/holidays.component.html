@@ -1,15 +1,13 @@
 <div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;">
 </div>
 <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
-    <div class="row">
-        <h2>Add Holidays</h2>
-        <div class="col-md-6">
+    <div class="row" style="margin-bottom:20px;margin-left: 10px;margin-right: 10px;">
+        <h2 style="text-align:center;">Add Holidays</h2>
+        <div class="col-md-6" style="margin-bottom:10px;">
             <div class="container">
-                <div class="card" *ngIf="true">
-                    <div class="card-body">
+                <div class="card">
+                    <div class="card-body" style="margin-bottom: 20px;">
                         <form [formGroup]="holidays">
-
-                            <div class="mt-5">
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -81,9 +79,9 @@
                                             <div class="col">
                                                 <mat-form-field appearance="fill">
                                                     <mat-label>Select Location</mat-label>
-                                                    <mat-select formControlName="workLocation" multiple>
-                                                        <mat-option *ngFor="let location of locationList"
-                                                            [value]="location">{{location}}</mat-option>
+                                                    <mat-select #allSelected formControlName="workLocation" multiple>
+                                                        <mat-option  (click)="toggleAllSelection()">Select All</mat-option>
+                                                        <mat-option *ngFor="let location of locationList" [value]="location">{{location}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                                 <div *ngIf="submitted && field.workLocation.errors"
@@ -96,18 +94,19 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col-md-12 justify-content-center texte-center">
                                             <button type="button" class="btn btn-primary" (click)="addLeave()"
-                                                [disabled]="disableAddBtn">Add</button>
-                                        </div>
-                                        <div class="col">
-                                            <button type="button" class="btn btn-primary"
-                                                (click)="resetForm()">Reset</button>
-                                        </div>
+                                            [disabled]="disableAddBtn">Add</button> 
 
+                                            <button type="button" class="btn btn-primary"
+                                            (click)="resetForm()">Reset</button>
+
+                                            <button type="button" class="btn btn-danger"(click)="navigateToHome()" title="Back"><i
+                                                class="bi bi-box-arrow-in-left"></i>Back</button>     
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </form>
                         <div style="text-align: center;">
                             <p class="alert alert-success" *ngIf="successMsg">Holidays Added Successfully!</p>
@@ -119,42 +118,43 @@
         </div>
 
 
-
         <div class="col-md-6">
-            <div class="container">
-                <div class=" mt-4 mb-4">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>DATE</th>
-                                <th>DAY</th>
-                                <th>DESCRIPTION</th>
-                                <th>YEAR</th>
-                                <th>LOCATION</th>
-                                <th *ngIf="true">ACTION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of ListData">
-                                <td><span>{{item.date}}</span></td>
-                                <td><span>{{item.day}}</span></td>
-                                <td><span>{{item.description}}</span></td>
-                                <td><span>{{item.year}}</span></td>
-                                <td><span>{{item.workLocation}}</span></td>
-                                <td *ngIf="true"><button type="button" class="btn btn-primary"
-                                        (click)="removeLeave(item)" [disabled]="disableRemoveBtn">Remove</button> </td>
-                            </tr>
+            <div class="container" >
+                <div class="card" *ngIf="true">
+                    <div class="card-body">
+                        <div class="table-responsive" style="height: 25.5rem;">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>HOLIDAYS</th>
+                                        <th>DATE</th>
+                                        <th>DAY</th>
+                                        <th>YEAR</th>
+                                        <th>LOCATION</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of ListData" >
+                                        <td><span>{{item.description}}</span></td>
+                                        <td><span>{{item.date}}</span></td>
+                                        <td><span>{{item.day}}</span></td>
+                                        <td><span>{{item.year}}</span></td>
+                                        <td><span>{{item.workLocation}}</span></td>
+                                        <td *ngIf="true"><button type="button" class="btn btn-primary"
+                                                (click)="removeLeave(item)" [disabled]="disableRemoveBtn">Remove</button> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p *ngIf="ListData.length == 0 " style="text-align: center;font-weight: bold;margin: 10px;margin-top:10rem;color: darkred;"><span>Error:</span> No Holidays added</p>
 
-                        </tbody>
-                    </table>
-                    <button class="btn btn-primary" [disabled]="disableSubmitBtn" (click)="submit()">Submit</button>
-                    <button class="btn btn-primary" [disabled]="disableResetBtn" (click)="resetLeave()">Reset</button>
-
+                        </div>
+                    <button class="btn btn-primary" [disabled]="disableSubmitBtn && ListData.length == 0 " (click)="submit()">Submit</button>
+                    <button class="btn btn-primary" *ngIf="ListData.length != 0 " (click)="resetLeave()">Reset</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-danger" id="btn" (click)="navigateToHome()" title="Back"><i
-            class="bi bi-box-arrow-in-left"></i>Back</button>
-
+  
 </div>

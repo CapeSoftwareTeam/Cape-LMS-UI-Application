@@ -1,15 +1,10 @@
-<!-- <div >
-    <div class="loader" *ngIf="spinner"></div>
-</div> -->
-
 <div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;">
 </div>
 
 <div class="card">
     <div class="card-body">
         <form [formGroup]="profile" (ngSubmit)="submitFunction()">
-            <div
-                [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
+            <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
                 <h2>Personal Details</h2>
 
                 <div class="row">
@@ -38,7 +33,6 @@
                                     <i class="bi bi-person-fill"></i>
                                 </span>
                             </div>
-                            <!-- </div> <mat-icon>account_circle</mat-icon> -->
                             <input class="form-control" type="text" formControlName="name" [(ngModel)]="register.name"
                                 [ngClass]="{'is-invalid': submitted && field.name.errors}">
                             <div *ngIf="submitted && field.name.errors" class="invalid-feedback">
@@ -58,15 +52,8 @@
                                         <i class="bi bi-people-fill"></i>
                                     </span>
                                 </div>
-                                <select class="form-control" formControlName="gender" [(ngModel)]="register.gender"
-                                    [ngClass]="{'is-invalid': submitted && field.gender.errors}">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female </option>
-                                    <option value="Others">Others</option>
-                                </select>
-
-                                <!-- <input class="form-control" type="text" formControlName="gender" [(ngModel)]="register.gender" 
-                                    [ngClass]="{'is-invalid': submitted && field.gender.errors}"> -->
+                                <input type="text" class="form-control" formControlName="gender" [(ngModel)]="register.gender"
+                                    [ngClass]="{'is-invalid': submitted && field.gender.errors}" readonly>
                                 <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
 
                                     <div *ngIf="field.gender.errors">Gender field is required</div>
@@ -116,8 +103,6 @@
                                     <option value="Unmarried">Unmarried </option>
 
                                 </select>
-                                <!-- <input class="form-control" type="text" formControlName="maritalstatus" [(ngModel)]="register.maritalstatus"
-                                    [ngClass]="{'is-invalid': submitted && field.maritalstatus.errors}"> -->
                                 <div *ngIf="submitted && field.maritalstatus.errors" class="invalid-feedback">
 
                                     <div *ngIf="field.maritalstatus.errors">Marital Status field is required</div>
