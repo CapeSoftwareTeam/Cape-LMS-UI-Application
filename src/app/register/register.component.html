@@ -64,6 +64,7 @@
                                                         [(ngModel)]="register.gender"  placeholder="Select Gender"
                                                         [ngClass]="{'is-invalid': submitted && field.gender.errors}">
                                                         <!-- <option value="" selected>Please Choose</option> -->
+                                                        <option value="" selected>Select Option</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female </option>
                                                         <option value="others">Others</option>
@@ -103,6 +104,7 @@
                                                 <select class="form-control" formControlName="maritalStatus"
                                                         [(ngModel)]="register.maritalstatus"  placeholder="Select Marital Status"
                                                         [ngClass]="{'is-invalid': submitted && field.maritalStatus.errors}">
+                                                        <option value="" selected>Select Option</option>
                                                         <option value="married">Married</option>
                                                         <option value="Unmarried">Unmarried </option>
 
@@ -248,7 +250,7 @@
                                                                 <option value="Design">Design</option>
                                                                 <option value="Marketing">Marketing</option>
                                                                 <option value="Sales">Sales</option>
-<option>HR</option>
+                                                                 <option value="HR">HR</option>
 <option>Accounts</option>
 
                                                         </select>
@@ -343,7 +345,7 @@
                                                                 <span class="input-group-text">
                                                                         <i class="bi bi-list-ul"></i> </span>
                                                         </div>
-                                                        <input type="number" name="CAPE Experience"  placeholder="Cape Experience(readonly"
+                                                        <input type="number" name="CAPE Experience"  placeholder="Cape Experience(readonly)"
                                                                 (keypress)="keyPressNumbers($event)"
                                                                 class="form-control" readonly
                                                                 formControlName="capeExperience"
@@ -538,7 +540,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary"
                                                 style="margin-top:40px;">Save</button>
-                                        <button type="submit" (click)="Home()" class="btn btn-primary"
+                                        <button type="submit" (click)="Home()" class="btn btn-danger"
                                                 style="margin-left:20px; margin-top:40px;">Back</button>
                                 </div>
 

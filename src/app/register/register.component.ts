@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
   RegisterationForm!: FormGroup;
   currentDate:any=new Date();
   Alternate:any;
+  
   countries: Country[]=[]; 
   states: string[]=[];
   cities: string[]=[];

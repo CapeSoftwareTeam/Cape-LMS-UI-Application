@@ -3,13 +3,13 @@ export class Register {
     empid!:String;
     name!:String;
     dob!:Date;
-    gender!:String;
-    maritalstatus!:String;
+    gender:string="";
+    maritalstatus:string="";
     mobilenumber!:String;
     alternatenumber!:String;
     emailid!:String;
-    department!:String;
-    designation!:String;
+    department:string="";
+    designation:string="";
     capeexperience!:any;
     otherexperience!:any;
     country!:any;
