@@ -215,7 +215,7 @@
               <!-- <i class="material-icons" id="delmessage" style="font-size:18px">delete</i>
               <p class="hide" style="float:right">  Delete</p> -->
             </button>
-            <button mat-flat-button  (click)="uploadDocument(element.historyid,uploading)" *ngIf="element.leaveType=='sick'"><i class="fas fa-cloud-upload-alt" style="color:rgb(24, 204, 132);font-size:28px" ></i></button>
+            <button mat-flat-button  (click)="uploadDocument(element.historyid,uploading)" *ngIf="element.leaveType=='sick'"><i class="fas fa-cloud-upload-alt" *ngIf="uploadshow" style="color:rgb(24, 204, 132);font-size:28px" ></i><h3 *ngIf="uploadhide" style="color:rgb(43, 117, 86);">&#10004;</h3></button>
            </mat-cell>
 
       </ng-container>
@@ -245,7 +245,7 @@
       <h4 class="modal-title" id="modal-basic-title">Upload Document </h4>
     </div>
     <div class="modal-body">
-    <input type="file" (change)="getfile($event)">
+    <input type="file" (change)="getfile($event)" required>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-info" (click)="uploadhere()">Upload</button>

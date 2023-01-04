@@ -22,6 +22,8 @@ export class LeaveStatusComponent implements OnInit {
   hrAdmin:boolean=false;
   showErrorMessage: boolean=false;
   admin:boolean=false;
+  uploadshow:boolean=true;
+  uploadhide:boolean=false;
   showmessage: boolean = false;
   enableApprove: boolean = true;
   enableSubmit: boolean = false;
@@ -175,6 +177,7 @@ ngOnInit(): void {
                 c.push(item);
                 this.notification = c.length;
               }
+              
             }
           this.dataSource2 = new MatTableDataSource(c);
           this.dataSource2.paginator = this.dataPaginator;
@@ -222,8 +225,14 @@ ngOnInit(): void {
       componentName="leaveApply"
       this.formFile = formData;         
       this.fileUploadService.fileUploadLms(formData,this.fileSize,componentName).subscribe(data=>{
-      this.fileId=data;
-      this.statusagree.fileUpdate(this.historyIdFor,this.fileId).subscribe(data=>{})
+       
+      this.fileId=data; 
+      this.uploadshow=false;
+      this.uploadhide=true;
+
+      this.statusagree.fileUpdate(this.historyIdFor,this.fileId).subscribe(data=>{
+     
+      })
       },
         error=>{
           this.showErrorMessage = true;
@@ -233,6 +242,8 @@ ngOnInit(): void {
             }, 3000);
         }
       );
+      
+    
     this.modalReference.close();
   }
   viewpdf(historyId:Number,showDocument:any){

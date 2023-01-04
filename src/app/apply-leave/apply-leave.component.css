@@ -20,6 +20,12 @@
     font-size: large;
     /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
    }
+   select:invalid{
+    color: gray;
+}
+option{
+    color: black;
+}
 
    /* input{
     width: 200px;

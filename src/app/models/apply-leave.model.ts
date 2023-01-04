@@ -3,12 +3,12 @@ export class ApplyLeave {
   historyid!: number;
   registerid!: number;
   fileid!:Number;
-  empid!: string;
-  name!: string;
+  empid: string="";
+  name: string="";
   department!: string;
   experience!: number;
   createddate!: Date;
-  leaveType!: string;
+  leaveType: string="";
   reasonforapply!: string;
   fromdate!: Date;
   todate!: Date;

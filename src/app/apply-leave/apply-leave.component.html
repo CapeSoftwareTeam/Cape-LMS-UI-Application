@@ -25,9 +25,9 @@
               <div class="col-7">
                 <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid" formControlName="empid"
                  [ngClass]="{'is-invalid' : submitted && field.empid.errors}" style="height: 40px;
-                 float: left;width: 75%;margin-top: 6px;height: fit-content;">
-                  <option [ngValue]="null" disabled >Select Employee</option>
-                  <option value="{{this.empid}}" selected>{{this.empid}} - {{this.name}}</option>
+                 float: left;width: 75%;margin-top: 6px;height: fit-content;" >
+                  <option value="" >Select Employee...</option>
+                  <option value="{{this.empid}}" >{{this.empid}} - {{this.name}}</option>
                   <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
                 </select>
                 <div *ngIf="submitted && field.empid.errors"
@@ -42,8 +42,8 @@
             <div class="col-7" >
             <select class="formcontrol" formControlName="leaveType" style="height: 40px;
             float: left;width: 75%;margin-top: 6px;height: fit-content;" (change)="findifsick($event)"
-            [ngClass]="{'is-invalid' : submitted && field.leaveType.errors}">
-              <option [ngValue]="null" disabled >Select leave type</option>
+            [ngClass]="{'is-invalid' : submitted && field.leaveType.errors}" placeholder="select leave type here...">
+              <option value="" disabled >Select leave type....</option>
               <option value="casual">Casual Leave</option>
               <option value="sick">Sick Leave</option>
               <option value="bereavement">Bereavement Leave</option>
@@ -96,9 +96,9 @@
                 <mat-form-field style="height: 40px;float: left;width: 75%;padding-left: 9px" id="field">
                   <input matInput [matDatepicker]="picker" [matDatepickerFilter]="FrommyDateFilter" placeholder="Choose a date"
                   style="padding-left: 10px;height: 40px;margin-top: 6px;" [(ngModel)]="fromdate" id="date2"
-                  formControlName="fromdate">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  formControlName="fromdate" >
+                  <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                  <mat-datepicker #picker ></mat-datepicker>
                 </mat-form-field>
                 
 <!-- <input type="text"
@@ -117,6 +117,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 
                 <!-- <input class="formcontrol" type="date" formControlName="fromdate" 
                 style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate"> -->
+
                 <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 63px;">
                 <br>
                 <br>
@@ -246,7 +247,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
           <div class="col-6"  style="float: left;width: 25%;margin-top: 6px;">
               <label><b>Leave Reason: </b></label></div>
               <div class="col-7">
-              <textarea formControlName="reasonforapply"
+              <textarea formControlName="reasonforapply" placeholder="Enter reason..."
               style="height: 40px;float: left;width: 75%;margin-top: 6px;" [ngClass]="{'is-invalid' : submitted && field.reasonforapply.errors}">
             </textarea>
             <div *ngIf="submitted && field.reasonforapply.errors"
@@ -263,7 +264,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
         <div class="row" >
           <div class="col-md-12 justify-content-center text-center" >
             <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" >Cancel</button>
-            <button type="button" class="btn btn-primary"  style="margin: 5px 5px;"  *ngIf="hideIfnotme" (click)="Save(save)">Save changes</button>
+            <button type="button" class="btn btn-primary"  style="margin: 5px 5px;"  *ngIf="hideIfnotme" (click)="Save(save,successave)">Save changes</button>
              <button type="button" class="btn btn-success"(click)="leaveApply(success,failure,onbehalf)"  *ngIf="hideIfsick"> Apply leave</button>
           </div>
         </div>
@@ -394,5 +395,18 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="okforsubmit()">OK</button>
     <button type="button" class="btn btn-danger" style="text-align: center;justify-content: center;" (click)="cancelsave()">Cancel</button>
+  </div>
+</ng-template>
+<ng-template #successave let-modal>
+  <div class="modal-header">
+    <div class="modal-title" id="modal-basic-title">
+      <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
+    </div>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    Your leave request has been saved successfully. Press ok to continue...
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="succesinsave()">OK</button>
   </div>
 </ng-template>
