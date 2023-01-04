@@ -86,6 +86,9 @@ filterdate:any;
   empArr: any;
   HRdata: any=[];
   countryList: any;
+  isExpanded: boolean = false;
+  isShowing: boolean = false;
+  autosize: boolean= false;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource1.filter = filterValue.trim().toLowerCase();
@@ -343,7 +346,7 @@ range!:any;
         )};
       
         //user
-        if (designation == "software trainee" || designation == "Designing" || designation == "Software Devloper" ||
+        if (designation == "Software Engineer trainee" || designation == "Designing" || designation == "Software Devloper" ||
           designation == "Testing" || designation == "Sales" || designation == "Marketing") {
           this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'leaveType', 'reasonForApply'];
 
@@ -623,6 +626,7 @@ closeTemp(){
     )
   }
 }
+
 
 
 function applyFilter(event: Event | undefined, Event: { new(type: string, eventInitDict?: EventInit | undefined): Event; prototype: Event; readonly AT_TARGET: number; readonly BUBBLING_PHASE: number; readonly CAPTURING_PHASE: number; readonly NONE: number; }) {

@@ -100,53 +100,10 @@
           {{this.minusml}} leave taken
         </div>
       </div>
-      </div>
-    
-      <div class="col-md-4" style="top: 10px; float: left" *ngIf="coverspace">
-        <div class="card" >
-          <div class="card-header" style="justify-content:center;text-align:center">
-            <h6><b>Permitted Leave types</b></h6>
-          </div>
-          <div class="card-body" style="height: 114px;margin-top: -6px;">
-            <ul>
-              <li> Casual Leave</li>
-              <li> Sick Leave</li>
-              <li> Bereavement Leave</li>
-              <li> Privilege Leave</li>
-            </ul>
-          </div>
-          <div class="card-footer" style="justify-content:center;text-align:center">
-                4/5
-          </div>
-          
-          <!-- <p class="text-success"  style="float:right">Your presence brings pleasance</p>-->
-          </div> 
-        </div>
-        <div class="col-md-4" style="top: 10px; float: left">
-          <div class="card" >
-            <div class="circular-progress blue "style=" width: 150px;
-            height: 150px !important;
-            float: left; 
-            line-height: 150px;
-            background: none;
-            margin: 10px;
-            box-shadow: none;
-            position: relative;">
-              <span class="circular-progress-left">
-                                <span class="progress-bar"></span>
-              </span>
-              <span class="circular-progress-right">
-                                <span class="progress-bar"></span>
-              </span>
-              <div class="circular-progress-value">{{counttotal}} %</div>
-            </div>
-            <p style="margin-top: -16px"><b> Total Leave taken in this year </b></p>
-            <!-- <p class="text-success"  style="float:right">Your presence brings pleasance</p>-->
-            </div> 
-          </div>
+    </div>
     <br>
     <br>
-        <!-- <div class="col-md-12" style="float: inherit;top:10px" *ngIf="coverspace">
+        <!-- <div class="col-md-12" style="float: inherit;top:10px">
           <div class="card" > 
        
               <div class="main_div">
@@ -237,7 +194,26 @@
   <!-- </i>  -->
 <!-- </div>  -->
 <br>
+<div class="card">
 
+<div class="circular-progress blue "style="  width: 150px;
+height: 150px !important;
+float: left; 
+line-height: 150px;
+background: none;
+margin: 20px;
+box-shadow: none;
+position: relative;">
+  <span class="circular-progress-left">
+                    <span class="progress-bar"></span>
+  </span>
+  <span class="circular-progress-right">
+                    <span class="progress-bar"></span>
+  </span>
+  <div class="circular-progress-value">{{counttotal}} %</div>
+</div>
+<p><b> Total Leave taken in this year </b></p>
+</div>
 
 <!-- <div class="circular-progress">
   <span class="progress-value"> 50%</span>
@@ -375,3 +351,40 @@
 
     </mat-sidenav-content>
 </mat-sidenav-container> -->
+<div class="container" >
+ 
+  
+  <div class="chatbox" *ngIf="open">
+      <div class="chatbox__support">
+          <div class="chatbox__header">
+              <div class="chatbox__image--header">
+                  <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+              </div>
+              <div class="chatbox__content--header">
+                  <h4 class="chatbox__heading--header">Chat support</h4>
+                  <p class="chatbox__description--header">Hi. My name is cape. How can I help you?</p>
+              </div>
+          </div>
+          <div class="chatbox__messages">
+              <div></div>
+          </div>
+          <div class="chatbox__footer">
+              <input type="text" placeholder="Write a message..."  >
+              <button class="chatbox__send--footer send__button">Send</button>
+          </div>
+      </div>
+      
+  </div>
+
+  <div class="chatbox__button" *ngIf="!open">
+
+          <button (click)="onOpen()"><img src="../assets/images/chatbox-icon.svg" /></button>
+          
+      </div>
+      <div class="chatbox__button" *ngIf="close">
+
+        <button (click)="onClose()"><img src="../assets/images/chatbox-icon.svg" /></button>
+        
+    </div>
+
+</div>

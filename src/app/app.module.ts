@@ -25,7 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
+
 import { MatListModule } from '@angular/material/list'
 import { HolidaysComponent } from './holidays/holidays.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -46,6 +46,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -101,6 +102,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     MatDatepickerModule,
     NgOtpInputModule,
     MatExpansionModule,
+    MatSidenavModule,
    
     NgOtpInputModule,
  

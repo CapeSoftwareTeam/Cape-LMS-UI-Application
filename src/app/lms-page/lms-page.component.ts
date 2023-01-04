@@ -20,7 +20,8 @@ import { RegisterserviceService } from '../services/registerservice.service';
 })
 
 export class LmsPageComponent implements OnInit {
-
+close:boolean=false;
+open:boolean=false;
   hidematernity:boolean=false;
   hourHandPosition=0;
   minuteHandPosition=0;
@@ -105,6 +106,8 @@ coverspace:boolean=false;
   leaveTotal: any;
   trackdetails: any;
   counttotal: any;
+  // open:boolean=false;
+  // close:boolean=false;
  
   constructor(private route: Router,
     private statusservice: LeaveStatusServiceService,
@@ -152,6 +155,7 @@ this.city=this.personDetails.city;
       }
     );
   });
+  
 
    
     this.getDetails.leaveTracking(this.empid).subscribe(
@@ -339,4 +343,13 @@ displayDoubleDights(value:number):string{
 //     }
 //   },100);
 // }
- }
+onOpen(){
+   this.open=true; 
+   this.close=true;
+}
+onClose(){
+this.close=false;
+this.open=false;
+}
+
+}
