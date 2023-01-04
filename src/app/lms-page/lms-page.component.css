@@ -123,7 +123,9 @@ mat-sidenav{
   padding: 20px;
   margin-top: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  
 }
+
 
 /* Clear floats after the columns */
 .row:after {
@@ -142,6 +144,7 @@ mat-sidenav{
   .leftcolumn, .rightcolumn {   
     width: 100%;
     padding: 0;
+    display:none;
     flex-direction: column;
     /* width: 100%; */
     /* display: block;
@@ -434,11 +437,6 @@ position: absolute;
   color:rgb(71, 5, 5)
 }
 
-
-
-
-
-
 .main_div{
   width:100vw;
   display:flex;
@@ -695,11 +693,11 @@ position: absolute;
 
 
 }
-.card{
+/* .card{
   height: 250px;
   width:250px;
- }
- * {
+ } */
+ /* * {
 
   box-sizing: border-box;
 
@@ -707,7 +705,7 @@ position: absolute;
 
   padding: 0;
 
-}
+} */
 
 
 
@@ -719,7 +717,7 @@ body {
 
   font-size: 100%;
 
-  background: #F1F1F1;
+  background: #F1F1F1; 
 
 }
 

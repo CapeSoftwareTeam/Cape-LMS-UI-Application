@@ -260,11 +260,11 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
         <p *ngIf="msg"   class="alert alert-danger alert-dismissible fade show"
         style="text-align:center ;width: fit-content;margin: auto;">Please Choose All The Fields</p>
         <hr>
-        <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-12">
-            <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" style="margin-right: 23px;">Cancel</button>
-            <button type="button" class="btn btn-primary" style="margin-right: 23px;" *ngIf="hideIfnotme" (click)="Save(save)">Save changes</button>
-             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure,onbehalf)" style="margin-right: 23px;" *ngIf="hideIfsick"> Apply leave</button>
+        <div class="row" >
+          <div class="col-md-12 justify-content-center text-center" >
+            <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" >Cancel</button>
+            <button type="button" class="btn btn-primary"  style="margin: 5px 5px;"  *ngIf="hideIfnotme" (click)="Save(save)">Save changes</button>
+             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure,onbehalf)"  *ngIf="hideIfsick"> Apply leave</button>
           </div>
         </div>
       </div>

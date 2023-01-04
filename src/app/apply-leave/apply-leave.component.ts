@@ -96,6 +96,7 @@ export class ApplyLeaveComponent implements OnInit {
   pluscount: any;
   difference: any;
   differentdays: any;
+  statusreview: any;
 
   constructor(private route: Router,
               private apply: ApplyleaveService,
@@ -150,6 +151,7 @@ ngOnInit(): void {
         this.managername = this.personDetails.managername;
         this.manageremail = this.personDetails.manageremail;
         this.city = this.personDetails.city;
+        this.statusreview=this.personDetails.status;
         if(this.department=="Software"){
           this.FrommyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
@@ -205,12 +207,12 @@ ngOnInit(): void {
       data => {
         this.leftoverApproval = JSON.parse(data)
           for (let team of this.leftoverApproval) {
-            if(this.designation=="Manager"){
+            if(this.designation=="Manager" && this.statusreview=="Active"){
               if (team.managername == this.name && team.department == this.department && team.city == this.city) {
                 this.members.push(team);
               }
             }
-            else if(this.designation=="HR"){
+            else if(this.designation=="HR" && this.statusreview=="Active"){
               if (team.managername == this.name && team.designation == "Manager") {
                 this.members.push(team);
               }
