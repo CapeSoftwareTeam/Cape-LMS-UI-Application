@@ -36,7 +36,7 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
  
   }
   sendOtp(userName:any):Observable<any>{
-    return this.http.get<any>(this.apiurl+'/sendotp'+'/'+userName,{ responseType:'text' as 'json'})
+    return this.http.get<any>(this.apiurl+'/sendOtp'+'/'+userName,{ responseType:'text' as 'json'})
   }
   updatePassWord(user:User):Observable<any>{
     return this.http.put<any>(this.apiurl+'/updatePassword',user,{responseType:'text' as 'json'})

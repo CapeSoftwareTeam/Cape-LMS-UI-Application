@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { FileUploadService } from '../services/file-upload.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
@@ -20,7 +21,7 @@ export class LeaveStatusComponent implements OnInit {
   dataSource2 = new MatTableDataSource<any>;
   dataSource3=new MatTableDataSource<any>;
   hrAdmin:boolean=false;
-  showErrorMessage: boolean=false;
+
   admin:boolean=false;
   uploadshow:boolean=true;
   uploadhide:boolean=false;
@@ -44,8 +45,9 @@ export class LeaveStatusComponent implements OnInit {
   fileSize: any;
   fileName1: any;
   formFile: any;
-  errorMessage: any;
-  globalErrorHandler: any;
+  showErrorMessage: boolean=false;
+  errorMessage: string='';
+ 
   fileId: any;
   historyIdFor:any;
   fileIdFor: any;
@@ -56,7 +58,7 @@ export class LeaveStatusComponent implements OnInit {
               private route: Router,
               private modalService: NgbModal,
               private registerDetails: LeaveStatusServiceService,
-              private fileUploadService:FileUploadService ) { }
+              private fileUploadService:FileUploadService ,private globalErrorHandler:GlobalErrorHandlerService ) { }
 
 ngOnInit(): void {
  
@@ -71,7 +73,13 @@ ngOnInit(): void {
           this.managerName=this.personDetails.managerName;
             if(this.designation=='Manager'){this.admin=true}
               if(this.designation=="HR"){ this.admin=true; this.hrAdmin=true;}
-        }
+        },error=>{
+          this.showErrorMessage = true;
+          this.errorMessage = this.globalErrorHandler.errorMessage;
+          setTimeout(() => {
+            this.showErrorMessage = false;
+          }, 3000);
+         }
       );
 
       // for update call
@@ -79,6 +87,12 @@ ngOnInit(): void {
           data => {
             this.getpendingData();
             this.getstatusData();
+         },error=>{
+          this.showErrorMessage = true;
+          this.errorMessage = this.globalErrorHandler.errorMessage;
+          setTimeout(() => {
+            this.showErrorMessage = false;
+          }, 3000);
          }
       );
 
@@ -87,16 +101,23 @@ ngOnInit(): void {
 
    //Update the status
   approve(historyid: Number, empid:String,status: string) {
-    this.showmessage = true;
-    setTimeout(() => { this.showmessage = false; }, 4000);
+    
     this.enableApprove = true;
     this.enableSubmit = false;
 
     this.statusagree.statusUpdate(historyid,this.empid, status).subscribe(
-      data => {
+     
+      data => {this.showmessage = true;
+        setTimeout(() => { this.showmessage = false; }, 4000);
         this.applyleave.status=status;
         this.ngOnInit();
-      }
+      }, error=>{
+        this.showErrorMessage = true;
+        this.errorMessage = this.globalErrorHandler.errorMessage;
+        setTimeout(() => {
+          this.showErrorMessage = false;
+        }, 3000);
+       }
     
     );
   
@@ -129,7 +150,13 @@ ngOnInit(): void {
               }
             this.dataSource1 = new MatTableDataSource(b);
             this.dataSource1.paginator = this.dataPaginator;
-          });
+          },error=>{
+            this.showErrorMessage = true;
+            this.errorMessage = this.globalErrorHandler.errorMessage;
+            setTimeout(() => {
+              this.showErrorMessage = false;
+            }, 3000);
+           });
         }
         else if(this.designation=='HR'){
           this.statusservice.getUpdates().subscribe(data => {

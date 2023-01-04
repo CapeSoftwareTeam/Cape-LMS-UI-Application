@@ -378,6 +378,11 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     <div class="modal-body" style="text-align:center">
       Your Leave has been successfully Updated. Press Ok to continue
     </div>
+    <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+
+    style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
+
+    {{errorMessage}}</p> 
     <div class="modal-footer">
     <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onAprroved()">OK</button>
     <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>

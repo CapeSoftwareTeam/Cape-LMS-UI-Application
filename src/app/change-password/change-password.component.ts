@@ -29,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
   errorMessage: any;
   showErrorMessage: boolean = false;
   constructor(private fb: FormBuilder, private registerService: RegisterserviceService, private route: Router, 
-    private globalErrorHandler: GlobalErrorHandlerService,private fileUploadService:FileUploadService
+    private globalErrorHandler: GlobalErrorHandlerService,private fileUploadService:FileUploadService,private dialogRef: MatDialogRef<ChangePasswordComponent>
   ) { }
 
   ngOnInit():void {
@@ -55,7 +55,7 @@ export class ChangePasswordComponent implements OnInit {
       this.succesMsg = true;
       setTimeout(() => {
         this.succesMsg = false;
-        this.route.navigate(['/home']);
+        this.dialogRef.close();
       }, 3000);
 
     },
@@ -71,7 +71,7 @@ export class ChangePasswordComponent implements OnInit {
   }
   //Back Button Method
   back() {
-    this.route.navigate(['/home'])
+    this.dialogRef.close();
   }
   // get Controls
   get f() {

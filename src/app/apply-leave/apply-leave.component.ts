@@ -233,7 +233,7 @@ ngOnInit(): void {
 
   leaveApply(success: any, failure: any,onbehalf:any) {
     this.submitted=true;
-    if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined ){
+    if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined||this.countinNumber==undefined ||this.postleave.value.reasonforapply=="" ){
       this.msg=true;
       
       setTimeout(() => {
@@ -405,7 +405,7 @@ ngOnInit(): void {
 
   Save(save:any,successave:any) {
     this.submitted=true;
-    if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined ){
+    if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined ||this.postleave.value.reasonforapply==""){
       this.msg=true;
       
       setTimeout(() => {
@@ -892,7 +892,13 @@ ngOnInit(): void {
         this.detailsdata.push(this.status);      
         this.modalReference.close();
         this.route.navigate(['/home']);
-      }
+      },error=>{
+        this.showErrorMessage=true;
+        this.errorMessage=this.globalErrorHandler.errorMessage;
+         setTimeout(() => {
+           this.showErrorMessage=false;
+         }, 3000);
+       }
     ); 
   }
   succesinsave(){

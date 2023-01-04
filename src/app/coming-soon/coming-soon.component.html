@@ -1,28 +1,34 @@
 
 <style>
 body, html {
-  height: 100%;
-  margin: 0;
+  display: grid;
+    height: 100%;
+   
+    align-items: center;
+    font-family: "Courier New", Courier, monospace;
+
+
 }
 
 .bgimg {
-  background-image: url('../assets/image2.png');
-  height: 100%;
+  /* background-image: url('../assets/image2.png'); */
+  /* height: 100%;
   background-position: center;
-  background-size: cover;
+  background-size:100% 100%;
   position: relative;
-  color: white;
+  color: rgb(177, 46, 46);
   font-family: "Courier New", Courier, monospace;
-  font-size: 25px;
+  font-size: 25px; */
 }
 </style>
 
-<div class="bgimg">
+<div class="bgimg" style="margin-top: -150px;margin-right:230px;">
     
-    <div class="middle">
-      <h1>COMING SOON</h1>
+    <div class="middle" style="margin-top:-108px;">
+      <h1 class="animated bounceInRight" style="animation-delay: 1s;">COMING SOON</h1>
       <hr>
-      <p formControlName="date" style="font-size:30px;font-weight: bolder;">{{hour}} Hours:{{minute}} Minute:{{timeLeft}} Seconds Left....</p>
+      <!-- <p class="animated bounceInLeft" style="animation-delay: 5s;" formControlName="date" style="font-size:30px;font-weight: bolder;color: green;">{{hour}} Hours:{{minute}} Minute:{{timeLeft}} Seconds Left....</p> -->
+      <p class="animated bounceInLeft" style="font-size:15px;font-weight: bolder;color: green;animation-delay: 5s;margin-left:18px;" >This page is under developement, It will be available in future</p>
     </div>
     
   </div>

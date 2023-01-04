@@ -1,7 +1,11 @@
 <mat-toolbar style="background-color:rgb(180, 180, 180);justify-content: center;">
   <h2><b>Leave Status</b></h2>
   </mat-toolbar>
-  
+  <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+
+  style="text-align:center ;margin-left: 20px;margin-right:20px;margin-top: 20px;"><strong>Error!</strong>
+
+  {{errorMessage}}</p> 
   <div class="example-container mat-elevation-z8">
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Organisation(Emergency) Approvals" *ngIf="hrAdmin" >
@@ -10,6 +14,7 @@
           <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"[class.isMobile]="isMobile"> -->
         <!-- Position Column -->
         <div class="card" >
+        
           <div class="card-body">
         <ng-container matColumnDef="createddate">
           <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date </mat-header-cell>
@@ -219,6 +224,8 @@
            </mat-cell>
 
       </ng-container>
+       
+
     
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -235,6 +242,7 @@
   <div *ngIf="showmessage" class="card" id="card">
     <p style="margin-top: 16px;">Your response has been successfully updated</p>
   </div>
+  
   <br>
   <button class="btn btn-danger" id="back" style="margin-left: 50%;margin:66px" (click)="back()"><i class="fa fa-sign-out" style="font-size:18px; padding-right:5px"></i>Back</button>
   
@@ -263,4 +271,5 @@
     <div class="modal-footer">
      <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>
     </div>
+   
   </ng-template>

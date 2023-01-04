@@ -14,6 +14,8 @@ import { RegisterserviceService } from '../services/registerservice.service';
 import { ApplyLeaveComponent } from '../apply-leave/apply-leave.component';
 import { MatDialog } from '@angular/material/dialog';
 
+import { ChangePasswordComponent } from '../change-password/change-password.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -87,6 +89,7 @@ export class HomeComponent implements OnInit {
   designation1: any;
  
   
+  
   clicktab(event:any){
     if(event.target.value=="Time Schedule"){
       this.comingsoon=true;
@@ -99,8 +102,7 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
     private globalErrorHandler: GlobalErrorHandlerService,private fileUploadService:FileUploadService,
-    private registerService:RegisterserviceService,
-    private dialog:MatDialog) { }
+    private registerService:RegisterserviceService, private dialog: MatDialog) { }
 
 
   // ngAfterViewInit(): void {
@@ -259,7 +261,12 @@ export class HomeComponent implements OnInit {
     this.route.navigate(['/profile']);
   }
   changePassword(){
-    this.route.navigate(['/changepassword'])
+    const dialogRef=this.dialog.open(ChangePasswordComponent,{
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(data=>{
+      
+    })
   }
   callCalculation() {
     this.route.navigate(['/leavestatus']);
@@ -437,6 +444,12 @@ dialogRef.afterClosed().subscribe(data=>{
 
 // file Upload Service
   onUpload(){
+    if(this.file==null){
+      this.showErrorMessage1=true;
+      setTimeout(() => {
+        this.showErrorMessage1=false
+      }, 3000);
+    }
     let componentName:any;
     const formData: FormData = new FormData();
     for (let f of this.file) {
