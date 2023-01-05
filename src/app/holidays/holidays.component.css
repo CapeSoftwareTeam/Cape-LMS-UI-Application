@@ -13,6 +13,14 @@
     top: 10px;
     /* justify-items: center; */
 }
+.errorMsg{
+    text-align: center;
+    font-weight: bold;
+    margin: 10px;
+    font-size: 20px;
+    margin-top:10rem;
+    color: darkred;
+}
 
 h2 {
     align-items: center;

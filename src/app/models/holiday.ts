@@ -2,7 +2,7 @@ export class Holiday {
     
     publicLeaveId!:any;
     date!:Date;
-    description!:String;
+    description:string="";
     day!:String;
     year!:any;
     workLocation!:String;

@@ -29,12 +29,13 @@ export class HolidaysComponent implements OnInit {
   disableRemoveBtn: boolean = false;
   holidays: FormGroup;
   ListData: any;
-
+  holidayDate: any;
+  showDateMsg: boolean = false;
   successMsg: boolean = false;
   showForm: boolean = false;
   holiday = new Holiday();
   weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
+  checkHolidayMsg: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private holidaysService: HolidayservicesService,
     private route: Router) {
@@ -52,14 +53,31 @@ export class HolidaysComponent implements OnInit {
   }
 
   // Add leaves in Table
-  public addLeave(): void {
+  addLeave(): void {
     this.submitted = true;
     if (this.holidays.invalid) {
       return
     }
-    this.ListData.push(this.holidays.value);
-    this.resetForm();
-    this.disableSubmitBtn = false;
+     if(this.ListData.length!=0){
+      for(let i of this.ListData){
+        if(i.date==this.holidays.value.date){
+          this.showDateMsg = true;
+          setTimeout(() => {
+            this.showDateMsg = false;
+          }, 3000);
+        }else{
+          this.ListData.push(this.holidays.value);
+          this.resetForm();
+          this.disableSubmitBtn = false;
+          break
+        }
+      }
+     }
+     else{
+      this.ListData.push(this.holidays.value);
+      this.resetForm();
+      this.disableSubmitBtn = false;
+     }
 
   }
 
@@ -123,7 +141,15 @@ export class HolidaysComponent implements OnInit {
 
   // Navigation
   navigateToHome() {
-    this.route.navigate(['/home'])
+    if(this.ListData.length==0){
+      this.route.navigate(['/home'])
+    }else{
+      this.checkHolidayMsg = true;
+      setTimeout(() => {
+        this.checkHolidayMsg = false;
+      }, 3000);
+    }
+ 
   }
 
   get field(): any {
@@ -147,6 +173,25 @@ export class HolidaysComponent implements OnInit {
     }
   }
 
+  // getDate(event : any){
+  //    this.holidayDate = this.holiday.date;
+     
+  //    let tempArr = [];
+
+  //    this.holidaysService.getLeave().subscribe(
+  //     data=>{
+  //         tempArr = JSON.parse(data);
+  //         for(let i of tempArr){
+  //           if(i.date==this.holidayDate){
+  //             this.showDateMsg = true;
+  //           }
+  //         }
+  //         setTimeout(() => {
+  //           this.showDateMsg = false;
+  //         }, 2000);
+  //    })
+
+  // }
   
 
 }

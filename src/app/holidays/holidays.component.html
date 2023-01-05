@@ -5,7 +5,7 @@
         <h2 style="text-align:center;">Add Holidays</h2>
         <div class="col-md-6" style="margin-bottom:10px;">
             <div class="container">
-                <div class="card">
+                <div class="card" >
                     <div class="card-body" style="margin-bottom: 20px;">
                         <form [formGroup]="holidays">
                                 <div class="form-row">
@@ -15,9 +15,10 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <input type="date" formControlName="date" class="form-control" name=""
+                                                <input type="date" formControlName="date"  class="form-control" name=""
                                                     id="" [ngClass]="{'is-invalid': submitted && field.date.errors}"
                                                     [(ngModel)]="holiday.date" (change)="DateFormatchange($event)">
+                                                    <div *ngIf="showDateMsg" class="alert alert-danger">Date already exits! Cannot have same date multiple times</div>
                                                 <div *ngIf="submitted && field.date.errors" class="invalid-feedback">
                                                     <div *ngIf="field.date.errors">Date is Required</div>
                                                 </div>
@@ -60,10 +61,32 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <input type="text" formControlName="description" class="form-control"
+
+                                                <select formControlName="description" class="form-control" name="" id="" [ngClass]="{'is-invalid': submitted && field.description.errors}"
+                                                [(ngModel)]="holiday.description" placeholder="Enter Description">
+                                                    <option value="" selected >Select Holiday</option>
+                                                    <option value="New Year">New Year</option>
+                                                    <option value="MaharaSankranti">Mahara Sankranti / Lohri </option>
+                                                    <option value="Pongal">Pongal</option>
+                                                    <option value="Republic Day">Republic Day</option>
+                                                    <option value="Holi">Holi</option>
+                                                    <option value="Ugadi"> Ugadi / Gudi Padwa</option>
+                                                    <option value="Tamil NewYear/Vishu">Tamil New Year / Vishu/ Bengal New Year</option>
+                                                    <option value="May Day">May Day</option>
+                                                    <option value="Independence Day">Independence Day</option>
+                                                    <option value="Raksha Bandhan (Rakhi)">Raksha Bandhan (Rakhi)</option>
+                                                    <option value="Janmastami ">Janmastami</option>
+                                                    <option value="Ganesh Chaturthi/Vinayaka Chaturthi">Ganesh Chaturthi/Vinayaka Chaturthi</option>
+                                                    <option value="Mahatma Gandhi Jayanti">Mahatma Gandhi Jayanti</option>
+                                                    <option value="Saraswathi Pooja">Saraswathi Pooja</option>
+                                                    <option value="Deepavali / Diwali">Deepavali / Diwali</option>
+                                                    <option value="Karnataka Day"> Karnataka Day</option>
+                                                    <option value="Christmas"> Christmas</option>
+                                                </select>
+                                                <!-- <input type="text" formControlName="description" class="form-control"
                                                     name="" id=""
                                                     [ngClass]="{'is-invalid': submitted && field.description.errors}"
-                                                    [(ngModel)]="holiday.description" placeholder="Enter Description">
+                                                    [(ngModel)]="holiday.description" placeholder="Enter Description"> -->
                                                 <div *ngIf="submitted && field.description.errors"
                                                     class="invalid-feedback">
                                                     <div *ngIf="field.description.errors">Description is Required</div>
@@ -100,9 +123,8 @@
 
                                             <button type="button" class="btn btn-primary"
                                             (click)="resetForm()">Reset</button>
-
-                                            <button type="button" class="btn btn-danger"(click)="navigateToHome()" title="Back"><i
-                                                class="bi bi-box-arrow-in-left"></i>Back</button>     
+                                            <!-- <i class="bi bi-box-arrow-in-left"></i> -->
+                                            <button type="button" class="btn btn-danger"(click)="navigateToHome()" title="Back">Back</button>     
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +132,7 @@
                         </form>
                         <div style="text-align: center;">
                             <p class="alert alert-success" *ngIf="successMsg">Holidays Added Successfully!</p>
+                            <p class="alert alert-danger" *ngIf="checkHolidayMsg"><strong>Error:</strong> Submit leaves before go back!</p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +169,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <p *ngIf="ListData.length == 0 " style="text-align: center;font-weight: bold;margin: 10px;margin-top:10rem;color: darkred;"><span>Error:</span> No Holidays added</p>
+                            <p *ngIf="ListData.length == 0 " class="errorMsg"><span>Error:</span> No Holidays added</p>
 
                         </div>
                     <button class="btn btn-primary" [disabled]="disableSubmitBtn && ListData.length == 0 " (click)="submit()">Submit</button>
