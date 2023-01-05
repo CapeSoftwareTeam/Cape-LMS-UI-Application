@@ -388,12 +388,11 @@
                   <p class="chatbox__description--header">Hi. My name is cape. How can I help you?</p>
               </div>
           </div>
-          <div class="chatbox__messages">
-              <div></div>
+          <div class="chatbox__messages" id="chats">
           </div>
           <div class="chatbox__footer">
-              <input type="text" placeholder="Write a message..."  >
-              <button class="chatbox__send--footer send__button">Send</button>
+              <input type="text"placeholder="Write a message..." value="" id="chatquery"  >
+              <button class="chatbox__send--footer send__button" (click)="sendMessage()" >Send</button>
           </div>
       </div>
       

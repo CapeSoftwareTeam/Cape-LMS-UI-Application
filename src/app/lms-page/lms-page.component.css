@@ -788,26 +788,6 @@ body {
 }
 
 /* MESSAGES */
-.chatbox__messages {
-  margin-top: auto;
-  display: flex;
-  overflow-y: scroll;
-  flex-direction: column-reverse;
-}
-
-.messages__item {
-  background: orange;
-  max-width: 60.6%;
-  width: fit-content;
-}
-
-.messages__item--operator {
-  margin-left: auto;
-}
-
-.messages__item--visitor {
-  margin-right: auto;
-}
 
 /* FOOTER */
 .chatbox__footer {

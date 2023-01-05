@@ -11,10 +11,10 @@ import { ApplyleaveService } from '../services/applyleave.service';
 import { FileUploadService } from '../services/file-upload.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
-import { ApplyLeaveComponent } from '../apply-leave/apply-leave.component';
+import { RegisterComponent } from '../register/register.component';
 import { MatDialog } from '@angular/material/dialog';
-
 import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { ApplyLeaveComponent } from '../apply-leave/apply-leave.component';
 
 @Component({
   selector: 'app-home',
@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit {
     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
     private globalErrorHandler: GlobalErrorHandlerService,private fileUploadService:FileUploadService,
-    private registerService:RegisterserviceService, private dialog: MatDialog) { }
+    private registerService:RegisterserviceService,private dialog:MatDialog) { }
 
 
   // ngAfterViewInit(): void {
@@ -256,6 +256,7 @@ export class HomeComponent implements OnInit {
   
   OpenModalBox() {
     this.modeModal = true;
+    
   }
   callProfile() {
     this.route.navigate(['/profile']);
@@ -293,7 +294,14 @@ dialogRef.afterClosed().subscribe(data=>{
     this.route.navigate(['/history']);
   }
   callRegister(){
-    this.route.navigate(['/register']);
+    const dialogRef=this.dialog.open(RegisterComponent,{
+      width: '130%',
+
+      height: '90%',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(data=>{
+    })
   }
 
   callEmployeeDetails(){

@@ -16,4 +16,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   max-width: auto;
 }
 
+.chatbox__messages {
+  margin-top: auto;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column-reverse !important;
+}
 
+
+.messages__item {
+  background: #581B98;
+  max-width: 60.6%;
+  padding:8px !important;
+  border-radius: 5px !important;
+  width: fit-content;
+  color:#ffffff !important;
+}
+
+.messages__item--operator {
+  margin-left: auto;
+}
+
+.messages__item--visitor {
+  margin-right: auto;
+}

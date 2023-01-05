@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, timer } from 'rxjs';
+import { ChatbotService } from '../chatbot.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { LeaveDetails } from '../models/leave-details.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
@@ -13,6 +14,7 @@ import { ApplyleaveService } from '../services/applyleave.service';
 
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
+declare const myFunction: any;
 @Component({
   selector: 'app-lms-page',
   templateUrl: './lms-page.component.html',
@@ -106,6 +108,9 @@ coverspace:boolean=false;
   leaveTotal: any;
   trackdetails: any;
   counttotal: any;
+  valueBot: string="";
+  strMsg: string=""; 
+
   // open:boolean=false;
   // close:boolean=false;
  
@@ -116,7 +121,8 @@ coverspace:boolean=false;
     private modalService: NgbModal,
     private registerDetails: LeaveStatusServiceService,
     private firstentry: LeaveStatusServiceService,
-    private teamDetails:RegisterserviceService) { }
+    private teamDetails:RegisterserviceService,private chatBot:ChatbotService
+  ) { }
    
     // @ViewChild("legend", { static: true } )
     // private legend: IgxLegendComponent
@@ -351,5 +357,23 @@ onClose(){
 this.close=false;
 this.open=false;
 }
+sendMessage() {
+  var input_data = (document.getElementById("chatquery") as HTMLInputElement).value;
+  if(input_data != ""){
+    document.getElementById("chats")?.insertAdjacentHTML("afterbegin","<div class='messages__item messages__item--operator'>"+input_data+"</div>");
+    (document.getElementById("chatquery") as HTMLInputElement).value = "";
+    fetch("http://localhost:5000?q="+input_data)
+    .then(x=>x.json())
+    .then(
+      (x)=>{
+        document.getElementById("chats")?.insertAdjacentHTML("afterbegin","<div class='messages__item messages__item--visitor'>"+x.msg+"</div>");
+        (document.getElementById("chatquery") as HTMLInputElement).value
+      }
+    )
+  }else{
+    alert("no")
+  }
+   
+}  
 
 }
