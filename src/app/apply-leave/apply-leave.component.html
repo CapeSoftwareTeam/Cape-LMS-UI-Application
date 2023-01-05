@@ -1,16 +1,16 @@
 <form [formGroup]="postleave">
   <div class="container">
-    <!-- <h6 style="margin-left: 92%;color: #a6a2a2;"><strong>{{empid}}</strong></h6> -->
-    <div class="card" style="margin-top:40px">  
+    <!-- <h6 style="margin-left: 92%;color: #a6a2a2;"><strong>{{empid}}</strong></h6> style="background-color: rgb(192, 211, 228);" -->
+    <div class="card" style="margin-top:40px;">  
       <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
 
                     style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
 
                     {{errorMessage}}</p> 
                       
-      <div class="card-body">
+      <div class="card-body" style="background-color: rgb(251, 252, 252);">
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-12">
+          <div class="col-md-12" >
             <div class="formcontrol">
               <h2 style="justify-content:center;text-align: center;">Enter Leave Details here</h2>
             </div>

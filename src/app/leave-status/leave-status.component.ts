@@ -243,7 +243,7 @@ ngOnInit(): void {
     this.modalReference = this.modalService.open(uploading, { size: 'm' });
   }
 
-  uploadhere(){
+  uploadhere(successtoupload:any){
     let componentName:any;
     const formData: FormData = new FormData();
       for (let f of this.file){
@@ -272,12 +272,13 @@ ngOnInit(): void {
       
     
     this.modalReference.close();
+    this.modalReference=this.modalService.open(successtoupload,{size:'m'});
   }
   viewpdf(historyId:Number,showDocument:any){
     this.statusagree.getHistoryId(historyId).subscribe(data=>{this.fileIdFor=JSON.parse(data).fileid;})
     this.modalReference= this.modalService.open(showDocument, { size: 'm' });
   }
-  
+
   backToleavestatus(){
     this.modalReference.close();
   }

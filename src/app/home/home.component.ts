@@ -274,6 +274,8 @@ export class HomeComponent implements OnInit {
   callApplyLeave(){
     
 const dialogRef=this.dialog.open(ApplyLeaveComponent,{
+  width: '70%',
+  height: '90%',
 disableClose: true
 });
 dialogRef.afterClosed().subscribe(data=>{

@@ -256,7 +256,7 @@
     <input type="file" (change)="getfile($event)" required>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-info" (click)="uploadhere()">Upload</button>
+      <button type="button" class="btn btn-outline-info" (click)="uploadhere(successtoupload)">Upload</button>
      <button type="button" class="btn btn-outline-danger" (click)="uploadbackbutton()">Back</button>
     </div>
   </ng-template>
@@ -271,5 +271,17 @@
     <div class="modal-footer">
      <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>
     </div>
-   
   </ng-template>
+  <ng-template #successtoupload let-modal>
+      <div class="modal-header" style="justify-content: center;">
+        <div class="modal-title" id="modal-basic-title" >
+          <i class="bi bi-check-circle" style='font-size:48px;color:green;'></i>
+        </div>
+      </div>
+      <div class="modal-body" style="text-align:center">
+       File has been loaded successfully. Click ok to save and procced.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="backToleavestatus()">OK</button>
+      </div>
+    </ng-template>

@@ -523,8 +523,8 @@ ngOnInit(): void {
       ) 
 
     }
-
-    this.route.navigate(['/home']);
+    this.dialogRef.close();
+    // this.route.navigate(['/home']);
     this.modalReference.close();
   }
 
@@ -800,7 +800,8 @@ ngOnInit(): void {
   }
   ok(){
     this.modalReference.close();
-    this.route.navigate(['/home']);
+    this.dialogRef.close();
+    // this.route.navigate(['/home']);
   }
   cancel() {
     this.statusagree.getUpdates().subscribe(
@@ -824,7 +825,8 @@ ngOnInit(): void {
     this.showMorning = true;
   }
   pageNavigate() {
-    this.route.navigate(["/home"])
+    this.dialogRef.close();
+    // this.route.navigate(["/home"])
   }
   findifsick(event: any) {
     if (this.defaultEmpid == this.empid) {
@@ -891,7 +893,7 @@ ngOnInit(): void {
       data => {
         this.detailsdata.push(this.status);      
         this.modalReference.close();
-        this.route.navigate(['/home']);
+        this.dialogRef.close();
       },error=>{
         this.showErrorMessage=true;
         this.errorMessage=this.globalErrorHandler.errorMessage;
@@ -899,15 +901,19 @@ ngOnInit(): void {
            this.showErrorMessage=false;
          }, 3000);
        }
-    ); 
-  }
+       ); 
+        // this.route.navigate(['/home']);
+      }
+
   succesinsave(){
     this.modalReference.close();
-    this.route.navigate(['/home']);
+    this.dialogRef.close();
+    // this.route.navigate(['/home']);
   }
   okforsubmit(){
     this.modalReference.close();
-    this.route.navigate(['/home']);
+    this.dialogRef.close();
+    // this.route.navigate(['/home']);
   }
   cancelsave(){
     this.statusagree.getUpdates().subscribe(
