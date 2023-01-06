@@ -349,6 +349,7 @@ displayDoubleDights(value:number):string{
 //     }
 //   },100);
 // }
+                                  //  ChatBot Code Starts
 onOpen(){
    this.open=true; 
    this.close=true;
@@ -375,5 +376,6 @@ sendMessage() {
   }
    
 }  
+                                          // ChatBot Code ends
 
 }

@@ -375,16 +375,16 @@
     </mat-sidenav-content>
 </mat-sidenav-container> -->
 
- 
+                             <!-- ChatBot Code Starts -->
   
-  <div class="chatbox" *ngIf="open" >
-      <div class="chatbox__support">
+  <div class="chatbox" *ngIf="open" style="margin-bottom:70px;">
+      <div class="chatbox__support" style="width:276px;">
           <div class="chatbox__header">
-              <div class="chatbox__image--header">
-                  <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image">
+              <div class="chatbox__image--header" style="height:89px;">
+                  <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-5--v1.png" alt="image" style="margin-top:25px;">
               </div>
-              <div class="chatbox__content--header">
-                  <h4 class="chatbox__heading--header">Chat support</h4>
+              <div class="chatbox__content--header" >
+                  <h4 class="chatbox__heading--header" style="margin-left:11px;">Chat support</h4>
                   <p class="chatbox__description--header">Hi. My name is cape. How can I help you?</p>
               </div>
           </div>
@@ -400,14 +400,27 @@
 
   <div class="chatbox__button" *ngIf="!open">
 
-          <button (click)="onOpen()"><img src="../assets/images/chatbox-icon.svg" /></button>
+          <button (click)="onOpen()" style="margin-top:300px;"><img src="../assets/images/chatbox-icon.svg" /></button>
           
       </div>
       <div class="chatbox__button" *ngIf="close">
 
-        <button (click)="onClose()"><img src="../assets/images/chatbox-icon.svg" /></button>
+        <button (click)="onClose()" style="margin-top:300px;"><img src="../assets/images/chatbox-icon.svg" /></button>
         
     </div>
+    <!-- <div class="container">
+      <div id="chatbot">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div id="chatbot-corner"></div>
+      <div id="antenna">
+        <div id="beam"></div>
+        <div id="beam-pulsar"></div>
+      </div>
+    </div> -->
 
 </div>
 </div>
+                                   <!-- ChatBot Code Ends -->

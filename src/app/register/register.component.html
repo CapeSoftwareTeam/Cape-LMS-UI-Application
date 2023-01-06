@@ -46,12 +46,7 @@
                                         </div>
                                 </div>
                                 <div class="col-md-4">
-                                        <!-- <label class="form-label">Gender</label>
-        <input type="text" name="gender" class="form-control"formControlName="gender"
-        [(ngModel)]="register.gender"[ngClass]="{'is-invalid': submitted && field.gender.errors}">
-         <div *ngIf="submitted && field.gender.errors" class="invalid-feedback">
-         <div *ngIf="field.gender.errors">choose your gender</div>
-         </div>-->
+                                       
                                         <label class="form-label">Gender</label>
                                         <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -63,7 +58,7 @@
                                                 <select class="form-control" formControlName="gender"
                                                         [(ngModel)]="register.gender"  placeholder="Select Gender"
                                                         [ngClass]="{'is-invalid': submitted && field.gender.errors}">
-                                                        <!-- <option value="" selected>Please Choose</option> -->
+                                                       
                                                         <option value="" selected>Select Option</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female </option>
@@ -127,7 +122,7 @@
                                                                 <i class="bi bi-telephone-fill"></i>
                                                         </span>
                                                 </div>
-                                                <!-- <intl-input-phone  formControlName="mobile"  [(ngModel)]="register.mobilenumber" [SelectedCountryISOCode]="'IN'" ></intl-input-phone> -->
+                                              
                                                 <input type="text" name="mobilenumber" (focusout)="mobile($event)"class="form-control"
                                                         formControlName="mobile" [(ngModel)]="register.mobilenumber"  placeholder="Enter Mobile Number"
                                                         [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
@@ -273,22 +268,7 @@
                                                                         <i class="bi bi-person-lines-fill"></i>
                                                                 </span>
                                                         </div>
-                                                        <!-- <div class="input-group">
-                                                
-                                                        <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                        <i class="bi bi-person-lines-fill"></i>
-                                                                </span>
-                                                             </div> -->
-                                                        <!-- <input type="text" name="designation" class="form-control"
-                                                             formControlName="designation" [(ngModel)]="register.designation"
-                                                             [ngClass]="{'is-invalid': submitted && field.designation.errors}">
-                                                     <div *ngIf="submitted && field.designation.errors"
-                                                             class="invalid-feedback">
-                                                             <div *ngIf="field.designation.errors">Designation is required
-                                                             </div>
-                                                     </div>
-                                                </div> -->
+                                                      
                                                         <select formControlName="designation" class="form-control"
                                                                 [(ngModel)]="register.designation"  placeholder="Select Designation"
                                                                 [ngClass]="{'is-invalid' : submitted && field.designation.errors}">
@@ -471,22 +451,7 @@
                                                         </div>
                                                 </div>
                                         </div>
-                                        <!-- <div class="col-md-4">        
-        <label class="form-label">Created Date</label>
-        <input type="text" name="createdDate" class="form-control"[formControl]="createdDate">
-        </div>
-<div class="col-md-4"> 
-        <label class="form-label"> Created By</label>
-        <input type="text" name="createdBy" class="form-control"[formControl]="createdBy">
-</div>
-<div class="col-md-4">        
-        <label class="form-label">Updated Date</label>
-        <input type="text" name="updatedDate" class="form-control" [formControl]="updatedDate">
-</div>
-<div class="col-md-4"> 
-         <label class="form-label"> Updated By</label>
-         <input type="text" name="updateBy" class="form-control" [formControl]="updatedBy">
-</div> -->
+                                        
                                         <div class="col-md-4" *ngIf="Hide">
                                                 <label class="form-label">Manager Name</label>
                                                 <div class="input-group">
