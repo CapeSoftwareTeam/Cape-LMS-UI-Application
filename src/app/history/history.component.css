@@ -87,9 +87,7 @@ display: none;
   .picker{
     right: 1185px;
   }
-.mat-header-cell{
-  background-color: skyblue;
-}
+/*  */
  
   /* th, td {
     overflow: hidden;
@@ -123,7 +121,7 @@ display: none;
     margin-top: -6px;
     border: 0;
     border-radius: 0;
-    background: #ada9a9;
+   background: #ada9a9;
   }
   .mat-row:hover{
   
@@ -154,31 +152,20 @@ display: none;
       text-align: center;
       justify-content: flex-end;
     } */
-
- #btn{
-  margin-left: 90%;
-  margin-bottom: 20px;
-   margin-left: 880px;
-
-}
   
- #deleteHistory{
-  position:relative;
-  right: 100px;
-  top: 80px;
-  margin-top: -165px;
-  margin-right: -45px;
+
+ .col-md-12{
+  margin-left: 30%;
+  margin-right: 55px;
  }
  #download{
   position: relative;
-  padding-top: 5px;
+  padding-top: 7px;
   padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  right:50px;
-  top:40px;
-  margin-top: -85px;
-  margin-right: -44px;
+ margin-left: 5px;
+ 
 
  }
  #filter{
@@ -199,7 +186,7 @@ display: none;
   display: flex;
   flex-direction: column;
   max-height: 500px;
-  min-width: 200px;
+  min-width: 300px;
 
 }
 h2 {
@@ -207,7 +194,7 @@ h2 {
 }
 
 .mat-table {
-   overflow: auto; 
+  overflow: auto;
   max-height: 500px;
   border: ridge;
   
@@ -234,6 +221,7 @@ h2 {
     flex-direction: column;
     align-items: start;
     padding: 8px 24px;
+   
   }
 
 #back{
@@ -325,14 +313,4 @@ margin-top:15px;
   box-shadow: inset 1px 1px #000, 0 1px #000;
 }
 
-.column {
-  float: left;
-  width: 11.33%;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+ 

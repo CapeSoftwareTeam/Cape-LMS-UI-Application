@@ -8,7 +8,7 @@ import { clipboardCheck, filter, valentine } from 'ngx-bootstrap-icons';
 import { DatePipe } from '@angular/common'
   ;
 import { RegisterserviceService } from '../services/registerservice.service';
-import { FormGroup, FormControl, NgModel } from '@angular/forms';
+import { FormGroup, FormControl, NgModel, Validators } from '@angular/forms';
 import { HistoryService } from '../services/historyservice.service';
 import { Router } from '@angular/router';
 import { start, State } from '@popperjs/core';
@@ -42,7 +42,10 @@ export class HistoryComponent implements OnInit {
   pending: boolean = false;
   cancelled: boolean = false;
   enableDelete: boolean = false;
+  viewer: boolean = false;
+  viewerFlag: boolean = false;
   emptyMessage: boolean = false;
+  userEmptyMessage: boolean = false;
   myHistory: boolean = true;
   showSubmenu: boolean = false;
   empid: any;
@@ -100,7 +103,7 @@ export class HistoryComponent implements OnInit {
   selectedRowIndexSub: any;
   filterFromDate:any;
   filterToDate:any;
-
+  submitted: boolean = false;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource1.filter = filterValue.trim().toLowerCase();
@@ -111,7 +114,10 @@ export class HistoryComponent implements OnInit {
 
   })
   range!: any;
-
+  dateRange = new FormGroup({
+    startDate: new FormControl('',Validators.required),
+    endDate: new FormControl('',Validators.required)
+  })
   // campaignOne = new FormGroup({
   //   start: new FormControl(new Date(year, month, 10)),
   //   end: new FormControl(new Date(year, month, 12)),
@@ -146,7 +152,7 @@ export class HistoryComponent implements OnInit {
   arr = [
     {
       id: "group_1",
-      name: "FILTER",
+      name: "",
       items: [
         {
           id: "group_1.abc",
@@ -324,17 +330,17 @@ export class HistoryComponent implements OnInit {
     this.arr[group_i].items[parent_i].childs[i].childs[l].stateList[m].checked = !this.arr[group_i]
       .items[parent_i].childs[i].childs[l].stateList[m].checked;
     const count = this.arr[group_i].items[parent_i].childs.filter(
-      el => el.checked == true
+      (      el: { checked: boolean; }) => el.checked == true
     ).length;
     if (count == this.arr[group_i].items[parent_i].childs.length) {
       this.arr[group_i].items[parent_i].checked = true;
     } else {
       this.arr[group_i].items[parent_i].checked = false;
     }
-    if (this.listChildChanged.findIndex((el: { [x: string]: string; }) => el['id'] == this.arr[group_i].items[parent_i].childs[i].id) == -1) {
+    if (this.listChildChanged.findIndex((el: { [x: string]: string; }) => el['id'] == this.arr[group_i].items[parent_i].childs[i].childs[l].stateList[m].id) == -1) {
       console.log(this.arr[group_i].items[parent_i].childs[i]);
       if (this.arr[group_i].items[parent_i].childs[i].checked == true) {
-        this.listChildChanged.push(this.arr[group_i].items[parent_i].childs[i])
+        this.listChildChanged.push(this.arr[group_i].items[parent_i].childs[i].childs[l].stateList[m])
 
       }
       // this.listChildChanged.push(this.arr.push(this.arr[group_i].items[parent_i].childs[i]));
@@ -390,6 +396,9 @@ export class HistoryComponent implements OnInit {
     console.log(this.listChildChanged);
   }
   ngOnInit(): void {
+
+    this.dateRange.reset();
+    this.submitted = false;
     this.siteService.retrieveCountry().subscribe(
       data => {
         this.countryList = JSON.parse(data);
@@ -403,50 +412,21 @@ export class HistoryComponent implements OnInit {
       start: new FormControl(''),
       end: new FormControl(''),
     });
-    //   let Country = require('country-state-city').Country;
-    //  let State = require('country-state-city').State;
-    //  let City = require('country-state-city').City;
-
-    //  console.log(Country.getAllCountries())
-    //  console.log(State.getAllStates())
-    //  console.log(City.getAllCities())
-
-    //  this.state=State.getAllStates();
-    //  this.country=Country.getAllCountries();
-    //  this.city=City.getAllCities();
 
     this.empid = sessionStorage.getItem('empid');
-    // // // Fetching city details
-    // for(let i of State.getAllStates()){
-    //   if(i.countryCode=="IN"){
-    //    this.tempStateName.push(i.name);
-    //   }
-    //   else if(i.country=="NP"){
-    //   this.tempStateName.push(i.name);
-    //   }
-    // };
-    // for (let k of City.getAllCities()){
-    //   if(k.countryCode && k.isoCode=="TN" && k.name=="Tamil Nadu"){
-    //     this.tempCityName.push(k.name);
-
-    //   }
-    // };
-    // this.stateList=this.tempStateName;
     let designation = '';
     this.registerService.getForm(this.empid).subscribe(
       data => {
         designation = JSON.parse(data).designation;
         let emailId = JSON.parse(data).emailId;
-        if (emailId == "gk@capeindia.net") {
-
+        if (emailId == "gk@capeindia.net") { 
           this.historyService.getHistoryDetails().subscribe(
             data => {
               this.displayedColumnsForAdmin = ['select', 'empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
               // this.HRdata;
               for (let value of JSON.parse(data)) {
                 if (designation == "HR") {
-                  if (value.status != "not submitted")
-
+                  if (value.status != "not submitted") 
                     this.HRdata.push(value);
                 }
               }
@@ -457,147 +437,96 @@ export class HistoryComponent implements OnInit {
         //user
         if (designation == "Software Engineer trainee" || designation == "Designing" || designation == "Software Devloper" ||
           designation == "Testing" || designation == "Sales" || designation == "Marketing") {
-          this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'leaveType', 'reasonForApply'];
-
-          this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
-            data => {
-              if (data == "[]") {
-                this.myHistory = false;
-                this.emptyMessage = true;
-              }
-              else {
-                this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
-                this.dataSource1 = new MatTableDataSource(JSON.parse(data));
-                for (let value of JSON.parse(data)) {
-                  if (value.status != "not submitted")
-
-                    this.dataSource1.sort = this.historySort;
-                  this.dataSource1.paginator = this.historyPaginatorAdmin;
-                }
-              }
-
-            });
-
-
+          this.getHistoryBasedOnUser("user");
+          this.viewer = true;
+          this.viewerFlag = true;
         }
         else if (designation == "HR") {
-
-          this.enableDelete = true;
-          //this.display = false;
-
+          this.enableDelete = true; 
           this.displayedColumns = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
-
           this.enable = true;
-
           this.historyService.getHistoryDetails().subscribe(
             data => {
-              if (data == "[]") {
-                this.myHistory = false;
-                this.emptyMessage = true;
-              }
-
-              else {
-                // this.delShow = true;
+              if (data !=null && JSON.parse(data).length!=0) {
+                let flag = true;
                 this.displayedColumnsForAdmin = ['select', 'empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
                 this.employeeData = [];
                 for (let value of JSON.parse(data)) {
-                  if (this.empid != value.empid) {
-                    if (value.status != "not submitted")
-                      this.employeeData.push(value);
-                    this.empArr = this.employeeData
-                    // if((value.fromDate == this.campaignTwo.controls.start) && (value.toDate == this.campaignTwo.controls.end)){
-                    //   employeeData.push(value);
-                    // }
+                  if (this.empid != value.empid && value.status != "not submitted") {
+                    this.employeeData.push(value);
+                    this.empArr = this.employeeData;
+                    flag = false;
                   }
+                }
+                if(flag){ 
+                  this.userEmptyMessage = true;
                 }
                 this.dataSource2 = new MatTableDataSource(this.employeeData);
                 this.dataSource2.sort = this.historySort;
                 this.dataSource2.paginator = this.historyPaginatorUser;
               }
-            });
-
-
-
-          this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
-            data => {
-              if (data == "[]") {
-                this.myHistory = false;
-                this.emptyMessage = true;
-              }
-              else {
-                let k: any = []
-                // this.delShow = true;
-                this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
-
-                for (let value of JSON.parse(data)) {
-                  if (this.empid == value.empid) {
-                    if (value.status != "not submitted")
-                      k.push(value);
-                    this.empArr = this.employeeData
-                  }
-                }
-                this.dataSource1 = new MatTableDataSource(k);
-
-                this.dataSource1.sort = this.historySort;
-                this.dataSource1.paginator = this.historyPaginatorAdmin;
-              }
-            });
-
-
+            }); 
+          this.getHistoryBasedOnUser("HR");
         }
         //Admin
         else {
-          this.enableDelete = true;
-
-          //this.display = false;
-
+          this.enableDelete = true; 
           this.enable = true;
           this.historyService.getHistoryBasedOnRole(JSON.parse(data).department).subscribe(
             data => {
-              if (data == "[]") {
-                this.myHistory = false;
-                this.emptyMessage = true;
-              }
-              else {
-
-
-                this.displayedColumnsForAdmin = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
+              let flag = true;
+              if ( data !=null && JSON.parse(data).length != 0) {
+                this.displayedColumnsForAdmin = ['select','empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location', 'delete'];
                 let employeeData = [];
                 for (let value of JSON.parse(data)) {
                   if (this.empid != value.empid) {
                     if (value.status != "not submitted")
                       employeeData.push(value);
+                      flag = false;
                   }
-                }
-                this.dataSource2 = new MatTableDataSource(employeeData);
-                this.dataSource2.sort = this.historySort;
-                this.dataSource2.paginator = this.historyPaginatorUser;
-              }
-            });
-          this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
-            data => {
-              if (data == "[]") {
-                this.myHistory = false;
-                this.emptyMessage = true;
-              }
-              else {
-                for (let value of JSON.parse(data)) {
-
-                  if (this.dataSource1.data == null) {
-
+                  if (flag) {
+                    this.userEmptyMessage = true;
                   }
-
-                  this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'toDate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
-
-                  this.dataSource1 = new MatTableDataSource(JSON.parse(data));
-                  this.dataSource1.sort = this.historySort;
-                  this.dataSource1.paginator = this.historyPaginatorAdmin;
+                  this.dataSource2 = new MatTableDataSource(employeeData);
+                  this.dataSource2.sort = this.historySort;
+                  this.dataSource2.paginator = this.historyPaginatorUser;
                 }
               }
-            });
+            }); 
+            this.getHistoryBasedOnUser("Admin");
         }
       });
   }
+
+  getHistoryBasedOnUser(user:any) {
+    this.historyService.getHistoryBasedOnUser(this.empid).subscribe(
+      data => {
+        let flag = true;
+        let notsubmitData = [];
+        if (JSON.parse(data).length != 0) {
+          this.displayedColumnsForUser = ['empId', 'name', 'appliedDate', 'approvedDate', 'fromDate', 'todate', 'noOfDays', 'lopdays', 'status', 'approvedBy', 'department', 'leaveType', 'reasonForApply', 'location'];
+          for (let value of JSON.parse(data)) {
+            if (value.status != "not submitted") {
+              notsubmitData.push(value);
+              flag = false;
+            }
+          }
+        }
+        if (flag) {
+          if(user != 'user'){
+            this.emptyMessage = true;
+          }
+          else{
+            this.userEmptyMessage = true;
+          } 
+        }
+        this.dataSource1 = new MatTableDataSource(notsubmitData);
+        this.dataSource1.sort = this.historySort;
+        this.dataSource1.paginator = this.historyPaginatorAdmin;
+      });
+  }
+
+
   tabClick(tab: any) {
     if (tab.index == 1) {
       this.hideShow = true;
@@ -687,6 +616,10 @@ export class HistoryComponent implements OnInit {
     this.ngOnInit();
   }
   date() {
+    this.submitted = true;
+    if(this.dateRange.invalid){
+      return
+    }
     console.log(this.employeeData + " " + this.filterFromDate + " " + this.filterToDate)
     let tempdata: any = []
 
@@ -788,7 +721,9 @@ console.log(event);
 
   }
 
-
+get f():any{
+  return this.dateRange.controls;
+}
   ///state country city code
   //   designer1changeCountry(e: any) {
   //     let changedValue;
