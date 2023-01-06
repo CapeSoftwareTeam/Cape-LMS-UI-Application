@@ -527,7 +527,7 @@ dialogRef.afterClosed().subscribe(data=>{
     setTimeout(() => {  
       this.blurMode=false;
       this.spinner=false;
-      this.route.navigate(['/login']);
+      this.route.navigate(['/frontpage']);
   }, 3000);
   
   }

@@ -11,6 +11,11 @@
          <a class="nav-link text-black-50"  [routerLink]="" (click)="loginPage()"><b>Login</b></a> 
        
       </li>
+      <li class="nav-item">
+        <a class="nav-link text-black-50"  [routerLink]="" (click)="signUp(signup)"><b>SignUp</b></a> 
+        
+     </li>
+
       <!-- <li class="nav-item" >
         <a class="nav-link text-black-50" href="#about">About</a>
       </li>
@@ -125,3 +130,41 @@
   <br>
   <div class="container px-4 px-lg-5"> © {{date}}-CAPE Electric Private Limited, All rights reserved.</div>
 </footer>
+<ng-template #signup let-modal>
+  
+  
+  <div style="text-align: center; display: block;margin-top:15px ;">
+    <!-- <h5 style="text-align: center;">SignUp</h5> -->
+  <h4>SignUp</h4><button mat-icon-button class="close-button" [mat-dialog-close]="true"   >
+    
+    <mat-icon class="close-icon" color="warn" (click)="onCancel()" >close</mat-icon>
+  </button>
+  </div><hr>
+  <form>
+    
+    <div class="modal-body" style="margin-top: -33px;">
+      <p  *ngIf="errorMsg" class="alert alert-danger alert-dismissible fade show"
+      style="text-align:center ;margin-left: 20px;margin-right:20px;margin-top: 3px;"><strong>Error!</strong>You Not Eligle For SignUp</p>
+  <div class="row">
+  <label class="form-lable">Email:</label>
+  <div class="input-group">
+
+    <div class="input-group-prepend">
+        <span class="input-group-text">
+            <i class="bi bi-envelope"></i>
+        </span>
+    </div>
+  
+  <input type="email" class="form-control" placeholder="Enter Your Email" id="inputuser"(focusout)="userInput($event)" >
+</div>
+  </div>
+  <div class="row">
+    <div class="text-center justify-content-center col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
+<button class="btn btn-primary" type="submit" (click)="signupButton()" [disabled]="signUpBtn">SignUp</button>
+</div>
+</div>
+</div>
+</form>
+
+</ng-template>
+

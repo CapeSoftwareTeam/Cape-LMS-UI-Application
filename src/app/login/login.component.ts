@@ -9,10 +9,8 @@ import { NgOtpInputComponent, NgOtpInputConfig } from 'ng-otp-input';
 import { exclamationSquareFill } from 'ngx-bootstrap-icons';
 import { TokenServiceService } from '../services/token-service.service';
 import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
-
-
-
-
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ForgotpasswordComponent } from '../forgotpassword/forgotpassword.component';
 
 
 @Component({
@@ -43,7 +41,7 @@ export class LoginComponent implements OnInit {
   countryCode:string='';
   user=new User();
   flag: boolean=false;
-
+ forgot:boolean=false;
   // LoginForm formGroup
   loginForm=new FormGroup({
   empid:new FormControl(''),
@@ -59,7 +57,7 @@ export class LoginComponent implements OnInit {
   disableMOb:boolean=false;
   successMsgOtp:boolean=false;
   disable1 : boolean = false;
-
+emailForgot:string='';
   // otpgenerateform FormGroup
   otpgenerateform=new FormGroup({ otpgenerate:new FormControl(''),mobileNumber:new FormControl('')
   ,emailid:new FormControl(''), otp :new FormControl('')})
@@ -73,7 +71,8 @@ export class LoginComponent implements OnInit {
               private registerService:RegisterserviceService,
               private router:Router,
               private tokenService:TokenServiceService,
-              private globalErrorHandler: GlobalErrorHandlerService) { 
+              private globalErrorHandler: GlobalErrorHandlerService,
+              private dialogRef:MatDialogRef<LoginComponent>,private dialog:MatDialog) { 
       this.configOption1 = new ConfigurationOptions();
       this.configOption1.SelectorClass = "ToolTipType1"; 
    
@@ -122,7 +121,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.emailidLogin.clearValidators();
       this.loginForm.controls.emailidLogin.updateValueAndValidity();
       this.loginForm.controls.mobileNumberLogin.setValidators([Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),Validators.required]);
-
+       
     }
     else{
       this.loginForm.controls.mobileNumberLogin.clearValidators();
@@ -134,6 +133,7 @@ export class LoginComponent implements OnInit {
   }
  
   ngOnInit(): void {
+    this.countryCode='91';
     this.loginForm=this.formbuilder.group({
       userValidation:['',[Validators.required]],
       empid:['',[Validators.required]],
@@ -204,12 +204,14 @@ login(){
    
   }
 
-  if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.mobileNumberLogin?.length==0){
+  else if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.mobileNumberLogin?.length==0){
     this.submitted=true;
   }
   
+  this.user.mobileNumber='+'+ this.countryCode +'-'+this.user.mobileNumber;
   // service call for login
     this.registerService.authenticate( this.user).subscribe(data=>{ 
+      this.dialogRef.close();
       this.isLogin = true;
       sessionStorage.setItem('empid',JSON.parse(data).register.empid);
       
@@ -219,7 +221,8 @@ login(){
       this.router.navigate(['/home',{email:JSON.parse(data).register.emailid}]);
     },
     error=>{
-      
+
+      this.f.mobileNumberLogin.setValue(this.user.mobileNumber.split("-")[1]);
       this.errorMessage=this.globalErrorHandler.errorMessage;
       if(this.errorMessage=="Something went wrong, Please try again later"){
         this.showErrorMessage1=true;
@@ -239,7 +242,7 @@ login(){
 
 //cancel method for login page
 gotoHome(){
-  this.router.navigate(['/frontpage'])
+  this.dialogRef.close();
 }
 
 // otp submit
@@ -267,14 +270,22 @@ submitForm(){
  }
     }, 3000);
   }
-
+  
   this.user.email=this.Email;
   this.user.otp=this.Otp;
   this.user.otpSession=this.otpsession;
 
   // service call for verifying otp
   this.registerService.verifyOtp(this.user).subscribe((data: any)=>{
-    this.router.navigate(['/forgotpassword',{email:this.Email}]);
+    this.dialogRef.close();
+    const dialogRef=this.dialog.open(ForgotpasswordComponent,{
+      disableClose: true,
+     
+      
+     })
+     dialogRef.afterClosed().subscribe(data=>{
+
+     })
   },
   error=>{
     if(this.errorOtp==true){
@@ -321,7 +332,7 @@ generate():any{
  
   this.mobileNumber= this.otpgenerateform.value.mobileNumber
   if(this.otpgenerateform.value.otpgenerate=="mobileNumber"){
-    this.userName=this.mobileNumber;
+    this.userName='+'+ this.countryCode +'-' +this.mobileNumber;
   }
   else{
     this.userName=this.email;
@@ -332,6 +343,7 @@ generate():any{
     {
       this.otpsession=JSON.parse(data)[0];
       this.Email=JSON.parse(data)[1];
+      this.globalErrorHandler.email=this.Email;
       this.successMsgOtp = true;
       setTimeout(() => {
         this.disableMOb=true;
@@ -368,3 +380,4 @@ get g(){
 }
 
 }
+

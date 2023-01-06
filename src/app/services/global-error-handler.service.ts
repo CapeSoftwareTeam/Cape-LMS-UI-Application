@@ -7,6 +7,7 @@ export class GlobalErrorHandlerService {
   errorMessage: string="";
 apphistoryid:any;
 leavefileId:any
+email:string='';
   constructor() { 
     console.log(this.errorMessage);
   }
