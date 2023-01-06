@@ -1,5 +1,5 @@
-<div class="example-container mat-elevation-z8" 
-[ngStyle]="{'filter': (blurMode ? 'blur(2px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}" >
+<div class="example-container mat-elevation-z8"
+  [ngStyle]="{'filter': (blurMode ? 'blur(2px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
   <mat-toolbar style="background-color:rgb(64, 177, 221);">
 
     <!-- <img src="../../assets/calendaar.jpg" alt="calendar"><mat-toolbarpadding-left: 92px; -->
@@ -8,28 +8,28 @@
       <button mat-button style='color:rgb(0, 0, 7); '>
         <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
       </button>
-      <h2 > Cape Electric Private Limited </h2>
+      <h2> Cape Electric Private Limited </h2>
       <button mat-button style="margin-left:auto;">
         <mat-icon mat-raised-button [matBadge]=notification [matBadgeHidden]="hidden" matBadgePosition="above after"
           matBadgeColor="accent" style='font-size:26px;color:rgb(1, 1, 17);' (click)="callCalculation()">
           notifications</mat-icon>
       </button>
       <div class="dropdown">
-        <button mat-button style='color:rgb(0, 0, 7);margin-left:auto;' data-toggle="dropdown" class="btn btn-default dropdown-toggle"
-        [matMenuTriggerFor]="menu">
+        <button mat-button style='color:rgb(0, 0, 7);margin-left:auto;' data-toggle="dropdown"
+          class="btn btn-default dropdown-toggle" [matMenuTriggerFor]="menu">
           <mat-icon style='font-size:30px;color:rgb(1, 1, 20);margin-left:auto;'>person</mat-icon>
-        <b style="font-size: 16px;">
-          {{empid}}
-        </b>
+          <b style="font-size: 16px;">
+            {{empid}}
+          </b>
         </button>
-        <mat-menu #menu="matMenu">    
-          <button mat-menu-item (click)="callProfile()">Profile</button> 
-          <button mat-menu-item (click)="changePassword()">Change Password</button>   
-          <button mat-menu-item (click)="signout()">Log out</button> 
-          
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="callProfile()">Profile</button>
+          <button mat-menu-item (click)="changePassword()">Change Password</button>
+          <button mat-menu-item (click)="signout()">Log out</button>
+
         </mat-menu>
-  
-    </div>
+
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 
@@ -38,9 +38,10 @@
     <mat-tab label="Time Schedule" (click)="callComingSoon()"> Time Schedule </mat-tab>
     <mat-tab label="Relieving Employee Details" (click)="callComingSoon()"> Relieving Employee Details </mat-tab> -->
   <!-- </mat-tab-group> -->
-  <mat-tab-group [selectedIndex]="selected.value" 
+  <mat-tab-group [selectedIndex]="selected.value"
     (selectedIndexChange)="selected.setValue($event);getSelectedindex($event);" mat-align-tabs="center">
-    <mat-tab style="font-family: system-ui;" *ngFor="let tab of tabs; let index = index" [label]="tab" (click)="clicktab($event)">
+    <mat-tab style="font-family: system-ui;" *ngFor="let tab of tabs; let index = index" [label]="tab"
+      (click)="clicktab($event)">
       <!-- <button mat-raised-button
             class="example-add-tab-button"
             (click)="addTab()" style="float:right;">
@@ -62,21 +63,23 @@
          style="color:blue" routerLink="/lmspage">Click here to access</button>
       <h1 *ngIf="tabName == 'Time Schedule'"> Time Schedule </h1>
     </div>style="justify-content: center;" text-decoration: underline;-->
- 
+
 
       <div class="sidebar" *ngIf="tabName == 'Leave Management Systems'">
         <br>
         <div class="avatar" data-label="" id="avatar" style="justify-content: center;
         text-align: center;padding: 27px;margin-left: 38px;font-family: -webkit-body;">
-          </div>
-       <br>
-       <br>
-               <h4 style="justify-content: center;text-align: center;font-family: fangsong;">  {{name}}</h4>
-        <h6 class="text-muted" style="justify-content: center;text-align: center;font-family: system-ui;"> {{department}} - {{designation}}</h6>
+        </div>
+        <br>
+        <br>
+        <h4 style="justify-content: center;text-align: center;font-family: fangsong;"> {{name}}</h4>
+        <h6 class="text-muted" style="justify-content: center;text-align: center;font-family: system-ui;">
+          {{department}} - {{designation}}</h6>
         <hr>
-        <mat-nav-list >
-          <a mat-list-item  (click)="termsCondition(termsContent)">Leave Policy</a>
-          <a mat-list-item  (click)="callHolidays()" style="justify-content:center;text-align: center;">Public Holidays</a>
+        <mat-nav-list>
+          <a mat-list-item (click)="termsCondition(termsContent)">Leave Policy</a>
+          <a mat-list-item (click)="callHolidays()" style="justify-content:center;text-align: center;">Public
+            Holidays</a>
           <a mat-list-item style="justify-content:center;text-align: center;" (click)="callApplyLeave()">Apply Leave</a>
           <a mat-list-item style="justify-content:center;text-align: center;" (click)="callHistory()">My History</a>
           <hr *ngIf="admin">
@@ -84,19 +87,19 @@
           <a mat-list-item (click)="callRegister()" *ngIf="admin">Add Employee</a>
           <a mat-list-item (click)="callEmployeeDetails()" *ngIf="managerasadmin">view employees</a>
           <a mat-list-item (click)="callRegister()" *ngIf="superadmin">Add HR</a>
-      
+
           <!-- <button type="button" class="btn btn-light" (click)="signout()" *ngIf="admin">
             <i class="fa fa-sign-out" style="font-size:30px"></i></button> -->
         </mat-nav-list>
- 
+
       </div>
       <div class="content" mat-elevation-z8>
- 
-    <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
-    <app-coming-soon *ngIf="comingsoon"></app-coming-soon>
 
-  </div>
-  
+        <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
+        <app-coming-soon *ngIf="comingsoon"></app-coming-soon>
+
+      </div>
+
     </mat-tab>
   </mat-tab-group>
 
@@ -124,193 +127,104 @@
 
 
 <ng-template #termsContent let-modal>
-  <form [formGroup]="leavePolicy" >
- 
+  <form [formGroup]="leavePolicy">
 
-  <!-- <div class="modal-header">
+
+    <!-- <div class="modal-header">
 
         <button type="button" class="btn btn-primary" printSectionId="printdiv">Print</button>
         <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('cancel click')"><i class="bi bi-x icon"></i> Cancel</button>
         </div> -->
-        
-           <div style="text-align: center; display: block;margin-top:15px ;">
-          <h4 class="modal-title" style="display: contents;color: #6990f2;">Leave Policy</h4>
-        
-          <button mat-icon-button class="close-button" [mat-dialog-close]="true" *ngIf="cancel">
-            <mat-icon class="close-icon" color="warn" (click)="onCancel()">close</mat-icon>
-          </button>
-        </div>
-  <div class="modal-body"  style="height:auto; ">
-        <p *ngIf="successMsg" class="alert alert-success alert-dismissible fade show"
-                    style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Success!</strong>Leave Policy
-                    Updated Successfully!</p>
-         <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
-                    style="text-align:center ;margin-left: 20px;margin-right:20px;">
-                    <strong>Error! </strong>{{errorMessage}}</p>
-         <p *ngIf="showErrorMessage1" class="alert alert-danger alert-dismissible fade show"
-                    style="text-align:center ;margin-left: 20px;margin-right:20px;">
-                    <strong>Error!</strong> Please choose a File</p>          
+
+    <div style="text-align: center; display: block;margin-top:15px ;">
+      <h4 class="modal-title" style="display: contents;color: #6990f2;">Leave Policy</h4>
+
+      <button mat-icon-button class="close-button" [mat-dialog-close]="true" *ngIf="cancel">
+        <mat-icon class="close-icon" color="warn" (click)="onCancel()">close</mat-icon>
+      </button>
+    </div>
+    <div class="modal-body" style="height:auto; ">
+      <p *ngIf="successMsg" class="alert alert-success alert-dismissible fade show"
+        style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Success!</strong>Leave Policy
+        Updated Successfully!</p>
+      <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+        style="text-align:center ;margin-left: 20px;margin-right:20px;">
+        <strong>Error! </strong>{{errorMessage}}
+      </p>
+      <p *ngIf="showErrorMessage1" class="alert alert-danger alert-dismissible fade show"
+        style="text-align:center ;margin-left: 20px;margin-right:20px;">
+        <strong>Error!</strong> Please choose a File
+      </p>
       <div *ngIf="loading1" style="margin-left:150px ;">
-        <circle-progress 
-        [percent]="100"
-        [radius]="60"
-        [outerStrokeWidth]="8"
-        [innerStrokeWidth]="8"
-        [outerStrokeColor]="'#78C000'"
-        [innerStrokeColor]="'#C7E596'"
-        [animation]="true"
-        [animationDuration]="1000"
-       
-      ></circle-progress>
-    </div>
+        <circle-progress [percent]="100" [radius]="60" [outerStrokeWidth]="8" [innerStrokeWidth]="8"
+          [outerStrokeColor]="'#78C000'" [innerStrokeColor]="'#C7E596'" [animation]="true"
+          [animationDuration]="1000"></circle-progress>
+      </div>
       <div *ngIf="updateFile1">
-        <div class="upload" >
-          <input type="file"  class="file-input"
-      accept=".txt,.jpeg,.png,.jpg,.pdf" id="upload"  (change)="onChange($event)" hidden>
-      <label for="upload">
-        <i   class="fas fa-cloud-upload-alt" >
-      </i>
-      <p style="text-align: center;color: #6990f2;" *ngIf="filename1">{{fileName1}}</p>
-      <p style="text-align: center;color: #6990f2;" *ngIf="filename2">Browse to Choose File</p>
-    </label>
-      
-     </div>
-     <div class="row">
-      <div class="text-center justify-content-center col-md-12" style="margin-bottom: -20px;">
-     <button type="button" class="btn btn-success btn-xs mr-4" (click)="onUpload()" *ngIf="upload"><i  class="fas fa-cloud-upload-alt"></i> Upload</button>
-     </div>
-     </div>
-     <div class="row" style="margin-bottom:15px;margin-top: 15px;">
-      <div class="col" style="width: 30% ;">
-          <button class="btn btn-primary form-control  btn-block" id="button1" (click)="updateFile($event)" *ngIf="!upload" ><i class="bi bi-pencil-square"></i> Update
-              
-          </button>
-      </div>
-      <div class="col">
+        <div class="upload">
+          <input type="file" class="file-input" accept=".txt,.jpeg,.png,.jpg,.pdf" id="upload"
+            (change)="onChange($event)" hidden>
+          <label for="upload">
+            <i class="fas fa-cloud-upload-alt">
+            </i>
+            <p style="text-align: center;color: #6990f2;" *ngIf="filename1">{{fileName1}}</p>
+            <p style="text-align: center;color: #6990f2;" *ngIf="filename2">Browse to Choose File</p>
+          </label>
 
-          <button class="btn btn-danger form-control btn-block" id="submit" (click)="back()" *ngIf="!upload" ><i class="bi bi-box-arrow-in-left"></i> Back
-              
-          </button>
-      </div>
-  </div>
-        
-      </div>
-     <div *ngIf="fileUpload">
-     <label class="form-lable">File Name</label>
-     <input type="text" formControlName="filename" class="form-control" >
-     <br>
-     
-     
-    <div class="row">
-      <div class="text-center justify-content-center col-md-12" style="margin-bottom: -20px;">
-        <button type="button"  class="btn btn-success " (click)="onDownload()" *ngIf="!updateButton" id="userDownload"style="align-items: center;"> <i class="bi bi-download" style="color: white;" ></i> Download</button>
-      </div>
-    </div>
-    
-      <div class="row" style="margin-bottom:15px;margin-top: 10px; ">
-        <div class="col">
-     <button type="button" class="btn btn-primary form-control btn-block" (click)="updateFileMethod()"  *ngIf="updateButton"> <i class="bi bi-pencil-square"></i> Update</button>
-    </div>
-    <div class="col">
-     <button type="button" class="btn btn-success form-control btn-block" (click)="onDownload()" href='javascript:void(0)' title="Download" *ngIf="downloadButton" >
-      <i class="bi bi-download" style="color: white;" ></i> Download</button>
-    </div>
-    
-  </div>
-  
-     </div>
-     
-   </div>
-  
-</form>
-</ng-template>
-
-<!-- <div class="content" mat-elevation-z8 >
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav mode="side" style="background-color: #9494b8;">
-            <mat-sidenav-content>
-
-          <img class="avatar">
-          <div>
-            <p>{{name}}</p>
-       </div>
-          <div>
-             <p>{{department}}</p>
         </div>
-         <hr>
+        <div class="row">
+          <div class="text-center justify-content-center col-md-12" style="margin-bottom: -20px;">
+            <button type="button" class="btn btn-success btn-xs mr-4" (click)="onUpload()" *ngIf="upload"><i
+                class="fas fa-cloud-upload-alt"></i> Upload</button>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;margin-top: 15px;">
+          <div class="col" style="width: 30% ;">
+            <button class="btn btn-primary form-control  btn-block" id="button1" (click)="updateFile($event)"
+              *ngIf="!upload"><i class="bi bi-pencil-square"></i> Update
 
-      </mat-sidenav-content>
-      <mat-nav-list>
-        <a mat-list-item ><button mat-button class="menu-button">
-          <span> Leave Policy</span>
-        </button></a>
-        <a mat-list-item ><button mat-button class="menu-button">
-          <span> Public Holidays </span>
-        </button></a>
-        <a mat-list-item  class="sideme">  <button mat-button class="menu-button">
-          <span> My History </span>
-        </button></a>
-      </mat-nav-list>
-    </mat-sidenav>
+            </button>
+          </div>
+          <div class="col">
+
+            <button class="btn btn-danger form-control btn-block" id="submit" (click)="back()" *ngIf="!upload"><i
+                class="bi bi-box-arrow-in-left"></i> Back
+
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div *ngIf="fileUpload">
+        <label class="form-lable">File Name</label>
+        <input type="text" formControlName="filename" class="form-control">
+        <br>
 
 
-  </mat-sidenav-container>
-</div> -->
-<!-- <script>
-  const avatars = document.querySelectorAll(".avatar");
-    avatars.forEach(a => {
-      const charCodeRed = a.dataset.label.charCodeAt(0);
-      const charCodeGreen = a.dataset.label.charCodeAt(1) || charCodeRed;
-      console.log(charCodeRed);
-      const red = Math.pow(charCodeRed* 7) % 200;
-      const green = Math.pow(charCodeGreen* 7) % 200;
-      const blue = (red + green) % 200;
-      a.style.background = 'rgb(${red}, ${green}, ${blue}';
-    });
-</script> -->
-<!-- <p> Goodbye</p>-->
-<div class="spinner" id="spinner" *ngIf="spinner">
-  <!-- <p class="logOut"> Logging out</p> -->
-  <div class="dot1"></div>
-  <div class="dot2"></div>
-</div> 
-<!-- <div class="chat-circle" class="btn-btn-raised" >
-  <div class="chat-overlay"></div>
-  <div class="tooltipBot glow">
-     
-      <img src="..\assets\chat img.png" (click)="toggleStatus()" style="width: 55px;
-          position: relative;
-          margin-left: 1473px;
-          top: 42px;
-          margin-top: 1000px;
-          ">
-          <span class="tooltiptextBot">Live Chat</span>
-  </div>
-</div> -->
-<!-- <div class="chat-box resizable" style="height:60%;" *ngIf="open">
-  <div class="chat-box-header">
-      <i class="bi bi-x-circle" style="margin-left:307px;margin-top:10px;" (click)="onCancell()" ></i>
-      <span><img src=..\assets\chatblue.jpg style="
-      width: 50px;
-  position: relative;
-  margin-top: -55px;
-  height: 44px;
-  margin-right: 279px;"></span>
-          
-          <span class="chat-box-toggle" style="top:0%; overflow-y:scroll;"></span>
-          
-          <ng-container >
-              <div class="message">
+        <div class="row">
+          <div class="text-center justify-content-center col-md-12" style="margin-bottom: -20px;">
+            <button type="button" class="btn btn-success " (click)="onDownload()" *ngIf="!updateButton"
+              id="userDownload" style="align-items: center;"> <i class="bi bi-download" style="color: white;"></i>
+              Download</button>
+          </div>
+        </div>
 
-              </div>
-              <div class="input">
-                  <input  type="text" 
-                  class="form-control" id="botUserInput" placeholder="type something....">
-                 </div>
-          </ng-container>
-         
-  </div>
-</div> 
+        <div class="row" style="margin-bottom:15px;margin-top: 10px; ">
+          <div class="col">
+            <button type="button" class="btn btn-primary form-control btn-block" (click)="updateFileMethod()"
+              *ngIf="updateButton"> <i class="bi bi-pencil-square"></i> Update</button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-success form-control btn-block" (click)="onDownload()"
+              href='javascript:void(0)' title="Download" *ngIf="downloadButton">
+              <i class="bi bi-download" style="color: white;"></i> Download</button>
+          </div>
 
-  -->
+        </div>
 
+      </div>
+
+    </div>
+
+  </form>
+</ng-template>

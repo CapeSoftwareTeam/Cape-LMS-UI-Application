@@ -1,59 +1,57 @@
 <form [formGroup]="postleave">
   <div class="container">
-    <!-- <h6 style="margin-left: 92%;color: #a6a2a2;"><strong>{{empid}}</strong></h6> style="background-color: rgb(192, 211, 228);" -->
-    <div class="card" style="margin-top:40px;">  
+    <h6 style="margin-left: 92%;color: #a6a2a2;"><strong>{{empid}}</strong></h6> 
+    <div class="card" style="margin-top:40px;">
       <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+        style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
 
-                    style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
+        {{errorMessage}}</p>
 
-                    {{errorMessage}}</p> 
-                      
       <div class="card-body" style="background-color: rgb(251, 252, 252);">
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-md-12" >
+          <div class="col-md-12">
             <div class="formcontrol">
               <h2 style="justify-content:center;text-align: center;">Enter Leave Details here</h2>
             </div>
           </div>
         </div>
         <hr>
-       
-        <div class="row" style="justify-content:center;text-align: center;" >
-          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;" >
-              <label><b>Select Employee </b></label>
-            </div>
-              <div class="col-7">
-                <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid" formControlName="empid"
-                 [ngClass]="{'is-invalid' : submitted && field.empid.errors}" style="height: 40px;
-                 float: left;width: 75%;margin-top: 6px;height: fit-content;" >
-                  <option value="" >Select Employee...</option>
-                  <option value="{{this.empid}}" >{{this.empid}} - {{this.name}}</option>
-                  <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
-                </select>
-                <div *ngIf="submitted && field.empid.errors"
-                class="invalid-feedback">
-                <div *ngIf="field.empid.errors">Employee Id is required</div>
-        </div>
-            </div>
-          </div>
+
         <div class="row" style="justify-content:center;text-align: center;">
           <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
-            <label><b>Leave Type: </b></label></div>
-            <div class="col-7" >
+            <label><b>Select Employee </b></label>
+          </div>
+          <div class="col-7">
+            <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid"
+              formControlName="empid" [ngClass]="{'is-invalid' : submitted && field.empid.errors}" style="height: 40px;
+                 float: left;width: 75%;margin-top: 6px;height: fit-content;">
+              <option value="">Select Employee...</option>
+              <option value="{{this.empid}}">{{this.empid}} - {{this.name}}</option>
+              <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
+            </select>
+            <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
+              <div *ngIf="field.empid.errors">Employee Id is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
+            <label><b>Leave Type: </b></label>
+          </div>
+          <div class="col-7">
             <select class="formcontrol" formControlName="leaveType" style="height: 40px;
             float: left;width: 75%;margin-top: 6px;height: fit-content;" (change)="findifsick($event)"
-            [ngClass]="{'is-invalid' : submitted && field.leaveType.errors}" placeholder="select leave type here...">
-              <option value="" disabled >Select leave type....</option>
+              [ngClass]="{'is-invalid' : submitted && field.leaveType.errors}" placeholder="select leave type here...">
+              <option value="" disabled>Select leave type....</option>
               <option value="casual">Casual Leave</option>
               <option value="sick">Sick Leave</option>
               <option value="bereavement">Bereavement Leave</option>
               <option value="privilege">Privilege Leave</option>
               <option value="maternity" *ngIf="noMatchGender">Maternity Leave</option>
             </select>
-            <div *ngIf="submitted && field.leaveType.errors"
-            class="invalid-feedback">
-            <div *ngIf="field.leaveType.errors">Type of leave is required</div>
-    </div>
+            <div *ngIf="submitted && field.leaveType.errors" class="invalid-feedback">
+              <div *ngIf="field.leaveType.errors">Type of leave is required</div>
+            </div>
             <!-- <mat-form-field appearance="fill">
   <mat-select formControlName="leaveType"  [(ngModel)]="selectedItem" (select)="selected()">
     <mat-option value="casual">Casual Leave</mat-option>
@@ -63,45 +61,48 @@
     <mat-option value="maternity">Maternity Leave</mat-option>
   </mat-select>
 </mat-form-field> -->
-</div>
+          </div>
         </div>
-<br>
-<div class="row" style="justify-content:center;text-align: center;">
-  <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
-    <label><b>Leave Duration: </b></label></div>
-  <div class="col-7" style="display: inline-flex;" >
-<div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-  <input class="form-check-input" type="radio" name="chooseDays"  value="FullDay" (click)="hideDays()"  
-  formControlName="chooseDays" [(ngModel)]="findDays">
-  <label class="form-check-label" for="inlineRadio1" style="display:contents">Full Day</label>
-</div>
-<div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-  <input class="form-check-input" type="radio" name="chooseDays"  value="HalfDay" (click)="showDays()" 
-  formControlName="chooseDays" [(ngModel)]="findDays">
-  <label class="form-check-label" for="inlineRadio1" style="display:contents">Half Day </label>
-</div>
+        <br>
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-6" style="float: left;width: 24%;margin-top: 6px;">
+            <label><b>Leave Duration: </b></label>
+          </div>
+          <div class="col-7" style="display: inline-flex;">
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" name="chooseDays" value="FullDay" (click)="hideDays()"
+                formControlName="chooseDays" [(ngModel)]="findDays">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Full Day</label>
+            </div>
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" name="chooseDays" value="HalfDay" (click)="showDays()"
+                formControlName="chooseDays" [(ngModel)]="findDays">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Half Day </label>
+            </div>
 
 
-<!-- <div class="form-check form-check-inline">
+            <!-- <div class="form-check form-check-inline">
   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
   <label class="form-check-label" for="inlineRadio1">Half in Afternoon</label>
 </div> -->
-</div>
-</div>
-<br>
+          </div>
+        </div>
+        <br>
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-6"  style="float: left;width: 24%;margin-top: 6px;">
-              <label><b>Start Date :</b> </label></div>
-              <div class="col-7">
-                <mat-form-field style="height: 40px;float: left;width: 75%;padding-left: 9px" id="field">
-                  <input matInput [matDatepicker]="picker" [matDatepickerFilter]="FrommyDateFilter" placeholder="Choose a date"
-                  style="padding-left: 10px;height: 40px;margin-top: 6px;" [(ngModel)]="fromdate" id="date2"
-                  formControlName="fromdate" >
-                  <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-                  <mat-datepicker #picker ></mat-datepicker>
-                </mat-form-field>
-                
-<!-- <input type="text"
+          <div class="col-6" style="float: left;width: 24%;margin-top: 6px;">
+            <label><b>Start Date :</b> </label>
+          </div>
+          <div class="col-7">
+            <mat-form-field style="height: 40px;float: left;width: 75%;padding-left: 9px" id="field">
+              <input matInput [matDatepicker]="picker" [matDatepickerFilter]="FrommyDateFilter"
+                placeholder="Choose a date" style="padding-left: 10px;height: 40px;margin-top: 6px;"
+                [(ngModel)]="fromdate" id="date2" formControlName="fromdate" >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+             
+            </mat-form-field> <i class='fas fa-sync-alt' style='font-size:18px;float:left' (click)="clearFromdateform()"></i>
+
+            <!-- <input type="text"
 placeholder="Datepicker"
 class="form-control"
 bsDatepicker
@@ -110,109 +111,111 @@ formControlName="fromdate"
 > -->
 
 
-<!-- <input class="form-control" placeholder="Daterangepicker" formControlName="fromdate" type="date"
+            <!-- <input class="form-control" placeholder="Daterangepicker" formControlName="fromdate" type="date"
 bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 
 
 
-                <!-- <input class="formcontrol" type="date" formControlName="fromdate" 
+            <!-- <input class="formcontrol" type="date" formControlName="fromdate" 
                 style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="fromdate"> -->
+            <!-- 
+                <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 63px;"> -->
+            <br>
+            <br>
+            <br>
+            <br>
 
-                <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 63px;">
-                <br>
-                <br>
-                <br>
-               
-               
-              
-                <!-- min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date"> -->
-                <!-- <mat-form-field appearance="fill">
+
+            <!-- min="{{CurrentDate|date:'yyyy-mm-dd'}}"| placeholder="Select your From date"> -->
+            <!-- <mat-form-field appearance="fill">
                   <input matInput [matDatepicker]="dtAdm" [matDatepickerFilter]="myDateFilter" formControlName="dateOfAdmission">
                   placeholder="Daterangepicker" bsDaterangepicker [daysDisabled]="[6,0]"
                   <mat-datepicker-toggle matSuffix [for]="dtAdm"></mat-datepicker-toggle>
     <mat-datepicker #dtAdm ></mat-datepicker>
                 </mat-form-field>  -->
-              </div>
           </div>
+        </div>
         <!-- </div> -->
 
-<div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
-          <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
-          <div class="col-7" style="display: inline-flex;" formControlName="chooseFromDays" >
+        <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
+          <div class="col-6" style="float: left;width: 24%;margin-top: 6px;"></div>
+          <div class="col-7" style="display: inline-flex;" formControlName="chooseFromDays">
             <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-              <input class="form-check-input" type="radio" value="morningfromHalf" name="chooseFromDays" 
-              formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
+              <input class="form-check-input" type="radio" value="morningfromHalf" name="chooseFromDays"
+                formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
               <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
             </div>
             <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-              <input class="form-check-input" type="radio" value="afternoonfromHalf" name="chooseFromDays"  
-              formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
+              <input class="form-check-input" type="radio" value="afternoonfromHalf" name="chooseFromDays"
+                formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
               <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label>
             </div>
             <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-              <input class="form-check-input" type="radio" value="fromfull" name="chooseFromDays"  
-              formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
+              <input class="form-check-input" type="radio" value="fromfull" name="chooseFromDays"
+                formControlName="chooseFromDays" [(ngModel)]="findHalfDays">
               <label class="form-check-label" for="inlineRadio1" style="display:contents">Full</label>
             </div>
-         
-  <!-- <mat-radio-group>
+
+            <!-- <mat-radio-group>
     <mat-radio-button value="morningfromHalf" name="chooseFromDays" 
   formControlName="chooseFromDays" [(ngModel)]="findHalfDays" >Morning Half</mat-radio-button>
     <mat-radio-button value="afternoonfromHalf" name="chooseFromDays"  
     formControlName="chooseFromDays" [(ngModel)]="findHalfDays">Afternoon Half</mat-radio-button>
   </mat-radio-group> -->
 
-</div>
-</div>
-<br>
-        <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-6"style="float: left;width: 24%;margin-top: 6px;">
-              <label><b>End Date :</b></label>
-            </div>
-            <div class="col-7">
-              <mat-form-field style="height:40px; float: left; width: 75%;padding-left: 9px">
-                <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter" placeholder="Choose a date"
-                style="padding-left: 10px;height: 40px;float: left;width: 75%;margin-top: 6px; " [(ngModel)]="todate" id="date1"
-                formControlName="todate">
-                <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
-                <mat-datepicker #pickers></mat-datepicker>
-              </mat-form-field>
-             
-              <!-- <input class="formcontrol" type="date" formControlName="todate" 
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate"> -->
-              <input type="submit" (click)="getsecondnumber()" value="confirm" style="margin-top: 63px;">
-            </div>
           </div>
-          <br>
-          <br>
-          <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
-            <div class="col-6"style="float: left;width: 24%;margin-top: 6px;"></div>
-            <div class="col-7" style="display: inline-flex;"  formControlName="chooseToDays" >
-              <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-                <input class="form-check-input" type="radio" value="morningtoHalf" name="chooseToDays"  
-                formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
-                <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
-              </div>
-              <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-                <input class="form-check-input" type="radio" value="afternoontoHalf" name="chooseToDays" 
-                formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
-                
-                <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label>
-              </div>
-              <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
-                <input class="form-check-input" type="radio" value="tofull" name="chooseToDays" 
-                formControlName="chooseToDays" [(ngModel)]="findHalfToDays">
-                <label class="form-check-label" for="inlineRadio1" style="display:contents">Full </label>
-              </div>
-      
+        </div>
+        <br>
+        <div class="row" style="justify-content:center;text-align: center;">
+          <div class="col-6" style="float: left;width: 24%;margin-top: 6px;">
+            <label><b>End Date :</b></label>
+          </div>
+          <div class="col-7">
+            <mat-form-field style="height:40px; float: left; width: 75%;padding-left: 9px">
+              <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter"
+                placeholder="Choose a date"
+                style="padding-left: 10px;height: 40px;float: left;width: 75%;margin-top: 6px; " [(ngModel)]="todate"
+                id="date1"  formControlName="todate" (ngModelChange)="matchDate($event)">
+              <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+              <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field><i class='fas fa-sync-alt' style='font-size:18px;float:left' (click)="clearTodateform()"></i>
 
-    <!-- <mat-radio-group>
+
+            <!-- <input class="formcontrol" type="date" formControlName="todate max="{{currentDate|date:'yyyy-MM-dd'}}"" 
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [(ngModel)]="todate"> -->
+            <!-- <input type="submit" (click)="getfirstnumber()" value="confirm" style="margin-top: 63px;"> -->
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
+          <div class="col-6" style="float: left;width: 24%;margin-top: 6px;"></div>
+          <div class="col-7" style="display: inline-flex;" formControlName="chooseToDays">
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" value="morningtoHalf" name="chooseToDays"
+                formControlName="chooseToDays" [(ngModel)]="findHalfToDays" [disabled]="hideRadio">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Morning Half</label>
+            </div>
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" value="afternoontoHalf" name="chooseToDays"
+                formControlName="chooseToDays" [(ngModel)]="findHalfToDays" [disabled]="hideRadio">
+
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Afternoon Half</label>
+            </div>
+            <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
+              <input class="form-check-input" type="radio" value="tofull" name="chooseToDays"
+                formControlName="chooseToDays" [(ngModel)]="findHalfToDays" [disabled]="hideRadio">
+              <label class="form-check-label" for="inlineRadio1" style="display:contents">Full </label>
+            </div>
+
+
+            <!-- <mat-radio-group>
       <mat-radio-button value="morningtoHalf" name="chooseToDays"  
       formControlName="chooseToDays" [(ngModel)]="findHalfToDays">Morning Half</mat-radio-button>
       <mat-radio-button value="afternoontoHalf" name="chooseToDays" 
       formControlName="chooseToDays" [(ngModel)]="findHalfToDays">Afternoon Half</mat-radio-button>
     </mat-radio-group> -->
-    <!-- <label class="form-check-label" for="inlineRadio1" style="display:contents" >Morning Half</label>
+            <!-- <label class="form-check-label" for="inlineRadio1" style="display:contents" >Morning Half</label>
     <input class="form-check-input" type="radio"  name="todate"  value="Morning" formcontrolName="datenext">   
     
   </div>
@@ -220,61 +223,65 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     <label class="form-check-label" for="inlineRadio1" style="display:contents" >Afternoon Half</label> 
     <input class="form-check-input" type="radio" name="todate"  value="Afternoon" formcontrolName="datenext">
    </div> -->
-   </div>
-  </div>
+          </div>
+        </div>
         <!-- </div>focusout -->
         <br>
         <br>
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;" >
-              <label><b>Number of days: </b></label>
-            </div>
-              <div class="col-7">
-              <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}} 
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)="getnumber()" readonly 
-              placeholder="Click here..... "  ><br><br>
-              <p *ngIf="showGetNumberError" style="color:red;"><b>Select date and Click confirm once date is selected...!!!!</b></p>
-              <p *ngIf="showGetNumberfullError" style="color:red;"><b>select full for either from or to date</b></p>
-              <!-- <div *ngIf="submitted && field.noofdays.errors"
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
+            <label><b>Number of days: </b></label>
+          </div>
+          <div class="col-7">
+            <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}}
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)=" getnumber()" readonly
+              placeholder="Click here..... "><br><br>
+            <p *ngIf="showGetNumberError" style="color:red;"><b>Select date and Click confirm once date is
+                selected...!!!!</b></p>
+            <p *ngIf="showGetNumberfullError" style="color:red;"><b>select full for either from or to date</b></p>
+            <!-- <div *ngIf="submitted && field.noofdays.errors"
               class="invalid-feedback">
               <div *ngIf="field.noofdays.errors">Click field to get number of days</div>
       </div> -->
-            </div>
           </div>
- <br>
+        </div>
+        <br>
 
         <div class="row" style="justify-content:center;text-align: center;">
-          <div class="col-6"  style="float: left;width: 25%;margin-top: 6px;">
-              <label><b>Leave Reason: </b></label></div>
-              <div class="col-7">
-              <textarea formControlName="reasonforapply" placeholder="Enter reason..."
-              style="height: 40px;float: left;width: 75%;margin-top: 6px;" [ngClass]="{'is-invalid' : submitted && field.reasonforapply.errors}">
+          <div class="col-6" style="float: left;width: 25%;margin-top: 6px;">
+            <label><b>Leave Reason: </b></label>
+          </div>
+          <div class="col-7">
+            <textarea formControlName="reasonforapply" placeholder="Enter reason..."
+              style="height: 40px;float: left;width: 75%;margin-top: 6px;"
+              [ngClass]="{'is-invalid' : submitted && field.reasonforapply.errors}">
             </textarea>
-            <div *ngIf="submitted && field.reasonforapply.errors"
-              class="invalid-feedback">
+            <div *ngIf="submitted && field.reasonforapply.errors" class="invalid-feedback">
               <div *ngIf="field.reasonforapply.errors">Reason is required</div>
-      </div>
+            </div>
           </div>
         </div>
-      
-        <br>
-        <p *ngIf="msg"   class="alert alert-danger alert-dismissible fade show"
-        style="text-align:center ;width: fit-content;margin: auto;">Please Choose All The Fields</p>
-        <hr>
-        <div class="row" >
-          <div class="col-md-12 justify-content-center text-center" >
-            <button type="button" class="btn btn-danger" id="cancel"(click)="pageNavigate()" >Cancel</button>
-            <button type="button" class="btn btn-primary"  style="margin: 5px 5px;"  *ngIf="hideIfnotme" (click)="Save(save,successave)">Save changes</button>
-             <button type="button" class="btn btn-success"(click)="leaveApply(success,failure,onbehalf)"  *ngIf="hideIfsick"> Apply leave</button>
-          </div>
-        </div>
-      </div>
-<br>
-    </div>
-   <br>
-   <br> 
 
-  <!-- <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
+        <br>
+        <p *ngIf="msg" class="alert alert-danger alert-dismissible fade show"
+          style="text-align:center ;width: fit-content;margin: auto;">Please Choose All The Fields</p>
+        <hr>
+        <div class="row">
+          <div class="col-md-12 justify-content-center text-center">
+            <button type="button" class="btn btn-danger" id="cancel" (click)="pageNavigate()">Cancel</button>
+            <button type="button" class="btn btn-primary" style="margin: 5px 5px;" *ngIf="hideIfnotme"
+              (click)="Save(save,successave)">Save changes</button>
+            <button type="button" class="btn btn-success" (click)="leaveApply(success,failure,onbehalf)"
+              *ngIf="hideIfsick" data-toggle="modal" data-target="#failure,#success,#onbehalf" data-backdrop="static" data-keyboard="false"> Apply leave</button>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <br>
+    <br>
+
+    <!-- <div class="modal-content" style="left: 380px;"  *ngIf="modeModal">
   <div class="modal-header" style="text-align:center;"><b> Enter Leave Details Here
   </b>
   </div>
@@ -323,7 +330,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
    <button type="button" class="btn btn-primary">Save changes</button>
     <button type="button" class="btn btn-success"(click)="leaveApply()"> Apply leave</button>
   </div>-->
-</div>
+  </div>
 </form>
 
 
@@ -335,12 +342,12 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     The leave which your are selected is unavailable. You will get Loss of pay if you proceed.
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="proceed()">proceed</button>
+    <button type="button" class="btn btn-primary" (click)="proceed()" >proceed</button>
     <button type="button" class="btn btn-danger" (click)="cancel()">cancel</button>
   </div>
 </ng-template>
 
-<ng-template #success let-modal>
+<ng-template #success let-modal >
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -349,8 +356,9 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
   <div class="modal-body" style="text-align:center">
     Your Leave has been successfully Updated.
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="ok()">OK</button>
+  <div class="modal-footer" data-keyboard="false" data-backdrop="static">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="ok()">OK</button>
   </div>
 </ng-template>
 
@@ -361,34 +369,37 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     </div>
   </div>
   <div class="modal-body" style="text-align:center">
-  Are you sure you want to proceed request for {{this.defaultEmpid}} ?
+    Are you sure you want to proceed request for {{this.defaultEmpid}} ?
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onbehalfAprroved(update)">OK</button>
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="onbehalfAprroved(update)">OK</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="cancel()">Cancel</button>
   </div>
 </ng-template>
 
-<ng-template #update let-modal>
+<ng-template #update let-modal >
   <div class="modal-header">
-      <div class="modal-title" id="modal-basic-title">
-        <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
-      </div>
+    <div class="modal-title" id="modal-basic-title">
+      <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
     </div>
-    <div class="modal-body" style="text-align:center">
-      Your Leave has been successfully Updated. Press Ok to continue
-    </div>
-    <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
-
+  </div>
+  <div class="modal-body" style="text-align:center">
+    Your Leave has been successfully Updated. Press Ok to continue
+  </div>
+  <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
     style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
 
-    {{errorMessage}}</p> 
-    <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="onAprroved()">OK</button>
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="cancel()">Cancel</button>
+    {{errorMessage}}</p>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="onAprroved()">OK</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="cancel()">Cancel</button>
   </div>
 </ng-template>
-<ng-template #save let-modal>
+<ng-template #save let-modal >
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -398,11 +409,13 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     The leave which your are selected is unavailable. You will get Loss of pay if you submit and proceed.
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="okforsubmit()">OK</button>
-    <button type="button" class="btn btn-danger" style="text-align: center;justify-content: center;" (click)="cancelsave()">Cancel</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="okforsubmit()">OK</button>
+    <button type="button" class="btn btn-danger" style="text-align: center;justify-content: center;"
+      (click)="cancelsave()">Cancel</button>
   </div>
 </ng-template>
-<ng-template #successave let-modal>
+<ng-template #successave let-modal >
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -412,6 +425,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
     Your leave request has been saved successfully. Press ok to continue...
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="succesinsave()">OK</button>
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="succesinsave()">OK</button>
   </div>
 </ng-template>

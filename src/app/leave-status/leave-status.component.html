@@ -1,287 +1,364 @@
 <mat-toolbar style="background-color:rgb(180, 180, 180);justify-content: center;">
   <h2><b>Leave Status</b></h2>
-  </mat-toolbar>
-  <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
-
-  style="text-align:center ;margin-left: 20px;margin-right:20px;margin-top: 20px;"><strong>Error!</strong>
-
-  {{errorMessage}}</p> 
-  <div class="example-container mat-elevation-z8">
-    <mat-tab-group mat-align-tabs="center">
-      <mat-tab label="Organisation(Emergency) Approvals" *ngIf="hrAdmin" >
-        <mat-table #table [dataSource]="dataSource3" >
+</mat-toolbar>
+<p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+  style="text-align:center ;margin-left: 20px;margin-right:20px;margin-top: 20px;"><strong>Error!</strong>{{errorMessage}}</p>
+<div class="example-container mat-elevation-z8">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Organisation(Emergency) Approvals" *ngIf="hrAdmin">
+      <mat-table #table [dataSource]="dataSource3">
         <!-- <div class="example-container mat-elevation-z8"(click)="admin()">
           <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"[class.isMobile]="isMobile"> -->
         <!-- Position Column -->
-        <div class="card" >
-        
+        <div class="card">
+
           <div class="card-body">
-        <ng-container matColumnDef="createddate">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date </mat-header-cell>
-          <mat-cell *matCellDef="let element" ><span class="mobile-label">Applied Date</span>{{element.createddate | date:'shortDate'}}  </mat-cell>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"><span class="mobile-label">Candidate Name</span> {{element.name}}</mat-cell>
-        </ng-container>
-      
-        <!-- Weight Column -->
-        <ng-container matColumnDef="leaveType">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Type of leave  </mat-header-cell>
-          <mat-cell *matCellDef="let element"><span class="mobile-label">Type of Leave</span> {{element.leaveType}}</mat-cell>
-        </ng-container>
-      
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="fromdate">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> From date </mat-header-cell>
-          <mat-cell *matCellDef="let element"><span class="mobile-label">From Date</span> {{element.fromdate | date:'shortDate'}} </mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="todate">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date </mat-header-cell>
-          <mat-cell *matCellDef="let element" > <span class="mobile-label">To Date</span>{{element.todate | date:'shortDate'}}</mat-cell>
-        </ng-container>
-        <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
-        <ng-container matColumnDef="reasonforapply">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason for apply </mat-header-cell>
-          <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for apply</span>{{element.reasonforapply}}  </mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="noofdays">
-          <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Number of days </mat-header-cell>
-          <mat-cell *matCellDef="let element"><span class="mobile-label">Number of days</span>{{element.noofdays}}  </mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="status">
-          <mat-header-cell *matHeaderCellDef style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Status </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <span class="mobile-label">Status</span>
-            <!-- <button mat-flat-button>Basic</button>
+            <ng-container matColumnDef="createddate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Applied Date</span>{{element.createddate |
+                date:'shortDate'}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Name
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Candidate Name</span>
+                {{element.name}}</mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="leaveType">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Type of
+                leave </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Type of Leave</span>
+                {{element.leaveType}}</mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fromdate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> From
+                date </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">From Date</span> {{element.fromdate |
+                date:'shortDate'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="todate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">To Date</span>{{element.todate |
+                date:'shortDate'}}</mat-cell>
+            </ng-container>
+            <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
+            <ng-container matColumnDef="reasonforapply">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason
+                for apply </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for
+                  apply</span>{{element.reasonforapply}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="noofdays">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Number
+                of days </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Number of days</span>{{element.noofdays}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Status
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">Status</span>
+                <!-- <button mat-flat-button>Basic</button>
           <button mat-flat-button color="primary">Primary</button> -->
-         
-             <button mat-flat-button  class="success"  (click)="approve(element.historyid,empid,'Approved')" style="color:blue">Approve</button>
-              <button mat-flat-button class="failure"  (click)="approve(element.historyid,empid,'Rejected')"  style="color:blue">Decline</button>
-              <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
-              
-              <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
-             </mat-cell>
-      
-        </ng-container>
-      
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      
-        <mat-paginator  #dataPaginator [pageSizeOptions]="[10, 20, 30]"
-        showFirstLastButtons>
-    </mat-paginator>
-    
-      </div>
-      </div>
+
+                <button mat-flat-button class="success" (click)="approve(element.historyid,empid,'Approved')"
+                  style="color:blue">Approve</button>
+                <button mat-flat-button class="failure" (click)="approve(element.historyid,empid,'Rejected')"
+                  style="color:blue">Decline</button>
+                <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
+                  (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
+
+                <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
+              </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            <mat-paginator #dataPaginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
+            </mat-paginator>
+
+          </div>
+        </div>
       </mat-table>
-      </mat-tab>
+    </mat-tab>
 
 
-    <mat-tab label="Pending Approvals" *ngIf="admin" >
-    <mat-table #table [dataSource]="dataSource1" >
-    <!-- <div class="example-container mat-elevation-z8"(click)="admin()">
+    <mat-tab label="Pending Approvals" *ngIf="admin">
+      <mat-table #table [dataSource]="dataSource1">
+        <!-- <div class="example-container mat-elevation-z8"(click)="admin()">
       <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"[class.isMobile]="isMobile"> -->
-    <!-- Position Column -->
-    <div class="card" >
-      <div class="card-body">
-    <ng-container matColumnDef="createddate">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date </mat-header-cell>
-      <mat-cell *matCellDef="let element" ><span class="mobile-label">Applied Date</span>{{element.createddate | date:'shortDate'}}  </mat-cell>
-    </ng-container>
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"><span class="mobile-label">Candidate Name</span> {{element.name}}</mat-cell>
-    </ng-container>
-  
-    <!-- Weight Column -->
-    <ng-container matColumnDef="leaveType">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Type of leave  </mat-header-cell>
-      <mat-cell *matCellDef="let element"><span class="mobile-label">Type of Leave</span> {{element.leaveType}}</mat-cell>
-    </ng-container>
-  
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="fromdate">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> From date </mat-header-cell>
-      <mat-cell *matCellDef="let element"><span class="mobile-label">From Date</span> {{element.fromdate | date:'shortDate'}} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="todate">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date </mat-header-cell>
-      <mat-cell *matCellDef="let element" > <span class="mobile-label">To Date</span>{{element.todate | date:'shortDate'}}</mat-cell>
-    </ng-container>
-    <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
-    <ng-container matColumnDef="reasonforapply">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason for apply </mat-header-cell>
-      <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for apply</span>{{element.reasonforapply}}  </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="noofdays">
-      <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Number of days </mat-header-cell>
-      <mat-cell *matCellDef="let element"><span class="mobile-label">Number of days</span>{{element.noofdays}}  </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Status </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <span class="mobile-label">Status</span>
-        <!-- <button mat-flat-button>Basic</button>
+        <!-- Position Column -->
+        <div class="card">
+          <div class="card-body">
+            <ng-container matColumnDef="createddate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Applied Date</span>{{element.createddate |
+                date:'shortDate'}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Name
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Candidate Name</span>
+                {{element.name}}</mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="leaveType">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Type of
+                leave </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Type of Leave</span>
+                {{element.leaveType}}</mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fromdate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> From
+                date </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">From Date</span> {{element.fromdate |
+                date:'shortDate'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="todate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">To Date</span>{{element.todate |
+                date:'shortDate'}}</mat-cell>
+            </ng-container>
+            <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
+            <ng-container matColumnDef="reasonforapply">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason
+                for apply </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for
+                  apply</span>{{element.reasonforapply}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="noofdays">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Number
+                of days </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Number of days</span>{{element.noofdays}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Status
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">Status</span>
+                <!-- <button mat-flat-button>Basic</button>
       <button mat-flat-button color="primary">Primary</button> -->
-     
-         <button mat-flat-button  class="success"  (click)="approve(element.historyid,empid,'Approved')" style="color:blue">Approve</button>
-          <button mat-flat-button class="failure"  (click)="approve(element.historyid,empid,'Rejected')"  style="color:blue">Decline</button>
-          <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;" (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
-          
-          <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
-         </mat-cell>
-  
-    </ng-container>
-  
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  
-    <mat-paginator  #dataPaginator [pageSizeOptions]="[10, 20, 30]"
-    showFirstLastButtons>
-</mat-paginator>
 
-  </div>
-  </div>
-  </mat-table>
-  </mat-tab>
-  
-  <!-- for user -->
-  <mat-tab label="My Status" >
-    <mat-table #table [dataSource]="dataSource2" >
-      <!-- <div class="example-container mat-elevation-z8">
+                <button mat-flat-button class="success" (click)="approve(element.historyid,empid,'Approved')"
+                  style="color:blue">Approve</button>
+                <button mat-flat-button class="failure" (click)="approve(element.historyid,empid,'Rejected')"
+                  style="color:blue">Decline</button>
+                <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
+                  (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
+
+                <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
+              </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            <mat-paginator #dataPaginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
+            </mat-paginator>
+
+          </div>
+        </div>
+      </mat-table>
+    </mat-tab>
+
+    <!-- for user -->
+    <mat-tab label="My Status">
+      <mat-table #table [dataSource]="dataSource2">
+        <!-- <div class="example-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"[class.isMobile]="isMobile"> -->
-      <!-- Position Column -->
-      <div class="card">
-        <div class="card-body">
+        <!-- Position Column -->
+        <div class="card">
+          <div class="card-body">
 
-      <!-- Created date -->
-      <ng-container matColumnDef="createddate">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date </mat-header-cell>
-        <mat-cell *matCellDef="let element" ><span class="mobile-label">Applied Date</span>{{element.createddate | date:'shortDate'}}  </mat-cell>
-      </ng-container>
-    
-      <!--Candidate Name -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"><span class="mobile-label">Candidate Name</span> {{element.name}}</mat-cell>
-      </ng-container>
-    
-      <!-- Type of leave -->
-      <ng-container matColumnDef="leaveType">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Type of leave  </mat-header-cell>
-        <mat-cell *matCellDef="let element" ><span class="mobile-label">Type of Leave</span> {{element.leaveType}}</mat-cell>
-      </ng-container>
-    
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="fromdate">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> From date </mat-header-cell>
-        <mat-cell *matCellDef="let element" formcontrol="fromdate"><span class="mobile-label">From Date</span> {{element.fromdate | date:'shortDate'}} </mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="todate">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date </mat-header-cell>
-        <mat-cell *matCellDef="let element" > <span class="mobile-label">To Date</span>{{element.todate | date:'shortDate'}}</mat-cell>
-      </ng-container>
-      <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
-      <ng-container matColumnDef="reasonforapply">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason for apply </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for apply</span>{{element.reasonforapply}}  </mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="noofdays">
-        <mat-header-cell *matHeaderCellDef  style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Number of days </mat-header-cell>
-        <mat-cell *matCellDef="let element"><span class="mobile-label">Number of days</span>{{element.noofdays}}  </mat-cell>
-      </ng-container>
-    
-    
-      <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Status </mat-header-cell>
-        <mat-cell *matCellDef="let element" >
-          <span class="mobile-label">Status</span>
-          <!-- <button mat-flat-button>Basic</button>
+            <!-- Created date -->
+            <ng-container matColumnDef="createddate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Applied Date</span>{{element.createddate |
+                date:'shortDate'}} </mat-cell>
+            </ng-container>
+
+            <!--Candidate Name -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Name
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Candidate Name</span>
+                {{element.name}}</mat-cell>
+            </ng-container>
+
+            <!-- Type of leave -->
+            <ng-container matColumnDef="leaveType">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Type of
+                leave </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Type of Leave</span>
+                {{element.leaveType}}</mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fromdate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> From
+                date </mat-header-cell>
+              <mat-cell *matCellDef="let element" formcontrol="fromdate"><span class="mobile-label">From Date</span>
+                {{element.fromdate | date:'shortDate'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="todate">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">To Date</span>{{element.todate |
+                date:'shortDate'}}</mat-cell>
+            </ng-container>
+            <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
+            <ng-container matColumnDef="reasonforapply">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason
+                for apply </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for
+                  apply</span>{{element.reasonforapply}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="noofdays">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Number
+                of days </mat-header-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Number of days</span>{{element.noofdays}}
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef
+                style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Status
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span class="mobile-label">Status</span>
+                <!-- <button mat-flat-button>Basic</button>
         <button mat-flat-button color="primary">Primary</button> -->
-        <!-- <span class="mobile-label">
+                <!-- <span class="mobile-label">
           {{element.status}} <p>{{}}</p>
         </span> -->
-        
-            <button mat-flat-button  (click)="submit(element.historyid,empid,'pending')" style="color:rgb(28, 5, 240)" >Submit</button>
-            <button mat-flat-button  style="color:rgb(228, 8, 8)" (click)="delete(element.historyid)">Delete
-              <!-- <i class="material-icons" id="delmessage" style="font-size:18px">delete</i>
-              <p class="hide" style="float:right">  Delete</p> -->
-            </button>
-            <button mat-flat-button  (click)="uploadDocument(element.historyid,uploading)" *ngIf="element.leaveType=='sick'"><i class="fas fa-cloud-upload-alt" *ngIf="uploadshow" style="color:rgb(24, 204, 132);font-size:28px" ></i><h3 *ngIf="uploadhide" style="color:rgb(43, 117, 86);">&#10004;</h3></button>
-           </mat-cell>
 
-      </ng-container>
-       
+                <button mat-flat-button (click)="submit(element.historyid,empid,'pending')"
+                  style="color:rgb(28, 5, 240)">Submit</button>
+                <button mat-flat-button style="color:rgb(228, 8, 8)" (click)="delete(element.historyid)">Delete
+                  <!-- <i class="material-icons" id="delmessage" style="font-size:18px">delete</i>
+              <p class="hide" style="float:right">  Delete</p> <h3 *ngIf="uploadhide" style="color:rgb(43, 117, 86);">&#10004;</h3>-->
+                </button>
+                <button mat-flat-button *ngIf="element.leaveType=='sick'"><i class="fas fa-cloud-upload-alt"
+                    *ngIf="element.fileid==null" (click)="uploadDocument(element.historyid,uploading)"
+                    style="color:rgb(24, 204, 132);font-size:28px"></i>
+                  <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
+                    (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.fileid!==null"></i></button>
 
-    
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-cell>
 
-      <mat-paginator  #dataPaginator [pageSizeOptions]="[10, 20, 30]"
-                 showFirstLastButtons>
- </mat-paginator>
-    </div>
-    </div>
-    </mat-table>
-  </mat-tab>
-  </mat-tab-group>
-  </div>
-  <div *ngIf="showmessage" class="card" id="card">
-    <p style="margin-top: 16px;">Your response has been successfully updated</p>
-  </div>
-  
-  <br>
-  <button class="btn btn-danger" id="back" style="margin-left: 50%;margin:66px" (click)="back()"><i class="fa fa-sign-out" style="font-size:18px; padding-right:5px"></i>Back</button>
-  
-  <!-- </div>
-  </div>style="margin-left: 50%;margin:66px"  -->
-  <ng-template #uploading let-modal>
-    <div class="modal-header" style="justify-content: space-evenly;">
-      <h4 class="modal-title" id="modal-basic-title">Upload Document </h4>
-    </div>
-    <div class="modal-body">
-    <input type="file" (change)="getfile($event)" required>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-info" (click)="uploadhere(successtoupload)">Upload</button>
-     <button type="button" class="btn btn-outline-danger" (click)="uploadbackbutton()">Back</button>
-    </div>
-  </ng-template>
-  <ng-template #showDocument let-modal>
-    <div class="modal-header" style="justify-content: space-evenly;">
-      <h4 class="modal-title" id="modal-basic-title" style="color:blue;justify-content: center; ">Attached Document</h4>
-    </div>
-    <div class="modal-body">
-    <p></p>
-    <button type="button" class="btn btn-info" (click)="viewpdffile()">Download <i class='fas fa-download'></i></button>
-    </div>
-    <div class="modal-footer">
-     <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>
-    </div>
-  </ng-template>
-  <ng-template #successtoupload let-modal>
-      <div class="modal-header" style="justify-content: center;">
-        <div class="modal-title" id="modal-basic-title" >
-          <i class="bi bi-check-circle" style='font-size:48px;color:green;'></i>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            <mat-paginator #dataPaginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
+            </mat-paginator>
+          </div>
         </div>
-      </div>
-      <div class="modal-body" style="text-align:center">
-       File has been loaded successfully. Click ok to save and procced.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;" (click)="backToleavestatus()">OK</button>
-      </div>
-    </ng-template>
+      </mat-table>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div *ngIf="showmessage" class="card" id="card">
+  <p style="margin-top: 16px;">Your response has been successfully updated</p>
+</div>
+
+<br>
+<button class="btn btn-danger" id="back" style="margin-left: 50%;margin:66px" (click)="back()"><i class="fa fa-sign-out"
+    style="font-size:18px; padding-right:5px"></i>Back</button>
+
+<!-- </div>
+  </div>style="margin-left: 50%;margin:66px"  -->
+<ng-template #uploading let-modal>
+  <div class="modal-header" style="justify-content: space-evenly;">
+    <h4 class="modal-title" id="modal-basic-title">Upload Document </h4>
+  </div>
+  <div class="modal-body">
+    <input type="file" (change)="getfile($event)" required>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-info" (click)="uploadhere(successtoupload)">Upload</button>
+    <button type="button" class="btn btn-outline-danger" (click)="uploadbackbutton()">Back</button>
+  </div>
+</ng-template>
+<ng-template #showDocument let-modal>
+  <div class="modal-header" style="justify-content: space-evenly;">
+    <h4 class="modal-title" id="modal-basic-title" style="color:blue;justify-content: center; ">Attached Document</h4>
+  </div>
+  <div class="modal-body">
+    <p></p>
+    <button type="button" class="btn btn-info" (click)="viewpdffile()" style="margin-left: 55px;">Download <i
+        class='fas fa-download'></i> </button>
+    <p style="float: right;margin-right: 59px;"><i>Download to view document</i></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>
+  </div>
+</ng-template>
+<ng-template #successtoupload let-modal>
+  <div class="modal-header" style="justify-content: center;">
+    <div class="modal-title" id="modal-basic-title">
+      <i class="bi bi-check-circle" style='font-size:48px;color:green;'></i>
+    </div>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    File has been loaded successfully. Click ok to save and submit to procced.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"
+      (click)="backToleavestatus()">OK</button>
+  </div>
+</ng-template>

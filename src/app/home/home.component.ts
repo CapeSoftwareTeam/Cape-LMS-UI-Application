@@ -130,11 +130,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   //   this.spinner=true;
   //   this.blurMode=true;
+  
   //   setTimeout(() => {  
   //     this.blurMode=false;
   //     this.spinner=false;
-  // }, 3000);
-    
+  // }, 2000);
+
     
     this.lmspage=true;
      

@@ -21,7 +21,7 @@ export class LeaveStatusComponent implements OnInit {
   dataSource2 = new MatTableDataSource<any>;
   dataSource3=new MatTableDataSource<any>;
   hrAdmin:boolean=false;
-
+  fileisempty:boolean=false;
   admin:boolean=false;
   uploadshow:boolean=true;
   uploadhide:boolean=false;
@@ -87,6 +87,7 @@ ngOnInit(): void {
           data => {
             this.getpendingData();
             this.getstatusData();
+
          },error=>{
           this.showErrorMessage = true;
           this.errorMessage = this.globalErrorHandler.errorMessage;
@@ -199,12 +200,12 @@ ngOnInit(): void {
         data => {
           let c = [];
           let dhana=[];
-            for(let item of JSON.parse(data)) {
-              if(item.status == 'not submitted' ) {
+            for(let item of JSON.parse(data)) {      
+              if(item.status == 'not submitted') {
                 c.push(item);
                 this.notification = c.length;
               }
-              
+            
             }
           this.dataSource2 = new MatTableDataSource(c);
           this.dataSource2.paginator = this.dataPaginator;
@@ -220,6 +221,8 @@ ngOnInit(): void {
   submit(historyid: Number, empid:string, status: string){
     this.statusagree.statusUpdate(historyid, empid, status).subscribe(
       data=>{ 
+        this.showmessage = true;
+        setTimeout(() => { this.showmessage = false; }, 4000);
         this.ngOnInit(); 
       }
     )

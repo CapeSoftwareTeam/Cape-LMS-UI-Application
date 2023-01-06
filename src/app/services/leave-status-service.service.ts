@@ -25,9 +25,7 @@ export class LeaveStatusServiceService {
   separationDetails(empid:String):Observable<any>{
     return this.http.get<any>(this.apiurl + "/matseparation" + "/" + empid,{responseType:'text' as 'json'});
   }
-  ApprovalDetails(empid:String):Observable<any>{
-    return this.http.get<any>(this.apiurl + "/matAprrovalseparation" + "/" + empid,{responseType:'text' as 'json'});
-  }
+
   deleteHistory(historyId:Number):Observable<any>{
     return this.http.delete<any>(this.apiurl + "/mystatusDel" + "/" + historyId,{responseType:'text' as 'json'});
  }

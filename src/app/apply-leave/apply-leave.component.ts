@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { end, start } from '@popperjs/core';
 import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 import { ApplyLeave } from '../models/apply-leave.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
@@ -19,6 +18,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./apply-leave.component.css']
 })
 export class ApplyLeaveComponent implements OnInit {
+  currentDate:any=new Date();
   submitted:boolean=false;
   showGetNumberfullError:boolean=false;
   noMatchGender:boolean=false;
@@ -99,6 +99,7 @@ export class ApplyLeaveComponent implements OnInit {
   difference: any;
   differentdays: any;
   statusreview: any;
+  hideRadio:boolean=false;
 
   constructor(private route: Router,
               private apply: ApplyleaveService,
@@ -119,7 +120,6 @@ ngOnInit(): void {
 
   this.postleave = new FormGroup({
     empid:new FormControl('', Validators.required),
-
     leaveType: new FormControl('', Validators.required),
     noofdays: new FormControl('', Validators.required),
     fromdate: new FormControl('', Validators.required),
@@ -156,18 +156,21 @@ ngOnInit(): void {
         this.city = this.personDetails.city;
         this.statusreview=this.personDetails.status;
         if(this.department=="Software"){
+          
           this.FrommyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
-            return day !== 0 && day !== 6;
+            const holiday = new Date("this.holidays");
+            const holi=holiday.getDay();
+            return day !== 0 && day !== 6 && !holi;
           }
           this.TomyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
-            return day !== 0 && day !== 6;
+            return day !== 0 && day !== 6  ;
           }
         }else if(this.department!="Software"){
           this.FrommyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
-            return day !== 0;
+            return day !== 0 ;
           }
           this.TomyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
@@ -262,6 +265,7 @@ ngOnInit(): void {
       this.applyLeave.fromdate = this.postleave.value.fromdate;
       this.applyLeave.todate = this.postleave.value.todate;
       this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.createdby= this.name;
       this.applyLeave.status = 'pending';
         this.apply.leaveRegister(this.applyLeave).subscribe(
           data => { },error=>{
@@ -288,6 +292,7 @@ ngOnInit(): void {
       this.applyLeave.fromdate = this.postleave.value.fromdate;
       this.applyLeave.todate = this.postleave.value.todate;
       this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.createdby= this.name;
       this.applyLeave.status = 'pending';
       // this.apply.leaveRegister(this.applyLeave).subscribe(
       // data => { this.leave.push(this.postleave) }
@@ -401,7 +406,12 @@ ngOnInit(): void {
         )  
     }
   }
-
+  matchDate(event:any){
+    if(this.todate.toDateString()==this.fromdate.toDateString()){
+      this.hideRadio=true;
+    }
+  }
+ 
 
   Save(save:any,successave:any) {
     this.submitted=true;
@@ -430,6 +440,7 @@ ngOnInit(): void {
     this.applyLeave.fromdate = this.postleave.value.fromdate;
     this.applyLeave.todate = this.postleave.value.todate;
     this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+    this.applyLeave.createdby= this.name;
     this.applyLeave.status = 'not submitted';
 
     this.apply.leaveRegister(this.applyLeave).subscribe(data => {this.leave.push(this.postleave)})    
@@ -497,6 +508,7 @@ ngOnInit(): void {
       this.applyLeave.fromdate = this.postleave.value.fromdate;
       this.applyLeave.todate = this.postleave.value.todate;
       this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.createdby= this.name;
       if(this.designation=="HR")
       {this.applyLeave.status = 'Approved'}
       else{ this.applyLeave.status = 'pending';}
@@ -517,6 +529,7 @@ ngOnInit(): void {
       this.applyLeave.fromdate = this.postleave.value.fromdate;
       this.applyLeave.todate = this.postleave.value.todate;
       this.applyLeave.reasonforapply = this.postleave.value.reasonforapply;
+      this.applyLeave.createdby= this.name;
       this.applyLeave.status = 'pending';
       this.apply.leaveRegister(this.applyLeave).subscribe(
         data => { this.leave.push(this.postleave) }
@@ -527,17 +540,21 @@ ngOnInit(): void {
     // this.route.navigate(['/home']);
     this.modalReference.close();
   }
+  clearTodateform(){
+    this.postleave.controls['todate'].setValue("");
+    this.postleave.controls['chooseToDays'].setValue("");
+  }
+  clearFromdateform(){
+    this.postleave.controls['fromdate'].setValue("");
+    this.postleave.controls['chooseFromDays'].setValue("");
+  }
 
-  getfirstnumber() {
+  getnumber() {
     this.count = this.fromdate;
     console.log(this.count);
-  }
-  getsecondnumber() {
     this.pluscount = this.todate;
     console.log(this.pluscount);
-  
-  }
-  getnumber() {
+
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
