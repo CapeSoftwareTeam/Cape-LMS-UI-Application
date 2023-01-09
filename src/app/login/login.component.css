@@ -22,6 +22,7 @@ html,body{
  color: aliceblue;
  padding:10px 20px;
  border-radius: 5px;
+ cursor: pointer;
  
 }
 
@@ -49,6 +50,7 @@ p{
   display: inline-block;
   vertical-align: top;
   margin-top: 25px;
+  cursor: pointer;
 }
 #otpGenerate{
   width: 300px;
@@ -89,12 +91,15 @@ mat-radio-button{
   float: right;
   margin-right: 10px;
  margin-top: 14px;
+ cursor: pointer;
+
 }
 
 .close-button{
   float: right;
   margin-right: 15px;
  margin-top: 18px;
+ cursor: pointer;
  
 }
 

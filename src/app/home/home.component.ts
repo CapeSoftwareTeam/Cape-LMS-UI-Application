@@ -408,7 +408,10 @@ export class HomeComponent implements OnInit {
   }
   termsCondition(termsContent: any) {
 
-    this.modalReference = this.modalService.open(termsContent, { size: 'm' })
+    this.modalReference = this.modalService.open(termsContent, { size: 'm'
+  ,backdrop:'static',
+
+  keyboard  : false })
 
     this.fileUploadService.retriveFileName("leavePolicy").subscribe(data=>{
       this.f.filename.setValue(JSON.parse(data).fileName);

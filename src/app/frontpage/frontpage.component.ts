@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { event } from 'jquery';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 
@@ -16,15 +17,18 @@ router:any;
 modalReference:any;
   errorMsg: boolean=false;
   signUpBtn:boolean=true;
+  frontPage:boolean=true;
+  register:boolean=false;
 
-  constructor(private route:Router,private dialoge:MatDialog,private modelService:NgbModal) { }
+  constructor(private route:Router,private dialog:MatDialog,private modelService:NgbModal) { }
 
   ngOnInit(): void {
     this.date = new Date().getFullYear()
   }
   // modal box open for Login
   loginPage(){
-    const dialogRef=this.dialoge.open(LoginComponent,{
+   
+    const dialogRef=this.dialog.open(LoginComponent,{
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(data=>{
@@ -34,26 +38,29 @@ modalReference:any;
   }
   // template Open For SignUp
   signUp(signup:any){
-this.modalReference=this.modelService.open(signup,{size:'m'})
+   
+this.modalReference=this.modelService.open(signup,{size:'m',
+backdrop:'static',
+
+keyboard  : false})
+
   }
   // signUp Click Fuction
   signupButton(){
-    this.onCancel();
-    const dialogRef=this.dialoge.open(RegisterComponent,{
-      disableClose: true
-     })
-     dialogRef.afterClosed().subscribe(data=>{
+    var inputValue = (<HTMLInputElement>document.getElementById('inputuser')).value;
 
-     })
-
-  }
-  // onFocus Event For SignUp
-  userInput(event:any){
-     if(event.target.value=='gk@capeindia.net'|| event.target.value=='srp@capeindia.net'||
-     event.target.value=='asha@capeindia.net'||event.target.value=='vasanthi@capeindia.net'){
-      this.signUpBtn=false;
-      
-     }
+       if(inputValue=='gk@capeindia.net'||inputValue=='srp@capeindia.net'||inputValue=='asha@capeindia.net'||inputValue=='vasanthi@capeindia.net')
+       {
+       this.register=true;
+       this.frontPage=false;
+        // const dialogRef=this.dialoge.open(RegisterComponent,{
+        //   disableClose: true
+        //  })
+        //  dialogRef.afterClosed().subscribe(data=>{
+    
+        //  })
+         this.onCancel();
+       }
      else{
       this.errorMsg=true;
     setTimeout(() => {
@@ -62,10 +69,23 @@ this.modalReference=this.modelService.open(signup,{size:'m'})
     }, 3000);
       
      }
+  
+
   }
+  // onFocus Event For SignUp
+  // userInput(event:any){
+  //    if(event.target.value=='gk@capeindia.net'|| event.target.value=='srp@capeindia.net'||
+  //    event.target.value=='asha@capeindia.net'||event.target.value=='vasanthi@capeindia.net'){
+  //     this.signUpBtn=false;
+      
+  //    }
+  // }
   // modal box close
 onCancel(){
   this.modalReference.close();
 }
-
+cancel(){
+  this.register=false;
+       this.frontPage=true;
+}
 }

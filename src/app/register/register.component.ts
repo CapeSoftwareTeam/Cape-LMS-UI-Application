@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { Register } from '../models/register';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { CscService } from '../csc.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
+
 
 interface Country {
   
@@ -39,7 +42,7 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,private route: Router,
-    private registerService: RegisterserviceService, private siteService:CscService
+    private registerService: RegisterserviceService, private siteService:CscService,private dialog:MatDialog
   ) { 
    
   }
@@ -287,9 +290,20 @@ clear(){
       data => {
         this.priyanka=true;
         setTimeout(() => {
-          this.priyanka = false;
-          this.clear();
-          this.submitted = false;
+          if(sessionStorage.getItem("token") !=null){
+            this.priyanka = false;
+            this.clear();
+            this.submitted = false;
+          }else {
+            
+    const dialogRef=this.dialog.open(LoginComponent,{
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(data=>{
+      
+    })
+          }
+         
         }, 3000);
         console.log("success")
       },
@@ -306,6 +320,6 @@ clear(){
     }
   }
   Home(){
-  
+    // this.dialogRef.close();
   }
 }

@@ -10,7 +10,7 @@
         <div class="wrapper">
             <div class="title" style="margin-top:-18px;">
             <button mat-icon-button class="close-button" [mat-dialog-close]="true"   >
-                <mat-icon class="close-icon" color="warn" (click)="gotoHome()">close</mat-icon>
+                <mat-icon class="close-icon" color="warn" (click)="gotoHome()" style="cursor: pointer;">close</mat-icon>
               </button><br>
               <span style="text-align: center;">LOGIN HERE!!</span>
             </div>
@@ -119,8 +119,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                         <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                             <div *ngIf="f.password.errors['required']">Password is required</div>
-                            <div *ngIf="f.password.errors['pattern']">Password must contain more than 8 characters,1
-                                upper case letter,and 1 special character </div>
+                            <div *ngIf="f.password.errors['pattern']">Ex.Name@123</div>
                         </div>
                     </div>
                 </div>
@@ -140,7 +139,7 @@
         <div class="modal-body">
             <div style="margin-top:-25px;">
             <button mat-icon-button class="close-button1" [mat-dialog-close]="true">
-                <mat-icon class="close-icon" color="warn" (click)="onCancel()">close</mat-icon>
+                <mat-icon class="close-icon" color="warn" (click)="onCancel()" style="cursor: pointer;">close</mat-icon>
               </button><br>
             <h5 style="text-align: center;margin-left: 15px;">OTP GENERATE</h5>
         </div>

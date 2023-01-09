@@ -14,3 +14,9 @@
   .close-icon:hover {
     transform: rotate(180deg);
   }
+  .cancelButton{
+    float: right;
+    margin-right: 15px;
+   
+    margin-right: 30px;
+  }
