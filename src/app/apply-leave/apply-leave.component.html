@@ -172,7 +172,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
           </div>
           <div class="col-7">
             <mat-form-field style="height:40px; float: left; width: 75%;padding-left: 9px">
-              <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter"
+              <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter"  (click)="findDatChnages()"
                 placeholder="Choose a date"
                 style="padding-left: 10px;height: 40px;float: left;width: 75%;margin-top: 6px; " [(ngModel)]="todate"
                 id="date1"  formControlName="todate" (ngModelChange)="matchDate($event)">
@@ -190,7 +190,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
         <br>
         <div class="row" style="justify-content:center;text-align: center;" *ngIf="showMorning">
           <div class="col-6" style="float: left;width: 24%;margin-top: 6px;"></div>
-          <div class="col-7" style="display: inline-flex;" formControlName="chooseToDays">
+          <div class="col-7" style="display: inline-flex;" formControlName="chooseToDays"  *ngIf="fromdate != todate">
             <div class="form-check form-check-inline" style="justify-content:center;text-align: center;">
               <input class="form-check-input" type="radio" value="morningtoHalf" name="chooseToDays"
                 formControlName="chooseToDays" [(ngModel)]="findHalfToDays" [disabled]="hideRadio">
@@ -271,7 +271,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
             <button type="button" class="btn btn-danger" id="cancel" (click)="pageNavigate()">Cancel</button>
             <button type="button" class="btn btn-primary" style="margin: 5px 5px;" *ngIf="hideIfnotme"
               (click)="Save(save,successave)">Save changes</button>
-            <button type="button" class="btn btn-success" (click)="leaveApply(success,failure,onbehalf)"
+            <button type="button" class="btn btn-success" (click)="leaveApply(success,failure,onbehalf)" style="margin: 5px 5px;"
               *ngIf="hideIfsick" data-toggle="modal" data-target="#failure,#success,#onbehalf" data-backdrop="static" data-keyboard="false"> Apply leave</button>
           </div>
         </div>

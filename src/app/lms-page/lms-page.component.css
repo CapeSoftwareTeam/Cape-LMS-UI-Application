@@ -111,22 +111,17 @@ mat-sidenav{
 .leftcolumn {   
   float: left;
   width: 75%;
- 
+ padding: 0 10px;
 }
 .rightcolumn {
   float: left;
   width: 25%;
-  padding-left: 20px;
-}
-.card {
-  background-color: white;
-  padding: 20px;
-  margin-top: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  
+  padding: 0 10px;
+  /* padding-left: 20px; */
 }
 
 
+.row {margin: 0 -5px;}
 /* Clear floats after the columns */
 .row:after {
  content: "";
@@ -140,16 +135,23 @@ mat-sidenav{
     margin-bottom: 20px;
   }
 } */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1140px) {
   .leftcolumn, .rightcolumn {   
     width: 100%;
+    display: block;
+    /* height:auto; */
     padding: 0;
-
     flex-direction: column;
     /* width: 100%; */
     /* display: block;
     margin-bottom: 20px; */
   }
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-top: 20px;
+  background-color: white;
 }
 /* .avatar{
   vertical-align: middle;
@@ -326,7 +328,7 @@ align-items: center;
   box-sizing:border-box;
 } */
 .clock-wrapper{
-  width:130px;
+  /* width:130px; */
   height:0px;
   margin:2rem auto;
   display:flex;
@@ -437,7 +439,7 @@ position: absolute;
   color:rgb(71, 5, 5)
 }
 
-.main_div{
+/* .main_div{
   width:100vw;
   display:flex;
   height:400px;
@@ -454,12 +456,12 @@ position: absolute;
   0 22.3px 17.9px rgba(0, 0 ,0, 0.072),
   0 41.8px 33.4px rgba(0, 0 ,0, 0.086),
   0 100px 80px rgba(0, 0 ,0, 0.12),
-}
+} */
 
 /* .center_div h1{
   padding: 20px 0 20px 20px;
 } */
-.center_div p{
+/* .center_div p{
   position: absolute;
   bottom: 1rem;
   right:1rem;
@@ -498,7 +500,7 @@ position: absolute;
     flex-direction: column;
   }
  
-}
+} */
 /* .circular-progress{
   position: relative;
   height:150px;

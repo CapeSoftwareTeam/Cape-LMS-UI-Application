@@ -5,23 +5,23 @@
   style="text-align:center ;margin-left: 20px;margin-right:20px;margin-top: 20px;"><strong>Error!</strong>{{errorMessage}}</p>
 <div class="example-container mat-elevation-z8">
   <div class="text-center">
-    <img src="../assets/no-record-found.png" class="img-fluid" *ngIf="showEmptyTable" alt="">
+    
   </div>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Organisation(Emergency) Approvals" *ngIf="hrAdmin">
-      <mat-table #table [dataSource]="dataSource3">
+      <mat-table #table [dataSource]="dataSource3" >
         <!-- <div class="example-container mat-elevation-z8"(click)="admin()">
           <mat-table #table [dataSource]="dataSource" [class.isMobile]="isMobile"[class.isMobile]="isMobile"> -->
         <!-- Position Column -->
         <div class="card">
-
+         
           <div class="card-body">
+            <img src="../assets/no-record-found.png" class="img-fluid" *ngIf="showEmptyTable" alt="">
             <ng-container matColumnDef="createddate">
               <mat-header-cell *matHeaderCellDef
                 style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date
               </mat-header-cell>
-              <mat-cell *matCellDef="let element"><span class="mobile-label">Applied Date</span>{{element.createddate |
-                date:'shortDate'}} </mat-cell>
+              <mat-cell *matCellDef="let element"><span class="mobile-label">Applied Date</span>{{element.createddate | date:'shortDate'}} </mat-cell>
             </ng-container>
 
             <!-- Name Column -->
@@ -62,9 +62,8 @@
             <ng-container matColumnDef="reasonforapply">
               <mat-header-cell *matHeaderCellDef
                 style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason
-                for apply </mat-header-cell>
-              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for
-                  apply</span>{{element.reasonforapply}} </mat-cell>
+      </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason</span>{{element.reasonforapply}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="noofdays">
@@ -115,6 +114,7 @@
         <!-- Position Column -->
         <div class="card">
           <div class="card-body">
+            <img src="../assets/no-record-found.png" class="img-fluid" *ngIf="showEmptyTable" alt="">
             <ng-container matColumnDef="createddate">
               <mat-header-cell *matHeaderCellDef
                 style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Date
@@ -161,9 +161,8 @@
             <ng-container matColumnDef="reasonforapply">
               <mat-header-cell *matHeaderCellDef
                 style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason
-                for apply </mat-header-cell>
-              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for
-                  apply</span>{{element.reasonforapply}} </mat-cell>
+               </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason </span>{{element.reasonforapply}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="noofdays">
@@ -261,9 +260,8 @@
             <ng-container matColumnDef="reasonforapply">
               <mat-header-cell *matHeaderCellDef
                 style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> Reason
-                for apply </mat-header-cell>
-              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason for
-                  apply</span>{{element.reasonforapply}} </mat-cell>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">Reason </span>{{element.reasonforapply}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="noofdays">

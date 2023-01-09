@@ -138,23 +138,22 @@ ngOnInit(): void {
         if(this.designation=='Manager'){
           this.statusservice.getUpdates().subscribe(data => {
             let b = [];
-            this.leftoverApproval =JSON.parse(data)
+            this.leftoverApproval =JSON.parse(data);
               for (let item of this.leftoverApproval) {
                 if(this.designation=="Manager"){
                   if(item.managername==this.name && item.department==this.department ){
-                    if (item.status == 'pending') {
+                   
+                    if (item.status == 'pending') {   
                       b.push(item);
                       this.notification = b.length;
                     }
-                    if(this.leftoverApproval.length==0){
-                      this.showEmptyTable = true;
                     
-                    }
                   }
                 }
               }
             this.dataSource1 = new MatTableDataSource(b);
             this.dataSource1.paginator = this.dataPaginator;
+          
           },error=>{
             this.showErrorMessage = true;
             this.errorMessage = this.globalErrorHandler.errorMessage;
@@ -204,9 +203,13 @@ ngOnInit(): void {
         data => {
           let c = [];
           let dhana=[];
+          if(JSON.parse(data)==null){
+            this.showEmptyTable=true;
+          }
             for(let item of JSON.parse(data)) {      
               if(item.status == 'not submitted') {
                 c.push(item);
+               
                 this.notification = c.length;
               }
             

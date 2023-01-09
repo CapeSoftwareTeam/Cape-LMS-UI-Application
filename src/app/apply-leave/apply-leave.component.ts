@@ -130,7 +130,22 @@ ngOnInit(): void {
     reasonforapply: new FormControl('', Validators.required),
     status: new FormControl('pending'),
   });
-
+  this.getPublicHolidays.getLeave().subscribe(
+    data => {
+      this.Includepublicholiday = JSON.parse(data);
+      console.log(this.Includepublicholiday);
+      for (let e = 0; e <= this.Includepublicholiday; e++) {
+        this.holidays = this.Includepublicholiday.date;
+        console.log(this.holidays);
+      }
+    }, error=>{
+      this.showErrorMessage=true;
+      this.errorMessage=this.globalErrorHandler.errorMessage;
+        setTimeout(() => {
+          this.showErrorMessage=false;
+        }, 3000);
+    }
+  );
     this.empid = sessionStorage.getItem("empid");
     this.getPublicHolidays.getLeave().subscribe(
       data => {
@@ -155,10 +170,14 @@ ngOnInit(): void {
         this.manageremail = this.personDetails.manageremail;
         this.city = this.personDetails.city;
         this.statusreview=this.personDetails.status;
+
+
         if(this.department=="Software"){
           
           this.FrommyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
+          //  const holi= this.Includepublicholiday.getDay();
+          //  console.log(holi);
             return day !== 0 && day !== 6 ;
           }
           this.TomyDateFilter = (d: Date | null): boolean => {
@@ -178,22 +197,7 @@ ngOnInit(): void {
       }
     )
 
-    this.getPublicHolidays.getLeave().subscribe(
-      data => {
-        this.Includepublicholiday = JSON.parse(data);
-        console.log(this.Includepublicholiday);
-        for (let e = 0; e <= this.Includepublicholiday; e++) {
-          this.holidays = this.Includepublicholiday.date;
-          console.log(this.holidays);
-        }
-      }, error=>{
-        this.showErrorMessage=true;
-        this.errorMessage=this.globalErrorHandler.errorMessage;
-          setTimeout(() => {
-            this.showErrorMessage=false;
-          }, 3000);
-      }
-    );
+  
 
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
@@ -407,11 +411,13 @@ ngOnInit(): void {
     }
   }
   matchDate(event:any){
-    if(this.todate.toDateString()==this.fromdate.toDateString()){
+    if(this.fromdate.toDateString()==this.todate.toDateString()){
       this.hideRadio=true;
     }
   }
- 
+  findDatChnages(){
+    debugger
+  }
 
   Save(save:any,successave:any) {
     this.submitted=true;
@@ -845,7 +851,7 @@ ngOnInit(): void {
     this.showMorning = true;
   }
   pageNavigate() {
-   
+   this.postleave.reset();
     // this.route.navigate(["/home"])
   }
   findifsick(event: any) {
