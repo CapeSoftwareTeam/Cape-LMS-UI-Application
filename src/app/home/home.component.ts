@@ -11,10 +11,9 @@ import { ApplyleaveService } from '../services/applyleave.service';
 import { FileUploadService } from '../services/file-upload.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
-import { RegisterComponent } from '../register/register.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
-import { ApplyLeaveComponent } from '../apply-leave/apply-leave.component';
+
 
 @Component({
   selector: 'app-home',
@@ -23,6 +22,8 @@ import { ApplyLeaveComponent } from '../apply-leave/apply-leave.component';
 })
 
 export class HomeComponent implements OnInit {
+  profileinhome:boolean=false;
+  employeedetailsinhome:boolean=false;
   managerasadmin: boolean=false;
   comingsoon:boolean=false;
   superadmin:boolean=false;
@@ -87,9 +88,12 @@ export class HomeComponent implements OnInit {
   valueBot: string="";
   downloadButton:boolean=true;
   designation1: any;
- 
-  
-  
+  applyleaveinhome:boolean=false;
+  leavestatusinhome:boolean=false;
+  publicholidaysinhome:boolean=false;
+  historyinhome:boolean=false;
+  registerinhome:boolean=false;
+  holidaysinhome:boolean=false;
   clicktab(event:any){
     if(event.target.value=="Time Schedule"){
       this.comingsoon=true;
@@ -260,7 +264,25 @@ export class HomeComponent implements OnInit {
     
   }
   callProfile() {
-    this.route.navigate(['/profile']);
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.profileinhome=true;
+    this.holidaysinhome=false;
+  }
+  callLmspage(){
+    this.applyleaveinhome=false;
+    this.lmspage=true;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.profileinhome=false;
   }
   changePassword(){
     const dialogRef=this.dialog.open(ChangePasswordComponent,{
@@ -271,48 +293,111 @@ export class HomeComponent implements OnInit {
     })
   }
   callCalculation() {
-    this.route.navigate(['/leavestatus']);
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=true;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.profileinhome=false;
+    this.holidaysinhome=false;
+
   }
   callApplyLeave(){
     
-const dialogRef=this.dialog.open(ApplyLeaveComponent,{
-  width: '70%',
-  height: '90%',
-disableClose: true
-});
-dialogRef.afterClosed().subscribe(data=>{
-})
-
-
+// const dialogRef=this.dialog.open(ApplyLeaveComponent,{
+//   width: '70%',
+//   height: '90%',
+// disableClose: true
+// });
+// dialogRef.afterClosed().subscribe(data=>{
+// })
+    this.applyleaveinhome=true;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.holidaysinhome=false;
+    this.profileinhome=false;
   }
   callHolidays(){
-     this.route.navigate(['/publicholidays']);
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=true;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.holidaysinhome=false;
+    this.profileinhome=false;
+    this.historyinhome=false;
+    //  this.route.navigate(['/publicholidays']);
   }
   calleditholidays(){
-    this.route.navigate(['/holidays'])
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.holidaysinhome=true;
+    this.profileinhome=false;
   }
   callHistory(){
-    this.route.navigate(['/history']);
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=true;
+    this.employeedetailsinhome=false;
+    this.registerinhome=false;
+    this.holidaysinhome=false;
+    this.profileinhome=false;
+  }
+  callRegisterForEmp(){
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=false;
+    this.registerinhome=true;
+    this.holidaysinhome=false;
+    this.profileinhome=false;
   }
   callRegister(){
-    const dialogRef=this.dialog.open(RegisterComponent,{
-      width: '130%',
-
-      height: '90%',
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(data=>{
-    })
+    console.log("only for super admin")
   }
 
   callEmployeeDetails(){
-    this.route.navigate(['/employeedetails'])
+    this.applyleaveinhome=false;
+    this.lmspage=false;
+    this.leavestatusinhome=false;
+    this.publicholidaysinhome=false;
+    this.historyinhome=false;
+    this.employeedetailsinhome=true;
+    this.registerinhome=false;
+    this.holidaysinhome=false;
+    this.profileinhome=false;
   }
 
   getSelectedindex(event: any) {
     this.tabName = this.tabs[event];
     if(this.tabName=="Time Schedule"||this.tabName=="Relieving Employee Details"){
       this.comingsoon=true;
+      this.applyleaveinhome=false;
+      this.lmspage=false;
+      this.leavestatusinhome=false;
+      this.publicholidaysinhome=false;
+      this.employeedetailsinhome=false;
+      this.historyinhome=false;
+      this.registerinhome=false;
+      this.profileinhome=false;
+      this.holidaysinhome=false;
+      
     }
     else{
       this.comingsoon=false;

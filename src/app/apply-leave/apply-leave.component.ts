@@ -109,15 +109,15 @@ export class ApplyLeaveComponent implements OnInit {
               private getPublicHolidays: HolidayservicesService,
               private teamdetails: RegisterserviceService,
               private statusagree: LeaveStatusServiceService,
-              private globalErrorHandler: GlobalErrorHandlerService,
-              private dialogRef: MatDialogRef<ApplyLeaveComponent>) { }
+              private globalErrorHandler: GlobalErrorHandlerService
+             ) { }
 
   applyLeave = new ApplyLeave();
 
   postleave !: FormGroup;
 
 ngOnInit(): void {
-
+  
   this.postleave = new FormGroup({
     empid:new FormControl('', Validators.required),
     leaveType: new FormControl('', Validators.required),
@@ -159,9 +159,7 @@ ngOnInit(): void {
           
           this.FrommyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
-            const holiday = new Date("this.holidays");
-            const holi=holiday.getDay();
-            return day !== 0 && day !== 6 && !holi;
+            return day !== 0 && day !== 6 ;
           }
           this.TomyDateFilter = (d: Date | null): boolean => {
             const day = (d || new Date()).getDay();
@@ -216,12 +214,14 @@ ngOnInit(): void {
             if(this.designation=="Manager" && this.statusreview=="Active"){
               if (team.managername == this.name && team.department == this.department && team.city == this.city) {
                 this.members.push(team);
-              }
+              }else{}
             }
             else if(this.designation=="HR" && this.statusreview=="Active"){
               if (team.managername == this.name && team.designation == "Manager") {
                 this.members.push(team);
-              }
+              }else{}
+            }else{
+
             }
          }
       },error=>{
@@ -245,7 +245,7 @@ ngOnInit(): void {
       return
       
       
-          }
+          }else{}
    
     
     // if(this.postleave.invalid){
@@ -396,7 +396,7 @@ ngOnInit(): void {
                
                 }
 
-              }
+              }else{}
 
           },error=>{
             this.showErrorMessage=true;
@@ -423,6 +423,7 @@ ngOnInit(): void {
       }, 3000);
       return
           }
+          else{}
           
     // if(this.postleave.invalid){
     //   return ;
@@ -485,6 +486,7 @@ ngOnInit(): void {
               this.modalReference=this.modalService.open(successave, { size: 'm' })
             }
           }
+          else{}
         },error=>{
           this.showErrorMessage=true;
           this.errorMessage=this.globalErrorHandler.errorMessage;
@@ -536,7 +538,7 @@ ngOnInit(): void {
       ) 
 
     }
-    this.dialogRef.close();
+   
     // this.route.navigate(['/home']);
     this.modalReference.close();
   }
@@ -551,10 +553,7 @@ ngOnInit(): void {
 
   getnumber() {
     this.count = this.fromdate;
-    console.log(this.count);
     this.pluscount = this.todate;
-    console.log(this.pluscount);
-
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
@@ -622,6 +621,7 @@ ngOnInit(): void {
               this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1;
             }
         }
+        else{}
         var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
         var arr = dates.filter(function (dt: any) {
           return holidaysArray.indexOf(dt) < 0;
@@ -683,6 +683,7 @@ ngOnInit(): void {
                 this.countinNumber = workingDateArray.length - this.minus; 
               }
             }
+            else{}
           } 
           if (this.postleave.value.chooseDays == "FullDay") {
             if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
@@ -694,6 +695,7 @@ ngOnInit(): void {
             setTimeout(() => {this.showGetNumberError=false;}, 3000);
           }
         }
+        else{}
         if (this.department == 'Software') {
           var getDateArray = function (start: string | number | Date, end: number | Date) {
           var arr = new Array();
@@ -807,6 +809,7 @@ ngOnInit(): void {
               setTimeout(() => {this.showGetNumberError=false;}, 3000)
           }
       }
+      else{}
   }
 
   handlerFull(event: any) {
@@ -817,7 +820,7 @@ ngOnInit(): void {
   }
   ok(){
     this.modalReference.close();
-    this.dialogRef.close();
+    // this.dialogRef.close();
     // this.route.navigate(['/home']);
   }
   cancel() {
@@ -828,11 +831,11 @@ ngOnInit(): void {
           if (item.status == 'pending' && item.empid==this.defaultEmpid ) {
             this.historyid=item.historyid;
             this.globalErrorHandler.apphistoryid=this.historyid;
-          }
+          }else{}
         }
         this.statusagree.deleteHistory(this.historyid).subscribe(data => {})
           this.modalReference.close();})
-          this.dialogRef.close();
+          
   }    
 
   hideDays() {
@@ -842,17 +845,20 @@ ngOnInit(): void {
     this.showMorning = true;
   }
   pageNavigate() {
-    this.dialogRef.close();
+   
     // this.route.navigate(["/home"])
   }
   findifsick(event: any) {
     if (this.defaultEmpid == this.empid) {
-      if (event.target.value == 'sick') {
+      if (event.target.value == 'sick' && this.designation!="HR") {
         this.hideIfsick = false;
       }else {
         this.hideIfsick = true;
       }
-    }else {}
+    }else if(this.defaultEmpid == this.empid && this.designation=="HR"){
+      this.hideIfsick=true;
+    }
+    else{}
   }
 
   selectToSend(event: any) {
@@ -874,11 +880,13 @@ ngOnInit(): void {
             this.personMartialstatus=i.maritalstatus;
               if(this.persongender=="female" && this.personMartialstatus=="married"){
                 this.noMatchGender=true;
-              }
+              }else{}
               if(this.designation=="HR"){
                 this.hideIfnotme = false;
               }
+              else{}
           }
+          else{}
         }
       }
     )
@@ -898,6 +906,7 @@ ngOnInit(): void {
             this.historyid=item.historyid;
             this.modalReference.close(); 
           }
+          else{}
         } 
         this.modalReference=this.modalService.open(update,{ size: 'm' })   
       })
@@ -910,7 +919,7 @@ ngOnInit(): void {
       data => {
         this.detailsdata.push(this.status);      
         this.modalReference.close();
-        this.dialogRef.close();
+       
       },error=>{
         this.showErrorMessage=true;
         this.errorMessage=this.globalErrorHandler.errorMessage;
@@ -924,12 +933,12 @@ ngOnInit(): void {
 
   succesinsave(){
     this.modalReference.close();
-    this.dialogRef.close();
+
     // this.route.navigate(['/home']);
   }
   okforsubmit(){
     this.modalReference.close();
-    this.dialogRef.close();
+   
     // this.route.navigate(['/home']);
   }
   cancelsave(){
@@ -940,7 +949,7 @@ ngOnInit(): void {
           if (item.status == 'not submitted' && item.empid==this.defaultEmpid){
             this.historyid=item.historyid;
             this.globalErrorHandler.apphistoryid=this.historyid;
-          }
+          }else{}
         }
         this.statusagree.deleteHistory(this.historyid).subscribe(data => {})
         this.modalReference.close();})

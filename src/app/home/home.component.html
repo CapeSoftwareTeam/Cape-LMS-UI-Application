@@ -6,7 +6,7 @@
     <mat-toolbar-row style="overflow: hidden;max-height: 500px;">
       <!-- margin-left: 68rem;rgb(9, 9, 211)rgb(185, 189, 192);left:72rem;style="margin-left: 450px;" -->
       <button mat-button style='color:rgb(0, 0, 7); '>
-        <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon>
+        <!-- <mat-icon style='font-size:30px;color:rgb(1, 1, 20);' (click)="sidenav.toggle()">menu</mat-icon> -->
       </button>
       <h2> Cape Electric Private Limited </h2>
       <button mat-button style="margin-left:auto;">
@@ -76,7 +76,8 @@
         <h6 class="text-muted" style="justify-content: center;text-align: center;font-family: system-ui;">
           {{department}} - {{designation}}</h6>
         <hr>
-        <mat-nav-list>
+        <mat-nav-list style="justify-content:center;text-align: center;align-items: center;" >
+          <a mat-list-item (click)="callLmspage()"> My Home</a>
           <a mat-list-item (click)="termsCondition(termsContent)">Leave Policy</a>
           <a mat-list-item (click)="callHolidays()" style="justify-content:center;text-align: center;">Public
             Holidays</a>
@@ -84,7 +85,7 @@
           <a mat-list-item style="justify-content:center;text-align: center;" (click)="callHistory()">My History</a>
           <hr *ngIf="admin">
           <a mat-list-item (click)="calleditholidays()" *ngIf="admin">Add holidays</a>
-          <a mat-list-item (click)="callRegister()" *ngIf="admin">Add Employee</a>
+          <a mat-list-item (click)="callRegisterForEmp()" *ngIf="admin">Add Employee</a>
           <a mat-list-item (click)="callEmployeeDetails()" *ngIf="managerasadmin">view employees</a>
           <a mat-list-item (click)="callRegister()" *ngIf="superadmin">Add HR</a>
 
@@ -96,8 +97,15 @@
       <div class="content" mat-elevation-z8>
 
         <app-lms-page *ngIf="lmspage && tabName == 'Leave Management Systems'"></app-lms-page>
-        <app-coming-soon *ngIf="comingsoon"></app-coming-soon>
-
+        <app-profile *ngIf="profileinhome"></app-profile>
+    <app-public-holidays *ngIf="publicholidaysinhome" ></app-public-holidays>
+    <app-leave-status *ngIf="leavestatusinhome"></app-leave-status>
+    <app-apply-leave *ngIf="applyleaveinhome"></app-apply-leave>
+    <app-history *ngIf="historyinhome"></app-history>
+    <app-employee-details *ngIf="employeedetailsinhome"></app-employee-details>
+    <app-register *ngIf="registerinhome"></app-register>
+    <app-holidays *ngIf="holidaysinhome"></app-holidays>
+    <app-coming-soon *ngIf="comingsoon"></app-coming-soon>
       </div>
 
     </mat-tab>
@@ -228,3 +236,6 @@
 
   </form>
 </ng-template>
+<div class="spinner" id="spinner" *ngIf="spinner">
+  <div class="dot1"></div>
+  <div class="dot2"></div>

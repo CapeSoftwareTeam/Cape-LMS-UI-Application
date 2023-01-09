@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { Register } from '../models/register';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { CscService } from '../csc.service';
-import { MatDialogRef } from '@angular/material/dialog';
-
 
 interface Country {
   
@@ -26,8 +24,7 @@ export class RegisterComponent implements OnInit {
   prod3:boolean=false;
   RegisterationForm!: FormGroup;
   currentDate:any=new Date();
-  Alternate:any;
-  
+  Alternate:any;  
   countries: Country[]=[]; 
   states: string[]=[];
   cities: string[]=[];
@@ -42,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,private route: Router,
-    private registerService: RegisterserviceService, private siteService:CscService,private dialogRef: MatDialogRef<RegisterComponent>
+    private registerService: RegisterserviceService, private siteService:CscService
   ) { 
    
   }
@@ -309,6 +306,6 @@ clear(){
     }
   }
   Home(){
-    this.dialogRef.close();
+  
   }
 }

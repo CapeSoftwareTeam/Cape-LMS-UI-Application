@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -11,10 +11,9 @@ import { LeaveDetails } from '../models/leave-details.model';
 import { LeaveTracking } from '../models/leave-tracking.model';
 import { Register } from '../models/register';
 import { ApplyleaveService } from '../services/applyleave.service';
-
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
-declare const myFunction: any;
+
 @Component({
   selector: 'app-lms-page',
   templateUrl: './lms-page.component.html',
@@ -22,6 +21,7 @@ declare const myFunction: any;
 })
 
 export class LmsPageComponent implements OnInit {
+  // superAdmin:boolean=true;
 close:boolean=false;
 open:boolean=false;
   hidematernity:boolean=false;

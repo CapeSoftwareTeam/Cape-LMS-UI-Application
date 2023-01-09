@@ -4,6 +4,9 @@
 <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
   style="text-align:center ;margin-left: 20px;margin-right:20px;margin-top: 20px;"><strong>Error!</strong>{{errorMessage}}</p>
 <div class="example-container mat-elevation-z8">
+  <div class="text-center">
+    <img src="../assets/no-record-found.png" class="img-fluid" *ngIf="showEmptyTable" alt="">
+  </div>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Organisation(Emergency) Approvals" *ngIf="hrAdmin">
       <mat-table #table [dataSource]="dataSource3">
@@ -85,8 +88,8 @@
                   style="color:blue">Approve</button>
                 <button mat-flat-button class="failure" (click)="approve(element.historyid,empid,'Rejected')"
                   style="color:blue">Decline</button>
-                <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
-                  (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
+                  <i class="material-icons" style="font-size:24px;color: rgb(162, 162, 47);"
+                  (click)="viewpdf(element.historyid)" *ngIf="element.fileid!==null">file_download</i>
 
                 <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
               </mat-cell>
@@ -184,8 +187,8 @@
                   style="color:blue">Approve</button>
                 <button mat-flat-button class="failure" (click)="approve(element.historyid,empid,'Rejected')"
                   style="color:blue">Decline</button>
-                <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
-                  (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.leaveType=='sick'"></i>
+                  <i class="material-icons" style="font-size:20px;color: rgb(162, 162, 47);"
+                  (click)="viewpdf(element.historyid)" *ngIf="element.fileid!==null">file_download</i>
 
                 <!-- <mat-icon class="material-icons-outlined-info info" title="Edit this Record" style="color: #17a2b8;cursor: pointer;" >edit</mat-icon> -->
               </mat-cell>
@@ -252,8 +255,7 @@
               <mat-header-cell *matHeaderCellDef
                 style="font-weight:bold; color:black;font-size: larger; background-color: rgb(192, 225, 240);"> To date
               </mat-header-cell>
-              <mat-cell *matCellDef="let element"> <span class="mobile-label">To Date</span>{{element.todate |
-                date:'shortDate'}}</mat-cell>
+              <mat-cell *matCellDef="let element"> <span class="mobile-label">To Date</span>{{element.todate |date:'shortDate'}}</mat-cell>
             </ng-container>
             <!-- <td mat-cell *matCellDef="let element" > {{element.todate | slice:0:10}}</td> -->
             <ng-container matColumnDef="reasonforapply">
@@ -291,11 +293,15 @@
                   <!-- <i class="material-icons" id="delmessage" style="font-size:18px">delete</i>
               <p class="hide" style="float:right">  Delete</p> <h3 *ngIf="uploadhide" style="color:rgb(43, 117, 86);">&#10004;</h3>-->
                 </button>
-                <button mat-flat-button *ngIf="element.leaveType=='sick'"><i class="fas fa-cloud-upload-alt"
+                <button mat-flat-button *ngIf="element.leaveType=='sick'">
+                  <i class="fas fa-cloud-upload-alt"
                     *ngIf="element.fileid==null" (click)="uploadDocument(element.historyid,uploading)"
                     style="color:rgb(24, 204, 132);font-size:28px"></i>
-                  <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
-                    (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.fileid!==null"></i></button>
+                    <i class="material-icons" style="font-size:20px;color: rgb(162, 162, 47);"
+                    (click)="viewpdf(element.historyid)" *ngIf="element.fileid!==null">file_download</i>
+                  <!-- <i class='far fa-file-pdf' style="margin-right: 2px;font-size: 25px;"
+                    (click)="viewpdf(element.historyid,showDocument)" *ngIf="element.fileid!==null"></i>-->
+                  </button> 
 
               </mat-cell>
 
@@ -334,7 +340,7 @@
     <button type="button" class="btn btn-outline-danger" (click)="uploadbackbutton()">Back</button>
   </div>
 </ng-template>
-<ng-template #showDocument let-modal>
+<!-- <ng-template #showDocument let-modal>
   <div class="modal-header" style="justify-content: space-evenly;">
     <h4 class="modal-title" id="modal-basic-title" style="color:blue;justify-content: center; ">Attached Document</h4>
   </div>
@@ -347,7 +353,7 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="backToleavestatus()">Back</button>
   </div>
-</ng-template>
+</ng-template> -->
 <ng-template #successtoupload let-modal>
   <div class="modal-header" style="justify-content: center;">
     <div class="modal-title" id="modal-basic-title">
@@ -355,7 +361,7 @@
     </div>
   </div>
   <div class="modal-body" style="text-align:center">
-    File has been loaded successfully. Click ok to save and submit to procced.
+    File has been uploaded successfully. Click ok to save and submit to procced.
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" style="text-align: center;justify-content: center;"

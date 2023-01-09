@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,6 +14,7 @@ import { LeaveStatusServiceService } from '../services/leave-status-service.serv
   styleUrls: ['./leave-status.component.css']
 })
 export class LeaveStatusComponent implements OnInit {
+  showEmptyTable:boolean=false;
   @ViewChild('dataPaginator', { static: false }) dataPaginator!: MatPaginator;
   displayedColumns: string[] = ['createddate', 'name', 'leaveType', 'fromdate', 'todate', 'reasonforapply', 'noofdays', 'status'];
   dataSource1 = new MatTableDataSource<any>;
@@ -145,6 +145,10 @@ ngOnInit(): void {
                     if (item.status == 'pending') {
                       b.push(item);
                       this.notification = b.length;
+                    }
+                    if(this.leftoverApproval.length==0){
+                      this.showEmptyTable = true;
+                    
                     }
                   }
                 }
@@ -277,9 +281,10 @@ ngOnInit(): void {
     this.modalReference.close();
     this.modalReference=this.modalService.open(successtoupload,{size:'m'});
   }
-  viewpdf(historyId:Number,showDocument:any){
+  viewpdf(historyId:Number){
     this.statusagree.getHistoryId(historyId).subscribe(data=>{this.fileIdFor=JSON.parse(data).fileid;})
-    this.modalReference= this.modalService.open(showDocument, { size: 'm' });
+    // this.modalReference= this.modalService.open(showDocument, { size: 'm' }); 
+    this.fileUploadService.fileDownload(this.fileIdFor);
   }
 
   backToleavestatus(){
@@ -290,7 +295,7 @@ ngOnInit(): void {
     this.fileSize = Math.round(this.file[0].size / 1024) + " KB";
     this.fileName1=this.file[0].name; 
   }
-  viewpdffile(){
-  this.fileUploadService.fileDownload(this.fileIdFor);
-  }
+  // viewpdffile(){
+  //   this.fileUploadService.fileDownload(this.fileIdFor);
+  // }
 }
