@@ -11,6 +11,7 @@ import { ApplyleaveService } from '../services/applyleave.service';
 import { FileUploadService } from '../services/file-upload.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
+
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 
@@ -234,6 +235,7 @@ export class HomeComponent implements OnInit {
        }
        if(this.designation=='MD'){
         this.superadmin=true;
+        this.managerasadmin=true;
        }
       }
     );
