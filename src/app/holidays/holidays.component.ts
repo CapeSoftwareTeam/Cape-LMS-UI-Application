@@ -6,7 +6,8 @@ import { HolidayservicesService } from '../services/holidayservices.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 
 
 @Component({
@@ -36,9 +37,15 @@ export class HolidaysComponent implements OnInit {
   holiday = new Holiday();
   weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   checkHolidayMsg: boolean = false;
+  formDirty:any;
+  modalReference:any;
+  showErrorMessage: boolean = false;
+  errorMessage: string='';
 
   constructor(private formBuilder: FormBuilder, private holidaysService: HolidayservicesService,
-    private route: Router) {
+    private route: Router,
+    private modalService:NgbModal,
+    private globalErrorHandler: GlobalErrorHandlerService) {
     this.ListData = [];
     this.holidays = this.formBuilder.group({
       date: ['', Validators.required],
@@ -52,8 +59,30 @@ export class HolidaysComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(alertTemplate:any): void{
+    if(this.ListData.length!=0){
+      this.modalReference= this.modalService.open(this.formDirty,
+        {centered:true,
+          size: 'm',
+          backdrop:'static', 
+          keyboard  : false })
+        
+          this.checkHolidayMsg = true;
+          setTimeout(() => {
+            this.checkHolidayMsg = false;
+          }, 300000);
+    
+    }
+  }
+
+  closeTemp(alertTemplate:any){
+    this.modalReference.close();
+  }
+
   // Add leaves in Table
-  addLeave(): void {
+  addLeave(alertTemplate:any): void {
+   this.formDirty = alertTemplate;
+    let flag = true;
     this.submitted = true;
     if (this.holidays.invalid) {
       return
@@ -65,21 +94,19 @@ export class HolidaysComponent implements OnInit {
           setTimeout(() => {
             this.showDateMsg = false;
           }, 3000);
-        }else{
-          this.ListData.push(this.holidays.value);
-          this.resetForm();
-          this.disableSubmitBtn = false;
-          break
+          flag = false;
         }
       }
      }
-     else{
+     if(flag){
       this.ListData.push(this.holidays.value);
       this.resetForm();
       this.disableSubmitBtn = false;
      }
 
   }
+
+  
 
   // Submiting Holidays 
   submit() {
@@ -109,6 +136,13 @@ export class HolidaysComponent implements OnInit {
           this.successMsg = false;
         }, 2000);
       }, 3000)
+    }, error=>{
+      this.showErrorMessage=true;
+      this.errorMessage=this.globalErrorHandler.errorMessage;
+      setTimeout(() => {
+        this.showErrorMessage=false;
+      }, 3000);
+
     })
   }
 
@@ -172,26 +206,5 @@ export class HolidaysComponent implements OnInit {
       this.select.options.forEach((item: MatOption) => item.deselect());
     }
   }
-
-  // getDate(event : any){
-  //    this.holidayDate = this.holiday.date;
-     
-  //    let tempArr = [];
-
-  //    this.holidaysService.getLeave().subscribe(
-  //     data=>{
-  //         tempArr = JSON.parse(data);
-  //         for(let i of tempArr){
-  //           if(i.date==this.holidayDate){
-  //             this.showDateMsg = true;
-  //           }
-  //         }
-  //         setTimeout(() => {
-  //           this.showDateMsg = false;
-  //         }, 2000);
-  //    })
-
-  // }
-  
 
 }

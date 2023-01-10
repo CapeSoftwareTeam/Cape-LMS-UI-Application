@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { RegisterserviceService } from '../services/registerservice.service';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 
 @Component({
   selector: 'app-public-holidays',
@@ -15,6 +16,9 @@ import { RegisterserviceService } from '../services/registerservice.service';
 export class PublicHolidaysComponent implements OnInit {
 
   display: boolean = false;
+  deleteMsg: boolean = false;
+  showErrorMessage: boolean = false;
+  errorMessage: string='';
 
   displayedColumns: string[] = ['description', 'location', 'date', 'day', 'action'];
   dataSource!: MatTableDataSource<any>;
@@ -35,7 +39,8 @@ export class PublicHolidaysComponent implements OnInit {
   }
 
 
-  constructor(private route: Router, private holidaysService: HolidayservicesService, private registerService: RegisterserviceService) {
+  constructor(private route: Router, private holidaysService: HolidayservicesService, private registerService: RegisterserviceService,
+    private globalErrorHandler: GlobalErrorHandlerService) {
     this.dataSource = new MatTableDataSource<any>()
   }
 
@@ -49,7 +54,7 @@ export class PublicHolidaysComponent implements OnInit {
       data => {
         designation = JSON.parse(data).designation;
         
-        if (designation == "HR") {
+        if (designation == "HR Manager") {
           this.holidaysService.getLeave().subscribe(
             data => {
               if(JSON.parse(data).length==0){
@@ -64,6 +69,13 @@ export class PublicHolidaysComponent implements OnInit {
                 
               }
            
+          }, error=>{
+            this.showErrorMessage=true;
+            this.errorMessage=this.globalErrorHandler.errorMessage;
+            setTimeout(() => {
+              this.showErrorMessage=false;
+            }, 3000);
+      
           })
 
         }
@@ -80,6 +92,13 @@ export class PublicHolidaysComponent implements OnInit {
               this.dataSource.paginator = this.holidaysPaginator;
             }
       
+          }, error=>{
+            this.showErrorMessage=true;
+            this.errorMessage=this.globalErrorHandler.errorMessage;
+            setTimeout(() => {
+              this.showErrorMessage=false;
+            }, 3000);
+      
           })
         }
       })
@@ -92,16 +111,23 @@ export class PublicHolidaysComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // Navigation
-  back() {
-    this.route.navigate(['/home'])
-  }
-
   // Delete Holidays From UI
   deleteLeave(publicLeaveId: any) {
     this.holidaysService.deleteLeave(publicLeaveId).subscribe(data => {
-      console.log("Holiday deleted")
+      setTimeout(() => {
+        this.deleteMsg = true;
+        setTimeout(() => {
+          this.deleteMsg = false;
+        }, 3000);
+      }, 1000);
       this.ngOnInit();
+    }, error=>{
+      this.showErrorMessage=true;
+      this.errorMessage=this.globalErrorHandler.errorMessage;
+      setTimeout(() => {
+        this.showErrorMessage=false;
+      }, 3000);
+
     })
   }
 

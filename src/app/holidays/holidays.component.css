@@ -21,7 +21,13 @@
     margin-top:10rem;
     color: darkred;
 }
-
+#row{
+    margin-bottom:20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* border: 1px solid black;
+    border-radius: 5px; */
+}
 h2 {
     align-items: center;
     justify-content: center;

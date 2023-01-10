@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form [formGroup]="profile" (ngSubmit)="submitFunction()">
+        <form [formGroup]="profile">
             <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
                 <h2>Personal Details</h2>
 
@@ -17,7 +17,7 @@
                                         <i class="bi bi-file-person"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="text" formControlName="empid"
+                                <input class="form-control" type="text" formControlName="empid" 
                                     [(ngModel)]="register.empid" readonly>
                             </div>
                         </div>
@@ -101,12 +101,9 @@
                                     [ngClass]="{'is-invalid': submitted && field.maritalstatus.errors}">
                                     <option value="Married">Married</option>
                                     <option value="Unmarried">Unmarried </option>
-
                                 </select>
                                 <div *ngIf="submitted && field.maritalstatus.errors" class="invalid-feedback">
-
                                     <div *ngIf="field.maritalstatus.errors">Marital Status field is required</div>
-
                                 </div>
                             </div>
                         </div>
@@ -147,7 +144,7 @@
                                     <div *ngIf="field.mobilenumber.errors?.['max']">Enter 10 Digit Number</div>
                                 </div>
                             </div>
-                            <mat-icon class="changeNumber" (click)="otp()" title="Change Contact Number">
+                            <mat-icon class="changeNumber" (click)="openChangeNumberTemp(changeNumberTemp)" title="Change Contact Number">
                                 published_with_changes
                             </mat-icon>
                         </div>
@@ -296,15 +293,70 @@
                         <div>
                             <p class="alert alert-success" *ngIf="successMsg">Profile Updated Successfully!</p>
                         </div>
+                        <div> 
+                            <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show" style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>{{errorMessage}}
+                            </p> 
+                        </div>
                         <button type="button" class="btn btn-primary" (click)="updateDetails()">Update</button>
-                        <button type="button" class="btn btn-danger" *ngIf="disableBackBtn" (click)=" profileCancel()"
-                            title="Back"><i class="bi bi-box-arrow-in-left"></i>Back</button>
-                        <button type="button" class="btn btn-secondary" (click)="employeeDetailsCancel()"
+                        <button type="button" class="btn btn-secondary" (click)="cancelDialogBox()"
                             *ngIf="cancelProfile">Cancel</button>
-                    </div>
+                     </div>
                 </div>
             </div>
         </form>
     </div>
 
 </div>
+
+<ng-template #changeNumberTemp let-modal>
+    <div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;">
+    </div>
+    <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
+                <h2 style="text-align: center;">Change Number</h2>
+                <form action="" [formGroup]="changeNumber" id="card">
+                    <div class="row">
+                        <label class="form-label">Enter Mobile Number</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="mobileNumber"
+                                [ngClass]="{'is-invalid': changeNumberSubmitted && f.mobileNumber.errors}"
+                                placeholder="Enter Mobile Number" [readonly]="OtpNumber">
+                            <div *ngIf=" changeNumberSubmitted && f.mobileNumber.errors" class="invalid-feedback">
+                                <div *ngIf=" f.mobileNumber.errors">Mobile Number Required</div>
+                                <div *ngIf="f.mobileNumber.errors?.['min']">Enter 10 Digit Number</div>
+                                <div *ngIf="f.mobileNumber.errors?.['max']">Enter 10 Digit Number</div>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <label class="form-lable">Enter Your Verify Otp</label>
+                        <ng-otp-input *ngIf="showOtpComponent" (onInputChange)="onOtpChange($event)"
+                            [config]="config"></ng-otp-input>
+                    </div>
+                    <div>
+                        <p *ngIf="successMsgOtp" class="alert alert-success">OTP generated Successfully</p>
+                    </div>
+                    
+                        <p *ngIf="failureMsgOtp" style="text-align: center;" class="alert alert-danger">Please Enter OTP</p>
+                    
+                    <div>
+                        <p *ngIf="numberUpdateMsg" class="alert alert-success">Mobile number Updated Successfully</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 justify-content-center text-center">
+                            <button type="button" class="btn btn-primary" *ngIf="disableGenerate"
+                            (click)="generate(f)">Generate</button>
+                            <button type="button" class="btn btn-primary" (click)="submit()"
+                            *ngIf="disableSubmit">Submit</button>
+                            <button type="button" class="btn btn-danger" (click)="cancelTemp()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+    </div>
+</ng-template>

@@ -1,7 +1,7 @@
 <div class="loader" *ngIf="spinner" style="overflow: inherit;margin: 0px auto;position: fixed;z-index: 1000;top: 40%;">
 </div>
 <div [ngStyle]="{'filter': (blurMode ? 'blur(1px)' : 'blur(0px)') ,'pointer-events': (blurMode ? 'none' : 'visible')}">
-    <div class="row" style="margin-bottom:20px;margin-left: 10px;margin-right: 10px;">
+    <div class="row" id="row">
         <h2 style="text-align:center;">Add Holidays</h2>
         <div class="col-md-6" style="margin-bottom:10px;">
             <div class="container">
@@ -18,7 +18,7 @@
                                                 <input type="date" formControlName="date"  class="form-control" name=""
                                                     id="" [ngClass]="{'is-invalid': submitted && field.date.errors}"
                                                     [(ngModel)]="holiday.date" (change)="DateFormatchange($event)">
-                                                    <div *ngIf="showDateMsg" class="alert alert-danger">Date already exits! Cannot have same date multiple times</div>
+                                                    <div *ngIf="showDateMsg" style="margin-top: 10px;" class="alert alert-danger">Date already exits! Cannot have same date multiple times</div>
                                                 <div *ngIf="submitted && field.date.errors" class="invalid-feedback">
                                                     <div *ngIf="field.date.errors">Date is Required</div>
                                                 </div>
@@ -118,13 +118,10 @@
 
                                     <div class="row">
                                         <div class="col-md-12 justify-content-center texte-center">
-                                            <button type="button" class="btn btn-primary" (click)="addLeave()"
+                                            <button type="button" class="btn btn-primary" (click)="addLeave(alertTemplate)"
                                             [disabled]="disableAddBtn">Add</button> 
 
-                                            <button type="button" class="btn btn-primary"
-                                            (click)="resetForm()">Reset</button>
-                                            <!-- <i class="bi bi-box-arrow-in-left"></i> -->
-                                            <button type="button" class="btn btn-danger"(click)="navigateToHome()" title="Back">Back</button>     
+                                            <button type="button" class="btn btn-danger" (click)="resetForm()" >Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +129,10 @@
                         </form>
                         <div style="text-align: center;">
                             <p class="alert alert-success" *ngIf="successMsg">Holidays Added Successfully!</p>
-                            <p class="alert alert-danger" *ngIf="checkHolidayMsg"><strong>Error:</strong> Submit leaves before go back!</p>
+                        </div>
+                        <div> 
+                            <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show" style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>{{errorMessage}}
+                            </p> 
                         </div>
                     </div>
                 </div>
@@ -181,3 +181,14 @@
     </div>
   
 </div>
+
+<ng-template #alertTemplate let-modal>
+  <div>
+    <p class="alert alert-danger" *ngIf="checkHolidayMsg" style="text-align: center;"><strong>Error:</strong> Submit leaves before go back!</p>
+    <div class="row">
+      <div class="col-md-12 justify-content-center text-center">
+         <button type="button" class="btn btn-primary" (click)="closeTemp(alertTemplate)" style="margin-left: 5px;">OK</button>
+      </div>
+    </div>
+</div>
+</ng-template>
