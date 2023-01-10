@@ -33,6 +33,7 @@
                                         <p *ngIf="prod" style="color:rgba(255, 0, 0, 0.844)">Employee id is already
                                                 exists</p>
                                 </div>
+                              
                                 <div class="col-md-4">
                                         <label class="form-label">Name</label>
                                         <div class="input-group">
@@ -252,6 +253,10 @@
                                                                 <option value="Sales">Sales</option>
                                                                  <option value="HR">HR</option>
                                                                  <option>Accounts</option>
+                                                                
+                                                                 <option value="SuperAdmin" *ngIf="superAdmin">SuperAdmin</option>
+
+
 
                                                         </select>
                                                         <div *ngIf="submitted && field.department.errors"
@@ -289,9 +294,10 @@
                                                                 <option *ngIf="field.department.value=='Sales'">MD</option>
                                                                 <option *ngIf="field.department.value=='HR'">HR Manager</option>
                                                                 <option *ngIf="field.department.value=='Accounts'">Accounts Manager</option>
+                                                                <option *ngIf="field.department.value=='SuperAdmin'">SuperAdmin</option>
 
 
-                                                        </select>
+                                                         </select>
                                                         <div *ngIf="submitted && field.designation.errors"
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="field.designation.errors">Designation is
@@ -440,14 +446,18 @@
                                                                         <i class="bi bi-geo-alt-fill"></i> </span>
                                                         </div>
 
-                                                        <input type="text" name="city" class="form-control"
+                                                        <select name="city" class="form-control"
                                                                 formControlName="city" [(ngModel)]="register.city"  placeholder="Enter City"
                                                                
                                                                 
                                                           
                                                                 [ngClass]="{'is-invalid': submitted && field.city.errors}">
+                                                                <option value="" selected>Select City Name</option>
+                                                                   <option *ngFor="let city of cities1">{{city}}
+                                                                        
+                                                        </option>
                                                                
-                                                                
+                                                        </select>      
                                                              
                                                         
                                                         <div *ngIf="submitted && field.city.errors"

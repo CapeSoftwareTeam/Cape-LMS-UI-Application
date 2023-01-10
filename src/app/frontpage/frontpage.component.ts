@@ -49,7 +49,7 @@ keyboard  : false})
   signupButton(){
     var inputValue = (<HTMLInputElement>document.getElementById('inputuser')).value;
 
-       if(inputValue=='gk@capeindia.net'||inputValue=='srp@capeindia.net'||inputValue=='asha@capeindia.net'||inputValue=='vasanthi@capeindia.net')
+       if(inputValue=='gk@capeindia.net'||inputValue=='srp@capeindia.net'||inputValue=='asha@capeindia.net'||inputValue=='vasanthi@capeindia.net'||inputValue=='awstesting@rushforsafety.com')
        {
        this.register=true;
        this.frontPage=false;

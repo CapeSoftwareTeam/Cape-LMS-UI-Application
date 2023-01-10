@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Register } from '../models/register';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { CscService } from '../csc.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { exclamationSquareFill } from 'ngx-bootstrap-icons';
 import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
+import { LoginComponent } from '../login/login.component';
 
 
 interface Country {
@@ -41,11 +42,13 @@ export class RegisterComponent implements OnInit {
   Hide:boolean=true;
   showErrorMessage: boolean=false;
   errorMessage: string="";
- 
+  superAdmin: boolean=false;
+
 
 
   constructor(private formBuilder: FormBuilder,private route: Router,
-    private registerService: RegisterserviceService, private siteService:CscService,private globalErrorHandler: GlobalErrorHandlerService
+    private registerService: RegisterserviceService, private siteService:CscService,private globalErrorHandler: GlobalErrorHandlerService,
+    private dialog:MatDialog
   ) { 
    
   }
@@ -83,7 +86,8 @@ export class RegisterComponent implements OnInit {
 
     this.countryCode='91';
  }
-  
+ cities1 = ['Oragadam','Chennai','Nagarcoil','Telugana','Hyderabad','Vishakapattinam',
+ 'Bengalore','Ernakulam','Bhubaneshwar','Kolkata','Delhi','Pragyaraj','Indore','Mumbai','Pune'];
   keyPressNumbers(event: any) {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
@@ -150,8 +154,10 @@ export class RegisterComponent implements OnInit {
     
     if(event.target.value=='gk@capeindia.net'|| event.target.value=='srp@capeindia.net'||
     event.target.value=='asha@capeindia.net'||event.target.value=='vasanthi@capeindia.net'||
-    event.target.value=='arun@capeindia.net'){
+    event.target.value=='arun@capeindia.net'||event.target.value=='awstesting@rushforsafety.com' ){
       this.Hide=false;
+      
+  this.superAdmin=true;
 
       this.field.manageremail.clearValidators();
 this.field.manageremail.updateValueAndValidity();
@@ -224,9 +230,23 @@ clear(){
         this.register.alternatenumber=this.register.alternatenumber.split('-')[1]
         this.priyanka=true;
         setTimeout(() => {
-          this.priyanka = false;
-          this.clear();
-          this.submitted = false;
+          // this.priyanka = false;
+          // this.clear();
+          // this.submitted = false;
+          
+ if(sessionStorage.getItem("token") !=null){ this.priyanka = false;
+ this.clear();
+ this.submitted = false;
+}else {
+ const dialogRef=this.dialog.open(LoginComponent,{
+disableClose: true
+});
+ dialogRef.afterClosed().subscribe(data=>{
+
+})
+}
+
+
         }, 3000);
         console.log("success")
       },
@@ -256,4 +276,5 @@ clear(){
   Home(){
   
   }
+ 
 }
