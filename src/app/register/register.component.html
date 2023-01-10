@@ -1,11 +1,13 @@
 <form [formGroup]="RegisterationForm" (ngSubmit)="submitFunction()">
         <div class="container">
-                <header class="hover-underline-animation" style="font-size:large; font-weight:bold; margin-bottom:10px;">Registration</header>
+                <header class="hover-underline-animation" style="font-size:large; font-weight:bold; margin-bottom:10px; font-family: Sofia, sans-serif;
+                font-size: 30px; 
+                text-shadow: 3px 3px 3px #e2bcbc;">Registration</header>
                 <div class="first">
-                        <h2>Personal Details</h2>
+                        <h3 class="font-effect-shadow-multiple" style="font-family: Trirong, serif; ">Personal Details</h3>
                         <div class="row">
                                 <div class="col-md-4">
-                                        <label class="form-label">Employee Id</label>
+                                        <label class="form-label" >Employee Id</label>
                                         <div class="input-group">
 
                                                 <div class="input-group-prepend">
@@ -15,14 +17,16 @@
                                                         </span>
 
                                                 </div>
-                                                <input type="text" name="empid" (focusout)="empid($event)"
+                                                <input class="effect-1"  type="text" name="empid" 
                                                         placeholder="Enter Employee id" class="form-control"
                                                         formControlName="empid" [(ngModel)]="register.empid"
                                                         [ngClass]="{ 'is-invalid': submitted && field.empid.errors }">
+                                                       
+                                                        
                                                 <div *ngIf="submitted && field.empid.errors" class="invalid-feedback">
                                                         <div *ngIf="field.empid.errors">Employee id is required</div>
 
-
+                                                        <span class="focus-border"></span>
                                                 </div>
 
                                         </div>
@@ -123,7 +127,7 @@
                                                         </span>
                                                 </div>
                                               
-                                                <input type="text" name="mobilenumber" (focusout)="mobile($event)"class="form-control"
+                                                <input type="text" name="mobilenumber" class="form-control"
                                                         formControlName="mobile" [(ngModel)]="register.mobilenumber"  placeholder="Enter Mobile Number"
                                                         [ngClass]="{'is-invalid': submitted && field.mobile.errors}">
                                                 <div *ngIf="submitted && field.mobile.errors" class="invalid-feedback">
@@ -148,7 +152,7 @@
                                                                 <i class="bi bi-telephone-forward-fill"></i>
                                                         </span>
                                                 </div>
-                                                <input type="text" name="alternate" (focusout)="alter($event)" class="form-control"
+                                                <input type="text" name="alternate"  class="form-control"
                                                         formControlName="alternate"  placeholder="Enter Alternate Mobile Number"
                                                         [(ngModel)]="register.alternatenumber"
                                                         [ngClass]="{'is-invalid': submitted && field.alternate.errors}">
@@ -175,7 +179,7 @@
                                                                 <i class="bi bi-envelope-fill"></i>
                                                         </span>
                                                 </div>
-                                                <input type="email" name="email" (focusout)="email($event)" class="form-control" (keyup)="getemail($event)"
+                                                <input type="email" name="email"  class="form-control" (keyup)="getemail($event)"
                                                         formControlName="email" [(ngModel)]="register.emailid"  placeholder="Enter Email Id"
                                                         [ngClass]="{'is-invalid': submitted && field.email.errors}">
                                                 <div *ngIf="submitted && field.email.errors" class="invalid-feedback">
@@ -194,9 +198,10 @@
                                                         <span class="input-group-text">
                                                                 <i class="bi bi-eye-slash-fill"></i> </span>
                                                 </div>
-                                                <input type="password" name="Password" class="form-control"
+                                                <input  type="password" name="Password" class="form-control"
                                                         formControlName="password" [(ngModel)]="register.password"  placeholder="Enter Password"
                                                         [ngClass]="{'is-invalid' : submitted && field.password.errors}">
+                                                        <span class="focus-border"></span>
                                                 <div *ngIf="submitted && field.password.errors"
                                                         class="invalid-feedback">
                                                         <div *ngIf="field.password.errors">Password is required</div>
@@ -205,7 +210,7 @@
                                 </div>
                         </div>
                         <div class="second" style="margin-top:30px;">
-                                <h2>Work Details</h2>
+                                <h3 style="font-family: Trirong, serif;">Work Details</h3>
                                 <div class="row">
                                         <div class="col-md-4">
                                                 <label class="form-label">Date Of Joining</label>
@@ -246,7 +251,7 @@
                                                                 <option value="Marketing">Marketing</option>
                                                                 <option value="Sales">Sales</option>
                                                                  <option value="HR">HR</option>
-<option>Accounts</option>
+                                                                 <option>Accounts</option>
 
                                                         </select>
                                                         <div *ngIf="submitted && field.department.errors"
@@ -483,7 +488,7 @@
                                                         </div>
                                                         <input type="email" name="Memail" class="form-control"  placeholder="Enter Manager Email"
                                                                 formControlName="manageremail"
-                                                                (focusout)="emailvalidation($event)"
+                                                                
                                                                 [(ngModel)]="register.manageremail"
                                                                 [ngClass]="{'is-invalid': submitted && field.manageremail.errors}">
                                                         <div *ngIf="submitted && field.manageremail.errors"
@@ -504,6 +509,13 @@
                                                 <p class="alert alert-success alert-dismissible fade show"
                                                         *ngIf="priyanka" id="errMsg"><strong>Success!</strong>
                                                         Registered.</p>
+                                                        <p *ngIf="showErrorMessage" class="alert alert-danger alert-dismissible fade show"
+
+                    style="text-align:center ;margin-left: 20px;margin-right:20px;"><strong>Error!</strong>
+
+                    {{errorMessage}}</p>
+                                                       
+                                                       
                                         </div>
                                         <button type="submit" class="btn btn-primary"
                                                 style="margin-top:40px;">Save</button>
@@ -517,4 +529,4 @@
 
                 </div>
         </div>
-</form>
+</form>  

@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { Register } from '../models/register';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { CscService } from '../csc.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { LoginComponent } from '../login/login.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { exclamationSquareFill } from 'ngx-bootstrap-icons';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 
 
 interface Country {
@@ -38,11 +39,13 @@ export class RegisterComponent implements OnInit {
   stateList1: any=[];
   countryList: any=[];
   Hide:boolean=true;
-
+  showErrorMessage: boolean=false;
+  errorMessage: string="";
+ 
 
 
   constructor(private formBuilder: FormBuilder,private route: Router,
-    private registerService: RegisterserviceService, private siteService:CscService,private dialog:MatDialog
+    private registerService: RegisterserviceService, private siteService:CscService,private globalErrorHandler: GlobalErrorHandlerService
   ) { 
    
   }
@@ -96,6 +99,7 @@ export class RegisterComponent implements OnInit {
      if(e.target != undefined) {
      changedValue = e.target.value;
       
+     
     }
     else{
      changedValue = e;
@@ -114,83 +118,7 @@ export class RegisterComponent implements OnInit {
   }
 
   
-//checking empid duplicates 
-  empid(event: any){
-   this.Empid=this.register.empid;
-   
-   let tempArr : any=[];
-   
-   this.registerService.getEmpid().subscribe(
-    data => {
-   
-     tempArr = JSON.parse(data);
-     for(let j of tempArr)
-     {
-      if(j.empid==this.Empid ){
-        this.prod=true;
-        this.field.empid.setValue("");
-      }
-       }
-         setTimeout(() => {
-          this.prod = false;
-          
-        }, 3000);
-        console.log("empid registered")
-        
-      }
-    
-     )
-    
-     }
-// checking mobile number duplicates
- mobile(event:any){
- 
-      this.Mobile= this.register.mobilenumber;
-      let  tempArr : any=[];
 
-this.registerService.getEmpid().subscribe(
-  data =>{
-    tempArr = JSON.parse(data);
-    for(let j of tempArr){
-     
-      if(j.mobilenumber==this.Mobile){
-this.prod1=true;
-this.field.mobile.setValue("");
-setTimeout(() => {
-  this.prod1=false;
-}, 3000);
-console.log("same mobilenumber")
-      }
-    }
-  }
-)
-this.field.mobile.updateValueAndValidity();
-this.field.mobile.clearValidators();        
-     }
-     //checking alternate mobile number duplicates
- alter(event:any){
- 
-  this.Alternate = this.register.alternatenumber;
-  let tempArr : any=[];
-  this. registerService.getEmpid().subscribe(
-    data =>{
-      tempArr = JSON.parse(data);
-      for(let j of tempArr){
-        if(j.alternatenumber== this.Alternate){
-          this.prod2=true;
-          this.field.alternate.setValue("");
-          setTimeout(()=>{
-            this.prod2=false;
-          }, 3000);
-          console.log("same alternatenumber")
-        }
-      }
-    }
-  )
-  this.field.alternate.clearValidators();
-  this.field.alternate.updateValueAndValidity();
-
- }
 
  get field(): any {
   return this.RegisterationForm.controls;
@@ -283,34 +211,40 @@ clear(){
     if (this.RegisterationForm.invalid) {
       return
     }
+    let tempArr : any=[];
+   
+   
+    
   this.register.mobilenumber='+'+ this.countryCode +'-' + this.RegisterationForm.value.mobile
   this.register.alternatenumber='+'+ this.countryCode +'-'+ this.RegisterationForm.value.alternate
-  this.register.country=
+ 
      this.registerService.saveForm(this.register).subscribe(
       data => {
+        this.register.mobilenumber=this.register.mobilenumber.split('-')[1]
+        this.register.alternatenumber=this.register.alternatenumber.split('-')[1]
         this.priyanka=true;
         setTimeout(() => {
-          if(sessionStorage.getItem("token") !=null){
-            this.priyanka = false;
-            this.clear();
-            this.submitted = false;
-          }else {
-            
-    const dialogRef=this.dialog.open(LoginComponent,{
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(data=>{
-      
-    })
-          }
-         
+          this.priyanka = false;
+          this.clear();
+          this.submitted = false;
         }, 3000);
         console.log("success")
       },
       error => {
-        console.log("bug")
+        this.register.mobilenumber=this.register.mobilenumber.split('-')[1]
+        this.register.alternatenumber=this.register.alternatenumber.split('-')[1]
+        this.showErrorMessage=true;
+
+        this.errorMessage=this.globalErrorHandler.errorMessage;
+  
+        setTimeout(() => {
+  
+          this.showErrorMessage=false;
+  
+        }, 3000);
       }
     )
+    
 
   }
  
@@ -320,6 +254,6 @@ clear(){
     }
   }
   Home(){
-    // this.dialogRef.close();
+  
   }
 }
