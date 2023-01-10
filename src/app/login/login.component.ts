@@ -109,23 +109,29 @@ emailForgot:string='';
   validate(event:any){
     
     if(event.value == "empid"){
+      this.loginForm.controls.emailidLogin.setValue('');
       this.loginForm.controls.emailidLogin.clearValidators();
       this.loginForm.controls.emailidLogin.updateValueAndValidity();
+      this.loginForm.controls.mobileNumberLogin.setValue('');
       this.loginForm.controls.mobileNumberLogin.clearValidators();
       this.loginForm.controls.mobileNumberLogin.updateValueAndValidity();
       this.loginForm.controls.empid.setValidators([Validators.required]);
 
     }else if(event.value == "mobileNumber"){
+      this.loginForm.controls.empid.setValue('')
       this.loginForm.controls.empid.clearValidators();
       this.loginForm.controls.empid.updateValueAndValidity();
+      this.loginForm.controls.emailidLogin.setValue('');
       this.loginForm.controls.emailidLogin.clearValidators();
       this.loginForm.controls.emailidLogin.updateValueAndValidity();
       this.loginForm.controls.mobileNumberLogin.setValidators([Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),Validators.required]);
        
     }
     else{
+      this.loginForm.controls.mobileNumberLogin.setValue('');
       this.loginForm.controls.mobileNumberLogin.clearValidators();
       this.loginForm.controls.mobileNumberLogin.updateValueAndValidity();
+      this.loginForm.controls.empid.setValue('')
       this.loginForm.controls.empid.clearValidators();
       this.loginForm.controls.empid.updateValueAndValidity();
       this.loginForm.controls.emailidLogin.setValidators([Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}"),Validators.required]);
@@ -198,17 +204,20 @@ login(){
             }, 3000);
             return;
                 }
-       else{
-            return;
-           }
    
   }
-
-  else if(this.loginForm.value.emailidLogin?.length==0 ||this.loginForm.value.empid?.length==0 ||this.loginForm.value.mobileNumberLogin?.length==0){
-    this.submitted=true;
+  else if(this.loginForm.value.userValidation=='mobileNumber'){
+    this.user.mobileNumber='+'+ this.countryCode +'-'+this.user.mobileNumber;
+  }
+  else{
+    this.showErrorMessage=true;
+    this.errorMessage=this.globalErrorHandler.errorMessage;
+    setTimeout(() => {
+      this.showErrorMessage=false;
+    }, 3000);
   }
   
-  this.user.mobileNumber='+'+ this.countryCode +'-'+this.user.mobileNumber;
+ 
   // service call for login
     this.registerService.authenticate( this.user).subscribe(data=>{ 
       this.dialogRef.close();
@@ -221,10 +230,12 @@ login(){
       this.router.navigate(['/home',{email:JSON.parse(data).register.emailid}]);
     },
     error=>{
-
-      this.f.mobileNumberLogin.setValue(this.user.mobileNumber.split("-")[1]);
       this.errorMessage=this.globalErrorHandler.errorMessage;
-      if(this.errorMessage=="Something went wrong, Please try again later"){
+        if(this.loginForm.value.userValidation=='mobileNumber'){
+      this.f.mobileNumberLogin.setValue(this.user.mobileNumber.split("-")[1]);
+      this.showErrorMessage=true;
+        }
+      else if(this.errorMessage=="Something went wrong, Please try again later"){
         this.showErrorMessage1=true;
         this.errorMessage1=this.errorMessage;
         this.loginPage=false;
@@ -242,7 +253,11 @@ login(){
 
 //cancel method for login page
 gotoHome(){
-  this.dialogRef.close();
+  
+  
+    this.dialogRef.close();
+  
+  
 }
 
 // otp submit

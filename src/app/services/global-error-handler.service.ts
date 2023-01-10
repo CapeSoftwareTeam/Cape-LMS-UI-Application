@@ -8,6 +8,8 @@ export class GlobalErrorHandlerService {
 apphistoryid:any;
 leavefileId:any
 email:string='';
+register:boolean=false;
+frontPage:boolean=true;
   constructor() { 
     console.log(this.errorMessage);
   }

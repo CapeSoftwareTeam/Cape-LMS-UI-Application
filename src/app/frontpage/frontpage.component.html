@@ -27,7 +27,7 @@
       </li> -->
     </ul>
   </nav> 
-  <div *ngIf="frontPage">
+  <div *ngIf="globalErrorHandler.frontPage">
   <img src="../assets/banner1.png" width="1520px" height="600px" alt="">
   <br>
   <hr>
@@ -136,11 +136,11 @@
   <div class="container px-4 px-lg-5"> © {{date}}-CAPE Electric Private Limited, All rights reserved.</div>
 </footer>
 </div>
-<button mat-icon-button class="cancelButton" [mat-dialog-close]="true"  *ngIf="register" >
+<button mat-icon-button class="cancelButton" [mat-dialog-close]="true"  *ngIf="globalErrorHandler.register" >
     
   <mat-icon  class="close-icon" color="warn" (click)="cancel()" >close</mat-icon>
 </button>
-<app-register *ngIf="register"></app-register>
+<app-register *ngIf="globalErrorHandler.register"></app-register>
 <ng-template #signup let-modal>
   
   

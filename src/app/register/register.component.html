@@ -1,4 +1,4 @@
-<form [formGroup]="RegisterationForm" (ngSubmit)="submitFunction()">
+<form [formGroup]="RegisterationForm" (ngSubmit)="submitFunction()" *ngIf="globalErrorHandler.register">
         <div class="container">
                 <header class="hover-underline-animation" style="font-size:large; font-weight:bold; margin-bottom:10px; font-family: Sofia, sans-serif;
                 font-size: 30px; 

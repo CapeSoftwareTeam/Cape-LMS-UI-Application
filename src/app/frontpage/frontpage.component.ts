@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { event } from 'jquery';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
+import { GlobalErrorHandlerService } from '../services/global-error-handler.service';
 
 @Component({
   selector: 'app-frontpage',
@@ -17,10 +18,10 @@ router:any;
 modalReference:any;
   errorMsg: boolean=false;
   signUpBtn:boolean=true;
-  frontPage:boolean=true;
-  register:boolean=false;
+  
+ 
 
-  constructor(private route:Router,private dialog:MatDialog,private modelService:NgbModal) { }
+  constructor(private route:Router,private dialog:MatDialog,private modelService:NgbModal,public globalErrorHandler:GlobalErrorHandlerService) { }
 
   ngOnInit(): void {
     this.date = new Date().getFullYear()
@@ -39,7 +40,7 @@ modalReference:any;
   // template Open For SignUp
   signUp(signup:any){
    
-this.modalReference=this.modelService.open(signup,{size:'m',
+this.modalReference=this.modelService.open(signup,{centered:true,size:'md',
 backdrop:'static',
 
 keyboard  : false})
@@ -49,10 +50,11 @@ keyboard  : false})
   signupButton(){
     var inputValue = (<HTMLInputElement>document.getElementById('inputuser')).value;
 
-       if(inputValue=='gk@capeindia.net'||inputValue=='srp@capeindia.net'||inputValue=='asha@capeindia.net'||inputValue=='vasanthi@capeindia.net'||inputValue=='awstesting@rushforsafety.com')
+       if(inputValue=='gk@capeindia.net'||inputValue=='srp@capeindia.net'||inputValue=='asha@capeindia.net'
+       ||inputValue=='vasanthi@capeindia.net'||inputValue=='awstesting@rushforsafety.com')
        {
-       this.register=true;
-       this.frontPage=false;
+       this.globalErrorHandler.register=true;
+       this.globalErrorHandler.frontPage=false;
         // const dialogRef=this.dialoge.open(RegisterComponent,{
         //   disableClose: true
         //  })
@@ -85,7 +87,7 @@ onCancel(){
   this.modalReference.close();
 }
 cancel(){
-  this.register=false;
-       this.frontPage=true;
+  this.globalErrorHandler.register=false;
+       this.globalErrorHandler.frontPage=true;
 }
 }

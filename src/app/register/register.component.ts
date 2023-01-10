@@ -43,11 +43,11 @@ export class RegisterComponent implements OnInit {
   showErrorMessage: boolean=false;
   errorMessage: string="";
   superAdmin: boolean=false;
-
+  register1:boolean=true;
 
 
   constructor(private formBuilder: FormBuilder,private route: Router,
-    private registerService: RegisterserviceService, private siteService:CscService,private globalErrorHandler: GlobalErrorHandlerService,
+    private registerService: RegisterserviceService, private siteService:CscService,public globalErrorHandler: GlobalErrorHandlerService,
     private dialog:MatDialog
   ) { 
    
@@ -234,10 +234,13 @@ clear(){
           // this.clear();
           // this.submitted = false;
           
- if(sessionStorage.getItem("token") !=null){ this.priyanka = false;
+ if(sessionStorage.getItem("token") !=null){
+   this.priyanka = false;
  this.clear();
  this.submitted = false;
 }else {
+  this.globalErrorHandler.register=false;
+  this.globalErrorHandler.frontPage=true;
  const dialogRef=this.dialog.open(LoginComponent,{
 disableClose: true
 });
