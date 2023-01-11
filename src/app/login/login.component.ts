@@ -209,13 +209,6 @@ login(){
   else if(this.loginForm.value.userValidation=='mobileNumber'){
     this.user.mobileNumber='+'+ this.countryCode +'-'+this.user.mobileNumber;
   }
-  else{
-    this.showErrorMessage=true;
-    this.errorMessage=this.globalErrorHandler.errorMessage;
-    setTimeout(() => {
-      this.showErrorMessage=false;
-    }, 3000);
-  }
   
  
   // service call for login
