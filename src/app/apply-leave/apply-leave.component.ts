@@ -166,73 +166,68 @@ ngOnInit(): void {
             let temp = [];
             this.Includepublicholiday = JSON.parse(data);
             for (let leave of this.Includepublicholiday) {
-            //  let location= leave.workLocation.split(",");
-            //  for(let y=0;y<=location.length;y++){
+              for (let location of leave.workLocation.split(',')) {
+                if (location == this.state) {
+                  this.holidays.push(leave.date);
+                }
+              }
+              this.publicleave = new Date(leave.date);
+              if (this.department == "Software") {
+                this.FrommyDateFilter = (d: Date | null): boolean => {
+                  const date = (d || new Date());
+                  const day = (d || new Date()).getDay();
+                  if (this.isHoliDayLeave(date, this.state)) {
+                    return false;
+                  }
+                  else {
+                    return day !== 0 && day !== 6;
+                  }
 
-           
-              // if(leave.workLocation!=this.state){
-              //   console.log(leave.date)
-              // }
-              // else{
-                this.holidays.push(leave.date);
-                this.publicleave=new Date(leave.date);
-  
-                if(this.department=="Software"){       
-                  this.FrommyDateFilter = (d: Date | null): boolean => {
-                    const date = (d || new Date());
-                    const day = (d || new Date()).getDay();
-                    if(this.isHoliDayLeave(date,this.state)){
-                      return  false;
-                    }
-                    else{
-                      return day !== 0 && day !== 6 ;
-                     }            
-                   
+                }
+                this.TomyDateFilter = (d: Date | null): boolean => {
+                  const date = (d || new Date());
+                  const day = (d || new Date()).getDay();
+                  if (this.isHoliDayLeave(date, this.state)) {
+                    return false;
                   }
-                  this.TomyDateFilter = (d: Date | null): boolean => {
-                    const date = (d || new Date());
-                    const day = (d || new Date()).getDay();            
-                    if(this.isHoliDayLeave(date,this.state)){
-                      return  false;
-                    }
-                    else{
-                      return day !== 0 && day !== 6 ;
-                     } 
-                  }
-                }else if(this.department!="Software"){ 
-  
-                  this.FrommyDateFilter = (d: Date | null): boolean => {
-                    const date = (d || new Date());
-                    const day = (d || new Date()).getDay();
-                    
-                    if(this.isHoliDayLeave(date,this.state)){
-                      return  false;
-                    }
-                    else{
-                      return day !== 0;
-                     } 
-                  }
-                  this.TomyDateFilter = (d: Date | null): boolean => {
-                    const date = (d || new Date());
-                    const day = (d || new Date()).getDay();
-                    if(this.isHoliDayLeave(date,this.state)){
-                      return  false;
-                    }
-                    else{
-                      return day !== 0;
-                     } 
+                  else {
+                    return day !== 0 && day !== 6;
                   }
                 }
+              } else if (this.department != "Software") {
+
+                this.FrommyDateFilter = (d: Date | null): boolean => {
+                  const date = (d || new Date());
+                  const day = (d || new Date()).getDay();
+
+                  if (this.isHoliDayLeave(date, this.state)) {
+                    return false;
+                  }
+                  else {
+                    return day !== 0;
+                  }
+                }
+                this.TomyDateFilter = (d: Date | null): boolean => {
+                  const date = (d || new Date());
+                  const day = (d || new Date()).getDay();
+                  if (this.isHoliDayLeave(date, this.state)) {
+                    return false;
+                  }
+                  else {
+                    return day !== 0;
+                  }
+                }
+              }
               // }
-            // }
+              // }
+            }
           }
-}
-             ,error=>{
-            this.showErrorMessage=true;
-            this.errorMessage=this.globalErrorHandler.errorMessage;
-              setTimeout(() => {
-                this.showErrorMessage=false;
-              }, 3000);
+          , error => {
+            this.showErrorMessage = true;
+            this.errorMessage = this.globalErrorHandler.errorMessage;
+            setTimeout(() => {
+              this.showErrorMessage = false;
+            }, 3000);
           }
         );
       }
@@ -620,6 +615,7 @@ ngOnInit(): void {
     this.postleave.controls['chooseFromDays'].setValue("");
   }
 
+  //method to get number of days with dates
   getnumber() {
     this.count = this.fromdate;
     this.pluscount = this.todate;
@@ -628,73 +624,74 @@ ngOnInit(): void {
         this.personDetails = JSON.parse(data);
         this.department = this.personDetails.department;
       });
-        let dd = this.count;
-        let d = this.pluscount;
-        this.empid = sessionStorage.getItem("empid");
-          if (this.department != 'Software') {
-           // for complete saturday and sunday
-           var getDateArray = function (start: string | number | Date, end: number | Date) {
-           var arr = new Array();
-           var dt = new Date(start);
-            while (dt <= end) {
-              arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
-              dt.setDate(dt.getDate() + 1);
-            }
-            return arr;
-           }
-           var prepareDateArray = function (dtArr: string | any[]) {
-           var arr = new Array();
-            for (var i = 0; i < dtArr.length; i++) {
-              arr.push((new Date(dtArr[i])).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
-            }
-            return arr;
-           }
-    function getSaturdays(year: number, month: number) {
-      let day, date;
-      let saturdays = [];
-      day = 1;
-      date = new Date(year, month, day);
+    this.empid = sessionStorage.getItem("empid");
+    if (this.department != 'Software') {
+      // for complete saturday and sunday
+      var getDateArray = function (start: string | number | Date, end: number | Date) {
+        var arr = new Array();
+        var dt = new Date(start);
+        while (dt <= end) {
+          arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
+          dt.setDate(dt.getDate() + 1);
+        }
+        return arr;
+      }
+      var prepareDateArray = function (dtArr: string | any[]) {
+        var arr = new Array();
+        for (var i = 0; i < dtArr.length; i++) {
+          arr.push((new Date(dtArr[i])).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
+        }
+        return arr;
+      }
+      // to get saturdays
+      function getSaturdays(year: number, month: number) {
+        let day, date;
+        let saturdays = [];
+        day = 1;
+        date = new Date(year, month, day);
         while (date.getMonth() === month) {
-          if(date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
+          if (date.getDay() === 6) { // Sun=0, Mon=1, Tue=2, etc.
             saturdays.push(new Date(year, month, day));
           }
           day += 1;
           date = new Date(year, month, day);
         }
         return saturdays;
-    }
-        if (this.count.getMonth() == this.pluscount.getMonth() && this.count.getFullYear() == this.pluscount.getFullYear()) {
-          this.saturdays = [];
-          this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
-          this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
-          this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-            for (let r = 0; r < this.saturdays.length; r++) {
-              let tempDate = this.saturdays[r].getMonth() + 1;
-              this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1
-            }
+      }
+      if (this.count.getMonth() == this.pluscount.getMonth() && this.count.getFullYear() == this.pluscount.getFullYear()) {
+        this.saturdays = [];
+        this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
+        this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
+        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+        for (let r = 0; r < this.saturdays.length; r++) {
+          let tempDate = this.saturdays[r].getMonth() + 1;
+          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1
         }
-        else if ((this.count.getFullYear() != this.pluscount.getFullYear()) || this.count.getMonth() != this.pluscount.getMonth()) {
-          this.Alternatesaturday = [];
-          this.saturdays = [];
-          this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
-          this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
-          // if(this.saturdays.getMonth()== this.count.getMonth()){
-          this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
-          // }
-          // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
-          this.saturdays1 = (getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
-          // }
-          this.saturdays = this.saturdays.concat(this.saturdays1);
-            for (let r = 0; r < this.saturdays.length; r++) {
-              let tempDate = this.saturdays[r].getMonth() + 1;
-              this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1;
-            }
+      }
+      else if ((this.count.getFullYear() != this.pluscount.getFullYear()) || this.count.getMonth() != this.pluscount.getMonth()) {
+        this.Alternatesaturday = [];
+        this.saturdays = [];
+        this.thismonth = this.count.getMonth(); this.nextmonth = this.pluscount.getMonth();
+        this.thisyear = this.count.getFullYear(); this.nextyear = this.pluscount.getFullYear();
+        // if(this.saturdays.getMonth()== this.count.getMonth()){
+        this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+        // }
+        // if(this.saturdays.getMonth()== this.pluscount.getMonth()){
+        this.saturdays1 = (getSaturdays(this.nextyear, this.nextmonth).filter((day, index) => index % 2 == 0));
+        // }
+        this.saturdays = this.saturdays.concat(this.saturdays1);
+        for (let r = 0; r < this.saturdays.length; r++) {
+          let tempDate = this.saturdays[r].getMonth() + 1;
+          this.Alternatesaturday.push(this.saturdays[r].getFullYear() + "-" + tempDate + "-" + this.saturdays[r].getDate()) + 1;
         }
-        else{}
-        var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
+      }
+      else { }
+      var getWorkingDateArray = function (dates: any[], hoildayDates: any[], workingWeekendDates: any[]) {
+        debugger
         var arr = dates.filter(function (dt: any) {
           return holidaysArray.indexOf(dt) < 0;
         });
+        //it neglects all saturdays and sundays and return value
         var result = arr.filter(function (dt: any) {
           if (dt.indexOf("Sat") > -1 || dt.indexOf("Sun") > -1) {
             if (workingWeekendDates.indexOf(dt) > -1) {
@@ -715,66 +712,65 @@ ngOnInit(): void {
       var holidaysArray = prepareDateArray(officalHolidays);
       var workingWeekendsArray = prepareDateArray(workingWeekends);
       var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
-        this.countinNumber = workingDateArray.length;
+      this.countinNumber = workingDateArray.length;
+      if (workingDateArray.length == 0) {
+        this.countinNumber = 0
+      }
+      if (this.postleave.value.chooseDays == "HalfDay") {
+
+        if (this.count.toDateString() != (this.pluscount.toDateString())) {
+          if (this.postleave.value.chooseFromDays == "fromfull" && this.postleave.value.chooseToDays == "tofull") {
+            this.showGetNumberfullError = true;
+            setTimeout(() => { this.showGetNumberfullError = false; }, 3000);
+
+          }
+          // if(this.count!=this.pluscount){
           if (workingDateArray.length == 0) {
             this.countinNumber = 0
           }
-          if (this.postleave.value.chooseDays == "HalfDay") {
-            
-            if (this.count.toDateString() != (this.pluscount.toDateString())) {
-              if(this.postleave.value.chooseFromDays =="fromfull" && this.postleave.value.chooseToDays=="tofull"){
-                this.showGetNumberfullError=true;
-                setTimeout(() => { this.showGetNumberfullError=false;}, 3000);
-               
-              }
-            // if(this.count!=this.pluscount){
-              if (workingDateArray.length == 0) {
-                this.countinNumber = 0
-              }
-            else if(this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
-                 || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
-              let number = workingDateArray.length - this.minus;
-              this.countinNumber = number - this.minus;
-            }
-            else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
-              this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf") {
-                let number = workingDateArray.length - this.minus;
-                this.countinNumber = number - this.minus;
-            }else {
-              this.countinNumber = workingDateArray.length - this.minus;
-            }
-            }
-            else if(this.count.toDateString() == (this.pluscount.toDateString())){
-              if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
-                  || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
-                this.countinNumber = workingDateArray.length - this.minus;
-              }else{
-                this.countinNumber = workingDateArray.length - this.minus; 
-              }
-            }
-            else{}
-          } 
-          if (this.postleave.value.chooseDays == "FullDay") {
-            if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
-              this.countinNumber = workingDateArray.length;
-            }
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+            || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf") {
+            let number = workingDateArray.length - this.minus;
+            this.countinNumber = number - this.minus;
           }
-          if(this.countinNumber==0){
-            this.showGetNumberError=true;
-            setTimeout(() => {this.showGetNumberError=false;}, 3000);
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
+            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf") {
+            let number = workingDateArray.length - this.minus;
+            this.countinNumber = number - this.minus;
+          } else {
+            this.countinNumber = workingDateArray.length - this.minus;
           }
         }
-        else{}
-        if (this.department == 'Software') {
-          var getDateArray = function (start: string | number | Date, end: number | Date) {
-          var arr = new Array();
-          var dt = new Date(start);
-            while (dt <= end) {
-              arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
-              dt.setDate(dt.getDate() + 1);
-            }
-            return arr;
+        else if (this.count.toDateString() == (this.pluscount.toDateString())) {
+          if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+            || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf") {
+            this.countinNumber = workingDateArray.length - this.minus;
+          } else {
+            this.countinNumber = workingDateArray.length - this.minus;
           }
+        }
+        else { }
+      }
+      if (this.postleave.value.chooseDays == "FullDay") {
+        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+          this.countinNumber = workingDateArray.length;
+        }
+      }
+      if (this.countinNumber == 0) {
+        this.showGetNumberError = true;
+        setTimeout(() => { this.showGetNumberError = false; }, 3000);
+      }
+    }
+    else {
+      var getDateArray = function (start: string | number | Date, end: number | Date) {
+        var arr = new Array();
+        var dt = new Date(start);
+        while (dt <= end) {
+          arr.push((new Date(dt)).toString().substring(0, 15)); //save only the Day MMM DD YYYY part
+          dt.setDate(dt.getDate() + 1);
+        }
+        return arr;
+      }
       function getSaturdays(year: number, month: number) {
         let day, date;
         let saturdays = [];
@@ -788,10 +784,11 @@ ngOnInit(): void {
           day += 1;
           date = new Date(year, month, day);
           console.log(date)
-        } 
+        }
         return saturdays;
       }
       this.saturdays = getSaturdays(this.thisyear, this.thismonth).filter((day, index) => index % 2 == 0);
+
       var prepareDateArray = function (dtArr: string | any[]) {
         var arr = new Array();
         for (var i = 0; i < dtArr.length; i++) {
@@ -818,21 +815,25 @@ ngOnInit(): void {
         });
         return result;
       }
-      this.getPublicHolidays.getLeave().subscribe(
-        data => {
-          let temp = [];
-          this.Includepublicholiday = JSON.parse(data);
-          for (let leave of this.Includepublicholiday) {
-            this.holidays.push(leave.date);
-          }
-        },error=>{
-          this.showErrorMessage=true;
-          this.errorMessage=this.globalErrorHandler.errorMessage;
-          setTimeout(() => {
-            this.showErrorMessage=false;
-          }, 3000);
-        }
-      );
+      // this.getPublicHolidays.getLeave().subscribe(
+      //   data => {
+      //     let temp = [];
+      //     this.Includepublicholiday = JSON.parse(data);
+      //     for (let leave of this.Includepublicholiday) {
+      //       this.holidays.push(leave.date);
+      //     }
+      //   }, error => {
+      //     this.showErrorMessage = true;
+      //     this.errorMessage = this.globalErrorHandler.errorMessage;
+      //     setTimeout(() => {
+      //       this.showErrorMessage = false;
+      //     }, 3000);
+      //   }
+      // );
+      // for(let value of this.holidays){
+        debugger
+      //   officalHolidays.push(this.holidays.date);
+      // }
       var startDate = new Date(this.count); //YYYY-MM-DD
       var endDate = new Date(this.pluscount); //YYYY-MM-DD
       officalHolidays = this.holidays //YYYY-MM-DD
@@ -840,45 +841,45 @@ ngOnInit(): void {
       var dateArray = getDateArray(startDate, endDate);
       var holidaysArray = prepareDateArray(officalHolidays);
       var workingWeekendsArray = prepareDateArray(workingWeekends);
-      var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray); 
-        if (workingDateArray.length == 0) {
-          this.countinNumber = 0
-        }
-        if (this.postleave.value.chooseDays == "HalfDay") {
-          if(this.count == (this.pluscount)){
-            if(this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
-                || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf"){
-              this.countinNumber = workingDateArray.length - this.minus;
-            }
-            else{
-              this.countinNumber = workingDateArray.length - this.minus; 
-            } 
-          }
-          else if (this.count != (this.pluscount)) {
-            if (workingDateArray.length == 0) {
-              this.countinNumber = 0
-            }
-            else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
-               this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"||this.postleave.value.chooseFromDays == "morningfromHalf"&& this.postleave.value.chooseToDays == "morningtoHalf"
-                || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf") {
-              let number = workingDateArray.length - this.minus;
-              this.countinNumber = number - this.minus;
-            }else {
-              this.countinNumber = workingDateArray.length - this.minus;
-            }
-          }
-        }
-        if (this.postleave.value.chooseDays == "FullDay") {
-          if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
-            this.countinNumber = workingDateArray.length;
-          }
-        }
-          if(this.countinNumber==0){
-             this.showGetNumberError=true;
-              setTimeout(() => {this.showGetNumberError=false;}, 3000)
-          }
+      var workingDateArray = getWorkingDateArray(dateArray, holidaysArray, workingWeekendsArray);
+      if (workingDateArray.length == 0) {
+        this.countinNumber = 0
       }
-      else{}
+      if (this.postleave.value.chooseDays == "HalfDay") {
+        if (this.count == (this.pluscount)) {
+          if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+            || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf") {
+            this.countinNumber = workingDateArray.length - this.minus;
+          }
+          else {
+            this.countinNumber = workingDateArray.length - this.minus;
+          }
+        }
+        else if (this.count != (this.pluscount)) {
+          if (workingDateArray.length == 0) {
+            this.countinNumber = 0
+          }
+          else if (this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf" ||
+            this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf" || this.postleave.value.chooseFromDays == "morningfromHalf" && this.postleave.value.chooseToDays == "morningtoHalf"
+            || this.postleave.value.chooseFromDays == "afternoonfromHalf" && this.postleave.value.chooseToDays == "afternoontoHalf") {
+            let number = workingDateArray.length - this.minus;
+            this.countinNumber = number - this.minus;
+          } else {
+            this.countinNumber = workingDateArray.length - this.minus;
+          }
+        }
+      }
+      if (this.postleave.value.chooseDays == "FullDay") {
+        if (this.count != (this.pluscount) || this.count == (this.pluscount)) {
+          this.countinNumber = workingDateArray.length;
+        }
+      }
+      if (this.countinNumber == 0) {
+        this.showGetNumberError = true;
+        setTimeout(() => { this.showGetNumberError = false; }, 3000)
+      }
+    }
+    
   }
 
   handlerFull(event: any) {
@@ -954,7 +955,9 @@ ngOnInit(): void {
               if(this.designation=="HR"){
                 this.hideIfnotme = false;
               }
-              else{}
+              else{
+                this.hideIfnotme = true;
+              }
           }
           else{}
         }
@@ -1029,6 +1032,7 @@ ngOnInit(): void {
     return this.postleave.controls;
   } 
   formreset(){
-    this.ngOnInit();
+     this.postleave.reset();
+    // this.ngOnInit();
   }
 }
