@@ -54,9 +54,15 @@ return this.http.post<any>(this.apiurl+'/authenticate',user,{responseType: 'text
     return this.http.put<any>(this.apiurl+'/changePassword',user,{responseType:'text' as 'json'})
   }
   
- 
+  postCity(register:Register):Observable<any> {
+    return this.http.post<any>(this.apiurl+'/addcity',register,{responseType: 'text' as 'json'}) 
 
   }
+  getCity():Observable<any>{
+    return this.http.get<any>(this.apiurl+'/getcity',{responseType: 'text' as 'json'})
+  }
+}
+
 
 
 

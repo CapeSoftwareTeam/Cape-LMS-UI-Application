@@ -95,6 +95,7 @@ export class HomeComponent implements OnInit {
   historyinhome:boolean=false;
   registerinhome:boolean=false;
   holidaysinhome:boolean=false;
+  addCity:boolean=false;
   clicktab(event:any){
     if(event.target.value=="Time Schedule"){
       this.comingsoon=true;
@@ -236,6 +237,9 @@ export class HomeComponent implements OnInit {
        if(this.designation=='MD'){
         this.superadmin=true;
         this.managerasadmin=true;
+       }
+       else if(this.personDetails.emailid =='awstesting@rushforsafety.com'){
+        this.addCity=true;
        }
       }
     );
@@ -627,4 +631,9 @@ export class HomeComponent implements OnInit {
       toggleStatus(){
         this.open=true;  
       }
+     Add(termsContent1:any){
+      
+      this.modalReference = this.modalService.open (termsContent1, { size: 'm' });
+      
+}
 }
