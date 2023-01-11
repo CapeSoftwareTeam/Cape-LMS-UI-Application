@@ -1,3 +1,4 @@
+<i class='fas fa-sync-alt' style='font-size:18px;float:left' (click)="formreset()"></i>
 <form [formGroup]="postleave">
   <div class="container">
     <h6 style="margin-left: 92%;color: #a6a2a2;"><strong>{{empid}}</strong></h6> 
@@ -25,7 +26,7 @@
             <select class="formcontrol" (change)="selectToSend($event)" [(ngModel)]="defaultEmpid"
               formControlName="empid" [ngClass]="{'is-invalid' : submitted && field.empid.errors}" style="height: 40px;
                  float: left;width: 75%;margin-top: 6px;height: fit-content;">
-              <option value="">Select Employee...</option>
+              <option value="" disabled selected>Select Employee...</option>
               <option value="{{this.empid}}">{{this.empid}} - {{this.name}}</option>
               <option *ngFor="let team of members" value="{{team.empid}}">{{team.empid}} - {{team.name}}</option>
             </select>
@@ -42,7 +43,7 @@
             <select class="formcontrol" formControlName="leaveType" style="height: 40px;
             float: left;width: 75%;margin-top: 6px;height: fit-content;" (change)="findifsick($event)"
               [ngClass]="{'is-invalid' : submitted && field.leaveType.errors}" placeholder="select leave type here...">
-              <option value="" disabled>Select leave type....</option>
+              <option value="" disabled selected>Select leave type....</option>
               <option value="casual">Casual Leave</option>
               <option value="sick">Sick Leave</option>
               <option value="bereavement">Bereavement Leave</option>
@@ -172,7 +173,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
           </div>
           <div class="col-7">
             <mat-form-field style="height:40px; float: left; width: 75%;padding-left: 9px">
-              <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter"  (click)="findDatChnages()"
+              <input matInput [matDatepicker]="pickers" [matDatepickerFilter]="TomyDateFilter"
                 placeholder="Choose a date"
                 style="padding-left: 10px;height: 40px;float: left;width: 75%;margin-top: 6px; " [(ngModel)]="todate"
                 id="date1"  formControlName="todate" (ngModelChange)="matchDate($event)">
@@ -236,8 +237,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
             <input class="formcontrol" type="text" formControlName="noofdays" value={{countinNumber}}
               style="height: 40px;float: left;width: 75%;margin-top: 6px;" (click)=" getnumber()" readonly
               placeholder="Click here..... "><br><br>
-            <p *ngIf="showGetNumberError" style="color:red;"><b>Select date and Click confirm once date is
-                selected...!!!!</b></p>
+            <p *ngIf="showGetNumberError" style="color:red;"><b>Please check the date </b></p>
             <p *ngIf="showGetNumberfullError" style="color:red;"><b>select full for either from or to date</b></p>
             <!-- <div *ngIf="submitted && field.noofdays.errors"
               class="invalid-feedback">
@@ -334,7 +334,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
 </form>
 
 
-<ng-template #failure let-modal style="justify-content:center;place-content: center;align-items: center;vertical-align: middle;">
+<ng-template #failure let-modal style="margin-top: 40px;">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">NOTE</h4>
   </div>
@@ -347,7 +347,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
   </div>
 </ng-template>
 
-<ng-template #success let-modal style="justify-content:center;place-content: center;align-items: center;vertical-align: middle;">
+<ng-template #success let-modal style="margin-top: 40px;">
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -362,7 +362,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
   </div>
 </ng-template>
 
-<ng-template #onbehalf let-modal style="justify-content:center;place-content: center;align-items: center;vertical-align: middle;">
+<ng-template #onbehalf let-modal>
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -379,7 +379,8 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
   </div>
 </ng-template>
 
-<ng-template #update let-modal  style="justify-content:center;place-content: center;align-items: center;vertical-align: middle;">
+
+<ng-template #update let-modal  style="margin-top: 40px;">
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -399,7 +400,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
       (click)="cancel()">Cancel</button>
   </div>
 </ng-template>
-<ng-template #save let-modal style="justify-content:center;place-content: center;align-items: center;vertical-align: middle;">
+<ng-template #save let-modal style="margin-top: 40px;">
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>
@@ -415,7 +416,7 @@ bsDaterangepicker [daysDisabled]="[6,0]" [(ngModel)]="fromdate"> -->
       (click)="cancelsave()">Cancel</button>
   </div>
 </ng-template>
-<ng-template #successave let-modal  style="justify-content:center;vertical-align: middle;">
+<ng-template #successave let-modal  style="margin-top: 40px;">
   <div class="modal-header">
     <div class="modal-title" id="modal-basic-title">
       <i class="bi bi-check-circle" style='font-size:48px;color:green;margin-left: -22px;'></i>

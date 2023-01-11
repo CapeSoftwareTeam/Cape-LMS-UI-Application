@@ -130,6 +130,7 @@ ngOnInit(): void {
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
         this.personDetails = JSON.parse(data);
+       
         this.name=this.personDetails.name;
         this.department=this.personDetails.department;
         this.designation=this.personDetails.designation;
@@ -139,10 +140,14 @@ ngOnInit(): void {
           this.statusservice.getUpdates().subscribe(data => {
             let b = [];
             this.leftoverApproval =JSON.parse(data);
+            if(this.leftoverApproval.length==0){
+              this.showEmptyTable=true;
+        }else{
               for (let item of this.leftoverApproval) {
+               
+                  this.showEmptyTable=false;
                 if(this.designation=="Manager"){
-                  if(item.managername==this.name && item.department==this.department ){
-                   
+                  if(item.managername==this.name && item.department==this.department ){                 
                     if (item.status == 'pending') {   
                       b.push(item);
                       this.notification = b.length;
@@ -153,7 +158,7 @@ ngOnInit(): void {
               }
             this.dataSource1 = new MatTableDataSource(b);
             this.dataSource1.paginator = this.dataPaginator;
-          
+            }
           },error=>{
             this.showErrorMessage = true;
             this.errorMessage = this.globalErrorHandler.errorMessage;
@@ -165,8 +170,12 @@ ngOnInit(): void {
         else if(this.designation=='HR'){
           this.statusservice.getUpdates().subscribe(data => {
           let g = [];
-            this.leftoverApproval =JSON.parse(data)
-              for (let item of this.leftoverApproval) {
+            this.leftoverApproval =JSON.parse(data);
+            if(this.leftoverApproval.length==0){
+              this.showEmptyTable=true;
+        }else{
+              for (let item of this.leftoverApproval) {  
+              this.showEmptyTable=false;
                 if(this.designation=="HR"){
                   if(item.managername==this.name || item.designation=="Manager"){
                     if(item.status=="pending"){
@@ -177,11 +186,17 @@ ngOnInit(): void {
                 this.dataSource1 = new MatTableDataSource(g);
                 this.dataSource1.paginator = this.dataPaginator;
               }
+            }
           });      
           this.statusservice.getUpdates().subscribe(data => {
           let r = [];
-          this.leftoverApproval =JSON.parse(data)
+          this.leftoverApproval =JSON.parse(data);
+          if(this.leftoverApproval.length==0){
+            this.showEmptyTable=true;
+      }else{
             for (let item of this.leftoverApproval) {
+           
+            this.showEmptyTable=false;
               if(this.designation=="HR"){
                 if( item.status=="pending" && item.designation!="Manager"){
                   r.push(item);
@@ -191,6 +206,7 @@ ngOnInit(): void {
               this.dataSource3 = new MatTableDataSource(r);
               this.dataSource3.paginator = this.dataPaginator;
             }
+          }
           });
         }
     })
@@ -203,16 +219,20 @@ ngOnInit(): void {
         data => {
           let c = [];
           let dhana=[];
-          if(JSON.parse(data)==null){
-            this.showEmptyTable=true;
-          }
-            for(let item of JSON.parse(data)) {      
+         if(data=="[]"){
+          this.showEmptyTable=true;
+         }
+            for(let item of JSON.parse(data)) {    
+          //     if(item.length==0){
+          //       this.showEmptyTable=true;
+          // }else{
+          //   this.showEmptyTable=false;  
               if(item.status == 'not submitted') {
                 c.push(item);
                
                 this.notification = c.length;
               }
-            
+          // }
             }
           this.dataSource2 = new MatTableDataSource(c);
           this.dataSource2.paginator = this.dataPaginator;
@@ -221,10 +241,11 @@ ngOnInit(): void {
       );
   }
 
-  back() {
-    this.route.navigate(['/home']);
-  }
+  // back() {
+  //   this.route.navigate(['/home']);
+  // }
 
+  // To send values for future need
   submit(historyid: Number, empid:string, status: string){
     this.statusagree.statusUpdate(historyid, empid, status).subscribe(
       data=>{ 
@@ -235,6 +256,7 @@ ngOnInit(): void {
     )
   }
 
+  //delete call for deleting row
   delete(historyid:Number){
    this.statusagree.deleteHistory(historyid).subscribe(
     data=>{
@@ -250,9 +272,10 @@ ngOnInit(): void {
 
   uploadDocument(historyid:Number,uploading:any){
     this.historyIdFor=historyid;
-    this.modalReference = this.modalService.open(uploading, { size: 'm' });
+    this.modalReference = this.modalService.open(uploading, {centered:true, size: 'm' });
   }
 
+  // post file
   uploadhere(successtoupload:any){
     let componentName:any;
     const formData: FormData = new FormData();
@@ -282,8 +305,9 @@ ngOnInit(): void {
       
     
     this.modalReference.close();
-    this.modalReference=this.modalService.open(successtoupload,{size:'m'});
+    this.modalReference=this.modalService.open(successtoupload,{centered:true,size:'m'});
   }
+  //get file
   viewpdf(historyId:Number){
     this.statusagree.getHistoryId(historyId).subscribe(data=>{this.fileIdFor=JSON.parse(data).fileid;})
     // this.modalReference= this.modalService.open(showDocument, { size: 'm' }); 
@@ -293,6 +317,7 @@ ngOnInit(): void {
   backToleavestatus(){
     this.modalReference.close();
   }
+  //size 
   getfile(event:any){
     this.file = event.target.files;
     this.fileSize = Math.round(this.file[0].size / 1024) + " KB";

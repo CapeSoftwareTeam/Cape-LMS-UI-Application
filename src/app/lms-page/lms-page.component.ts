@@ -143,8 +143,8 @@ coverspace:boolean=false;
 //   this.updateClock(date);
 // },1000);
 
-
 this.startClock();
+
     this.empid = sessionStorage.getItem("empid");
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
@@ -303,6 +303,8 @@ this.trackdetails= this.expcl + this.expsl + this.expbl +this.exppl+ this.expml;
 //     this.minHand.nativeElement.style.transform='rotate('+date.getSeconds()*6+'deg)';
 //     this.hrHand.nativeElement.style.transform='rotate('+date.getSeconds()*6+'deg)';
 //   }
+
+//for digitial timer
   startClock(){
     this.counter=timer(0,1000).subscribe(
       (res)=>{
@@ -358,6 +360,7 @@ onClose(){
 this.close=false;
 this.open=false;
 }
+// chatbot
 sendMessage() {
   var input_data = (document.getElementById("chatquery") as HTMLInputElement).value;
   if(input_data != ""){

@@ -11,6 +11,7 @@ import { HolidayservicesService } from '../services/holidayservices.service';
 import { LeaveStatusServiceService } from '../services/leave-status-service.service';
 import { RegisterserviceService } from '../services/registerservice.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { getLocaleDirection, isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'app-apply-leave',
@@ -100,6 +101,8 @@ export class ApplyLeaveComponent implements OnInit {
   differentdays: any;
   statusreview: any;
   hideRadio:boolean=false;
+  publicleave: any;
+  state: any;
 
   constructor(private route: Router,
               private apply: ApplyleaveService,
@@ -130,32 +133,18 @@ ngOnInit(): void {
     reasonforapply: new FormControl('', Validators.required),
     status: new FormControl('pending'),
   });
-  this.getPublicHolidays.getLeave().subscribe(
-    data => {
-      this.Includepublicholiday = JSON.parse(data);
-      console.log(this.Includepublicholiday);
-      for (let e = 0; e <= this.Includepublicholiday; e++) {
-        this.holidays = this.Includepublicholiday.date;
-        console.log(this.holidays);
-      }
-    }, error=>{
-      this.showErrorMessage=true;
-      this.errorMessage=this.globalErrorHandler.errorMessage;
-        setTimeout(() => {
-          this.showErrorMessage=false;
-        }, 3000);
-    }
-  );
+  // this.getPublicHolidays.getLeave().subscribe(
+  //   data => {
+  //     this.Includepublicholiday = JSON.parse(data);
+  //     console.log(this.Includepublicholiday);
+  //     for (let e = 0; e <= this.Includepublicholiday; e++) {
+  //       this.holidays = this.Includepublicholiday.date;
+  //       console.log(this.holidays);
+  //     }
+   // }
+  // );
     this.empid = sessionStorage.getItem("empid");
-    this.getPublicHolidays.getLeave().subscribe(
-      data => {
-        let temp = [];
-        this.Includepublicholiday = JSON.parse(data);
-        for (let leave of this.Includepublicholiday) {
-          this.holidays.push(leave.date);
-        }
-      }
-    );
+  
 
     this.registerDetails.getMemberDetails(this.empid).subscribe(
       data => {
@@ -169,34 +158,85 @@ ngOnInit(): void {
         this.managername = this.personDetails.managername;
         this.manageremail = this.personDetails.manageremail;
         this.city = this.personDetails.city;
+        this.state=this.personDetails.state;
         this.statusreview=this.personDetails.status;
 
+        this.getPublicHolidays.getLeave().subscribe(
+          data => {
+            let temp = [];
+            this.Includepublicholiday = JSON.parse(data);
+            for (let leave of this.Includepublicholiday) {
+            //  let location= leave.workLocation.split(",");
+            //  for(let y=0;y<=location.length;y++){
 
-        if(this.department=="Software"){
-          
-          this.FrommyDateFilter = (d: Date | null): boolean => {
-            const day = (d || new Date()).getDay();
-          //  const holi= this.Includepublicholiday.getDay();
-          //  console.log(holi);
-            return day !== 0 && day !== 6 ;
+           
+              // if(leave.workLocation!=this.state){
+              //   console.log(leave.date)
+              // }
+              // else{
+                this.holidays.push(leave.date);
+                this.publicleave=new Date(leave.date);
+  
+                if(this.department=="Software"){       
+                  this.FrommyDateFilter = (d: Date | null): boolean => {
+                    const date = (d || new Date());
+                    const day = (d || new Date()).getDay();
+                    if(this.isHoliDayLeave(date,this.state)){
+                      return  false;
+                    }
+                    else{
+                      return day !== 0 && day !== 6 ;
+                     }            
+                   
+                  }
+                  this.TomyDateFilter = (d: Date | null): boolean => {
+                    const date = (d || new Date());
+                    const day = (d || new Date()).getDay();            
+                    if(this.isHoliDayLeave(date,this.state)){
+                      return  false;
+                    }
+                    else{
+                      return day !== 0 && day !== 6 ;
+                     } 
+                  }
+                }else if(this.department!="Software"){ 
+  
+                  this.FrommyDateFilter = (d: Date | null): boolean => {
+                    const date = (d || new Date());
+                    const day = (d || new Date()).getDay();
+                    
+                    if(this.isHoliDayLeave(date,this.state)){
+                      return  false;
+                    }
+                    else{
+                      return day !== 0;
+                     } 
+                  }
+                  this.TomyDateFilter = (d: Date | null): boolean => {
+                    const date = (d || new Date());
+                    const day = (d || new Date()).getDay();
+                    if(this.isHoliDayLeave(date,this.state)){
+                      return  false;
+                    }
+                    else{
+                      return day !== 0;
+                     } 
+                  }
+                }
+              // }
+            // }
           }
-          this.TomyDateFilter = (d: Date | null): boolean => {
-            const day = (d || new Date()).getDay();
-            return day !== 0 && day !== 6  ;
+}
+             ,error=>{
+            this.showErrorMessage=true;
+            this.errorMessage=this.globalErrorHandler.errorMessage;
+              setTimeout(() => {
+                this.showErrorMessage=false;
+              }, 3000);
           }
-        }else if(this.department!="Software"){
-          this.FrommyDateFilter = (d: Date | null): boolean => {
-            const day = (d || new Date()).getDay();
-            return day !== 0 ;
-          }
-          this.TomyDateFilter = (d: Date | null): boolean => {
-            const day = (d || new Date()).getDay();
-            return day !== 0;
-          }
-        }
+        );
       }
-    )
-
+    ) 
   
 
     this.registerDetails.getMemberDetails(this.empid).subscribe(
@@ -237,7 +277,32 @@ ngOnInit(): void {
         }
     );
 }
+  isHoliDayLeave(date: any,state:any): any {
+    let flag = true;
+    for (let value of this.Includepublicholiday) {
+      if (new Date(value.date).getDate() == date.getDate() 
+      && date.getFullYear() == new Date(value.date).getFullYear() 
+      && date.getMonth() == new Date(value.date).getMonth() 
+      && this.getLocation(value.workLocation,state)) {
+        flag = false;
+        return true;
+      }
 
+    } if (flag) {
+      return false;
+    }
+
+  }
+
+  getLocation(location: any,compareLocation:any): any {
+    let flag = false;
+    for (let value of location.split(',')) {
+      if(value == compareLocation){
+        flag = true;
+      }
+    }
+    return flag;
+  }
   leaveApply(success: any, failure: any,onbehalf:any) {
     this.submitted=true;
     if(this.field.chooseDays.value==undefined ||this.postleave.value.fromdate==undefined ||this.postleave.value.todate==undefined ||this.countinNumber==undefined||this.countinNumber==undefined ||this.postleave.value.reasonforapply=="" ){
@@ -280,7 +345,7 @@ ngOnInit(): void {
                         }, 3000);
                       }
         )
-      this.modalReference=this.modalService.open(onbehalf,{ size: 'm' })
+      this.modalReference=this.modalService.open(onbehalf,{ centered:true,size: 'm' })
     }
     else {
       this.applyLeave.empid = this.empid;
@@ -306,76 +371,76 @@ ngOnInit(): void {
             this.leavetrack = JSON.parse(data);
               if (this.postleave.value.leaveType == "casual" ) {
                 if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
-                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                  this.modalReference = this.modalService.open(failure, { centered:true,size: 'm' });
                 }
                 else{
                   if(this.designation=="HR"){
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(onbehalf, { size: 'm' })
+                    this.modalReference = this.modalService.open(onbehalf, { centered:true,size: 'm' })
                   }else{
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(success, { size: 'm' })
+                    this.modalReference = this.modalService.open(success, {centered:true, size: 'm' })
                   }
                
                 }
               }
               else if (this.postleave.value.leaveType == "sick") {
                 if (this.countinNumber > this.leavetrack.sickLeave) {
-                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                  this.modalReference = this.modalService.open(failure, { centered:true,size: 'm' });
                 } 
                 else{
                   if(this.designation=="HR"){
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(onbehalf, { size: 'm' })
+                    this.modalReference = this.modalService.open(onbehalf, { centered:true,size: 'm' })
                   }else{
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(success, { size: 'm' })
+                    this.modalReference = this.modalService.open(success, { centered:true,size: 'm' })
                   }
                
                 }
               }
               else if (this.postleave.value.leaveType == "bereavement") {
                 if (this.countinNumber > this.leavetrack.bereavementLeave) {
-                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                  this.modalReference = this.modalService.open(failure, {centered:true, size: 'm' });
                 }
                 else{
                   if(this.designation=="HR"){
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(onbehalf, { size: 'm' })
+                    this.modalReference = this.modalService.open(onbehalf, { centered:true,size: 'm' })
                   }else{
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(success, { size: 'm' })
+                    this.modalReference = this.modalService.open(success, {centered:true, size: 'm' })
                   }
                
                 }
               }
               else if (this.postleave.value.leaveType == "privilege") {
                 if (this.countinNumber > this.leavetrack.privilegeLeave) {
-                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                  this.modalReference = this.modalService.open(failure, { centered:true,size: 'm' });
                 }
                 else{
                   if(this.designation=="HR"){
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(onbehalf, { size: 'm' })
+                    this.modalReference = this.modalService.open(onbehalf, { centered:true,size: 'm' })
                   }else{
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(success, { size: 'm' })
+                    this.modalReference = this.modalService.open(success, { centered:true,size: 'm' })
                   }
                
                 }
@@ -383,19 +448,19 @@ ngOnInit(): void {
               }
               else if (this.postleave.value.leaveType == "maternity") {
                 if (this.countinNumber > this.leavetrack.maternityLeave) {
-                  this.modalReference = this.modalService.open(failure, { size: 'm' });
+                  this.modalReference = this.modalService.open(failure, {centered:true, size: 'm' });
                 }
                 else{
                   if(this.designation=="HR"){
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(onbehalf, { size: 'm' })
+                    this.modalReference = this.modalService.open(onbehalf, {centered:true, size: 'm' })
                   }else{
                     this.apply.leaveRegister(this.applyLeave).subscribe(
                       data => { this.leave.push(this.applyLeave) }
                     )
-                    this.modalReference = this.modalService.open(success, { size: 'm' })
+                    this.modalReference = this.modalService.open(success, {centered:true, size: 'm' })
                   }
                
                 }
@@ -415,9 +480,7 @@ ngOnInit(): void {
       this.hideRadio=true;
     }
   }
-  findDatChnages(){
-    debugger
-  }
+
 
   Save(save:any,successave:any) {
     this.submitted=true;
@@ -456,40 +519,40 @@ ngOnInit(): void {
           this.leavetrack = JSON.parse(data);
             if (this.postleave.value.leaveType == "casual") {
               if (this.countinNumber > this.leavetrack.carryForwardLeave || this.leavetrack.carryForwardLeave == undefined) {
-                this.modalReference = this.modalService.open(save, { size: 'm' });
+                this.modalReference = this.modalService.open(save, {centered:true, size: 'm' });
               }else{
-                this.modalReference=this.modalService.open(successave, { size: 'm' })
+                this.modalReference=this.modalService.open(successave, {centered:true, size: 'm' })
               }
             }
             else if (this.postleave.value.leaveType == "sick") {
               if (this.countinNumber > this.leavetrack.sickLeave) {
-                this.modalReference = this.modalService.open(save, { size: 'm' });
+                this.modalReference = this.modalService.open(save, {centered:true, size: 'm' });
               }else{
-                this.modalReference=this.modalService.open(successave, { size: 'm' })
+                this.modalReference=this.modalService.open(successave, {centered:true, size: 'm' })
               }
             }
           else if (this.postleave.value.leaveType == "bereavement") {
             if (this.countinNumber > this.leavetrack.bereavementLeave) {
-              this.modalReference = this.modalService.open(save, { size: 'm' });
+              this.modalReference = this.modalService.open(save, {centered:true, size: 'm' });
             }
             else{
-              this.modalReference=this.modalService.open(successave, { size: 'm' })
+              this.modalReference=this.modalService.open(successave, {centered:true, size: 'm' })
             }
           }
           else if (this.postleave.value.leaveType == "privilege") {
             if (this.countinNumber > this.leavetrack.privilegeLeave) {
-              this.modalReference = this.modalService.open(save, { size: 'm' });
+              this.modalReference = this.modalService.open(save, {centered:true, size: 'm' });
             }
             else{
-              this.modalReference=this.modalService.open(successave, { size: 'm' })
+              this.modalReference=this.modalService.open(successave, {centered:true, size: 'm' })
             }
           }
           else if (this.postleave.value.leaveType == "maternity") {
             if (this.countinNumber > this.leavetrack.maternityLeave) {
-              this.modalReference = this.modalService.open(save, { size: 'm' });
+              this.modalReference = this.modalService.open(save, {centered:true, size: 'm' });
             }
             else{
-              this.modalReference=this.modalService.open(successave, { size: 'm' })
+              this.modalReference=this.modalService.open(successave, {centered:true, size: 'm' })
             }
           }
           else{}
@@ -851,7 +914,8 @@ ngOnInit(): void {
     this.showMorning = true;
   }
   pageNavigate() {
-   this.postleave.reset();
+    this.ngOnInit();
+  //  this.postleave.reset();
     // this.route.navigate(["/home"])
   }
   findifsick(event: any) {
@@ -914,7 +978,7 @@ ngOnInit(): void {
           }
           else{}
         } 
-        this.modalReference=this.modalService.open(update,{ size: 'm' })   
+        this.modalReference=this.modalService.open(update,{ centered:true,size: 'm' })   
       })
       this.globalErrorHandler.apphistoryid=this.historyid;
   }
@@ -964,4 +1028,7 @@ ngOnInit(): void {
   get field(): any {
     return this.postleave.controls;
   } 
+  formreset(){
+    this.ngOnInit();
+  }
 }
